@@ -1,0 +1,42 @@
+<!doctype html>
+<!--
+  index.html — the single HTML page of the TripWise SPA.
+  React renders everything inside <div id="root">; this file only holds
+  meta tags, the favicon, and a tiny pre-paint theme script.
+-->
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="TripWise plans your whole trip with AI — day-by-day itineraries that fit your budget and your vibe. Free."
+    />
+    <meta name="theme-color" content="#FFF8EE" />
+    <title>TripWise — AI travel itineraries</title>
+    <!--
+      Set the theme BEFORE the first paint so dark-mode users never see a white flash.
+      Must stay in sync with ThemeProvider (storage key "tw_theme").
+      Wrapped in try/catch because localStorage can be blocked (private mode).
+    -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('tw_theme');
+          var theme =
+            saved === 'light' || saved === 'dark'
+              ? saved
+              : matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

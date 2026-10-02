@@ -1,0 +1,6 @@
+<!-- favicon.svg — TripWise tab icon: a coral "stamp" square with a paper-plane mark. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect x="4" y="4" width="52" height="52" rx="14" fill="#1B1B1F"/>
+  <rect x="0" y="0" width="52" height="52" rx="14" fill="#FF6B5A" stroke="#1B1B1F" stroke-width="4"/>
+  <path d="M12 26 L42 13 L33 41 L27 30 Z" fill="#FFF8EE" stroke="#1B1B1F" stroke-width="3" stroke-linejoin="round"/>
+</svg>

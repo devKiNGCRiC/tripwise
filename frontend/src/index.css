@@ -1,0 +1,2 @@
+/* index.css — global stylesheet. For now it only loads Tailwind; Task 2 adds the theme. */
+@import "tailwindcss";

@@ -1,0 +1,33 @@
+// tsconfig.json — TypeScript settings for the whole frontend.
+// We only type-check here (noEmit); Vite does the actual compiling.
+{
+  "compilerOptions": {
+    // Modern JS output — every browser we support understands ES2022.
+    "target": "ES2022",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    // "bundler" matches how Vite resolves imports (package.json "exports", no file extensions).
+    "moduleResolution": "bundler",
+    // Use React 17+'s automatic JSX runtime: no `import React` needed in every file.
+    "jsx": "react-jsx",
+
+    // Safety nets: strict typing + flag unused code so mistakes surface early.
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Vite compiles each file on its own, so TS must not rely on cross-file emit tricks.
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+
+    // Global type packages: Vite's import.meta.env + Node (only used by vite.config.ts).
+    "types": ["vite/client", "node"],
+
+    // `@/lib/api/client` instead of `../../../lib/api/client`. Mirrored in vite.config.ts.
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": ["src", "vite.config.ts"]
+}
