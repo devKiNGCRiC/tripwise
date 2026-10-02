@@ -17,3 +17,6 @@ test-results/
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Local agent scratch (plan ledgers)
+.superpowers/
