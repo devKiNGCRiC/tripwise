@@ -1,21 +1,31 @@
 /**
  * setup.ts — runs before every test file.
- * Adds DOM matchers (toBeInTheDocument, …) and unmounts components after each test
- * so tests never leak into each other.
+ *  - DOM matchers (toBeInTheDocument, …)
+ *  - the MSW mock API, reset after each test so tests never leak data into each other
+ *  - stubs for browser APIs jsdom lacks (matchMedia, scrollTo)
+ *  - Motion animations finish instantly
  */
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
 import { MotionGlobalConfig } from 'motion/react';
-import { afterEach } from 'vitest';
+import { afterAll, afterEach, beforeAll } from 'vitest';
+import { resetDb } from '@/mocks/db';
+import { server } from '@/mocks/node';
 
+// Start intercepting fetch before any test runs.
+beforeAll(() => server.listen());
+
+// After each test: unmount UI, drop per-test handler overrides, restore seed data, clear storage.
 afterEach(() => {
   cleanup();
+  server.resetHandlers();
+  resetDb();
+  localStorage.clear();
 });
 
-/**
- * Finish every Motion animation instantly in tests: exit animations would
- * otherwise keep removed elements in the DOM while jsdom "animates" them.
- */
+afterAll(() => server.close());
+
+/** Finish every Motion animation instantly so exit animations don't linger in jsdom. */
 MotionGlobalConfig.skipAnimations = true;
 
 /**
@@ -35,3 +45,6 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: () => false,
   }),
 });
+
+/** jsdom doesn't implement scrolling; React Router's scroll restoration calls it. */
+window.scrollTo = () => {};
