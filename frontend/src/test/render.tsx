@@ -7,9 +7,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ReactElement, ReactNode } from 'react';
-import { MemoryRouter } from 'react-router';
+import { createMemoryRouter, MemoryRouter } from 'react-router';
+import { RouterProvider } from 'react-router/dom';
 import { ToastProvider } from '@/components/ui/Toast';
 import { AuthProvider } from '@/features/auth/AuthProvider';
+import { routes } from '@/router';
 import { ThemeProvider } from '@/theme/ThemeProvider';
 
 /** A fresh cache per test, with retries off so failures show up immediately. */
@@ -40,4 +42,17 @@ export function renderWithProviders(ui: ReactElement, { route = '/' }: { route?:
     </AppProviders>,
   );
   return { user, queryClient, ...result };
+}
+
+/** Render the WHOLE app (real routes, guards, layout) starting at `route`. */
+export function renderApp(route = '/') {
+  const router = createMemoryRouter(routes, { initialEntries: [route] });
+  const queryClient = createTestQueryClient();
+  const user = userEvent.setup();
+  const result = render(
+    <AppProviders queryClient={queryClient}>
+      <RouterProvider router={router} />
+    </AppProviders>,
+  );
+  return { router, user, queryClient, ...result };
 }

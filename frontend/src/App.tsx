@@ -1,7 +1,36 @@
 /**
- * App.tsx — root React component.
- * Temporary placeholder; Task 9 replaces it with providers + the router.
+ * App.tsx — root component: wires the app-wide providers around the router.
+ *
+ * Order matters: the query cache is outermost (auth uses it), then theme,
+ * motion settings, toasts, auth, and finally the router that renders pages.
  */
+import { QueryClientProvider } from '@tanstack/react-query';
+import { MotionConfig } from 'motion/react';
+import { createBrowserRouter } from 'react-router';
+import { RouterProvider } from 'react-router/dom';
+import { ToastProvider } from '@/components/ui/Toast';
+import { AuthProvider } from '@/features/auth/AuthProvider';
+import { createQueryClient } from '@/lib/queryClient';
+import { routes } from '@/router';
+import { ThemeProvider } from '@/theme/ThemeProvider';
+
+// Created once, outside React, so they survive re-renders.
+const queryClient = createQueryClient();
+const router = createBrowserRouter(routes);
+
 export default function App() {
-  return <h1 className="p-8 text-4xl font-bold">TripWise</h1>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        {/* "user" = follow the OS reduced-motion setting for every Motion animation. */}
+        <MotionConfig reducedMotion="user">
+          <ToastProvider>
+            <AuthProvider>
+              <RouterProvider router={router} />
+            </AuthProvider>
+          </ToastProvider>
+        </MotionConfig>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
 }
