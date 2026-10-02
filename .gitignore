@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Environment secrets (never commit API keys / DB URIs)
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+coverage/
+playwright-report/
+test-results/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
