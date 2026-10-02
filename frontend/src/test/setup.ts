@@ -9,6 +9,7 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
 import { MotionGlobalConfig } from 'motion/react';
 import { afterAll, afterEach, beforeAll } from 'vitest';
+import { api } from '@/lib/api/client';
 import { resetDb } from '@/mocks/db';
 import { server } from '@/mocks/node';
 
@@ -21,6 +22,7 @@ afterEach(() => {
   server.resetHandlers();
   resetDb();
   localStorage.clear();
+  api.setAccessToken(null);
 });
 
 afterAll(() => server.close());
