@@ -87,7 +87,10 @@ export function createApiClient({ fetchImpl = (input, init) => fetch(input, init
 
   /**
    * Get a new access token using the httpOnly refresh cookie.
-   * Returns true on success. Parallel callers share the same in-flight attempt.
+   * Resolves true on success, false when the server says the session is over (401/403).
+   * Other failures (offline, server hiccup) are THROWN, not treated as "logged out" —
+   * a brief network blip must not kick the user to the login page.
+   * Parallel callers share the same in-flight attempt.
    */
   function refreshSession(): Promise<boolean> {
     refreshPromise ??= (async () => {
@@ -95,9 +98,12 @@ export function createApiClient({ fetchImpl = (input, init) => fetch(input, init
         const data = await request<{ accessToken: string }>('/auth/refresh', { method: 'POST', skipRefresh: true });
         accessToken = data.accessToken;
         return true;
-      } catch {
-        accessToken = null;
-        return false;
+      } catch (error) {
+        if (error instanceof ApiError && (error.code === 'UNAUTHORIZED' || error.code === 'FORBIDDEN')) {
+          accessToken = null;
+          return false;
+        }
+        throw error;
       } finally {
         refreshPromise = null;
       }
@@ -107,13 +113,19 @@ export function createApiClient({ fetchImpl = (input, init) => fetch(input, init
 
   /** Make an API call and get typed JSON back (or an ApiError thrown). */
   async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+    // Remember which token this attempt used, to spot "someone already refreshed" below.
+    const tokenUsed = accessToken;
     let res = await send(path, options);
 
-    // Access token expired? Refresh once and retry; if that fails the session is over.
     if (res.status === 401 && !options.skipRefresh) {
-      if (await refreshSession()) {
+      if (accessToken && accessToken !== tokenUsed) {
+        // Another call refreshed while this one was in flight: just retry with the new token.
+        res = await send(path, options);
+      } else if (await refreshSession()) {
+        // Access token expired: we refreshed it, retry once.
         res = await send(path, options);
       } else {
+        // Refresh was rejected: the session is truly over.
         onUnauthorized?.();
       }
     }

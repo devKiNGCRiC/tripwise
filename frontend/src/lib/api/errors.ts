@@ -39,14 +39,17 @@ export class ApiError extends Error {
   }
 }
 
-/** Best-guess code when the body didn't include one (e.g. a proxy's HTML error page). */
+/**
+ * Best-guess code when the body didn't include one (e.g. a proxy's HTML error page).
+ * QUOTA_EXCEEDED and AI_UNAVAILABLE are deliberately NOT guessed from 429/503:
+ * a hosting proxy's 503 during login must not claim "AI planners are busy".
+ * Those codes only come from our API's own JSON error bodies.
+ */
 function statusToCode(status: number): ApiErrorCode {
   if (status === 400 || status === 409 || status === 422) return 'VALIDATION';
   if (status === 401) return 'UNAUTHORIZED';
   if (status === 403) return 'FORBIDDEN';
   if (status === 404) return 'NOT_FOUND';
-  if (status === 429) return 'QUOTA_EXCEEDED';
-  if (status === 503) return 'AI_UNAVAILABLE';
   return 'SERVER';
 }
 

@@ -37,11 +37,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
   const [state, setState] = useState<AuthState>({ status: 'loading', user: null });
 
-  // If any API call finds the session dead (refresh failed), drop to guest.
+  // If any API call finds the session dead (refresh failed), drop to guest and forget
+  // cached private data, so the next person on this device never sees it.
   useEffect(() => {
-    api.setUnauthorizedHandler(() => setState(GUEST));
+    api.setUnauthorizedHandler(() => {
+      setState(GUEST);
+      queryClient.clear();
+    });
     return () => api.setUnauthorizedHandler(null);
-  }, []);
+  }, [queryClient]);
 
   // Restore an existing session once on startup.
   useEffect(() => {

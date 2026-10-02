@@ -12,6 +12,7 @@ import '@fontsource-variable/jetbrains-mono';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
+import { startApp } from './bootstrap';
 import './index.css';
 import { USE_MOCKS } from './lib/api/config';
 
@@ -23,7 +24,8 @@ async function enableMocks() {
   await worker.start({ onUnhandledRequest: 'bypass' });
 }
 
-enableMocks().then(() => {
+// Render even if the mocks fail to start (see bootstrap.ts) — never a blank page.
+startApp(enableMocks, () => {
   // StrictMode double-invokes some logic in development to surface side-effect bugs early.
   createRoot(document.getElementById('root')!).render(
     <StrictMode>

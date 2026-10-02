@@ -9,10 +9,18 @@ describe('safeNext', () => {
     expect(safeNext('/plan?destination=Goa')).toBe('/plan?destination=Goa');
   });
 
-  it.each([null, undefined, '', 'https://evil.com', '//evil.com', '/\\evil.com', 'javascript:alert(1)'])(
-    'falls back for unsafe value %s',
-    (value) => {
-      expect(safeNext(value)).toBe('/passport');
-    },
-  );
+  it.each([
+    null,
+    undefined,
+    '',
+    'https://evil.com',
+    '//evil.com',
+    '/\\evil.com',
+    'javascript:alert(1)',
+    // URL parsers strip tabs/newlines, turning these into "//evil.com" (protocol-relative).
+    '/\t/evil.com',
+    '/\n/evil.com',
+  ])('falls back for unsafe value %j', (value) => {
+    expect(safeNext(value)).toBe('/passport');
+  });
 });

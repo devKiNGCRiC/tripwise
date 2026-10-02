@@ -104,4 +104,52 @@ describe('api client', () => {
     await pending;
     expect(slowRequests.getSnapshot()).toBe(0);
   });
+
+  it('does not refresh again when a late 401 arrives after another call already refreshed', async () => {
+    let refreshCalls = 0;
+    let releaseB: () => void = () => {};
+    const bGate = new Promise<void>((r) => (releaseB = r));
+    const fetchImpl = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      const path = pathOf(input);
+      if (path.endsWith('/auth/refresh')) {
+        refreshCalls += 1;
+        return json({ accessToken: `fresh-${refreshCalls}` });
+      }
+      const auth = (init?.headers as Record<string, string>).Authorization;
+      // B's first (stale) response is held back until A has fully refreshed and retried.
+      if (path.endsWith('/b') && auth === 'Bearer stale') await bGate;
+      return auth?.startsWith('Bearer fresh') ? json({ path }) : json({ error: { code: 'UNAUTHORIZED', message: 'expired' } }, 401);
+    });
+    const client = createApiClient({ fetchImpl });
+    client.setAccessToken('stale');
+
+    const b = client.request('/b');
+    await client.request('/a');
+    releaseB();
+    await expect(b).resolves.toEqual({ path: expect.stringMatching(/\/b$/) });
+    expect(refreshCalls).toBe(1);
+  });
+
+  it('keeps the session when refresh fails because of the network (no logout)', async () => {
+    const onUnauthorized = vi.fn();
+    const client = createApiClient({
+      fetchImpl: async (input: RequestInfo | URL) => {
+        if (pathOf(input).endsWith('/auth/refresh')) throw new TypeError('Failed to fetch');
+        return json({ error: { code: 'UNAUTHORIZED', message: 'expired' } }, 401);
+      },
+    });
+    client.setUnauthorizedHandler(onUnauthorized);
+    client.setAccessToken('stale');
+
+    await expect(client.request('/private')).rejects.toMatchObject({ code: 'NETWORK' });
+    expect(onUnauthorized).not.toHaveBeenCalled();
+    expect(client.getAccessToken()).toBe('stale');
+  });
+
+  it('maps a non-JSON 503 or 429 to a generic SERVER error, not AI/quota messages', async () => {
+    for (const status of [503, 429]) {
+      const client = createApiClient({ fetchImpl: async () => new Response('<html>busy</html>', { status }) });
+      await expect(client.request('/x')).rejects.toMatchObject({ code: 'SERVER', status });
+    }
+  });
 });

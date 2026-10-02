@@ -1,8 +1,10 @@
 /**
  * AuthProvider.test.tsx — session bootstrap, login and logout.
  */
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+import { api } from '@/lib/api/client';
+import { authApi } from '@/lib/api/endpoints';
 import { session } from '@/mocks/db';
 import { renderWithProviders } from '@/test/render';
 import { useAuth } from './AuthProvider';
@@ -47,5 +49,22 @@ describe('AuthProvider', () => {
     await user.click(screen.getByRole('button', { name: 'logout' }));
     expect(await screen.findByText('status: guest')).toBeInTheDocument();
     expect(session.get()).toBeNull();
+  });
+
+  it('drops cached private data when the session expires mid-use', async () => {
+    session.set('u_demo');
+    const { queryClient } = renderWithProviders(<AuthProbe />);
+    await screen.findByText('status: authenticated');
+    queryClient.setQueryData(['trips'], ['secret trip']);
+
+    // Session dies server-side, then any call 401s and the refresh fails.
+    session.clear();
+    api.setAccessToken('expired');
+    await act(async () => {
+      await authApi.me().catch(() => {});
+    });
+
+    expect(await screen.findByText('status: guest')).toBeInTheDocument();
+    expect(queryClient.getQueryData(['trips'])).toBeUndefined();
   });
 });
