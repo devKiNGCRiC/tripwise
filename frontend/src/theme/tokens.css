@@ -1,0 +1,93 @@
+/**
+ * tokens.css — THE single source of truth for TripWise's look ("Passport Pop").
+ *
+ * Every colour, shadow, radius and font used anywhere in the app comes from here.
+ * Want a new palette or softer shadows later? Edit this file only — Tailwind
+ * utilities (bg-paper, shadow-pop, …) are mapped to these variables in index.css.
+ *
+ * Style rule of thumb:
+ *   paper + stamps → content   |   thick outlines + hard shadows → tappable things
+ *   aurora glow → AI moments and the "Night Flight" dark theme
+ */
+
+/* ── Day theme (default) ─────────────────────────────────────────────── */
+:root {
+  /* Surfaces: warm postcard paper, slightly darker paper, white card faces */
+  --trip-paper: #fff8ee;
+  --trip-paper-2: #fcebd2;
+  --trip-surface: #ffffff;
+
+  /* Text and outlines: near-black "ink" */
+  --trip-ink: #1b1b1f;
+  --trip-ink-soft: #55535c;
+  --trip-line: #1b1b1f;
+
+  /* Accent palette: sunset coral, mustard, deep teal, sky, aurora violet */
+  --trip-coral: #ff6b5a;
+  --trip-mustard: #f4b942;
+  --trip-teal: #0f766e;
+  --trip-sky: #7cc6fe;
+  --trip-violet: #8b5cf6;
+  /* Error text colour — darker than coral so it passes WCAG AA on paper */
+  --trip-danger: #b42318;
+  /* Text colour that sits ON coral/mustard fills */
+  --trip-on-accent: #1b1b1f;
+
+  /* Shape */
+  --trip-radius-card: 1.25rem;
+
+  /* Neo-brutalist hard shadows (no blur) + the AI glow */
+  --trip-shadow-pop-sm: 2px 2px 0 0 var(--trip-line);
+  --trip-shadow-pop: 4px 4px 0 0 var(--trip-line);
+  --trip-shadow-pop-lg: 7px 7px 0 0 var(--trip-line);
+  --trip-shadow-glow: 0 12px 40px -12px rgb(139 92 246 / 0.6);
+
+  /* Aurora gradient used on AI buttons and the generating screen */
+  --trip-aurora: linear-gradient(120deg, #0f766e 0%, #8b5cf6 50%, #ff6b5a 100%);
+
+  /* Fonts (self-hosted via Fontsource, imported in main.tsx) */
+  --trip-font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --trip-font-body: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --trip-font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  /* Page background layers: an optional glow layer + subtle paper grain (inline SVG noise, no request) */
+  --trip-backdrop: none;
+  --trip-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* Tell the browser to draw native controls (scrollbars, date pickers) in light style */
+  color-scheme: light;
+}
+
+/* ── Night Flight theme (dark) ───────────────────────────────────────── */
+[data-theme='dark'] {
+  --trip-paper: #0b1026;
+  --trip-paper-2: #131b3d;
+  --trip-surface: #151d40;
+
+  --trip-ink: #f5f1e8;
+  --trip-ink-soft: #b8b5c8;
+  --trip-line: #f5f1e8;
+
+  /* Accents brightened so they glow against navy */
+  --trip-coral: #ff7a6b;
+  --trip-mustard: #f7c55e;
+  --trip-teal: #2dd4bf;
+  --trip-sky: #93d2ff;
+  --trip-violet: #a78bfa;
+  --trip-danger: #ff8a80;
+  --trip-on-accent: #0b1026;
+
+  /* Softer cream shadows + a teal glow */
+  --trip-shadow-pop-sm: 2px 2px 0 0 rgb(245 241 232 / 0.85);
+  --trip-shadow-pop: 4px 4px 0 0 rgb(245 241 232 / 0.85);
+  --trip-shadow-pop-lg: 7px 7px 0 0 rgb(245 241 232 / 0.85);
+  --trip-shadow-glow: 0 0 36px -6px rgb(45 212 191 / 0.5);
+
+  /* Aurora light blooms behind the whole page */
+  --trip-backdrop:
+    radial-gradient(60rem 30rem at 10% -10%, rgb(45 212 191 / 0.16), transparent 60%),
+    radial-gradient(50rem 30rem at 100% 0%, rgb(167 139 250 / 0.18), transparent 60%),
+    radial-gradient(40rem 30rem at 50% 110%, rgb(255 122 107 / 0.12), transparent 60%);
+
+  color-scheme: dark;
+}

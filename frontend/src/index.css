@@ -1,2 +1,131 @@
-/* index.css — global stylesheet. For now it only loads Tailwind; Task 2 adds the theme. */
-@import "tailwindcss";
+/**
+ * index.css — global stylesheet.
+ *
+ * 1. Loads Tailwind CSS and our design tokens.
+ * 2. Maps tokens to Tailwind utilities (so `bg-paper` = var(--trip-paper)).
+ * 3. Sets base page styles (background, fonts).
+ * 4. Defines a few custom "Passport Pop" utilities (press effect, aurora, ticket notches).
+ * 5. Honours reduced-motion for everyone who asks for it.
+ */
+@import 'tailwindcss';
+@import './theme/tokens.css';
+
+/* Make Tailwind's `dark:` variant follow our data-theme attribute instead of the OS setting. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
+ * Token → utility mapping. `inline` makes Tailwind emit var(--trip-…) references,
+ * so switching data-theme instantly restyles everything without rebuilding CSS.
+ */
+@theme inline {
+  --color-paper: var(--trip-paper);
+  --color-paper-2: var(--trip-paper-2);
+  --color-surface: var(--trip-surface);
+  --color-ink: var(--trip-ink);
+  --color-ink-soft: var(--trip-ink-soft);
+  --color-line: var(--trip-line);
+  --color-coral: var(--trip-coral);
+  --color-mustard: var(--trip-mustard);
+  --color-teal: var(--trip-teal);
+  --color-sky: var(--trip-sky);
+  --color-violet: var(--trip-violet);
+  --color-danger: var(--trip-danger);
+  --color-on-accent: var(--trip-on-accent);
+
+  --font-display: var(--trip-font-display);
+  --font-body: var(--trip-font-body);
+  --font-mono: var(--trip-font-mono);
+
+  --radius-card: var(--trip-radius-card);
+
+  --shadow-pop-sm: var(--trip-shadow-pop-sm);
+  --shadow-pop: var(--trip-shadow-pop);
+  --shadow-pop-lg: var(--trip-shadow-pop-lg);
+  --shadow-glow: var(--trip-shadow-glow);
+  /* drop-shadow follows masked shapes (used by ticket notches, where box-shadow would be clipped) */
+  --drop-shadow-pop: 4px 4px 0 var(--trip-line);
+}
+
+/* Base page look: paper background with grain (+ aurora blooms at night), body font, display headings. */
+@layer base {
+  html {
+    font-family: var(--trip-font-body);
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    min-height: 100dvh;
+    background-color: var(--trip-paper);
+    background-image: var(--trip-backdrop), var(--trip-grain);
+    background-attachment: fixed;
+    color: var(--trip-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--trip-font-display);
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: var(--trip-mustard);
+    color: #1b1b1f;
+  }
+}
+
+/* Neo-brutalist press: lifts on hover, then "slams" into its own shadow on press. */
+@utility pop-press {
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+  &:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--trip-shadow-pop-lg);
+  }
+  &:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+  }
+}
+
+/* Slowly shifting aurora gradient — reserved for AI actions and AI moments. */
+@utility aurora-fill {
+  background-image: var(--trip-aurora);
+  background-size: 200% 200%;
+  animation: aurora-shift 8s ease infinite;
+}
+
+/*
+ * Boarding-pass notches: cuts a half-circle out of the left and right edges,
+ * 72px above the bottom (where the ticket "stub" starts). Uses a CSS mask, so
+ * wrap the element in `drop-shadow-pop` (not shadow-pop) to keep its shadow.
+ */
+@utility ticket-notch {
+  --notch-y: calc(100% - 72px);
+  mask:
+    radial-gradient(circle 14px at 0 var(--notch-y), transparent 13px, #000 14px) left / 51% 100% no-repeat,
+    radial-gradient(circle 14px at 100% var(--notch-y), transparent 13px, #000 14px) right / 51% 100%
+      no-repeat;
+}
+
+@keyframes aurora-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Respect users who ask the OS for less motion: effectively disable CSS animations/transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
