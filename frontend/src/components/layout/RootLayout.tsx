@@ -10,7 +10,9 @@ import { ServerWakingBanner } from './ServerWakingBanner';
 
 export function RootLayout() {
   return (
-    <div className="flex min-h-dvh flex-col">
+    // overflow-x-clip: decorative stamps may poke past the screen edge; clip them so phones never
+    // get a sideways scroll (clip, unlike hidden, keeps the sticky navbar working).
+    <div className="flex min-h-dvh flex-col overflow-x-clip">
       {/* Skip link: lets keyboard users jump past the navigation. */}
       <a
         href="#main"

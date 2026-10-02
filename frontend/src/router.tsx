@@ -26,7 +26,7 @@ export const routes: RouteObject[] = [
     errorElement: <RouteError />,
     children: [
       // Public pages
-      { index: true, element: <ComingSoonPage title="Home" /> },
+      { index: true, lazy: lazyPage(() => import('@/pages/LandingPage')) },
       { path: 'explore', element: <ComingSoonPage title="Explore destinations" /> },
       { path: 'destinations/:slug', element: <ComingSoonPage title="Destination guide" /> },
       { path: 't/:shareId', element: <ComingSoonPage title="Shared trip" /> },

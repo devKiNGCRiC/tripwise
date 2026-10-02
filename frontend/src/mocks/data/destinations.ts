@@ -89,7 +89,7 @@ export const seedDestinations: Destination[] = [
     summary: 'The world’s oldest living city — ghats, ganga aarti and legendary street food.',
     highlights: ['Dashashwamedh Ghat aarti', 'Sunrise boat ride', 'Sarnath', 'Kachori Gali'],
     avgDailyCost: { amount: 2000, currency: 'INR' },
-    image: photo('1561361513-2d000a50f0dc'),
+    image: photo('1571536802807-30451e3955d8'),
   },
   {
     id: 'd_bali',
