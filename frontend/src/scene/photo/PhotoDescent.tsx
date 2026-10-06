@@ -53,7 +53,7 @@ export function PhotoDescent({ className }: { className?: string }) {
   if (needed > loadedUpTo) setLoadedUpTo(needed);
 
   return (
-    <div aria-hidden="true" className={cn('pointer-events-none fixed inset-0 overflow-hidden bg-[#0a0f24]', className)}>
+    <div aria-hidden="true" className={cn('pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#0a0f24]', className)}>
       {SCENES.map((scene, i) => {
         const weight = stageWeight(i, progress);
         // Each layer drifts slowly upward as you pass through it (a gentle camera move).

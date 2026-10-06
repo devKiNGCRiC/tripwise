@@ -117,6 +117,17 @@
       no-repeat;
 }
 
+/*
+ * Frosted glass for content floating over the scenery: a translucent page-coloured
+ * pane that blurs whatever is behind it, so text stays readable over sky, snow or water.
+ */
+@utility glass {
+  background-color: color-mix(in srgb, var(--trip-paper) 68%, transparent);
+  border: 1px solid color-mix(in srgb, var(--trip-surface) 60%, transparent);
+  backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.45);
+}
+
 /* Kesari brand gradient (saffron → orange) for main buttons and the logo tile. */
 @utility brand-fill {
   background-image: var(--trip-brand);

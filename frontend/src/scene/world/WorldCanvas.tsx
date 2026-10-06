@@ -75,7 +75,7 @@ export default function WorldCanvas({ tier, motion, visible, onReady, onError }:
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className={cn('pointer-events-none fixed inset-0 size-full transition-opacity duration-[1400ms] ease-out', visible ? 'opacity-100' : 'opacity-0')}
+      className={cn('pointer-events-none fixed inset-0 -z-10 size-full transition-opacity duration-[1400ms] ease-out', visible ? 'opacity-100' : 'opacity-0')}
     />
   );
 }
