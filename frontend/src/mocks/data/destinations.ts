@@ -16,6 +16,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_goa',
     slug: 'goa',
+    localName: 'गोवा',
     name: 'Goa',
     country: 'India',
     vibes: ['beach', 'party', 'food'],
@@ -29,6 +30,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_manali',
     slug: 'manali',
+    localName: 'मनाली',
     name: 'Manali',
     country: 'India',
     vibes: ['mountains', 'adventure', 'nature'],
@@ -42,6 +44,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_jaipur',
     slug: 'jaipur',
+    localName: 'जयपुर',
     name: 'Jaipur',
     country: 'India',
     vibes: ['culture', 'food', 'city'],
@@ -55,6 +58,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_kerala',
     slug: 'kerala',
+    localName: 'केरल',
     name: 'Kerala Backwaters',
     country: 'India',
     vibes: ['nature', 'romantic', 'food'],
@@ -68,6 +72,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_ladakh',
     slug: 'ladakh',
+    localName: 'लद्दाख',
     name: 'Ladakh',
     country: 'India',
     vibes: ['mountains', 'adventure', 'spiritual'],
@@ -81,6 +86,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_varanasi',
     slug: 'varanasi',
+    localName: 'वाराणसी',
     name: 'Varanasi',
     country: 'India',
     vibes: ['spiritual', 'culture', 'food'],
@@ -94,6 +100,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_bali',
     slug: 'bali',
+    localName: 'बाली',
     name: 'Bali',
     country: 'Indonesia',
     vibes: ['beach', 'spiritual', 'nature', 'romantic'],
@@ -107,6 +114,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_paris',
     slug: 'paris',
+    localName: 'पेरिस',
     name: 'Paris',
     country: 'France',
     vibes: ['romantic', 'culture', 'food', 'city'],
@@ -120,6 +128,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_tokyo',
     slug: 'tokyo',
+    localName: 'टोक्यो',
     name: 'Tokyo',
     country: 'Japan',
     vibes: ['city', 'food', 'culture', 'party'],
@@ -133,6 +142,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_santorini',
     slug: 'santorini',
+    localName: 'सैंटोरिनी',
     name: 'Santorini',
     country: 'Greece',
     vibes: ['beach', 'romantic'],
@@ -146,6 +156,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_dubai',
     slug: 'dubai',
+    localName: 'दुबई',
     name: 'Dubai',
     country: 'United Arab Emirates',
     vibes: ['city', 'adventure', 'party'],
@@ -159,6 +170,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_interlaken',
     slug: 'interlaken',
+    localName: 'इंटरलाकेन',
     name: 'Interlaken',
     country: 'Switzerland',
     vibes: ['mountains', 'adventure', 'nature'],

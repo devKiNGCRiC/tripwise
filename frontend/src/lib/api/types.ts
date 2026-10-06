@@ -55,6 +55,8 @@ export interface Destination {
   /** URL-friendly name used in /destinations/:slug, e.g. "goa" */
   slug: string;
   name: string;
+  /** The name in Hindi (Devanagari), shown on station-board signs, e.g. "गोवा". */
+  localName?: string;
   country: string;
   vibes: Vibe[];
   budgetTier: BudgetTier;

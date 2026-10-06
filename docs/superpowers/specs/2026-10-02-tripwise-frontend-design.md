@@ -111,7 +111,7 @@ The base URL is `VITE_API_URL`. If `VITE_USE_MOCKS=true`, MSW intercepts the req
 
 ```ts
 User        { id, name, email, avatarUrl?, role: 'user'|'admin', createdAt, blocked }
-Destination { id, slug, name, country, vibes: Vibe[], budgetTier: 'budget'|'mid'|'luxury',
+Destination { id, slug, name, localName?, country, vibes: Vibe[], budgetTier: 'budget'|'mid'|'luxury',
               bestMonths: number[], summary, highlights: string[], avgDailyCost: {amount, currency},
               image: { url, credit, creditUrl } }
 TripRequest { destination, startDate, endDate, budget: {amount, currency},

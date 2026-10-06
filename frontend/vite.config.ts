@@ -25,5 +25,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
+    // Generous per-test limit: a cold first run on a slow machine (lazy routes, MSW, jsdom) can take >5s.
+    testTimeout: 15_000,
   },
 });

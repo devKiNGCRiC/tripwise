@@ -1,6 +1,8 @@
 /**
- * LandingPage.tsx — route "/". Composes the landing sections top to bottom.
+ * LandingPage.tsx — route "/". Composes the landing sections top to bottom,
+ * with festival bunting strung between the sky and the content.
  */
+import { Bunting } from '@/components/signature/Bunting';
 import { CallToAction } from '@/features/landing/CallToAction';
 import { Hero } from '@/features/landing/Hero';
 import { HowItWorks } from '@/features/landing/HowItWorks';
@@ -11,6 +13,7 @@ export default function LandingPage() {
     <>
       <title>TripWise — AI travel itineraries, free</title>
       <Hero />
+      <Bunting className="-mt-7" />
       <HowItWorks />
       <PopularDestinations />
       <CallToAction />

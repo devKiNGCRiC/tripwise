@@ -6,12 +6,18 @@
  *  - Motion animations finish instantly
  */
 import '@testing-library/jest-dom/vitest';
-import { cleanup } from '@testing-library/react';
+import { cleanup, configure } from '@testing-library/react';
 import { MotionGlobalConfig } from 'motion/react';
 import { afterAll, afterEach, beforeAll } from 'vitest';
 import { api } from '@/lib/api/client';
 import { resetDb } from '@/mocks/db';
 import { server } from '@/mocks/node';
+
+/**
+ * findBy… queries and waitFor wait up to 4s (default 1s). Lazy-loaded pages can take longer than
+ * 1s on a cold, busy machine — that made tests fail at random before.
+ */
+configure({ asyncUtilTimeout: 4000 });
 
 // Start intercepting fetch before any test runs.
 beforeAll(() => server.listen());
