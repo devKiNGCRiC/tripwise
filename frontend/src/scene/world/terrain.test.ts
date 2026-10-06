@@ -52,6 +52,17 @@ describe('buildTerrain', () => {
 });
 
 describe('placeTrees', () => {
+  it('uses a terrain grid for fast checks but still sits trees exactly on the ground', () => {
+    const seg = 120;
+    const terrain = buildTerrain(seg);
+    const trees = placeTrees(300, { positions: terrain.positions, normals: terrain.normals, seg });
+    expect(trees.count).toBeGreaterThan(100);
+    for (let i = 0; i < trees.count; i++) {
+      const x = trees.data[i * 6], y = trees.data[i * 6 + 1], z = trees.data[i * 6 + 2];
+      expect(Math.abs(height(x, z) - (y + 1))).toBeLessThan(0.01);
+    }
+  });
+
   it('places trees only on dry, gentle, low ground', () => {
     const trees = placeTrees(200);
     expect(trees.count).toBeGreaterThan(50);

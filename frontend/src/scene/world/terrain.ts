@@ -182,15 +182,45 @@ function seeded(seed: number) {
   };
 }
 
-/** Scatter pines on dry, gentle, low slopes. Per tree: x, y, z, scale, heightScale, rotation. */
-export function placeTrees(target: number): { data: Float32Array; count: number } {
+/** Grid data from buildTerrain, used to reject bad tree spots without recomputing noise. */
+export interface TerrainGrid {
+  positions: Float32Array;
+  normals: Float32Array;
+  seg: number;
+}
+
+/** Height and "up-ness" of the nearest grid vertex — a cheap lookup instead of fresh noise. */
+function sampleGrid(grid: TerrainGrid, x: number, z: number) {
+  const n = grid.seg + 1, step = WORLD.size / grid.seg, half = WORLD.size / 2;
+  const col = Math.min(n - 1, Math.max(0, Math.round((x + half) / step)));
+  const row = Math.min(n - 1, Math.max(0, Math.round((z - (WORLD.centerZ - half)) / step)));
+  const i = row * n + col;
+  return { y: grid.positions[i * 3 + 1], up: grid.normals[i * 3 + 1] };
+}
+
+/**
+ * Scatter pines on dry, gentle, low slopes. Per tree: x, y, z, scale, heightScale, rotation.
+ * With a terrain grid, candidate spots are checked against already-computed heights (fast);
+ * only accepted trees get an exact height, so they sit right on the ground.
+ */
+export function placeTrees(target: number, grid?: TerrainGrid): { data: Float32Array; count: number } {
   const random = seeded(42);
   const data = new Float32Array(target * 6);
   let count = 0;
   for (let tries = 0; count < target && tries < target * 12; tries++) {
-    const x = (random() - 0.5) * 3200, z = -random() * 3000 + 100, y = height(x, z);
-    const slope = Math.abs(height(x + 6, z) - y) + Math.abs(height(x, z + 6) - y);
-    if (y < 8 || y > 300 || slope > 9 || z < -2700) continue;
+    const x = (random() - 0.5) * 3200, z = -random() * 3000 + 100;
+    if (z < -2700) continue;
+    let y: number;
+    if (grid) {
+      const sample = sampleGrid(grid, x, z);
+      if (sample.y < 8 || sample.y > 300 || sample.up < 0.85) continue;
+      y = height(x, z);
+      if (y < 8 || y > 300) continue;
+    } else {
+      y = height(x, z);
+      const slope = Math.abs(height(x + 6, z) - y) + Math.abs(height(x, z + 6) - y);
+      if (y < 8 || y > 300 || slope > 9) continue;
+    }
     const scale = 0.7 + random() * 0.9;
     data.set([x, y - 1, z, scale, scale * (0.8 + random() * 0.6), random() * Math.PI * 2], count * 6);
     count++;

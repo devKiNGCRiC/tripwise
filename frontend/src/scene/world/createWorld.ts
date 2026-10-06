@@ -16,6 +16,7 @@ import {
   BlendFunction,
   BloomEffect,
   BrightnessContrastEffect,
+  Effect,
   EffectComposer,
   EffectPass,
   HueSaturationEffect,
@@ -32,7 +33,7 @@ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js
 import type { SceneTier } from '../quality';
 import { cameraPose } from './camera';
 import { CLIFF, height, riverX, WORLD } from './terrain';
-import type { TerrainData } from './terrain';
+import { startTerrainJob } from './terrainJob';
 
 export interface WorldOptions {
   tier: SceneTier;
@@ -59,26 +60,30 @@ const TEXTURE_MEAN = {
   cliff: [0.486, 0.324, 0.194],
 } as const;
 
-const DETAIL = {
-  high: { seg: 380, trees: 5200, pixelRatio: 1.5, shadows: true, reflection: 512 },
-  low: { seg: 220, trees: 2200, pixelRatio: 1, shadows: false, reflection: 256 },
-} as const;
-
-/** Run the terrain + forest builder in a Web Worker and wait for the result. */
-function buildInWorker(seg: number, trees: number): Promise<{ terrain: TerrainData; forest: { data: Float32Array; count: number } }> {
-  return new Promise((resolve, reject) => {
-    const worker = new Worker(new URL('./terrain.worker.ts', import.meta.url), { type: 'module' });
-    worker.onmessage = (event) => {
-      resolve(event.data);
-      worker.terminate();
-    };
-    worker.onerror = (error) => {
-      reject(error);
-      worker.terminate();
-    };
-    worker.postMessage({ seg, trees });
-  });
+/**
+ * Exposure, applied to the HDR image before tone mapping. (Post-processing tone mapping
+ * ignores the renderer's own exposure setting, so without this the world looks washed out.)
+ */
+class ExposureEffect extends Effect {
+  constructor(exposure: number) {
+    super(
+      'ExposureEffect',
+      'uniform float exposure; void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor){ outputColor = vec4(inputColor.rgb * exposure, inputColor.a); }',
+      { uniforms: new Map([['exposure', new THREE.Uniform(exposure)]]) },
+    );
+  }
+  set exposure(value: number) {
+    this.uniforms.get('exposure')!.value = value;
+  }
 }
+
+/** A high mid-morning sun: deep blue sky, little horizon glare. */
+const DAY_ELEVATION = 34;
+
+const DETAIL = {
+  high: { pixelRatio: 1.5, shadows: true, reflection: 512 },
+  low: { pixelRatio: 1, shadows: false, reflection: 256 },
+} as const;
 
 /** A soft round glow texture, drawn once (mist, diyas, fireflies, moon halo). */
 function softTexture(): THREE.CanvasTexture {
@@ -145,11 +150,12 @@ async function loadTexture(loader: THREE.TextureLoader, name: string, color = tr
 
 export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptions): Promise<World> {
   const detail = DETAIL[options.tier];
+  performance.mark('world:start');
 
   /* ── Start the heavy work in parallel: terrain (worker) + textures (network) ── */
   const loader = new THREE.TextureLoader();
   const [built, grassTex, rockTex, snowTex, cliffTex, waterNormals] = await Promise.all([
-    buildInWorker(detail.seg, detail.trees),
+    startTerrainJob(options.tier), // usually already running (started by Scenery)
     loadTexture(loader, 'grass'),
     loadTexture(loader, 'rock'),
     loadTexture(loader, 'snow'),
@@ -161,12 +167,13 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance', stencil: false });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, detail.pixelRatio));
   renderer.shadowMap.enabled = detail.shadows;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(55, 1, 1, 30000);
-  scene.fog = new THREE.FogExp2(0xa6c8e8, 0.000085);
+  scene.fog = new THREE.FogExp2(0xa6c8e8, 0.00006);
 
   /* ── Terrain: worker-built arrays + a texture-detail shader ──────────── */
+  performance.mark('world:assets');
   const { terrain: data, forest } = built;
   const terrainGeo = new THREE.BufferGeometry();
   terrainGeo.setAttribute('position', new THREE.BufferAttribute(data.positions, 3));
@@ -308,7 +315,10 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
   const cloudMap = cloudTexture();
   for (let i = 0; i < 70; i++) {
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: cloudMap, transparent: true, opacity: 0.85, depthWrite: false, fog: false }));
-    sprite.position.set((Math.random() - 0.5) * 6000, 2000 + Math.random() * 350, 1400 - Math.random() * 2400);
+    // Keep a clear gap around the starting viewpoint so the first frame isn't a whiteout
+    let x = (Math.random() - 0.5) * 6000;
+    if (Math.abs(x) < 900) x += Math.sign(x || 1) * 900;
+    sprite.position.set(x, 1950 + Math.random() * 300, 1200 - Math.random() * 2600);
     const w = 700 + Math.random() * 900;
     sprite.scale.set(w, w * 0.45, 1);
     scene.add(sprite);
@@ -375,7 +385,7 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
   /* ── Light: one sun for the whole world; cool moonlight at night ─────── */
   const sky = new Sky();
   sky.scale.setScalar(20000);
-  Object.entries({ turbidity: 1.8, rayleigh: 2.4, mieCoefficient: 0.003, mieDirectionalG: 0.82 }).forEach(([k, value]) => {
+  Object.entries({ turbidity: 1.2, rayleigh: 2.2, mieCoefficient: 0.0012, mieDirectionalG: 0.78 }).forEach(([k, value]) => {
     sky.material.uniforms[k].value = value;
   });
   scene.add(sky);
@@ -410,12 +420,14 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
   /* ── Post-processing: bloom → ACES tone mapping → grade → vignette → grain ── */
   const composer = new EffectComposer(renderer, { frameBufferType: THREE.HalfFloatType });
   composer.addPass(new RenderPass(scene, camera));
+  const exposure = new ExposureEffect(0.32);
   const grade = new BrightnessContrastEffect({ brightness: 0, contrast: 0.08 });
   const grain = new NoiseEffect({ blendFunction: BlendFunction.OVERLAY });
   grain.blendMode.opacity.value = 0.06;
   composer.addPass(
     new EffectPass(
       camera,
+      exposure,
       new BloomEffect({ intensity: 0.55, luminanceThreshold: 0.92, luminanceSmoothing: 0.15, mipmapBlur: true }),
       new ToneMappingEffect({ mode: ToneMappingMode.ACES_FILMIC }),
       new HueSaturationEffect({ saturation: 0.22 }),
@@ -426,14 +438,14 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
   );
 
   /* ── Day ↔ night: everything follows the sun's elevation ─────────────── */
-  const sunState = { elevation: options.night ? -10 : 22 };
+  const sunState = { elevation: options.night ? -10 : DAY_ELEVATION };
   const sunDirection = new THREE.Vector3();
   const DAY_FOG = new THREE.Color(0x9fc3e6), NIGHT_FOG = new THREE.Color(0x1a2752);
   const applySun = () => {
     sunDirection.setFromSphericalCoords(1, THREE.MathUtils.degToRad(90 - sunState.elevation), THREE.MathUtils.degToRad(215));
     sky.material.uniforms.sunPosition.value.copy(sunDirection);
     water.material.uniforms.sunDirection.value.copy(sunDirection).normalize();
-    const day = THREE.MathUtils.clamp((sunState.elevation + 4) / 14, 0, 1);
+    const day = THREE.MathUtils.clamp((sunState.elevation + 4) / 16, 0, 1);
     const night = 1 - day;
     sun.intensity = 3 * day;
     sun.color.setHSL(0.09, 0.8, 0.6 + 0.3 * Math.min(1, Math.max(0, sunState.elevation) / 20));
@@ -443,12 +455,13 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
     scene.environmentIntensity = 0.55 + 0.9 * night;
     (scene.fog as THREE.FogExp2).color.copy(NIGHT_FOG).lerp(DAY_FOG, day);
     grade.brightness = 0.09 * night;
+    exposure.exposure = 0.32 + 0.53 * night;
     stars.material.opacity = night;
     moon.material.opacity = night;
     moonGlow.material.opacity = night * 0.5;
     auroraMat.uniforms.strength.value = night * 0.42;
     glows.material.opacity = night;
-    clouds.forEach((cloud) => (cloud.material.opacity = 0.85 * day + 0.1));
+    clouds.forEach((cloud) => (cloud.material.opacity = 0.7 * day + 0.08));
     fallMat.uniforms.light.value = 0.35 + 0.65 * day;
     water.material.uniforms.waterColor.value.setHex(day > 0.5 ? 0x0e3a4a : 0x061626);
   };
@@ -469,7 +482,9 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
   resize();
 
   // Compile every shader BEFORE the first frame, without blocking, so the fade-in never stutters.
+  performance.mark('world:built');
   await renderer.compileAsync(scene, camera);
+  performance.mark('world:compiled');
 
   /* ── Loop: ease toward the scroll target; animate water, falls, aurora, trees ── */
   let target = 0, current = 0, pointerX = 0, pointerY = 0, frame = 0, elapsed = 0, last = performance.now();
@@ -514,7 +529,7 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
     setNight(night) {
       tween?.kill();
       tween = gsap.to(sunState, {
-        elevation: night ? -10 : 22,
+        elevation: night ? -10 : DAY_ELEVATION,
         duration: options.motion ? 3.2 : 0,
         ease: 'power2.inOut',
         onUpdate: () => {

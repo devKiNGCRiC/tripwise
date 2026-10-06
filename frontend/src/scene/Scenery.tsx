@@ -6,7 +6,8 @@
  * If 3D fails for any reason, the photos simply stay. That keeps first paint
  * fast on every connection while still giving strong devices the full world.
  */
-import { lazy, Suspense, useCallback, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
+import { startTerrainJob } from './world/terrainJob';
 import { PhotoDescent } from './photo/PhotoDescent';
 import { chooseScene, readDeviceInfo, type SceneChoice } from './quality';
 import { readScenePreference } from './scenePreference';
@@ -27,6 +28,10 @@ export function Scenery() {
   }, []);
 
   const use3D = choice.pack === 'world3d' && !worldFailed;
+  // Kick off the terrain build right away, in parallel with downloading the 3D code.
+  useEffect(() => {
+    if (choice.pack === 'world3d') startTerrainJob(choice.tier).catch(() => {}); // failures surface via createWorld
+  }, [choice]);
 
   return (
     <>

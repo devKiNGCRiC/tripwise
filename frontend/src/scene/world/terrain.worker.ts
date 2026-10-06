@@ -12,7 +12,8 @@ export interface TerrainRequest {
 
 self.onmessage = (event: MessageEvent<TerrainRequest>) => {
   const terrain = buildTerrain(event.data.seg);
-  const forest = placeTrees(event.data.trees);
+  // Reuse the heights just computed to check tree spots cheaply
+  const forest = placeTrees(event.data.trees, { positions: terrain.positions, normals: terrain.normals, seg: event.data.seg });
   const transfer = [terrain.positions.buffer, terrain.normals.buffer, terrain.colors.buffer, terrain.weights.buffer, terrain.indices.buffer, forest.data.buffer];
   (self as unknown as Worker).postMessage({ terrain, forest }, transfer);
 };
