@@ -53,12 +53,15 @@ export function chooseScene(info: DeviceInfo): SceneChoice {
 /** Gather the real device facts (browser only). */
 export function readDeviceInfo(preference?: ScenePack | null): DeviceInfo {
   const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
-  let webgl2 = false;
-  try {
-    webgl2 = typeof WebGL2RenderingContext !== 'undefined' && !!document.createElement('canvas').getContext('webgl2');
-  } catch {
-    webgl2 = false;
-  }
+  /** Can this browser create a WebGL2 context? (Creating one can throw on locked-down GPUs.) */
+  const hasWebGL2 = () => {
+    try {
+      return typeof WebGL2RenderingContext !== 'undefined' && !!document.createElement('canvas').getContext('webgl2');
+    } catch {
+      return false;
+    }
+  };
+  const webgl2 = hasWebGL2();
   return {
     webgl2,
     deviceMemory: nav.deviceMemory,
