@@ -1,19 +1,23 @@
 /**
  * AuthLayout.tsx — shared look for /login and /signup.
  *
- * Left: a card whose header is a bilingual station board — "Arrivals / आगमन" for
- *       people coming back (login), "Departures / प्रस्थान" for new travellers (signup).
- * Right (desktop only): a slice of the kite-festival sky with a one-line promise.
+ * Real scenery fills the page (glacier for login, mountains for signup). The
+ * form sits on a card whose header is a bilingual station board — "Arrivals /
+ * आगमन" for people coming back, "Departures / प्रस्थान" for new travellers.
+ * On desktop, a one-line promise floats over the view beside it.
  */
 import type { ReactNode } from 'react';
 import { Card } from '@/components/ui/Card';
-import { FestivalSky } from '@/components/signature/FestivalSky';
+import { StillScenery } from '@/scene/photo/StillScenery';
+import type { StageName } from '@/scene/photo/scenePhotos';
 
 interface AuthLayoutProps {
   /** Board header, English, e.g. "Arrivals". */
   board: string;
   /** Board header in Hindi, e.g. "आगमन". */
   boardLocal: string;
+  /** Which stage of the journey shows behind the page. */
+  scene: StageName;
   title: string;
   subtitle: string;
   children: ReactNode;
@@ -21,9 +25,10 @@ interface AuthLayoutProps {
   footer: ReactNode;
 }
 
-export function AuthLayout({ board, boardLocal, title, subtitle, children, footer }: AuthLayoutProps) {
+export function AuthLayout({ board, boardLocal, scene, title, subtitle, children, footer }: AuthLayoutProps) {
   return (
-    <div className="rangoli-dots">
+    <div>
+      <StillScenery stage={scene} />
       <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-10 md:grid-cols-2 md:py-16">
         <Card className="mx-auto w-full max-w-md overflow-hidden">
           {/* Station-board header: always black on yellow */}
@@ -43,13 +48,15 @@ export function AuthLayout({ board, boardLocal, title, subtitle, children, foote
           </div>
         </Card>
 
-        {/* Decorative sky panel — hidden from screen readers and on small screens */}
-        <div aria-hidden className="sky-fill relative hidden h-128 overflow-hidden rounded-card border-[3px] border-line shadow-pop md:block">
-          <FestivalSky />
-          <p className="absolute inset-x-10 bottom-12 z-10 font-display text-5xl leading-none font-black text-black font-stretch-120% dark:text-white">
-            Collect places, not things.
-          </p>
-        </div>
+        {/* The promise, floating over the view (desktop only) */}
+        <p
+          aria-hidden
+          className="hidden font-display text-6xl leading-[0.95] font-black text-white font-stretch-122% [text-shadow:0_6px_40px_rgb(0_0_0/.5)] md:block"
+        >
+          Collect places,
+          <br />
+          not things.
+        </p>
       </div>
     </div>
   );

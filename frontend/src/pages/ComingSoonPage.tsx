@@ -5,11 +5,14 @@
  */
 import { Link } from 'react-router';
 import { buttonClasses } from '@/components/ui/Button';
+import { GlassPanel } from '@/components/ui/GlassPanel';
+import { StillScenery } from '@/scene/photo/StillScenery';
 
 export default function ComingSoonPage({ title }: { title: string }) {
   return (
-    <div className="rangoli-dots">
-      <div className="mx-auto flex max-w-xl flex-col items-center gap-6 px-4 py-24 text-center">
+    <div>
+      <StillScenery stage="Waterfall" />
+      <GlassPanel className="mx-auto my-20 flex max-w-xl flex-col items-center gap-6 text-center">
         <title>{`${title} · TripWise`}</title>
         <div className="w-full rounded-xl border-[3px] border-black bg-yellow px-6 py-5 text-black shadow-[8px_8px_0_#000]">
           <p className="text-lg font-semibold">Boarding soon</p>
@@ -19,7 +22,7 @@ export default function ComingSoonPage({ title }: { title: string }) {
         <Link to="/" className={buttonClasses({ variant: 'secondary' })}>
           Back to home
         </Link>
-      </div>
+      </GlassPanel>
     </div>
   );
 }

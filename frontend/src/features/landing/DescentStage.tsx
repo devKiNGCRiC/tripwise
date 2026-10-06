@@ -32,7 +32,5 @@ export function DescentStage({ name, side = 'left', children, className }: Desce
   );
 }
 
-/** Frosted pane that keeps text readable over the scenery. */
-export function GlassPanel({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('glass rounded-[28px] p-6 sm:p-9', className)}>{children}</div>;
-}
+/** Re-exported for the landing stages, which always pair a stage with a glass pane. */
+export { GlassPanel } from '@/components/ui/GlassPanel';

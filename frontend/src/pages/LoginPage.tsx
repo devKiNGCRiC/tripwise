@@ -20,6 +20,7 @@ export default function LoginPage() {
       <AuthLayout
         board="Arrivals"
         boardLocal="आगमन"
+        scene="Glacier"
         title="Welcome back"
         subtitle="Your trips are waiting where you left them."
         footer={

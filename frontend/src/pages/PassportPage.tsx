@@ -7,7 +7,10 @@ import { LogOut } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 import { Button, buttonClasses } from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
+import { GlassPanel } from '@/components/ui/GlassPanel';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { SceneryChoice } from '@/features/passport/SceneryChoice';
+import { StillScenery } from '@/scene/photo/StillScenery';
 import { ThemeToggle } from '@/theme/ThemeToggle';
 
 export default function PassportPage() {
@@ -28,10 +31,11 @@ export default function PassportPage() {
   const memberSince = new Date(user.createdAt).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
 
   return (
-    <div className="rangoli-dots">
+    <div>
+      <StillScenery stage="River" />
       <div className="mx-auto max-w-4xl px-4 py-12">
         <title>Your passport · TripWise</title>
-        <h1 className="text-[clamp(40px,5vw,64px)] font-stretch-125%">Your passport</h1>
+        <h1 className="text-[clamp(40px,5vw,64px)] text-white font-stretch-125% [text-shadow:0_4px_24px_rgb(0_0_0/.45)]">Your passport</h1>
 
         <div className="mt-8 grid overflow-hidden rounded-card border-[3px] border-line shadow-pop md:grid-cols-[0.9fr_1.1fr]">
           {/* Cover: always deep blue with cream text, like the real document */}
@@ -70,15 +74,19 @@ export default function PassportPage() {
           </section>
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <span className="font-semibold text-ink-soft">Day or Night Flight theme</span>
+        {/* Settings on glass so they read clearly over the river scenery */}
+        <GlassPanel className="mt-8 flex flex-col gap-6">
+          <SceneryChoice />
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <ThemeToggle />
+              <span className="font-semibold">Day or Night Flight theme</span>
+            </div>
+            <Button variant="secondary" icon={<LogOut className="size-4" aria-hidden />} onClick={handleLogout}>
+              Log out
+            </Button>
           </div>
-          <Button variant="secondary" icon={<LogOut className="size-4" aria-hidden />} onClick={handleLogout}>
-            Log out
-          </Button>
-        </div>
+        </GlassPanel>
       </div>
     </div>
   );

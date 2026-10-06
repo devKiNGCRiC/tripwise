@@ -50,10 +50,6 @@
   --trip-brand: linear-gradient(115deg, #ff9933, #ff7a00);
   --trip-aurora: linear-gradient(115deg, #5bc8f5 0%, #9b8cff 55%, #ff9933 100%);
 
-  /* Hero sky: top → horizon */
-  --trip-sky-top: #7fd3f7;
-  --trip-sky-mid: #c6ecfb;
-  --trip-sky-low: #fff3d6;
 
   /* Rangoli dot grid behind content sections */
   --trip-dots: radial-gradient(circle, rgb(0 0 0 / 0.09) 1.4px, transparent 1.6px);
@@ -85,9 +81,6 @@
   --trip-shadow-pop-lg: 8px 8px 0 0 rgb(255 248 236 / 0.85);
   --trip-shadow-glow: 0 0 34px -6px rgb(255 153 51 / 0.55);
 
-  --trip-sky-top: #050817;
-  --trip-sky-mid: #0d1433;
-  --trip-sky-low: #2a1745;
 
   --trip-dots: radial-gradient(circle, rgb(255 255 255 / 0.07) 1.4px, transparent 1.6px);
 

@@ -10,36 +10,10 @@
  * Photos load lazily: only the current and next stages, as you approach them.
  */
 import { useState, useSyncExternalStore } from 'react';
-import { sizedImage } from '@/lib/utils/images';
 import { cn } from '@/lib/utils/cn';
 import { useTheme } from '@/theme/ThemeProvider';
 import { descentProgress, STAGES, stageWeight } from '../descent';
-
-const photo = (id: string) => `https://images.unsplash.com/photo-${id}`;
-
-/** One entry per stage: day photo, and either a night photo or `moonlit` (grade the day one). */
-const SCENES: { day: string; night: string | 'moonlit' }[] = [
-  { day: photo('1501630834273-4b5604d2ee31'), night: photo('1419242902214-272b3f66ee7a') }, // sky / Milky Way
-  { day: photo('1454496522488-7a8e488e8606'), night: photo('1579033461380-adb47c3eb938') }, // glacier / aurora
-  { day: photo('1464822759023-fed622ff2c3b'), night: photo('1519681393784-d120267933ba') }, // mountains / starry peaks
-  { day: photo('1432405972618-c60b0225b8f9'), night: 'moonlit' }, // waterfall
-  { day: photo('1437482078695-73f5ca6c96e2'), night: photo('1534447677768-be436bb09401') }, // river / starlit lake
-  { day: photo('1500382017468-9049fed747ef'), night: 'moonlit' }, // fields at sunrise
-];
-
-/** Responsive photo: phones download ~900px, desktops ~1800px. */
-function ScenePhoto({ src, className }: { src: string; className?: string }) {
-  return (
-    <img
-      src={sizedImage(src, 1600)}
-      srcSet={`${sizedImage(src, 900)} 900w, ${sizedImage(src, 1600)} 1600w, ${sizedImage(src, 2200)} 2200w`}
-      sizes="100vw"
-      alt=""
-      decoding="async"
-      className={cn('absolute inset-0 size-full object-cover transition-opacity duration-1000', className)}
-    />
-  );
-}
+import { MOONLIT, SCENES, ScenePhoto } from './scenePhotos';
 
 export function PhotoDescent({ className }: { className?: string }) {
   const progress = useSyncExternalStore(descentProgress.subscribe, descentProgress.get, descentProgress.get);
@@ -72,8 +46,7 @@ export function PhotoDescent({ className }: { className?: string }) {
                   src={scene.night === 'moonlit' ? scene.day : scene.night}
                   className={cn(
                     night ? 'opacity-100' : 'opacity-0',
-                    // "Day-for-night": dark, cool, desaturated — moonlight
-                    scene.night === 'moonlit' && '[filter:brightness(.38)_saturate(.55)_contrast(1.15)_hue-rotate(195deg)]',
+                    scene.night === 'moonlit' && MOONLIT,
                   )}
                 />
               </>

@@ -4,7 +4,7 @@
  * 1. Loads Tailwind CSS and our design tokens.
  * 2. Maps tokens to Tailwind utilities (so `bg-paper` = var(--trip-paper)).
  * 3. Sets base page styles (background, fonts).
- * 4. Defines a few custom "Yatra Mela" utilities (press effect, aurora, ticket notches, rangoli dots).
+ * 4. Defines a few custom "Yatra Mela" utilities (press effect, aurora, ticket notches, glass).
  * 5. Honours reduced-motion for everyone who asks for it.
  */
 @import 'tailwindcss';
@@ -133,39 +133,13 @@
   background-image: var(--trip-brand);
 }
 
-/* Rangoli dot grid: a quiet texture behind content sections so the page never feels empty. */
-@utility rangoli-dots {
-  background-image: var(--trip-dots);
-  background-size: 26px 26px;
-}
-
-/* The hero sky: blue overhead fading to a warm horizon (night: navy to plum). */
-@utility sky-fill {
-  background-image: linear-gradient(180deg, var(--trip-sky-top), var(--trip-sky-mid) 55%, var(--trip-sky-low));
-}
-
 /*
- * Named animations (usable as animate-sway, animate-rise, animate-flap).
- * sway  → kites rocking on their strings
- * rise  → sky lanterns drifting up at night
+ * Named animations (usable as animate-flap).
  * flap  → a departure-board letter flipping into place
  */
 @theme {
-  --animate-sway: sway var(--sway-duration, 7s) ease-in-out infinite alternate;
-  --animate-rise: rise var(--rise-duration, 18s) linear infinite;
   --animate-flap: flap 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) both;
 
-  @keyframes sway {
-    from { transform: rotate(-7deg) translateY(0); }
-    to { transform: rotate(6deg) translateY(-14px); }
-  }
-  @keyframes rise {
-    0% { transform: translate(0, 0); opacity: 0; }
-    10% { opacity: 0.95; }
-    50% { transform: translate(18px, -260px); }
-    90% { opacity: 0.95; }
-    100% { transform: translate(-10px, -560px); opacity: 0; }
-  }
   @keyframes flap {
     from { transform: rotateX(90deg); }
     to { transform: rotateX(0); }

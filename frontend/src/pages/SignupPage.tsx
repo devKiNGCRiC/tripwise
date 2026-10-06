@@ -18,6 +18,7 @@ export default function SignupPage() {
       <AuthLayout
         board="Departures"
         boardLocal="प्रस्थान"
+        scene="Mountains"
         title="Start your passport"
         subtitle="Free forever. Plan up to 5 AI trips every day."
         footer={
