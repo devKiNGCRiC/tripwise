@@ -82,7 +82,15 @@ export function DestinationCard({ destination, featured = false, className }: De
 
       {/* Station-sign name plate: always black on yellow, like the real thing */}
       <div className="absolute inset-x-4 bottom-4 rounded-lg border-[3px] border-black bg-yellow px-3 pt-2 pb-1.5 text-center shadow-[4px_4px_0_#000] [transform:translateZ(50px)]">
-        <h3 className={cn('font-black uppercase [font-stretch:135%]', featured ? 'text-4xl sm:text-5xl' : 'text-[32px]')}>
+        <h3
+          className={cn(
+            'font-black uppercase',
+            // Long names ("Kerala Backwaters") get smaller, narrower letters so they fit the plate.
+            destination.name.length > 9
+              ? 'text-2xl [font-stretch:110%]'
+              : cn('[font-stretch:135%]', featured ? 'text-4xl sm:text-5xl' : 'text-[32px]'),
+          )}
+        >
           {destination.name}
         </h3>
         <p className="text-xl leading-tight font-extrabold">

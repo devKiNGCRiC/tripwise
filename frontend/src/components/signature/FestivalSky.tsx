@@ -78,12 +78,14 @@ export function FestivalSky({ className }: { className?: string }) {
         <Kite key={`${kite.x}-${kite.y}`} {...kite} />
       ))}
 
-      {/* Sky lanterns: hidden by day, rising slowly at night */}
+      {/* Sky lanterns: rising slowly at night. The wrapper does the day/night fade,
+          because the rise animation itself animates each lantern's opacity. */}
+      <div className="absolute inset-0 opacity-0 transition-opacity duration-700 dark:opacity-100">
       {LANTERNS.map((l) => (
         <span
           key={l.left}
           data-lantern
-          className="absolute h-[30px] w-[22px] animate-rise rounded-[40%_40%_30%_30%] opacity-0 [background:radial-gradient(circle_at_50%_70%,#fff3b0,var(--trip-saffron)_55%,#b84a00)] shadow-[0_0_22px_6px_rgb(255_153_51/.55)] [animation-play-state:paused] dark:[animation-play-state:running]"
+          className="absolute h-[30px] w-[22px] animate-rise rounded-[40%_40%_30%_30%] [background:radial-gradient(circle_at_50%_70%,#fff3b0,var(--trip-saffron)_55%,#b84a00)] shadow-[0_0_22px_6px_rgb(255_153_51/.55)] [animation-play-state:paused] dark:[animation-play-state:running]"
           style={
             {
               left: `${l.left}%`,
@@ -95,6 +97,7 @@ export function FestivalSky({ className }: { className?: string }) {
           }
         />
       ))}
+      </div>
     </div>
   );
 }
