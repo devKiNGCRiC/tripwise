@@ -20,8 +20,8 @@ const BASE =
 /** Per-variant colours and effects (all from design tokens). */
 const VARIANTS: Record<ButtonVariant, string> = {
   // Signboard touch: the letters stretch a little wider on hover.
-  primary: 'brand-fill text-on-accent border-line shadow-pop pop-press [transition:transform_120ms,box-shadow_120ms,font-stretch_250ms] hover:font-stretch-115%',
-  secondary: 'bg-surface text-ink border-line shadow-pop pop-press [transition:transform_120ms,box-shadow_120ms,font-stretch_250ms] hover:font-stretch-115%',
+  primary: 'brand-fill text-on-accent border-line shadow-pop pop-press hover:font-stretch-115%',
+  secondary: 'bg-surface text-ink border-line shadow-pop pop-press hover:font-stretch-115%',
   ghost: 'bg-transparent text-ink border-transparent hover:bg-ink/5',
   glow: 'aurora-fill text-black border-line shadow-glow hover:brightness-110',
 };

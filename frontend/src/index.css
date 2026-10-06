@@ -85,7 +85,8 @@
 @utility pop-press {
   transition:
     transform 120ms ease,
-    box-shadow 120ms ease;
+    box-shadow 120ms ease,
+    font-stretch 250ms ease;
   &:hover {
     transform: translate(-2px, -2px);
     box-shadow: var(--trip-shadow-pop-lg);
