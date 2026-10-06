@@ -6,6 +6,11 @@ import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { DepartureBoard } from './DepartureBoard';
 
+/** Find the board's screen-reader line by its full text (it spans a nested lang="hi" span). */
+function boardLine(text: string) {
+  return screen.getByText((_, el) => el?.tagName === 'P' && el.textContent === text);
+}
+
 const STOPS = [
   { name: 'Goa', localName: 'गोवा' },
   { name: 'Manali', localName: 'मनाली' },
@@ -36,8 +41,13 @@ describe('DepartureBoard', () => {
 
   it('announces the first stop with its local name', () => {
     render(<DepartureBoard stops={STOPS} />);
-    expect(screen.getByText('Next stop: Goa (गोवा)')).toBeInTheDocument();
-    expect(screen.getByText('गोवा')).toBeInTheDocument();
+    expect(boardLine('Next stop: Goa (गोवा)')).toBeInTheDocument();
+    expect(screen.getAllByText('गोवा').length).toBeGreaterThan(0);
+  });
+
+  it('marks the Hindi name as Hindi for screen readers', () => {
+    render(<DepartureBoard stops={STOPS} />);
+    expect(boardLine('Next stop: Goa (गोवा)').querySelector('[lang="hi"]')).toHaveTextContent('गोवा');
   });
 
   it('flips to the next stop after the interval', () => {
@@ -45,7 +55,7 @@ describe('DepartureBoard', () => {
     act(() => {
       vi.advanceTimersByTime(3000);
     });
-    expect(screen.getByText('Next stop: Manali (मनाली)')).toBeInTheDocument();
+    expect(boardLine('Next stop: Manali (मनाली)')).toBeInTheDocument();
   });
 
   it('stays on the first stop when the user prefers reduced motion', () => {
@@ -54,6 +64,6 @@ describe('DepartureBoard', () => {
     act(() => {
       vi.advanceTimersByTime(9000);
     });
-    expect(screen.getByText('Next stop: Goa (गोवा)')).toBeInTheDocument();
+    expect(boardLine('Next stop: Goa (गोवा)')).toBeInTheDocument();
   });
 });

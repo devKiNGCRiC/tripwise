@@ -5,14 +5,14 @@
  */
 import { cn } from '@/lib/utils/cn';
 
-export type StampTone = 'green' | 'red' | 'sky' | 'orange';
+// Only deep inks: lighter ones (like orange) fail text contrast on paper.
+export type StampTone = 'green' | 'red' | 'sky';
 
 /** Ink colours — the deep shades so the text stays readable on paper. */
 const TONES: Record<StampTone, string> = {
   green: 'border-green-deep text-green-deep',
   red: 'border-danger text-danger',
   sky: 'border-sky-deep text-sky-deep',
-  orange: 'border-orange text-orange',
 };
 
 interface StampProps {

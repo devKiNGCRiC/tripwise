@@ -19,13 +19,14 @@ const VIBE_COLOR: Record<Vibe, string> = {
   beach: 'bg-sky',
   mountains: 'bg-green',
   culture: 'bg-yellow',
-  party: 'bg-red text-white',
+  // Red tags use the darker `danger` red so white text passes WCAG AA (4.5:1).
+  party: 'bg-danger text-white',
   adventure: 'brand-fill',
   spiritual: 'bg-yellow',
   food: 'brand-fill',
   nature: 'bg-green',
   city: 'bg-sky',
-  romantic: 'bg-red text-white',
+  romantic: 'bg-danger text-white',
 };
 
 interface DestinationCardProps {
@@ -37,10 +38,15 @@ interface DestinationCardProps {
 export function DestinationCard({ destination, featured = false, className }: DestinationCardProps) {
   const tilt = useTilt();
   const vibe = destination.vibes[0];
+  const price = formatMoney(destination.avgDailyCost);
+  // Screen readers hear the place first ("Goa, India, from ₹3,500 a day, beach"),
+  // not the order things happen to sit in the DOM.
+  const accessibleName = `${destination.name}, ${destination.country}, from ${price} a day${vibe ? `, ${vibe}` : ''}`;
 
   return (
     <Link
       to={`/destinations/${destination.slug}`}
+      aria-label={accessibleName}
       {...tilt}
       className={cn(
         'group relative block text-black [transform-style:preserve-3d] [transform:perspective(1000px)_rotateX(var(--rx,0deg))_rotateY(var(--ry,0deg))] transition-transform duration-150 ease-out',
@@ -67,7 +73,7 @@ export function DestinationCard({ destination, featured = false, className }: De
       </div>
 
       <span className="absolute top-3.5 left-3.5 rounded-full border-[2.5px] border-black bg-white px-3 py-0.5 text-[15px] font-semibold [transform:translateZ(40px)]">
-        from {formatMoney(destination.avgDailyCost)}/day
+        from {price}/day
       </span>
       {vibe && (
         <span
@@ -93,9 +99,8 @@ export function DestinationCard({ destination, featured = false, className }: De
         >
           {destination.name}
         </h3>
-        <p className="text-xl leading-tight font-extrabold">
+        <p lang={destination.localName ? 'hi' : undefined} className="text-xl leading-tight font-extrabold">
           {destination.localName ?? destination.country}
-          <span className="sr-only">, {destination.country}</span>
         </p>
       </div>
     </Link>

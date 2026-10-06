@@ -29,7 +29,9 @@ export function AuthLayout({ board, boardLocal, title, subtitle, children, foote
           {/* Station-board header: always black on yellow */}
           <div className="flex items-baseline justify-between border-b-[3px] border-black bg-yellow px-6 py-3 text-black">
             <span className="font-display text-xl font-black uppercase font-stretch-130%">{board}</span>
-            <span className="text-xl font-extrabold">{boardLocal}</span>
+            <span lang="hi" className="text-xl font-extrabold">
+              {boardLocal}
+            </span>
           </div>
           <div className="flex flex-col gap-6 p-6 sm:p-8">
             <header>

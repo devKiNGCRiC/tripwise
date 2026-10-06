@@ -87,13 +87,19 @@ export function DepartureBoard({
         </div>
 
         {stop.localName && (
-          <p aria-hidden className="text-[clamp(26px,3.2vw,40px)] leading-tight font-extrabold">
+          <p aria-hidden lang="hi" className="text-[clamp(26px,3.2vw,40px)] leading-tight font-extrabold">
             {stop.localName}
           </p>
         )}
+        {/* The real text for screen readers; lang="hi" makes them pronounce the Hindi name properly. */}
         <p className="sr-only">
           {label}: {stop.name}
-          {stop.localName ? ` (${stop.localName})` : ''}
+          {stop.localName && (
+            <>
+              {' ('}
+              <span lang="hi">{stop.localName}</span>)
+            </>
+          )}
         </p>
       </div>
     </div>
