@@ -1,8 +1,9 @@
 # TripWise — Frontend
 
 React + TypeScript web app for **TripWise**, the AI travel itinerary planner.
-Design language: **"Passport Pop"** — postcard paper & stamps for content, bold outlines for
-anything tappable, aurora glow for AI moments and the "Night Flight" dark theme.
+Design language: **"Yatra Mela"**, the visual language of Indian journeys: a railway departure-board
+headline, truck-art colours, a kite-festival sky by day and sky lanterns by night ("Night Flight").
+Fonts: Anybody (stretched display) and Mukta (body text and Hindi). Design reference: `docs/design/yatra-mela-preview.html`.
 
 ## Quick start
 

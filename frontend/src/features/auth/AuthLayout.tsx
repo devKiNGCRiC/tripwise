@@ -44,7 +44,7 @@ export function AuthLayout({ board, boardLocal, title, subtitle, children, foote
         {/* Decorative sky panel — hidden from screen readers and on small screens */}
         <div aria-hidden className="sky-fill relative hidden h-128 overflow-hidden rounded-card border-[3px] border-line shadow-pop md:block">
           <FestivalSky />
-          <p className="absolute inset-x-10 bottom-12 font-display text-5xl leading-none font-black text-black font-stretch-120% dark:text-white">
+          <p className="absolute inset-x-10 bottom-12 z-10 font-display text-5xl leading-none font-black text-black font-stretch-120% dark:text-white">
             Collect places, not things.
           </p>
         </div>

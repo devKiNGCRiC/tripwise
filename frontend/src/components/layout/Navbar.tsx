@@ -69,9 +69,12 @@ export function Navbar() {
           )}
           {status === 'guest' && (
             <>
-              <NavLink to="/login" className={buttonClasses({ variant: 'ghost', size: 'sm', className: 'hidden sm:inline-flex' })}>
-                Log in
-              </NavLink>
+              {/* Wrapper does the hiding: buttonClasses always sets inline-flex, which would fight a `hidden` class. */}
+              <span className="hidden sm:block">
+                <NavLink to="/login" className={buttonClasses({ variant: 'ghost', size: 'sm' })}>
+                  Log in
+                </NavLink>
+              </span>
               <NavLink to="/signup" className={buttonClasses({ size: 'sm' })}>
                 Sign up
               </NavLink>

@@ -15,7 +15,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 
 /** Shared look: pill shape, display font, accessible focus ring, dimmed when disabled. */
 const BASE =
-  'inline-flex items-center justify-center gap-2 rounded-full border-2 font-display font-bold tracking-tight select-none transition disabled:pointer-events-none disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-deep';
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border-2 font-display font-bold tracking-tight select-none transition disabled:pointer-events-none disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-deep';
 
 /** Per-variant colours and effects (all from design tokens). */
 const VARIANTS: Record<ButtonVariant, string> = {
