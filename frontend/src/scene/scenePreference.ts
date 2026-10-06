@@ -7,6 +7,7 @@ import type { ScenePack } from './quality';
 
 const KEY = 'tw_scene';
 
+/** The saved choice, or null for "let TripWise decide". */
 export function readScenePreference(): ScenePack | null {
   try {
     const saved = window.localStorage.getItem(KEY);
@@ -16,6 +17,7 @@ export function readScenePreference(): ScenePack | null {
   }
 }
 
+/** Save a choice (null clears it back to automatic). */
 export function saveScenePreference(pack: ScenePack | null) {
   try {
     if (pack) window.localStorage.setItem(KEY, pack);

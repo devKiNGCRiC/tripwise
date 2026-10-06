@@ -16,6 +16,7 @@ const OPTIONS: { value: ScenePack | null; label: string; hint: string }[] = [
   { value: 'photo', label: 'Photos', hint: 'Lighter on data' },
 ];
 
+/** Radio group for the home-page scenery preference. */
 export function SceneryChoice() {
   const [choice, setChoice] = useState<ScenePack | null>(readScenePreference);
 

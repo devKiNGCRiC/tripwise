@@ -10,12 +10,15 @@
  * Photos load lazily: only the current and next stages, as you approach them.
  */
 import { useState, useSyncExternalStore } from 'react';
+import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 import { cn } from '@/lib/utils/cn';
 import { useTheme } from '@/theme/ThemeProvider';
-import { descentProgress, STAGES, stageWeight } from '../descent';
+import { descentProgress, STAGES } from '../descent';
 import { MOONLIT, SCENES, ScenePhoto } from './scenePhotos';
 
+/** The scrolling photo scenery (see file header). */
 export function PhotoDescent({ className }: { className?: string }) {
+  const reduceMotion = usePrefersReducedMotion();
   const progress = useSyncExternalStore(descentProgress.subscribe, descentProgress.get, descentProgress.get);
   const { theme } = useTheme();
   const night = theme === 'dark';
@@ -29,28 +32,26 @@ export function PhotoDescent({ className }: { className?: string }) {
   return (
     <div aria-hidden="true" className={cn('pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#0a0f24]', className)}>
       {SCENES.map((scene, i) => {
-        const weight = stageWeight(i, progress);
-        // Each layer drifts slowly upward as you pass through it (a gentle camera move).
-        const drift = (position - i) * -4;
+        // The stage we're in stays fully opaque; the next one fades in ON TOP of it.
+        // (Two half-transparent layers would let the dark background show through mid-way.)
+        const base = Math.floor(position);
+        const opacity = i === base ? 1 : i === base + 1 ? position - base : 0;
+        // Each layer drifts slowly upward as you pass through it (a gentle camera move) — not for reduced motion.
+        const drift = reduceMotion ? 0 : (position - i) * -4;
         return (
           <div
             key={scene.day}
             data-stage={i}
             className="absolute inset-0 will-change-[opacity,transform]"
-            style={{ opacity: weight, transform: `scale(1.12) translateY(${drift}%)` }}
+            style={{ opacity, transform: reduceMotion ? 'scale(1.12)' : `scale(1.12) translateY(${drift}%)` }}
           >
-            {i <= loadedUpTo && (
-              <>
-                <ScenePhoto src={scene.day} className={night ? 'opacity-0' : 'opacity-100'} />
-                <ScenePhoto
-                  src={scene.night === 'moonlit' ? scene.day : scene.night}
-                  className={cn(
-                    night ? 'opacity-100' : 'opacity-0',
-                    scene.night === 'moonlit' && MOONLIT,
-                  )}
-                />
-              </>
-            )}
+            {/* Only the current theme's photo is fetched (saves data on the devices this pack serves) */}
+            {i <= loadedUpTo &&
+              (night ? (
+                <ScenePhoto src={scene.night === 'moonlit' ? scene.day : scene.night} className={cn(scene.night === 'moonlit' && MOONLIT)} />
+              ) : (
+                <ScenePhoto src={scene.day} />
+              ))}
           </div>
         );
       })}

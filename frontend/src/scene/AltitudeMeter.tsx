@@ -7,6 +7,7 @@ import { useSyncExternalStore } from 'react';
 import { cn } from '@/lib/utils/cn';
 import { altitudeAt, descentProgress, stageAt } from './descent';
 
+/** Altitude + stage name, following descent progress. */
 export function AltitudeMeter({ className }: { className?: string }) {
   const progress = useSyncExternalStore(descentProgress.subscribe, descentProgress.get, descentProgress.get);
 

@@ -10,6 +10,7 @@ import { usePrefersReducedMotion } from './usePrefersReducedMotion';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/** Returns a ref; the element it's attached to reveals itself on scroll. */
 export function useReveal<T extends HTMLElement>() {
   const ref = useRef<T>(null);
   const reduceMotion = usePrefersReducedMotion();

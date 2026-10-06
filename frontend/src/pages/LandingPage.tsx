@@ -18,6 +18,7 @@ import { AltitudeMeter } from '@/scene/AltitudeMeter';
 import { descentProgress } from '@/scene/descent';
 import { Scenery } from '@/scene/Scenery';
 
+/** The Descent: scenery behind, six stages in front (see file header). */
 export default function LandingPage() {
   const trackRef = useRef<HTMLDivElement>(null);
 

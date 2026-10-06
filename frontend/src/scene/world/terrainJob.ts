@@ -22,11 +22,24 @@ export const TERRAIN_DETAIL = {
 
 const jobs = new Map<SceneTier, Promise<BuiltTerrain>>();
 
+/**
+ * Start (or reuse) the terrain build for a detail tier. The result stays cached for the
+ * visit (~8 MB at high detail) so returning to the home page is instant.
+ */
 export function startTerrainJob(tier: SceneTier): Promise<BuiltTerrain> {
   const existing = jobs.get(tier);
   if (existing) return existing;
   const job = new Promise<BuiltTerrain>((resolve, reject) => {
-    const worker = new Worker(new URL('./terrain.worker.ts', import.meta.url), { type: 'module' });
+    let worker: Worker;
+    try {
+      worker = new Worker(new URL('./terrain.worker.ts', import.meta.url), { type: 'module' });
+    } catch (error) {
+      // e.g. a Content-Security-Policy that blocks workers — don't cache the failure.
+      // (Deferred: this runs before `jobs.set` below, so deleting now would be undone.)
+      queueMicrotask(() => jobs.delete(tier));
+      reject(error);
+      return;
+    }
     worker.onmessage = (event: MessageEvent<BuiltTerrain>) => {
       resolve(event.data);
       worker.terminate();

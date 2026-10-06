@@ -21,6 +21,7 @@ interface WorldCanvasProps {
   onError: (error: unknown) => void;
 }
 
+/** Mounts the 3D world canvas and keeps it in sync with scroll, theme and pointer. */
 export default function WorldCanvas({ tier, motion, visible, onReady, onError }: WorldCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const worldRef = useRef<World | null>(null);
@@ -34,6 +35,12 @@ export default function WorldCanvas({ tier, motion, visible, onReady, onError }:
     if (!canvas) return;
     let cancelled = false;
     let unsubscribe = () => {};
+    // GPU reset / tab eviction: hand the scenery back to the photos instead of going blank.
+    const onContextLost = (event: Event) => {
+      event.preventDefault();
+      if (!cancelled) onError(new Error('WebGL context lost'));
+    };
+    canvas.addEventListener('webglcontextlost', onContextLost);
     createWorld(canvas, { tier, motion, night: nightRef.current })
       .then((world) => {
         if (cancelled) {
@@ -41,6 +48,8 @@ export default function WorldCanvas({ tier, motion, visible, onReady, onError }:
           return;
         }
         worldRef.current = world;
+        // Catch up on anything that changed while we were building (theme, scroll)
+        world.setNight(nightRef.current);
         world.setProgress(descentProgress.get());
         unsubscribe = descentProgress.subscribe(() => world.setProgress(descentProgress.get()));
         onReady();
@@ -50,6 +59,7 @@ export default function WorldCanvas({ tier, motion, visible, onReady, onError }:
       });
     return () => {
       cancelled = true;
+      canvas.removeEventListener('webglcontextlost', onContextLost);
       unsubscribe();
       worldRef.current?.dispose();
       worldRef.current = null;

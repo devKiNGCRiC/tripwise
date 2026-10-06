@@ -32,6 +32,7 @@ export interface SceneChoice {
   motion: boolean;
 }
 
+/** Pick the scenery pack + detail tier for a device (rules explained inline). */
 export function chooseScene(info: DeviceInfo): SceneChoice {
   const motion = !info.reducedMotion;
   // Unknown memory (Safari/Firefox don't report it) is treated as "probably fine".

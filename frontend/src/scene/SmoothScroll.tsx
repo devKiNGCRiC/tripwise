@@ -15,6 +15,7 @@ import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/** Turns on smooth scrolling for everything inside it (see file header). */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const reduceMotion = usePrefersReducedMotion();
 
@@ -28,6 +29,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     gsap.ticker.lagSmoothing(0);
     return () => {
       gsap.ticker.remove(tick);
+      gsap.ticker.lagSmoothing(500, 33); // GSAP's defaults
       lenis.destroy();
     };
   }, [reduceMotion]);

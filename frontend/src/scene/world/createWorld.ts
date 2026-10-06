@@ -148,7 +148,22 @@ async function loadTexture(loader: THREE.TextureLoader, name: string, color = tr
   return texture;
 }
 
+/**
+ * Build the world. If anything fails part-way (e.g. shader compile on a weak GPU),
+ * everything created so far is released before the error is passed on.
+ */
 export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptions): Promise<World> {
+  const cleanups: (() => void)[] = [];
+  try {
+    return await buildWorld(canvas, options, (fn) => cleanups.push(fn));
+  } catch (error) {
+    cleanups.reverse().forEach((fn) => fn());
+    throw error;
+  }
+}
+
+/** The actual construction; `onCleanup` registers undo steps used if a later step throws. */
+async function buildWorld(canvas: HTMLCanvasElement, options: WorldOptions, onCleanup: (fn: () => void) => void): Promise<World> {
   const detail = DETAIL[options.tier];
   performance.mark('world:start');
 
@@ -165,6 +180,7 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
 
   /* ── Renderer, scene, camera ─────────────────────────────────────────── */
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance', stencil: false });
+  onCleanup(() => renderer.dispose());
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, detail.pixelRatio));
   renderer.shadowMap.enabled = detail.shadows;
   renderer.shadowMap.type = THREE.PCFShadowMap;
@@ -337,7 +353,8 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
   const starGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(starPositions, 3));
   const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 2.1, sizeAttenuation: false, transparent: true, opacity: 0, fog: false, depthWrite: false }));
   scene.add(stars);
-  const moon = new THREE.Sprite(new THREE.SpriteMaterial({ map: moonTexture(), transparent: true, opacity: 0, fog: false, depthWrite: false }));
+  const moonMap = moonTexture();
+  const moon = new THREE.Sprite(new THREE.SpriteMaterial({ map: moonMap, transparent: true, opacity: 0, fog: false, depthWrite: false }));
   moon.scale.setScalar(700);
   moon.position.set(-2600, 3400, -9000);
   const moonGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: soft, color: 0xcfe0ff, transparent: true, opacity: 0, fog: false, depthWrite: false, blending: THREE.AdditiveBlending }));
@@ -479,6 +496,7 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
   };
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(canvas);
+  onCleanup(() => resizeObserver.disconnect());
   resize();
 
   // Compile every shader BEFORE the first frame, without blocking, so the fade-in never stutters.
@@ -494,7 +512,6 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
     frame = requestAnimationFrame(loop);
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
-    if (document.hidden) return; // don't burn battery in a background tab
     elapsed += dt;
     current += (target - current) * (options.motion ? Math.min(1, dt * 5) : 1);
     cameraPose(current, pose);
@@ -557,7 +574,10 @@ export async function createWorld(canvas: HTMLCanvasElement, options: WorldOptio
         const materials = Array.isArray(mesh.material) ? mesh.material : mesh.material ? [mesh.material] : [];
         materials.forEach((material) => material.dispose());
       });
-      [grassTex, rockTex, snowTex, cliffTex, waterNormals, soft, cloudMap].forEach((t) => t.dispose());
+      trees.dispose(); // instance matrix + colour buffers
+      envSky.geometry.dispose();
+      (water.material.uniforms.mirrorSampler.value as THREE.Texture | null)?.dispose(); // reflection render target's texture
+      [grassTex, rockTex, snowTex, cliffTex, waterNormals, soft, cloudMap, moonMap].forEach((t) => t.dispose());
       envTarget?.dispose();
       pmrem.dispose();
       composer.dispose();

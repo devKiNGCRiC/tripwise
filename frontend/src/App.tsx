@@ -9,6 +9,7 @@ import { MotionConfig } from 'motion/react';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 import { ToastProvider } from '@/components/ui/Toast';
+import { SmoothScroll } from '@/scene/SmoothScroll';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { createQueryClient } from '@/lib/queryClient';
 import { routes } from '@/router';
@@ -26,7 +27,10 @@ export default function App() {
         <MotionConfig reducedMotion="user">
           <ToastProvider>
             <AuthProvider>
-              <RouterProvider router={router} />
+              {/* Buttery inertial scrolling (Lenis) synced with GSAP scroll animations */}
+              <SmoothScroll>
+                <RouterProvider router={router} />
+              </SmoothScroll>
             </AuthProvider>
           </ToastProvider>
         </MotionConfig>

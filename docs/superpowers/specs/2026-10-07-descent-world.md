@@ -118,3 +118,15 @@ public/world/            textures (WebP/JPG 512–1k, ~0.5 MB total) + water nor
   3D world in about 2.9 s or 3.6 s.
 - **Custom exposure step before ACES tone mapping**, because post-processing tone mapping ignores the
   renderer's exposure setting.
+- **Photos are hotlinked from Unsplash's CDN**, not stored locally. The CDN resizes them per device (900–2200px
+  via `srcset`), which keeps the repo small. Only the current theme's photo for the current and next stage is fetched.
+- **Reduced motion:** no parallax drift, no smooth scrolling and no 3D. The altitude meter's number still updates
+  with scroll (it isn't animation).
+- **Final review fixes:**
+  - an error boundary around the 3D layer
+  - photos kept until the 3D fade-in completes
+  - context-loss fallback
+  - full GPU disposal plus cleanup on a failed build
+  - smooth scrolling is actually mounted (`App.tsx`)
+  - the night theme is applied if it was toggled while the world was building
+  - cross-fades with no mid-way dimming
