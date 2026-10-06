@@ -1,0 +1,362 @@
+<!doctype html>
+<!--
+  tripwise-descent-preview.html — PREVIEW of the "Realistic" scene pack (not part of the app).
+  The whole page is one descent through nature: sky → glacier → mountains → waterfall → river → land.
+  Real Unsplash photos blended band-into-band, parallax on scroll, day/night crossfade.
+  Night: Milky Way, northern lights, moonlit valley (day-for-night grading where no night photo exists),
+  diyas floating on the river, fireflies over the fields. Altitude meter counts down as you scroll.
+-->
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TripWise Descent Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=Mukta:wght@400;600;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --saffron: #ff9933; --orange: #ff7a00; --yellow: #ffc72c; --red: #c81e2d; --sky: #5bc8f5; --green: #9be08a;
+  --ink: #0b0b0b; --text: #0b0b0b; --text-soft: #2f3640;
+  --glass: rgb(255 255 255 / .62); --glass-line: rgb(255 255 255 / .9);
+  --brand: linear-gradient(115deg, var(--saffron), var(--orange));
+  color-scheme: light;
+}
+[data-theme='dark'] {
+  --text: #fff8ec; --text-soft: #d4d1e0;
+  --glass: rgb(10 15 36 / .55); --glass-line: rgb(255 255 255 / .22);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #0a0f24; overflow-x: clip; }
+main { overflow-x: clip; }
+body { font: 400 18px/1.55 Mukta, system-ui, sans-serif; color: var(--text); overflow-x: clip; }
+h1, h2, h3 { font-family: Anybody, sans-serif; font-weight: 850; font-stretch: 122%; margin: 0; line-height: .98; letter-spacing: -.02em; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 22px; position: relative; z-index: 3; }
+
+/* ── Top bar: frosted, floats over the sky ── */
+.bar { position: fixed; inset: 0 0 auto 0; z-index: 50; backdrop-filter: blur(14px) saturate(1.3);
+  background: color-mix(in srgb, var(--glass) 70%, transparent); border-bottom: 1px solid var(--glass-line); }
+.bar .wrap { height: 66px; display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; gap: 10px; align-items: center; font: 900 23px Anybody; font-stretch: 130%; color: var(--text); text-decoration: none; }
+.brand b { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 11px; background: var(--brand); border: 2px solid #000;
+  box-shadow: 2px 2px 0 #000; transform: rotate(-8deg); }
+.toggle { display: flex; border: 1.5px solid var(--glass-line); border-radius: 999px; padding: 4px; gap: 4px; background: var(--glass); }
+.toggle button { border: 0; border-radius: 999px; padding: 7px 14px; font: 600 15px Mukta; background: transparent; color: var(--text); cursor: pointer; }
+.toggle button[aria-pressed='true'] { background: var(--yellow); color: #000; }
+
+/* ── The scene: stacked photo bands that blend into each other ── */
+.band { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 140px 0 160px; }
+.band + .band { margin-top: -180px; }                 /* overlap so bands melt together */
+.bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+  -webkit-mask-image: linear-gradient(transparent, #000 180px, #000 calc(100% - 180px), transparent);
+          mask-image: linear-gradient(transparent, #000 180px, #000 calc(100% - 180px), transparent); }
+.band:first-of-type .bg { -webkit-mask-image: linear-gradient(#000, #000 calc(100% - 180px), transparent); mask-image: linear-gradient(#000, #000 calc(100% - 180px), transparent); }
+.bg img { position: absolute; left: 0; top: -10%; width: 100%; height: 120%; object-fit: cover; will-change: transform; transition: opacity 1s ease; }
+.bg .night { opacity: 0; }
+[data-theme='dark'] .bg .night { opacity: 1; }
+[data-theme='dark'] .bg .day { opacity: 0; }
+/* "Day-for-night": film trick — grade a day photo into moonlight when no night photo exists */
+.moonlit { filter: brightness(.38) saturate(.55) contrast(1.15) hue-rotate(195deg); }
+
+/* ── Frosted panels keep text readable over any photo ── */
+.panel { background: var(--glass); border: 1px solid var(--glass-line); border-radius: 26px; padding: 30px; max-width: 640px;
+  backdrop-filter: blur(16px) saturate(1.4); box-shadow: 0 30px 80px -30px rgb(0 0 0 / .45); }
+.lede { color: var(--text-soft); font-size: 20px; max-width: 54ch; margin: 14px 0 0; }
+.btn { font: 800 17px Anybody; font-stretch: 112%; border: 2.5px solid #000; border-radius: 14px; padding: 15px 24px;
+  background: var(--brand); color: #000; box-shadow: 5px 5px 0 #000; cursor: pointer; white-space: nowrap; transition: transform .12s, box-shadow .12s, font-stretch .25s; }
+.btn:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #000; font-stretch: 122%; }
+
+/* Panels sit to one side so the landscape stays visible beside them */
+.side-right { margin-left: auto; }
+.panel.wide { max-width: 860px; }
+/* ── Sky band (hero) ── */
+.hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; align-items: center; }
+.board { background: var(--yellow); color: #000; border: 3px solid #000; border-radius: 10px; padding: 16px 24px 14px; box-shadow: 8px 8px 0 #000; position: relative; max-width: 600px; }
+.board::before, .board::after { content: ''; position: absolute; top: -34px; width: 6px; height: 34px; background: #2b2b2b; }
+.board::before { left: 18%; } .board::after { right: 18%; }
+.board .row { display: flex; justify-content: space-between; font-weight: 600; font-size: 18px; }
+.flaps { display: flex; gap: 5px; margin: 8px 0 6px; font: 900 calc(clamp(40px, 6.4vw, 86px) * min(1, 5.5 / var(--n, 6)))/1 Anybody; font-stretch: 135%; }
+.flap { min-width: .62em; text-align: center; background: #000; color: var(--yellow); border-radius: 6px; padding: 6px 2px 4px; position: relative; }
+.flap::after { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: var(--yellow); opacity: .25; }
+.flap.go { animation: flapIn .45s cubic-bezier(.3,1.4,.5,1) both; }
+@keyframes flapIn { from { transform: rotateX(90deg); } }
+.hindi { font: 800 clamp(24px, 3vw, 38px)/1.1 Mukta; }
+.hero h1 { font-size: clamp(32px, 3.6vw, 50px); margin-top: 30px; max-width: 17ch; text-shadow: 0 2px 30px rgb(255 255 255 / .5); }
+[data-theme='dark'] .hero h1 { text-shadow: 0 2px 30px rgb(0 0 0 / .6); }
+.plan { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; max-width: 560px; }
+.plan input { flex: 1; min-width: 220px; height: 58px; border: 2.5px solid #000; border-radius: 14px; padding: 0 20px; font: 500 18px Mukta; box-shadow: 5px 5px 0 #000; }
+.hero .fine { margin-top: 14px; color: var(--text-soft); font-weight: 600; }
+
+/* Moon: a real moon photo, blended into the night sky with `screen` (its black background vanishes) */
+.moon { position: absolute; z-index: 1; right: 9%; top: 15%; width: 170px; height: 170px; object-fit: cover; mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(circle, #000 52%, transparent 66%); mask-image: radial-gradient(circle, #000 52%, transparent 66%);
+  opacity: 0; transition: opacity 1.2s; filter: drop-shadow(0 0 40px rgb(255 248 220 / .35)); }
+[data-theme='dark'] .moon { opacity: .95; }
+/* Twinkling stars + an occasional shooting star (night only) */
+.twinkle { position: absolute; inset: 0; z-index: 1; opacity: 0; transition: opacity 1s;
+  background-image: radial-gradient(1.6px 1.6px at 12% 22%, #fff, transparent), radial-gradient(1.2px 1.2px at 32% 64%, #fff, transparent),
+   radial-gradient(1.8px 1.8px at 58% 18%, #fff, transparent), radial-gradient(1.2px 1.2px at 76% 42%, #fff, transparent),
+   radial-gradient(1.6px 1.6px at 88% 70%, #fff, transparent), radial-gradient(1.2px 1.2px at 44% 80%, #fff, transparent);
+  animation: twinkle 3.5s ease-in-out infinite alternate; }
+[data-theme='dark'] .twinkle { opacity: 1; }
+@keyframes twinkle { from { filter: brightness(.6); } to { filter: brightness(1.4); } }
+.shoot { position: absolute; z-index: 1; top: 12%; left: 70%; width: 140px; height: 2px; opacity: 0;
+  background: linear-gradient(90deg, #fff, transparent); transform: rotate(-25deg); }
+[data-theme='dark'] .shoot { animation: shoot 7s ease-in 2s infinite; }
+@keyframes shoot { 0%, 88% { opacity: 0; transform: translate(0,0) rotate(-25deg); } 90% { opacity: 1; } 100% { opacity: 0; transform: translate(-320px, 150px) rotate(-25deg); } }
+/* Birds (day only): a loose V drifting across */
+.birds { position: absolute; z-index: 1; top: 26%; left: -10%; transition: opacity 1s; animation: birds 38s linear infinite; }
+[data-theme='dark'] .birds { opacity: 0; }
+@keyframes birds { to { transform: translateX(130vw) translateY(-60px); } }
+
+/* ── Glacier band: aurora shimmer on top of the night photo ── */
+.aurora { position: absolute; inset: 0 0 35% 0; z-index: 1; opacity: 0; mix-blend-mode: screen; transition: opacity 1.2s; filter: blur(30px);
+  background: radial-gradient(60% 40% at 30% 30%, rgb(60 255 170 / .45), transparent 70%), radial-gradient(50% 35% at 70% 20%, rgb(140 90 255 / .35), transparent 70%);
+  animation: aurora 12s ease-in-out infinite alternate; }
+[data-theme='dark'] .aurora { opacity: 1; }
+@keyframes aurora { to { transform: translateX(6%) skewX(-6deg); filter: blur(36px) hue-rotate(25deg); } }
+.route { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 40px; position: relative; list-style: none; padding: 0; }
+.route::before { content: ''; position: absolute; left: 4%; right: 4%; top: 30px; height: 10px; border: 2px solid #000; border-radius: 6px;
+  background: repeating-linear-gradient(90deg, #000 0 22px, var(--yellow) 22px 44px); }
+.stop .dot { position: relative; width: 66px; height: 66px; border-radius: 50%; border: 3px solid #000; display: grid; place-items: center; font: 900 28px Anybody; color: #000; box-shadow: 4px 4px 0 #000; }
+.stop h3 { font-size: 28px; margin-top: 18px; }
+.stop p { margin: 8px 0 0; color: var(--text-soft); }
+
+/* ── Mountains band: postcards ── */
+.cards { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 18px; margin-top: 30px; }
+.card { position: relative; border-radius: 18px; overflow: hidden; border: 3px solid #000; box-shadow: 6px 6px 0 #000; min-height: 320px; color: #000; text-decoration: none;
+  transform: perspective(900px) rotateX(var(--rx,0)) rotateY(var(--ry,0)); transition: transform .15s; }
+.card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.card .sign { position: absolute; left: 14px; right: 14px; bottom: 14px; background: var(--yellow); border: 3px solid #000; border-radius: 8px; text-align: center; padding: 6px; box-shadow: 4px 4px 0 #000; }
+.card .sign h3 { font-size: 24px; font-weight: 900; font-stretch: 135%; text-transform: uppercase; }
+.card .sign span { font: 800 19px Mukta; }
+.card .price { position: absolute; top: 12px; left: 12px; background: #fff; border: 2.5px solid #000; border-radius: 999px; padding: 3px 12px; font-weight: 600; font-size: 15px; }
+
+/* ── Waterfall band: AI moment ── */
+.mist { position: absolute; z-index: 1; left: 0; right: 0; bottom: 18%; height: 30%; pointer-events: none;
+  background: radial-gradient(50% 60% at 50% 100%, rgb(255 255 255 / .35), transparent 70%); filter: blur(20px); animation: mist 6s ease-in-out infinite alternate; }
+@keyframes mist { to { transform: translateY(-14px) scale(1.06); opacity: .7; } }
+.gen { margin-top: 26px; border-radius: 18px; border: 2px solid var(--glass-line); padding: 22px; display: flex; gap: 18px; align-items: center;
+  background: linear-gradient(115deg, rgb(91 200 245 / .35), rgb(155 140 255 / .3), rgb(255 153 51 / .35)); }
+.gen .spin { font-size: 34px; animation: fly 2.4s ease-in-out infinite alternate; }
+@keyframes fly { to { transform: translate(14px, -8px) rotate(8deg); } }
+.gen b { font: 850 24px Anybody; font-stretch: 118%; display: block; }
+
+/* ── River band: crew teaser + diyas at night ── */
+.diya { position: absolute; z-index: 1; width: 16px; height: 9px; border-radius: 0 0 10px 10px; background: #8a3b12; opacity: 0; transition: opacity 1s;
+  animation: drift var(--d, 30s) linear infinite; animation-delay: var(--dl, 0s); }
+.diya::before { content: ''; position: absolute; left: 5px; top: -9px; width: 6px; height: 10px; border-radius: 50% 50% 40% 40%;
+  background: radial-gradient(circle at 50% 70%, #fff6b0, #ffb12c 60%, transparent); box-shadow: 0 0 18px 6px rgb(255 170 60 / .6); }
+[data-theme='dark'] .diya { opacity: 1; }
+@keyframes drift { from { transform: translateX(-10vw); } to { transform: translateX(110vw); } }
+.crew { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
+.crew div { border: 2px solid var(--glass-line); border-radius: 16px; padding: 16px; background: rgb(255 255 255 / .12); }
+.crew b { font: 850 20px Anybody; font-stretch: 115%; display: block; margin-bottom: 4px; }
+
+/* ── Land band: CTA, fireflies at night ── */
+.fly-bug { position: absolute; z-index: 1; width: 5px; height: 5px; border-radius: 50%; background: #f9ff9a; box-shadow: 0 0 10px 3px rgb(240 255 120 / .8);
+  opacity: 0; animation: bug var(--d, 6s) ease-in-out infinite alternate; animation-delay: var(--dl, 0s); }
+[data-theme='dark'] .fly-bug { opacity: 1; }
+@keyframes bug { 0% { transform: translate(0,0); filter: brightness(.4); } 50% { filter: brightness(1.4); } 100% { transform: translate(40px,-30px); filter: brightness(.5); } }
+footer { position: relative; z-index: 3; padding: 26px 0 40px; color: var(--text-soft); text-align: center; }
+
+/* ── Altitude meter: the page is a descent, so show it ── */
+.alt { position: fixed; right: 18px; top: 50%; transform: translateY(-50%); z-index: 40; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.alt .val { font: 900 22px Anybody; font-stretch: 120%; background: var(--glass); border: 1px solid var(--glass-line); backdrop-filter: blur(10px);
+  border-radius: 12px; padding: 6px 12px; color: var(--text); min-width: 112px; text-align: right; }
+.alt ol { list-style: none; margin: 0; padding: 10px 12px; display: grid; gap: 6px; background: var(--glass); border: 1px solid var(--glass-line);
+  border-radius: 12px; backdrop-filter: blur(10px); }
+.alt li { font-size: 14px; font-weight: 600; color: var(--text); opacity: .6; text-align: right; }
+.alt li.on { opacity: 1; font-weight: 800; }
+.alt li.on::after { content: ' ●'; color: var(--saffron); }
+
+@media (max-width: 900px) {
+  .hero-grid, .cards, .route, .crew { grid-template-columns: 1fr; }
+  .side-right { margin-left: 0; }
+  .route::before { display: none; }
+  .alt ol { display: none; }
+  .alt { top: auto; bottom: 14px; transform: none; }
+  .band { padding: 110px 0 140px; }
+  .panel { padding: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="bar"><div class="wrap">
+  <a class="brand" href="#"><b>✈</b>TripWise</a>
+  <div class="toggle" role="group" aria-label="Time of day">
+    <button id="day" aria-pressed="true">☀️ Day</button><button id="night" aria-pressed="false">🌙 Night</button>
+  </div>
+</div></header>
+
+<aside class="alt" aria-hidden="true">
+  <div class="val" id="altval">8,000 m</div>
+  <ol id="altlist"><li>Sky</li><li>Glacier</li><li>Mountains</li><li>Waterfall</li><li>River</li><li>Land</li></ol>
+</aside>
+
+<main>
+  <!-- 1. SKY -->
+  <section class="band hero" data-alt="8000">
+    <div class="bg">
+      <img class="day" data-speed=".25" src="https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?w=1800&q=65&auto=format&fit=crop" alt="" />
+      <img class="night" data-speed=".25" src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1800&q=65&auto=format&fit=crop" alt="" />
+    </div>
+    <div class="twinkle"></div><span class="shoot"></span>
+    <img class="moon" src="https://images.unsplash.com/photo-1532693322450-2cb5c511067d?w=400&q=70&auto=format&fit=crop" alt="" />
+    <svg class="birds" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true"><g fill="none" stroke="#1d2433" stroke-width="2" stroke-linecap="round">
+      <path d="M10 20 q6 -6 12 0 q6 -6 12 0"/><path d="M40 10 q5 -5 10 0 q5 -5 10 0"/><path d="M62 26 q4 -4 8 0 q4 -4 8 0"/></g></svg>
+    <div class="wrap hero-grid">
+      <div>
+        <div class="board"><div class="row"><span>Next stop</span><span>Platform 1</span></div>
+          <div class="flaps" id="flaps"></div><div class="hindi" id="hindi" lang="hi">गोवा</div></div>
+        <h1>Your whole trip, planned day by day in seconds.</h1>
+        <form class="plan" onsubmit="event.preventDefault()"><input placeholder="Goa, Ladakh, Bali…" aria-label="Where do you want to go?" /><button class="btn">Plan my trip</button></form>
+        <p class="fine">Free forever. Five AI-planned trips a day, a PDF, and a link for your gang.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. GLACIER -->
+  <section class="band" data-alt="6000">
+    <div class="bg">
+      <img class="day" data-speed=".18" src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1800&q=65&auto=format&fit=crop" alt="" />
+      <img class="night" data-speed=".18" src="https://images.unsplash.com/photo-1579033461380-adb47c3eb938?w=1800&q=65&auto=format&fit=crop" alt="" />
+    </div>
+    <div class="aurora"></div>
+    <div class="wrap"><div class="panel wide">
+      <h2 style="font-size:clamp(36px,5vw,66px)">Three stops to a full plan</h2>
+      <p class="lede">No forms that feel like tax returns. Tap a few choices and the planner does the rest.</p>
+      <ol class="route">
+        <li class="stop"><div class="dot" style="background:var(--yellow)">1</div><h3>Pick your vibe</h3><p>Where, when, budget, who's coming, and what you love.</p></li>
+        <li class="stop"><div class="dot" style="background:var(--sky)">2</div><h3>AI plans every day</h3><p>Morning to night, with costs, local tips and a packing list.</p></li>
+        <li class="stop"><div class="dot" style="background:var(--green)">3</div><h3>Save, share, go</h3><p>PDF, a link for friends, and a stamp in your passport.</p></li>
+      </ol>
+    </div></div>
+  </section>
+
+  <!-- 3. MOUNTAINS -->
+  <section class="band" data-alt="3500">
+    <div class="bg">
+      <img class="day" data-speed=".15" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1800&q=65&auto=format&fit=crop" alt="" />
+      <img class="night" data-speed=".15" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1800&q=65&auto=format&fit=crop" alt="" />
+    </div>
+    <div class="wrap"><div class="panel wide side-right">
+      <h2 style="font-size:clamp(36px,5vw,66px)">Where India is heading</h2>
+      <p class="lede">Every postcard opens a ready-made plan you can tweak.</p>
+      <div class="cards">
+        <a class="card" href="#"><img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=900&q=65&auto=format&fit=crop" alt="" /><span class="price">from ₹3,500/day</span><div class="sign"><h3>Goa</h3><span lang="hi">गोवा</span></div></a>
+        <a class="card" href="#"><img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?w=600&q=65&auto=format&fit=crop" alt="" /><span class="price">from ₹4,500/day</span><div class="sign"><h3>Ladakh</h3><span lang="hi">लद्दाख</span></div></a>
+        <a class="card" href="#"><img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?w=600&q=65&auto=format&fit=crop" alt="" /><span class="price">from ₹3,000/day</span><div class="sign"><h3>Jaipur</h3><span lang="hi">जयपुर</span></div></a>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 4. WATERFALL -->
+  <section class="band" data-alt="1800">
+    <div class="bg">
+      <img class="day" data-speed=".12" src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=1800&q=65&auto=format&fit=crop" alt="" />
+      <img class="night moonlit" data-speed=".12" src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=1800&q=65&auto=format&fit=crop" alt="" />
+    </div>
+    <div class="mist"></div>
+    <div class="wrap"><div class="panel" style="max-width:540px">
+      <h2 style="font-size:clamp(34px,4.6vw,56px)">Ideas pour in. The plan comes out.</h2>
+      <p class="lede">Tell it once. In seconds you get every day planned, costed and ready to share.</p>
+      <div class="gen"><span class="spin" aria-hidden="true">✈️</span><div><b>Planning your Goa trip</b><span id="genline">Finding the best sunset spots</span></div></div>
+    </div></div>
+  </section>
+
+  <!-- 5. RIVER -->
+  <section class="band" data-alt="600" id="river">
+    <div class="bg">
+      <img class="day" data-speed=".1" src="https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?w=1800&q=65&auto=format&fit=crop" alt="" />
+      <img class="night" data-speed=".1" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1800&q=65&auto=format&fit=crop" alt="" />
+    </div>
+    <div class="wrap"><div class="panel wide side-right">
+      <h2 style="font-size:clamp(34px,4.6vw,60px)">Better with your crew</h2>
+      <p class="lede">Coming soon: invite friends with one link and keep the whole trip in one place.</p>
+      <div class="crew"><div><b>Invite the gang</b>One WhatsApp link, everyone's in.</div><div><b>Split expenses</b>Who paid what, and who owes whom. Settle up by UPI.</div><div><b>Notes and photos</b>PNRs, bookings and memories, shared.</div></div>
+    </div></div>
+  </section>
+
+  <!-- 6. LAND -->
+  <section class="band" data-alt="0" id="land" style="min-height:90vh">
+    <div class="bg">
+      <img class="day" data-speed=".08" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1800&q=65&auto=format&fit=crop" alt="" />
+      <img class="night moonlit" data-speed=".08" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1800&q=65&auto=format&fit=crop" alt="" />
+    </div>
+    <div class="wrap" style="text-align:center"><div class="panel" style="display:inline-block;max-width:760px">
+      <h2 style="font-size:clamp(36px,5vw,68px)">Touchdown. Where to next?</h2>
+      <p class="lede" style="margin-inline:auto">Free to use, no card needed. Tell us where and we'll do the planning.</p>
+      <p style="margin-top:24px"><button class="btn">Start planning</button></p>
+    </div></div>
+  </section>
+</main>
+<footer>Preview of the Realistic scene pack. Photos from Unsplash. Use the Day / Night switch at the top.</footer>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Day / Night switch */
+const setTheme = (dark) => {
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  document.getElementById('day').setAttribute('aria-pressed', String(!dark));
+  document.getElementById('night').setAttribute('aria-pressed', String(dark));
+};
+document.getElementById('day').onclick = () => setTheme(false);
+document.getElementById('night').onclick = () => setTheme(true);
+
+/* Departure board flip letters */
+const STOPS = [['GOA','गोवा'],['MANALI','मनाली'],['JAIPUR','जयपुर'],['LADAKH','लद्दाख'],['VARANASI','वाराणसी'],['BALI','बाली']];
+let si = 0;
+function show() {
+  const [en, hi] = STOPS[si]; const f = document.getElementById('flaps'); f.style.setProperty('--n', en.length); f.innerHTML = '';
+  [...en].forEach((c, i) => { const s = document.createElement('span'); s.className = 'flap' + (reduce ? '' : ' go'); s.style.animationDelay = i * 60 + 'ms'; s.textContent = c; f.appendChild(s); });
+  document.getElementById('hindi').textContent = hi;
+}
+show(); if (!reduce) setInterval(() => { si = (si + 1) % STOPS.length; show(); }, 3200);
+
+/* Parallax: each photo drifts slower than the page, which gives depth */
+const layers = [...document.querySelectorAll('.bg img')];
+const bands = [...document.querySelectorAll('.band')];
+const altVal = document.getElementById('altval'), altItems = [...document.querySelectorAll('#altlist li')];
+function onScroll() {
+  const vh = innerHeight;
+  if (!reduce) layers.forEach((img) => {
+    const r = img.parentElement.getBoundingClientRect();
+    img.style.transform = `translate3d(0, ${(r.top + r.height / 2 - vh / 2) * -img.dataset.speed}px, 0)`;
+  });
+  /* Altitude meter: interpolate between the bands' altitudes */
+  const mid = scrollY + vh / 2; let alt = 8000, idx = 0;
+  bands.forEach((b, i) => {
+    const top = b.offsetTop, next = bands[i + 1];
+    if (mid >= top) { idx = i; const a = +b.dataset.alt, nA = next ? +next.dataset.alt : 0, span = (next ? next.offsetTop : document.body.scrollHeight) - top;
+      alt = Math.round(a - (a - nA) * Math.min(1, (mid - top) / span)); }
+  });
+  altVal.textContent = `${Math.max(0, alt).toLocaleString('en-IN')} m`;
+  altItems.forEach((li, i) => li.classList.toggle('on', i === idx));
+}
+addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll); onScroll();
+
+/* Tilt on postcards */
+document.querySelectorAll('.card').forEach((c) => {
+  c.onpointermove = (e) => { if (reduce) return; const r = c.getBoundingClientRect();
+    c.style.setProperty('--ry', ((e.clientX - r.left) / r.width - .5) * 14 + 'deg'); c.style.setProperty('--rx', (.5 - (e.clientY - r.top) / r.height) * 10 + 'deg'); };
+  c.onpointerleave = () => { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); };
+});
+
+/* AI status lines */
+const LINES = ['Finding the best sunset spots', 'Checking what fits ₹12,000', 'Adding street food you can’t miss', 'Packing for 31°C and a little rain'];
+let li = 0; if (!reduce) setInterval(() => (document.getElementById('genline').textContent = LINES[++li % LINES.length]), 2200);
+
+/* Night extras: diyas floating on the river, fireflies over the fields */
+const river = document.getElementById('river');
+for (let i = 0; i < 10; i++) { const d = document.createElement('span'); d.className = 'diya';
+  d.style.cssText = `bottom:${12 + (i % 4) * 7}%;--d:${26 + (i % 5) * 6}s;--dl:-${i * 4}s`; river.appendChild(d); }
+const land = document.getElementById('land');
+for (let i = 0; i < 26; i++) { const f = document.createElement('span'); f.className = 'fly-bug';
+  f.style.cssText = `left:${(i * 37) % 100}%;top:${30 + ((i * 53) % 60)}%;--d:${4 + (i % 5)}s;--dl:-${i * .7}s`; land.appendChild(f); }
+</script>
+</body>
+</html>
