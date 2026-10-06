@@ -1,6 +1,6 @@
 /**
  * Button.tsx — the TripWise button in four flavours:
- *   primary   → coral, outlined, hard shadow (main call-to-action)
+ *   primary   → saffron-to-orange gradient, outlined, hard shadow (main call-to-action)
  *   secondary → white card face, outlined, hard shadow
  *   ghost     → no border/shadow (low-emphasis actions)
  *   glow      → aurora gradient + glow (reserved for AI actions like "Generate")
@@ -15,11 +15,11 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 
 /** Shared look: pill shape, display font, accessible focus ring, dimmed when disabled. */
 const BASE =
-  'inline-flex items-center justify-center gap-2 rounded-full border-2 font-display font-bold tracking-tight select-none transition disabled:pointer-events-none disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky';
+  'inline-flex items-center justify-center gap-2 rounded-full border-2 font-display font-bold tracking-tight select-none transition disabled:pointer-events-none disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-deep';
 
 /** Per-variant colours and effects (all from design tokens). */
 const VARIANTS: Record<ButtonVariant, string> = {
-  primary: 'bg-coral text-on-accent border-line shadow-pop pop-press',
+  primary: 'brand-fill text-on-accent border-line shadow-pop pop-press',
   secondary: 'bg-surface text-ink border-line shadow-pop pop-press',
   ghost: 'bg-transparent text-ink border-transparent hover:bg-ink/5',
   glow: 'aurora-fill text-white border-transparent shadow-glow hover:brightness-110',

@@ -4,7 +4,7 @@
  * 1. Loads Tailwind CSS and our design tokens.
  * 2. Maps tokens to Tailwind utilities (so `bg-paper` = var(--trip-paper)).
  * 3. Sets base page styles (background, fonts).
- * 4. Defines a few custom "Passport Pop" utilities (press effect, aurora, ticket notches).
+ * 4. Defines a few custom "Yatra Mela" utilities (press effect, aurora, ticket notches, rangoli dots).
  * 5. Honours reduced-motion for everyone who asks for it.
  */
 @import 'tailwindcss';
@@ -24,17 +24,19 @@
   --color-ink: var(--trip-ink);
   --color-ink-soft: var(--trip-ink-soft);
   --color-line: var(--trip-line);
-  --color-coral: var(--trip-coral);
-  --color-mustard: var(--trip-mustard);
-  --color-teal: var(--trip-teal);
+  --color-saffron: var(--trip-saffron);
+  --color-orange: var(--trip-orange);
+  --color-yellow: var(--trip-yellow);
   --color-sky: var(--trip-sky);
-  --color-violet: var(--trip-violet);
+  --color-sky-deep: var(--trip-sky-deep);
+  --color-green: var(--trip-green);
+  --color-green-deep: var(--trip-green-deep);
+  --color-red: var(--trip-red);
   --color-danger: var(--trip-danger);
   --color-on-accent: var(--trip-on-accent);
 
   --font-display: var(--trip-font-display);
   --font-body: var(--trip-font-body);
-  --font-mono: var(--trip-font-mono);
 
   --radius-card: var(--trip-radius-card);
 
@@ -43,10 +45,10 @@
   --shadow-pop-lg: var(--trip-shadow-pop-lg);
   --shadow-glow: var(--trip-shadow-glow);
   /* drop-shadow follows masked shapes (used by ticket notches, where box-shadow would be clipped) */
-  --drop-shadow-pop: 4px 4px 0 var(--trip-line);
+  --drop-shadow-pop: 5px 5px 0 var(--trip-line);
 }
 
-/* Base page look: paper background with grain (+ aurora blooms at night), body font, display headings. */
+/* Base page look: clean paper, Mukta body text, stretched Anybody headings. */
 @layer base {
   html {
     font-family: var(--trip-font-body);
@@ -55,9 +57,12 @@
   body {
     min-height: 100dvh;
     background-color: var(--trip-paper);
-    background-image: var(--trip-backdrop), var(--trip-grain);
-    background-attachment: fixed;
     color: var(--trip-ink);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    transition:
+      background-color 0.4s,
+      color 0.4s;
     -webkit-font-smoothing: antialiased;
   }
   h1,
@@ -65,11 +70,14 @@
   h3,
   h4 {
     font-family: var(--trip-font-display);
+    font-weight: 850;
+    font-stretch: 120%;
     letter-spacing: -0.02em;
+    line-height: 0.98;
   }
   ::selection {
-    background: var(--trip-mustard);
-    color: #1b1b1f;
+    background: var(--trip-yellow);
+    color: #000;
   }
 }
 
@@ -106,6 +114,50 @@
     radial-gradient(circle 14px at 0 var(--notch-y), transparent 13px, #000 14px) left / 51% 100% no-repeat,
     radial-gradient(circle 14px at 100% var(--notch-y), transparent 13px, #000 14px) right / 51% 100%
       no-repeat;
+}
+
+/* Kesari brand gradient (saffron → orange) for main buttons and the logo tile. */
+@utility brand-fill {
+  background-image: var(--trip-brand);
+}
+
+/* Rangoli dot grid: a quiet texture behind content sections so the page never feels empty. */
+@utility rangoli-dots {
+  background-image: var(--trip-dots);
+  background-size: 26px 26px;
+}
+
+/* The hero sky: blue overhead fading to a warm horizon (night: navy to plum). */
+@utility sky-fill {
+  background-image: linear-gradient(180deg, var(--trip-sky-top), var(--trip-sky-mid) 55%, var(--trip-sky-low));
+}
+
+/*
+ * Named animations (usable as animate-sway, animate-rise, animate-flap).
+ * sway  → kites rocking on their strings
+ * rise  → sky lanterns drifting up at night
+ * flap  → a departure-board letter flipping into place
+ */
+@theme {
+  --animate-sway: sway var(--sway-duration, 7s) ease-in-out infinite alternate;
+  --animate-rise: rise var(--rise-duration, 18s) linear infinite;
+  --animate-flap: flap 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+
+  @keyframes sway {
+    from { transform: rotate(-7deg) translateY(0); }
+    to { transform: rotate(6deg) translateY(-14px); }
+  }
+  @keyframes rise {
+    0% { transform: translate(0, 0); opacity: 0; }
+    10% { opacity: 0.95; }
+    50% { transform: translate(18px, -260px); }
+    90% { opacity: 0.95; }
+    100% { transform: translate(-10px, -560px); opacity: 0; }
+  }
+  @keyframes flap {
+    from { transform: rotateX(90deg); }
+    to { transform: rotateX(0); }
+  }
 }
 
 @keyframes aurora-shift {

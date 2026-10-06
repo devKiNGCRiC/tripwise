@@ -11,7 +11,7 @@ export default function ComingSoonPage({ title }: { title: string }) {
     <div className="mx-auto max-w-xl px-4 py-20">
       <title>{`${title} · TripWise`}</title>
       <Card className="flex flex-col items-center gap-4 p-10 text-center">
-        <span className="-rotate-6 rounded-full border-4 border-double border-teal px-4 py-1 font-mono text-xs font-bold tracking-[0.2em] text-teal">
+        <span className="-rotate-6 rounded-full border-4 border-double border-green-deep px-4 py-1 text-xs font-bold tracking-[0.2em] text-green-deep">
           BOARDING SOON
         </span>
         <h1 className="text-4xl font-extrabold">{title}</h1>

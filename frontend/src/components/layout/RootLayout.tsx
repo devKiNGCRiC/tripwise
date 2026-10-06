@@ -16,7 +16,7 @@ export function RootLayout() {
       {/* Skip link: lets keyboard users jump past the navigation. */}
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-mustard focus:px-4 focus:py-2 focus:font-bold focus:text-on-accent"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-yellow focus:px-4 focus:py-2 focus:font-bold focus:text-on-accent"
       >
         Skip to content
       </a>

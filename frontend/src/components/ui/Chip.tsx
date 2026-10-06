@@ -1,7 +1,7 @@
 /**
  * Chip.tsx — two small pill components:
  *   Chip → a toggle (aria-pressed) used for filters and the interest "stickers".
- *          When selected it turns mustard and tilts, like a sticker slapped on.
+ *          When selected it turns board-yellow and tilts, like a sticker slapped on.
  *   Tag  → a static, non-interactive label (e.g. a destination's vibes).
  */
 import type { ComponentProps, ReactNode } from 'react';
@@ -24,8 +24,8 @@ export function Chip({ selected = false, icon, className, children, onClick, onS
         onSelectedChange?.(!selected);
       }}
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border-2 border-line px-3.5 py-1.5 text-sm font-semibold transition focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky',
-        selected ? '-rotate-2 bg-mustard text-on-accent shadow-pop-sm' : 'bg-surface text-ink hover:-rotate-1',
+        'inline-flex items-center gap-1.5 rounded-full border-2 border-line px-3.5 py-1.5 text-sm font-semibold transition focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-deep',
+        selected ? '-rotate-2 bg-yellow text-on-accent shadow-pop-sm' : 'bg-surface text-ink hover:-rotate-1',
         className,
       )}
       {...rest}

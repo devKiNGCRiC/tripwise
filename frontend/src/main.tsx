@@ -5,10 +5,13 @@
  *    first API call is already intercepted.
  * 3. Mounts <App /> into #root.
  */
-// Self-hosted variable fonts (Fontsource): no Google Fonts request, faster first paint.
-import '@fontsource-variable/bricolage-grotesque';
-import '@fontsource-variable/inter';
-import '@fontsource-variable/jetbrains-mono';
+// Self-hosted fonts (Fontsource): no Google Fonts request, faster first paint.
+// Anybody — variable weight AND width, for stretched signboard headings.
+import '@fontsource-variable/anybody/wdth.css';
+// Mukta (by Ek Type, India) — body text + Devanagari, in the three weights we use.
+import '@fontsource/mukta/400.css';
+import '@fontsource/mukta/600.css';
+import '@fontsource/mukta/800.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';

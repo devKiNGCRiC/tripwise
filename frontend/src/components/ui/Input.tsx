@@ -33,7 +33,7 @@ export function Input({ label, error, hint, id, className, ...rest }: InputProps
         aria-invalid={error ? true : undefined}
         aria-describedby={message ? messageId : undefined}
         className={cn(
-          'h-12 rounded-2xl border-2 bg-surface px-4 text-base text-ink shadow-pop-sm outline-none transition placeholder:text-ink-soft/70 focus:-translate-y-0.5 focus:shadow-pop focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky',
+          'h-12 rounded-2xl border-2 bg-surface px-4 text-base text-ink shadow-pop-sm outline-none transition placeholder:text-ink-soft/70 focus:-translate-y-0.5 focus:shadow-pop focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-deep',
           error ? 'border-danger' : 'border-line',
           className,
         )}

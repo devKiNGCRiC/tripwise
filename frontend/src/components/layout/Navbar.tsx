@@ -10,11 +10,11 @@ import { cn } from '@/lib/utils/cn';
 import { ThemeToggle } from '@/theme/ThemeToggle';
 import { Logo } from './Logo';
 
-/** Desktop nav link: mustard pill when active, soft highlight on hover. */
+/** Desktop nav link: yellow station-board pill when active, soft highlight on hover. */
 function navLinkClass({ isActive }: { isActive: boolean }) {
   return cn(
-    'rounded-full px-3 py-1.5 font-display font-bold transition focus-visible:outline-3 focus-visible:outline-sky',
-    isActive ? 'bg-mustard text-on-accent' : 'hover:bg-ink/5',
+    'rounded-full px-3 py-1.5 font-display font-bold transition focus-visible:outline-3 focus-visible:outline-sky-deep',
+    isActive ? 'bg-yellow text-on-accent' : 'hover:bg-ink/5',
   );
 }
 
@@ -62,7 +62,7 @@ export function Navbar() {
             <NavLink
               to="/passport"
               aria-label="Your passport"
-              className="grid size-10 place-items-center rounded-full border-2 border-line bg-mustard font-display text-sm font-extrabold text-on-accent shadow-pop-sm"
+              className="grid size-10 place-items-center rounded-full border-2 border-line bg-yellow font-display text-sm font-extrabold text-on-accent shadow-pop-sm"
             >
               {initials(user.name)}
             </NavLink>

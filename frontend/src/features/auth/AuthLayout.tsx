@@ -21,9 +21,9 @@ export function AuthLayout({ ticketLabel, title, subtitle, children, footer }: A
     <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-10 md:grid-cols-2 md:py-16">
       <Card className="mx-auto w-full max-w-md overflow-hidden">
         {/* Ticket header strip */}
-        <div className="flex items-center justify-between border-b-2 border-dashed border-line/40 bg-mustard px-6 py-3 text-on-accent">
-          <span className="font-mono text-xs font-bold tracking-[0.2em]">{ticketLabel}</span>
-          <span className="font-mono text-xs font-bold">TW · 2026</span>
+        <div className="flex items-center justify-between border-b-2 border-dashed border-line/40 bg-yellow px-6 py-3 text-on-accent">
+          <span className=" text-xs font-bold tracking-[0.2em]">{ticketLabel}</span>
+          <span className=" text-xs font-bold">TW · 2026</span>
         </div>
         <div className="flex flex-col gap-6 p-6 sm:p-8">
           <header>
@@ -45,13 +45,13 @@ export function AuthLayout({ ticketLabel, title, subtitle, children, footer }: A
               <br />
               not things.
             </p>
-            <p className="mt-4 font-mono text-sm tracking-widest opacity-90">EVERY TRIP = A NEW STAMP</p>
+            <p className="mt-4 text-sm tracking-widest opacity-90">EVERY TRIP = A NEW STAMP</p>
           </div>
         </div>
-        <span className="absolute top-8 left-8 -rotate-12 rounded-full border-4 border-double border-white/80 px-4 py-2 font-mono text-sm font-bold text-white">
+        <span className="absolute top-8 left-8 -rotate-12 rounded-full border-4 border-double border-white/80 px-4 py-2 text-sm font-bold text-white">
           GOA ✓
         </span>
-        <span className="absolute right-10 bottom-10 rotate-6 rounded-full border-4 border-double border-white/80 px-4 py-2 font-mono text-sm font-bold text-white">
+        <span className="absolute right-10 bottom-10 rotate-6 rounded-full border-4 border-double border-white/80 px-4 py-2 text-sm font-bold text-white">
           TOKYO ✓
         </span>
       </div>

@@ -38,7 +38,7 @@ export function Hero() {
         <h1 className="mt-6 text-5xl leading-[0.95] font-extrabold sm:text-6xl lg:text-7xl">
           Plan less.
           <br />
-          Wander <span className="relative inline-block text-coral">more.</span>
+          Wander <span className="relative inline-block text-orange">more.</span>
         </h1>
         <p className="mt-6 max-w-lg text-lg text-ink-soft">
           Tell us where, when and your vibe. TripWise builds a day-by-day itinerary that fits your budget — in seconds.
@@ -49,8 +49,8 @@ export function Hero() {
           <label htmlFor="hero-destination" className="sr-only">
             Where to?
           </label>
-          <div className="flex h-14 flex-1 items-center gap-2 rounded-full border-2 border-line bg-surface px-5 shadow-pop focus-within:outline-3 focus-within:outline-offset-2 focus-within:outline-sky">
-            <MapPin className="size-5 shrink-0 text-coral" aria-hidden />
+          <div className="flex h-14 flex-1 items-center gap-2 rounded-full border-2 border-line bg-surface px-5 shadow-pop focus-within:outline-3 focus-within:outline-offset-2 focus-within:outline-sky-deep">
+            <MapPin className="size-5 shrink-0 text-orange" aria-hidden />
             <input
               id="hero-destination"
               value={destination}
@@ -63,7 +63,7 @@ export function Hero() {
             Plan my trip
           </Button>
         </form>
-        <p className="mt-4 font-mono text-xs tracking-wide text-ink-soft">NO CARD · 5 AI TRIPS A DAY · PDF + SHARE</p>
+        <p className="mt-4 text-xs tracking-wide text-ink-soft">NO CARD · 5 AI TRIPS A DAY · PDF + SHARE</p>
       </div>
 
       {/* Decorative sample ticket — gently floats (motion respects reduced-motion). */}
@@ -77,21 +77,21 @@ export function Hero() {
         <Ticket
           stub={
             <>
-              <span className="font-mono text-xs font-bold tracking-widest">TW-GOI · 3D</span>
-              <span className="font-mono text-sm font-bold">₹12,000</span>
+              <span className=" text-xs font-bold tracking-widest">TW-GOI · 3D</span>
+              <span className=" text-sm font-bold">₹12,000</span>
             </>
           }
         >
           <div className="flex items-center justify-between">
-            <span className="font-mono text-xs font-bold tracking-[0.2em] text-ink-soft">BOARDING PASS</span>
-            <span className="rounded-full bg-teal px-2.5 py-0.5 font-mono text-[10px] font-bold text-white">AI PLANNED</span>
+            <span className=" text-xs font-bold tracking-[0.2em] text-ink-soft">BOARDING PASS</span>
+            <span className="rounded-full bg-green-deep px-2.5 py-0.5 text-[10px] font-bold text-white">AI PLANNED</span>
           </div>
           <p className="mt-3 font-display text-4xl font-extrabold">Goa</p>
           <p className="text-sm text-ink-soft">Friends · Balanced pace · Beaches & food</p>
           <ul className="mt-4 space-y-2">
             {SAMPLE_DAYS.map((d) => (
               <li key={d.day} className="flex gap-3 text-sm">
-                <span className="font-mono text-xs font-bold text-coral">{d.day}</span>
+                <span className=" text-xs font-bold text-orange">{d.day}</span>
                 <span>{d.text}</span>
               </li>
             ))}

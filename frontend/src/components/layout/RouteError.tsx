@@ -14,7 +14,7 @@ export function RouteError() {
 
   return (
     <div className="mx-auto flex max-w-xl flex-col items-center gap-4 px-4 py-24 text-center">
-      <p className="font-mono text-sm font-bold tracking-[0.3em] text-ink-soft">ERROR</p>
+      <p className=" text-sm font-bold tracking-[0.3em] text-ink-soft">ERROR</p>
       <h1 className="text-4xl font-extrabold">Turbulence!</h1>
       <p className="text-ink-soft">Something went wrong loading this page. A refresh usually fixes it.</p>
       <div className="flex gap-3">

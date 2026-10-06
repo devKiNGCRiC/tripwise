@@ -24,7 +24,7 @@ export function DestinationCard({ destination }: { destination: Destination }) {
   return (
     <Link
       to={`/destinations/${destination.slug}`}
-      className="group block rounded-card border-2 border-line bg-surface p-3 shadow-pop pop-press focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-sky"
+      className="group block rounded-card border-2 border-line bg-surface p-3 shadow-pop pop-press focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-sky-deep"
     >
       <div className="relative overflow-hidden rounded-xl border-2 border-line">
         <img
@@ -51,7 +51,7 @@ export function DestinationCard({ destination }: { destination: Destination }) {
             <Tag key={vibe}>{vibe}</Tag>
           ))}
         </div>
-        <p className="mt-3 font-mono text-sm">
+        <p className="mt-3 text-sm">
           from <strong>{formatMoney(destination.avgDailyCost)}</strong>/day
         </p>
       </div>

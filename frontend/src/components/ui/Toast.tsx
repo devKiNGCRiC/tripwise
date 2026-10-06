@@ -37,7 +37,7 @@ const ToastContext = createContext<ToastContextValue | null>(null);
 
 /** Icon + accent colour for each tone. */
 const TONES: Record<ToastTone, { icon: typeof Info; accent: string }> = {
-  success: { icon: CircleCheck, accent: 'bg-teal' },
+  success: { icon: CircleCheck, accent: 'bg-green-deep' },
   error: { icon: CircleAlert, accent: 'bg-danger' },
   info: { icon: Info, accent: 'bg-sky' },
 };
@@ -98,7 +98,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                   type="button"
                   onClick={() => dismiss(toast.id)}
                   aria-label="Dismiss notification"
-                  className="grid size-8 place-items-center rounded-full hover:bg-ink/5 focus-visible:outline-3 focus-visible:outline-sky"
+                  className="grid size-8 place-items-center rounded-full hover:bg-ink/5 focus-visible:outline-3 focus-visible:outline-sky-deep"
                 >
                   <X className="size-4" aria-hidden />
                 </button>

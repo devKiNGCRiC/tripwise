@@ -8,10 +8,10 @@ import { cn } from '@/lib/utils/cn';
 export type StampTone = 'teal' | 'danger' | 'mustard' | 'violet';
 
 const TONES: Record<StampTone, string> = {
-  teal: 'border-teal text-teal',
+  teal: 'border-green-deep text-green-deep',
   danger: 'border-danger text-danger',
-  mustard: 'border-mustard bg-mustard/15 text-ink',
-  violet: 'border-violet text-violet',
+  mustard: 'border-yellow bg-yellow/15 text-ink',
+  violet: 'border-sky-deep text-sky-deep',
 };
 
 interface StampProps {
@@ -26,7 +26,7 @@ export function Stamp({ children, tone = 'teal', rotate = -8, className }: Stamp
   return (
     <span
       className={cn(
-        'inline-flex items-center justify-center rounded-full border-4 border-double px-4 py-1.5 font-mono text-xs font-bold tracking-[0.2em] uppercase',
+        'inline-flex items-center justify-center rounded-full border-4 border-double px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase',
         TONES[tone],
         className,
       )}

@@ -33,15 +33,15 @@ export default function PassportPage() {
       <h1 className="text-4xl font-extrabold sm:text-5xl">Your passport</h1>
 
       <Card className="mt-8 overflow-hidden">
-        <div className="flex items-center justify-between bg-teal px-6 py-3 text-white">
-          <span className="font-mono text-xs font-bold tracking-[0.25em]">TRIPWISE · PASSPORT</span>
-          <span className="font-mono text-xs font-bold uppercase">{user.role}</span>
+        <div className="flex items-center justify-between bg-green-deep px-6 py-3 text-white">
+          <span className=" text-xs font-bold tracking-[0.25em]">TRIPWISE · PASSPORT</span>
+          <span className=" text-xs font-bold uppercase">{user.role}</span>
         </div>
         <div className="flex flex-col gap-6 p-6 sm:flex-row sm:items-center">
-          <div className="grid size-20 shrink-0 place-items-center rounded-2xl border-2 border-line bg-mustard font-display text-3xl font-extrabold text-on-accent shadow-pop-sm">
+          <div className="grid size-20 shrink-0 place-items-center rounded-2xl border-2 border-line bg-yellow font-display text-3xl font-extrabold text-on-accent shadow-pop-sm">
             {user.name.charAt(0).toUpperCase()}
           </div>
-          <dl className="grid flex-1 grid-cols-1 gap-3 font-mono text-sm sm:grid-cols-2">
+          <dl className="grid flex-1 grid-cols-1 gap-3 text-sm sm:grid-cols-2">
             <div>
               <dt className="text-xs tracking-widest text-ink-soft">NAME</dt>
               <dd className="font-bold">{user.name}</dd>

@@ -1,0 +1,496 @@
+<!doctype html>
+<!--
+  tripwise-yatra-preview.html — PREVIEW of the "Yatra Mela" direction (not part of the app).
+  Signature: an Indian-railway departure board headline that flips through destinations,
+  a 3D globe, and a living kite-festival sky (sky lanterns at night).
+  Fonts: Anybody (variable width display) + Mukta (Indian-designed body + Devanagari).
+-->
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TripWise Yatra Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=Mukta:wght@400;500;600;800&display=swap" rel="stylesheet" />
+<style>
+/* ── Tokens: every colour has one job ─────────────────────────────── */
+:root {
+  --saffron: #ff9933;  --orange: #ff7a00;  --yellow: #ffc72c;  --red: #e63946;
+  --sky: #5bc8f5;      --sky-deep: #1b8fd1; --green: #9be08a;   --green-deep: #2f9e55;
+  --black: #000;       --white: #fff;
+
+  --page: #ffffff;  --page-2: #fff4e0;  --text: #000;  --text-soft: #3d3d45;  --line: #000;
+  --sky-top: #7fd3f7;  --sky-mid: #c6ecfb;  --sky-low: #fff3d6;
+  --brand: linear-gradient(115deg, var(--saffron), var(--orange));
+  --ai: linear-gradient(115deg, var(--sky), #9b8cff 55%, var(--saffron));
+  --pop: 5px 5px 0 var(--black);
+  --dots: radial-gradient(circle, rgb(0 0 0 / .09) 1.4px, transparent 1.6px);
+  color-scheme: light;
+}
+[data-theme='dark'] {
+  --page: #0a0f24; --page-2: #121a3a; --text: #fff8ec; --text-soft: #c9c5d8; --line: #fff8ec;
+  --sky-top: #050817; --sky-mid: #0d1433; --sky-low: #2a1745;
+  --pop: 5px 5px 0 rgb(255 248 236 / .9);
+  --dots: radial-gradient(circle, rgb(255 255 255 / .08) 1.4px, transparent 1.6px);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font: 400 18px/1.55 Mukta, system-ui, sans-serif; color: var(--text); background: var(--page);
+  overflow-x: clip; transition: background .5s, color .5s; }
+h1, h2, h3 { font-family: Anybody, sans-serif; margin: 0; line-height: .95; }
+h2 { font-size: clamp(40px, 5.6vw, 76px); font-weight: 850; font-stretch: 125%; letter-spacing: -.02em; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 22px; }
+.lede { max-width: 54ch; color: var(--text-soft); font-size: 20px; margin: 14px 0 0; }
+:focus-visible { outline: 3px solid var(--sky-deep); outline-offset: 3px; }
+
+/* Buttons: chunky, outlined, press into their shadow */
+.btn { font: 800 17px/1 Anybody; font-stretch: 112%; border: 2.5px solid var(--black); border-radius: 14px; padding: 16px 24px;
+  background: var(--brand); color: var(--black); box-shadow: var(--pop); cursor: pointer; transition: transform .12s, box-shadow .12s, font-stretch .3s; }
+.btn:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--black); font-stretch: 125%; }
+.btn:active { transform: translate(5px,5px); box-shadow: none; }
+.btn.quiet { background: var(--white); }
+.btn.ai { background: var(--ai); }
+[data-theme='dark'] .btn { border-color: var(--black); }
+
+/* ── Top bar ── */
+.bar { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--page) 88%, transparent); backdrop-filter: blur(10px);
+  border-bottom: 2.5px solid var(--line); }
+.bar .wrap { height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 10px; font: 900 24px Anybody; font-stretch: 130%; color: var(--text); text-decoration: none; }
+.brand b { display: grid; place-items: center; width: 40px; height: 40px; border: 2.5px solid var(--black); border-radius: 12px;
+  background: var(--brand); box-shadow: 3px 3px 0 var(--black); transform: rotate(-8deg); font-size: 20px; }
+.links { display: flex; gap: 6px; }
+.links a { font: 600 17px Mukta; color: var(--text); text-decoration: none; padding: 6px 12px; border-radius: 10px; }
+.links a:hover { background: var(--yellow); color: var(--black); }
+.icon-btn { width: 44px; height: 44px; border-radius: 12px; border: 2.5px solid var(--line); background: var(--page); color: var(--text);
+  font-size: 20px; cursor: pointer; }
+@media (max-width: 760px) { .links, .wide-only { display: none; } }
+.signup { white-space: nowrap; }
+
+/* ── Hero sky ── */
+.hero { position: relative; overflow: hidden; background: linear-gradient(180deg, var(--sky-top), var(--sky-mid) 55%, var(--sky-low)); }
+.hero .wrap { position: relative; z-index: 3; display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; align-items: center; padding-top: 56px; padding-bottom: 90px; }
+/* A crisp sun disc with soft halo rings — no blur, so it never muddies into the blue sky. */
+.sun { position: absolute; z-index: 0; width: 150px; height: 150px; right: 6%; top: 34px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 38%, #fff3b8, var(--yellow) 45%, var(--saffron));
+  box-shadow: 0 0 0 22px rgb(255 199 44 / .22), 0 0 0 48px rgb(255 199 44 / .12), 0 0 0 80px rgb(255 199 44 / .06); }
+[data-theme='dark'] .sun { background: radial-gradient(circle at 40% 38%, #fffaf0, #e9e4d4); width: 96px; height: 96px; top: 50px;
+  box-shadow: 0 0 0 18px rgb(255 255 255 / .06), 0 0 60px 10px rgb(255 248 236 / .25); }
+.stars { position: absolute; inset: 0; z-index: 0; opacity: 0; transition: opacity .6s;
+  background-image: radial-gradient(1.5px 1.5px at 10% 20%, #fff, transparent), radial-gradient(1px 1px at 30% 70%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 55% 15%, #fff, transparent), radial-gradient(1px 1px at 75% 45%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 90% 80%, #fff, transparent), radial-gradient(1px 1px at 45% 85%, #fff, transparent),
+    radial-gradient(1px 1px at 20% 50%, #fff, transparent), radial-gradient(1.5px 1.5px at 65% 60%, #fff, transparent); }
+[data-theme='dark'] .stars { opacity: 1; }
+
+/* Kites (day) and sky lanterns (night) — the living background */
+.kite { position: absolute; z-index: 1; transform-origin: 50% 100%; animation: sway var(--d, 7s) ease-in-out infinite alternate; transition: opacity .6s; }
+.kite svg { display: block; overflow: visible; }
+@keyframes sway { from { transform: rotate(-7deg) translateY(0); } to { transform: rotate(6deg) translateY(-14px); } }
+.lantern { position: absolute; z-index: 1; width: 22px; height: 30px; border-radius: 40% 40% 30% 30%; opacity: 0;
+  background: radial-gradient(circle at 50% 70%, #fff3b0, var(--saffron) 55%, #b84a00);
+  box-shadow: 0 0 22px 6px rgb(255 153 51 / .55); animation: rise var(--d, 18s) linear infinite; animation-delay: var(--delay, 0s); }
+@keyframes rise { 0% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-260px) translateX(18px); } 100% { transform: translateY(-560px) translateX(-10px); } }
+[data-theme='dark'] .kite { opacity: 0; }
+[data-theme='dark'] .lantern { opacity: .95; }
+
+/* ── Departure board (the signature) ── */
+.board { display: block; width: min(100%, 620px); background: var(--yellow); color: var(--black); border: 3px solid var(--black); border-radius: 10px;
+  padding: 18px 26px 16px; box-shadow: 8px 8px 0 var(--black); position: relative; }
+.board::before, .board::after { content: ''; position: absolute; top: -34px; width: 6px; height: 34px; background: #2b2b2b; }
+.board::before { left: 18%; } .board::after { right: 18%; }
+.board .next { font: 700 20px Mukta; letter-spacing: .02em; display: flex; justify-content: space-between; gap: 20px; }
+/* --n = letters in the name: long names shrink so VARANASI fits as well as GOA. */
+.flaps { --n: 6; display: flex; gap: 5px; margin: 8px 0 6px; min-height: 1em; font: 900 calc(clamp(40px, 6.6vw, 88px) * min(1, 5.5 / var(--n)))/1 Anybody; font-stretch: 135%; }
+.flap { display: inline-block; min-width: .62em; text-align: center; background: var(--black); color: var(--yellow);
+  border-radius: 6px; padding: 6px 2px 4px; position: relative; perspective: 300px; }
+.flap::after { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: var(--yellow); opacity: .25; }
+/* Named is-flapping (not .flip) so it can't collide with the ticket's .flip button styles. */
+.flap.is-flapping { animation: flap .45s cubic-bezier(.3,1.4,.5,1); }
+@keyframes flap { 0% { transform: rotateX(90deg); } 100% { transform: rotateX(0); } }
+.hindi { font: 800 clamp(26px, 3.2vw, 40px)/1.1 Mukta; }
+.hero h1 { font-size: clamp(30px, 3.4vw, 46px); font-weight: 800; font-stretch: 110%; margin-top: 34px; max-width: 18ch; line-height: 1.05; }
+.plan { margin-top: 26px; display: flex; gap: 12px; flex-wrap: wrap; max-width: 560px; }
+.plan label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.plan input { flex: 1; min-width: 230px; height: 58px; border-radius: 14px; border: 2.5px solid var(--black); padding: 0 20px;
+  font: 500 18px Mukta; background: var(--white); color: var(--black); box-shadow: var(--pop); }
+.fineprint { margin-top: 14px; font-size: 16px; color: var(--text-soft); }
+
+#globe { width: 100%; height: 560px; cursor: grab; display: block; }
+.globe-wrap { position: relative; }
+.chip { position: absolute; background: var(--white); color: var(--black); border: 2.5px solid var(--black); border-radius: 12px;
+  padding: 8px 12px; font: 600 15px Mukta; box-shadow: 4px 4px 0 var(--black); line-height: 1.2; }
+.chip b { font: 800 18px Anybody; font-stretch: 120%; display: block; }
+
+/* Festival bunting divider */
+.bunting { position: relative; z-index: 4; height: 54px; margin-top: -28px; }
+.bunting svg { width: 100%; height: 100%; display: block; }
+
+/* ── Sections ── */
+.sec { padding: 96px 0; background-image: var(--dots); background-size: 26px 26px; }
+.sec.warm { background-color: var(--page-2); }
+
+/* Route: the 3 steps really are a sequence → stations on a railway line */
+.route { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+.route::before { content: ''; position: absolute; left: 4%; right: 4%; top: 30px; height: 10px; border-radius: 6px;
+  background: repeating-linear-gradient(90deg, var(--black) 0 22px, var(--yellow) 22px 44px); border: 2px solid var(--black); }
+.stop { position: relative; z-index: 1; }
+.stop .dot { width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--black); display: grid; place-items: center;
+  font: 900 30px Anybody; color: var(--black); box-shadow: 4px 4px 0 var(--black); }
+.stop h3 { font-size: 30px; font-weight: 850; font-stretch: 118%; margin-top: 20px; }
+.stop p { color: var(--text-soft); margin: 8px 0 0; max-width: 32ch; }
+.train { position: absolute; top: -26px; left: 2%; font-size: 34px; z-index: 2; transition: left 1.2s cubic-bezier(.5,0,.2,1); }
+@media (max-width: 760px) { .route { grid-template-columns: 1fr; } .route::before, .train { display: none; } }
+
+/* Destination postcards with a station-board title */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 32px; margin-top: 48px; perspective: 1000px; }
+.card { --rx: 0deg; --ry: 0deg; --mx: 50%; --my: 50%; position: relative; text-decoration: none; color: var(--black); display: block;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)); transform-style: preserve-3d; transition: transform .15s ease-out; }
+.card .photo { position: relative; border: 3px solid var(--black); border-radius: 16px; overflow: hidden; box-shadow: var(--pop); }
+.card img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .6s; }
+.card:hover img { transform: scale(1.06); }
+.card .shine { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .2s;
+  background: radial-gradient(circle at var(--mx) var(--my), rgb(255 255 255 / .45), transparent 45%); }
+.card:hover .shine { opacity: 1; }
+.card .sign { position: absolute; left: 16px; right: 16px; bottom: 16px; transform: translateZ(50px); background: var(--yellow);
+  border: 3px solid var(--black); border-radius: 8px; padding: 8px 12px 6px; text-align: center; box-shadow: 4px 4px 0 var(--black); }
+.card .sign h3 { font-size: 34px; font-weight: 900; font-stretch: 135%; }
+.card .sign span { font: 800 20px Mukta; }
+.card .price { position: absolute; top: 14px; left: 14px; transform: translateZ(40px); background: var(--white); border: 2.5px solid var(--black);
+  border-radius: 999px; padding: 4px 12px; font: 700 15px Mukta; }
+.card .vibe { position: absolute; top: 14px; right: 14px; transform: translateZ(40px) rotate(6deg); border-radius: 999px; padding: 4px 12px;
+  font: 700 15px Mukta; border: 2.5px solid var(--black); }
+
+/* Ticket flip + passport */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 48px; }
+@media (max-width: 860px) { .duo, .hero .wrap { grid-template-columns: 1fr; } #globe { height: 380px; } }
+.flip { perspective: 1300px; cursor: pointer; border: 0; padding: 0; background: none; width: 100%; text-align: left; color: inherit; font: inherit; }
+.flip-in { position: relative; height: 360px; transform-style: preserve-3d; transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+.flip[aria-pressed='true'] .flip-in { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; border: 3px solid var(--black); border-radius: 18px; box-shadow: var(--pop);
+  overflow: hidden; display: grid; grid-template-columns: 1fr 120px; background: var(--white); color: var(--black); }
+.face.back { transform: rotateY(180deg); background: var(--green); grid-template-columns: 1fr; padding: 26px; }
+.face .main { padding: 24px; }
+.face .stub { border-left: 3px dashed var(--black); background: var(--saffron); display: grid; place-items: center; text-align: center; font: 800 18px Mukta; padding: 10px; }
+.face .stub b { font: 900 28px Anybody; font-stretch: 110%; display: block; }
+.face h3 { font-size: 52px; font-weight: 900; font-stretch: 135%; }
+.face .who { margin: 4px 0 14px; color: #3d3d45; }
+.face ol { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 8px; }
+.face li { display: grid; grid-template-columns: 64px 1fr; font-size: 17px; }
+.face li strong { font: 800 15px Anybody; font-stretch: 115%; color: var(--orange); padding-top: 3px; }
+.face.back dl { display: grid; grid-template-columns: 1fr auto; gap: 10px 20px; font-size: 19px; margin: 18px 0 0; }
+.face.back dt { font-weight: 600; } .face.back dd { margin: 0; font-weight: 800; }
+.note { margin-top: 14px; color: var(--text-soft); font-size: 16px; }
+
+.passport { position: relative; height: 360px; border: 3px solid var(--black); border-radius: 18px; box-shadow: var(--pop); overflow: hidden;
+  background: linear-gradient(140deg, #0f3d68, #0e6f7a); color: #fff8ec; padding: 26px; }
+.passport::before { content: ''; position: absolute; right: -40px; top: -40px; width: 200px; height: 200px; border-radius: 50%;
+  border: 2px solid rgb(255 255 255 / .2); box-shadow: 0 0 0 26px rgb(255 255 255 / .05), 0 0 0 52px rgb(255 255 255 / .04); }
+.passport h3 { font-size: 34px; font-weight: 850; font-stretch: 120%; }
+.passport p { margin: 2px 0 0; opacity: .8; }
+.pages { position: absolute; inset: 104px 22px 22px; border-radius: 12px; background: #fdf6e9; color: var(--black);
+  background-image: radial-gradient(circle, rgb(0 0 0 / .07) 1.2px, transparent 1.4px); background-size: 18px 18px; }
+.passport.thump { animation: thump .32s ease-out; }
+@keyframes thump { 30% { transform: translateY(5px); } }
+.stamp { position: absolute; border: 4px double; border-radius: 50%; width: 92px; height: 92px; display: grid; place-content: center; text-align: center;
+  font: 900 15px/1.05 Anybody; font-stretch: 125%; animation: stampIn .45s cubic-bezier(.2,1.6,.4,1) both; mix-blend-mode: multiply; }
+.stamp small { font: 800 13px Mukta; display: block; }
+@keyframes stampIn { from { transform: scale(2.6) rotate(var(--r)); opacity: 0; } to { transform: scale(1) rotate(var(--r)); opacity: .9; } }
+
+/* AI moment */
+.gen { position: relative; overflow: hidden; margin-top: 44px; border: 3px solid var(--black); border-radius: 22px; height: 240px;
+  background: var(--ai); box-shadow: var(--pop); }
+.gen .msg { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; color: var(--black); z-index: 2; padding: 0 20px; }
+.gen .msg h3 { font-size: clamp(30px, 4vw, 46px); font-weight: 900; font-stretch: 125%; }
+.gen .msg p { margin: 8px 0 0; font-weight: 600; min-height: 1.5em; }
+.gen svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plane { position: absolute; font-size: 34px; offset-path: path('M -60 170 C 220 40, 420 220, 660 100 S 1120 30, 1340 130'); animation: fly 7s linear infinite; }
+@keyframes fly { to { offset-distance: 100%; } }
+
+/* Colours row */
+.paints { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 40px; }
+.paint { border: 3px solid var(--black); border-radius: 16px; overflow: hidden; background: var(--white); color: var(--black); box-shadow: 4px 4px 0 var(--black); }
+.paint i { display: block; height: 78px; }
+.paint p { margin: 0; padding: 10px 12px 12px; font-size: 15px; line-height: 1.3; }
+.paint b { font: 800 18px Anybody; font-stretch: 115%; display: block; }
+
+footer { border-top: 3px solid var(--line); padding: 36px 0 70px; color: var(--text-soft); background: var(--page-2); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="bar"><div class="wrap">
+  <a class="brand" href="#"><b>✈</b>TripWise</a>
+  <nav class="links" aria-label="Main"><a href="#explore">Explore</a><a href="#how">How it works</a><a href="#trips">My trips</a></nav>
+  <div style="display:flex;gap:10px"><button class="icon-btn" id="theme" aria-label="Switch to night flight theme">🌙</button>
+    <button class="btn signup" style="padding:11px 18px;font-size:15px">Sign up<span class="wide-only"> free</span></button></div>
+</div></header>
+
+<!-- HERO: kite-festival sky, departure board, 3D globe -->
+<section class="hero">
+  <div class="sun"></div><div class="stars"></div>
+  <div id="sky"></div>
+  <div class="wrap">
+    <div>
+      <div class="board" role="status" aria-live="polite">
+        <div class="next"><span>Next stop</span><span>Platform 1</span></div>
+        <div class="flaps" id="flaps" aria-label="Goa"></div>
+        <div class="hindi" id="hindi">गोवा</div>
+      </div>
+      <h1>Your whole trip, planned day by day in seconds.</h1>
+      <form class="plan" onsubmit="event.preventDefault()">
+        <label for="where">Where do you want to go?</label>
+        <input id="where" placeholder="Goa, Ladakh, Bali…" />
+        <button class="btn">Plan my trip</button>
+      </form>
+      <p class="fineprint">Free forever. 5 AI-planned trips a day, PDF download, and a link to share with your gang.</p>
+    </div>
+    <div class="globe-wrap">
+      <canvas id="globe" aria-label="3D globe showing flight routes from India"></canvas>
+      <div class="chip" style="top:60px;left:0"><b>₹12,000</b>Goa, 3 days for 2</div>
+      <div class="chip" style="bottom:70px;right:0;background:var(--green)"><b>Saved!</b>Stamp added to passport</div>
+    </div>
+  </div>
+</section>
+
+<div class="bunting" aria-hidden="true"><svg id="bunting" preserveAspectRatio="none"></svg></div>
+
+<!-- HOW IT WORKS: a real sequence, drawn as a railway route -->
+<section class="sec" id="how"><div class="wrap">
+  <h2>Three stops to a full plan</h2>
+  <p class="lede">No forms that feel like tax returns. Tap a few choices and let the planner do the rest.</p>
+  <div class="route" id="route">
+    <span class="train" id="train" aria-hidden="true">🚂</span>
+    <div class="stop"><div class="dot" style="background:var(--yellow)">1</div><h3>Pick your vibe</h3><p>Where, when, budget, who's coming, and the stuff you love — beaches, food, temples, nightlife.</p></div>
+    <div class="stop"><div class="dot" style="background:var(--sky)">2</div><h3>AI plans every day</h3><p>Morning to night, with rough costs, local tips and a packing list that fits the weather.</p></div>
+    <div class="stop"><div class="dot" style="background:var(--green)">3</div><h3>Save, share, go</h3><p>Download the PDF, send the link to your friends, and collect a stamp in your passport.</p></div>
+  </div>
+</div></section>
+
+<!-- DESTINATIONS -->
+<section class="sec warm" id="explore"><div class="wrap">
+  <h2>Where India is heading</h2>
+  <p class="lede">Hover a postcard. Every one opens a ready-made plan you can tweak.</p>
+  <div class="cards">
+    <a class="card" href="#"><div class="photo"><img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=700&q=70&auto=format&fit=crop" alt="Goa beach" /><span class="shine"></span></div>
+      <span class="price">from ₹3,500/day</span><span class="vibe" style="background:var(--sky)">Beach</span>
+      <div class="sign"><h3>GOA</h3><span>गोवा</span></div></a>
+    <a class="card" href="#"><div class="photo"><img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?w=700&q=70&auto=format&fit=crop" alt="Road through Ladakh" /><span class="shine"></span></div>
+      <span class="price">from ₹4,500/day</span><span class="vibe" style="background:var(--saffron)">Road trip</span>
+      <div class="sign"><h3>LADAKH</h3><span>लद्दाख</span></div></a>
+    <a class="card" href="#"><div class="photo"><img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?w=700&q=70&auto=format&fit=crop" alt="Hawa Mahal, Jaipur" /><span class="shine"></span></div>
+      <span class="price">from ₹3,000/day</span><span class="vibe" style="background:var(--green)">Culture</span>
+      <div class="sign"><h3>JAIPUR</h3><span>जयपुर</span></div></a>
+  </div>
+</div></section>
+
+<!-- TICKET + PASSPORT -->
+<section class="sec" id="trips"><div class="wrap">
+  <h2>Your trip, as a ticket</h2>
+  <p class="lede">Flip it for the money talk. Save it and it lands in your passport.</p>
+  <div class="duo">
+    <div>
+      <button class="flip" id="flip" aria-pressed="false" aria-label="Flip ticket to see cost breakdown">
+        <div class="flip-in">
+          <div class="face">
+            <div class="main"><h3>Goa</h3><p class="who">3 days for 2 friends, balanced pace</p>
+              <ol><li><strong>Day 1</strong>Fontainhas walk, then sunset at Vagator</li><li><strong>Day 2</strong>Dudhsagar Falls and a spice-farm lunch</li><li><strong>Day 3</strong>Kayaking at Palolem, night market</li></ol></div>
+            <div class="stub"><div><b>₹12k</b>for 2</div></div>
+          </div>
+          <div class="face back"><h3 style="font-size:40px">Where ₹12,000 goes</h3>
+            <dl><dt>Stay, 2 nights</dt><dd>₹5,400</dd><dt>Food</dt><dd>₹3,000</dd><dt>Scooter + cabs</dt><dd>₹1,800</dd><dt>Activities</dt><dd>₹1,800</dd></dl></div>
+        </div>
+      </button>
+      <p class="note">Tap the ticket to flip it.</p>
+    </div>
+    <div>
+      <div class="passport" id="passport"><h3>Riya Sharma</h3><p>Passport · 4 trips planned</p><div class="pages" id="pages"></div></div>
+      <div style="margin-top:20px"><button class="btn" id="stampBtn">Save this trip</button></div>
+    </div>
+  </div>
+  <div class="gen" aria-live="polite">
+    <svg viewBox="0 0 1280 240" preserveAspectRatio="none" aria-hidden="true"><path d="M -60 170 C 220 40, 420 220, 660 100 S 1120 30, 1340 130" fill="none" stroke="#000" stroke-width="3" stroke-dasharray="10 14" opacity=".45" /></svg>
+    <span class="plane" aria-hidden="true">✈️</span>
+    <div class="msg"><h3>Planning your Goa trip</h3><p id="genline">Finding the best sunset spots</p></div>
+  </div>
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:28px"><button class="btn">Plan my trip</button><button class="btn quiet">See an example</button><button class="btn ai">Generate with AI</button></div>
+</div></section>
+
+<!-- COLOURS -->
+<section class="sec warm"><div class="wrap">
+  <h2>Colours of the road</h2>
+  <p class="lede">Borrowed from truck art, railway boards and kite season. Each one has a single job.</p>
+  <div class="paints">
+    <div class="paint"><i style="background:var(--brand)"></i><p><b>Kesari</b>Saffron to orange. Main buttons and brand.</p></div>
+    <div class="paint"><i style="background:var(--yellow)"></i><p><b>Peela</b>Board yellow. Signs and highlights.</p></div>
+    <div class="paint"><i style="background:var(--sky)"></i><p><b>Aasmani</b>Sky blue. The sky, links, AI.</p></div>
+    <div class="paint"><i style="background:var(--green)"></i><p><b>Hara</b>Leaf green. Saved, success, budget.</p></div>
+    <div class="paint"><i style="background:var(--red)"></i><p><b>Laal</b>Signal red. Alerts and hot deals only.</p></div>
+    <div class="paint"><i style="background:linear-gradient(90deg,#000 50%,#fff 50%);border-bottom:3px solid #000"></i><p><b>Kaala, Safed</b>Black ink on white.</p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">Preview of the "Yatra Mela" direction. Press 🌙 for Night Flight: lanterns replace the kites.</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── Theme toggle (globe re-tints too) ── */
+const themeBtn = document.getElementById('theme');
+themeBtn.onclick = () => {
+  const dark = document.documentElement.dataset.theme !== 'dark';
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  themeBtn.textContent = dark ? '☀️' : '🌙';
+  themeBtn.setAttribute('aria-label', dark ? 'Switch to day theme' : 'Switch to night flight theme');
+  window.setGlobeTheme?.(dark);
+};
+
+/* ── Kite-festival sky: paper kites on strings (day) + rising sky lanterns (night) ── */
+const sky = document.getElementById('sky');
+const KITES = [
+  { x: 2, y: 64, s: 50, c: ['#ff9933', '#e63946'], d: 6 }, { x: 40, y: 8, s: 38, c: ['#ffc72c', '#2f9e55'], d: 8 },
+  { x: 47, y: 62, s: 30, c: ['#e63946', '#ffc72c'], d: 7 }, { x: 88, y: 12, s: 46, c: ['#9be08a', '#ff7a00'], d: 9 },
+  { x: 72, y: 70, s: 34, c: ['#ff7a00', '#5bc8f5'], d: 6.5 },
+];
+KITES.forEach(({ x, y, s, c, d }) => {
+  const k = document.createElement('div');
+  k.className = 'kite'; k.style.cssText = `left:${x}%;top:${y}%;--d:${d}s`;
+  k.innerHTML = `<svg width="${s}" height="${s * 3}" viewBox="0 0 40 120" aria-hidden="true">
+    <path d="M20 0 L40 22 L20 50 L0 22 Z" fill="${c[0]}" stroke="#000" stroke-width="1.6"/>
+    <path d="M20 0 L40 22 L20 22 Z" fill="${c[1]}"/><path d="M20 0 V50 M0 22 H40" stroke="#000" stroke-width="1.2"/>
+    <path d="M20 50 l-5 9 h10 z" fill="${c[1]}" stroke="#000" stroke-width="1.2"/>
+    <path d="M20 50 C 30 75, 5 95, 22 120" fill="none" stroke="rgb(0 0 0 / .35)" stroke-width="1"/></svg>`;
+  sky.appendChild(k);
+});
+for (let i = 0; i < 9; i++) {
+  const l = document.createElement('span');
+  l.className = 'lantern';
+  l.style.cssText = `left:${5 + i * 10.5}%;bottom:${-40 - (i % 3) * 30}px;--d:${14 + (i % 4) * 3}s;--delay:-${i * 2.1}s;transform:scale(${0.7 + (i % 3) * 0.2})`;
+  sky.appendChild(l);
+}
+
+/* ── Departure board: split-flap letters cycle through destinations ── */
+const STOPS = [['GOA', 'गोवा'], ['MANALI', 'मनाली'], ['JAIPUR', 'जयपुर'], ['LADAKH', 'लद्दाख'], ['VARANASI', 'वाराणसी'], ['BALI', 'बाली']];
+const flaps = document.getElementById('flaps'), hindi = document.getElementById('hindi');
+let stop = 0;
+function showStop(i) {
+  const [en, hi] = STOPS[i];
+  flaps.setAttribute('aria-label', en);
+  flaps.style.setProperty('--n', Math.max(en.length, 3));
+  flaps.innerHTML = '';
+  [...en].forEach((ch, j) => {
+    const f = document.createElement('span'); f.className = 'flap'; f.textContent = ch; f.setAttribute('aria-hidden', 'true');
+    if (!reduceMotion) { f.style.animationDelay = `${j * 60}ms`; f.classList.add('is-flapping'); }
+    flaps.appendChild(f);
+  });
+  hindi.textContent = hi;
+}
+showStop(0);
+if (!reduceMotion) setInterval(() => { stop = (stop + 1) % STOPS.length; showStop(stop); }, 3200);
+
+/* ── Bunting: triangle flags on a sagging string, in the palette ── */
+(function bunting() {
+  const svg = document.getElementById('bunting'), W = 1600, H = 54, cols = ['#ff9933', '#ffc72c', '#9be08a', '#e63946', '#5bc8f5', '#ff7a00'];
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  let out = '';
+  const sag = (x) => 8 + Math.sin((x / W) * Math.PI * 4) * 6;
+  for (let x = 0, i = 0; x < W; x += 40, i++) {
+    const y1 = sag(x), y2 = sag(x + 40);
+    out += `<path d="M${x} ${y1} L${x + 40} ${y2} L${x + 20} ${(y1 + y2) / 2 + 38} Z" fill="${cols[i % cols.length]}" stroke="#000" stroke-width="2"/>`;
+  }
+  out += `<path d="M0 ${sag(0)} ${Array.from({ length: 41 }, (_, i) => `L${i * 40} ${sag(i * 40)}`).join(' ')}" fill="none" stroke="#000" stroke-width="2.5"/>`;
+  svg.innerHTML = out;
+})();
+
+/* ── Route: the train rolls to whichever stop you hover ── */
+const train = document.getElementById('train');
+document.querySelectorAll('.stop').forEach((s, i) => s.addEventListener('pointerenter', () => (train.style.left = `${2 + i * 33}%`)));
+
+/* ── 3D tilt + shine on postcards ── */
+document.querySelectorAll('.card').forEach((card) => {
+  card.addEventListener('pointermove', (e) => {
+    if (reduceMotion) return;
+    const r = card.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+    card.style.setProperty('--ry', `${(px - 0.5) * 16}deg`); card.style.setProperty('--rx', `${(0.5 - py) * 12}deg`);
+    card.style.setProperty('--mx', `${px * 100}%`); card.style.setProperty('--my', `${py * 100}%`);
+  });
+  card.addEventListener('pointerleave', () => { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); });
+});
+
+/* ── Ticket flip ── */
+const flip = document.getElementById('flip');
+flip.onclick = () => flip.setAttribute('aria-pressed', String(flip.getAttribute('aria-pressed') !== 'true'));
+
+/* ── Passport stamps (round, double-ringed, with Hindi) ── */
+const STAMPS = [['GOA', 'गोवा', '#2f9e55'], ['LADAKH', 'लद्दाख', '#1b8fd1'], ['JAIPUR', 'जयपुर', '#e63946'], ['BALI', 'बाली', '#ff7a00'], ['MANALI', 'मनाली', '#7a3fa0']];
+let n = 0;
+function addStamp() {
+  const [en, hi, col] = STAMPS[n % STAMPS.length]; n++;
+  const s = document.createElement('span'); const r = Math.round(Math.random() * 36 - 18);
+  s.className = 'stamp'; s.style.cssText = `color:${col};border-color:${col};--r:${r}deg;left:${4 + Math.random() * 66}%;top:${4 + Math.random() * 46}%`;
+  s.innerHTML = `${en}<small>${hi}</small>`;
+  document.getElementById('pages').appendChild(s);
+  const p = document.getElementById('passport'); p.classList.remove('thump'); void p.offsetWidth; p.classList.add('thump');
+}
+document.getElementById('stampBtn').onclick = addStamp;
+addStamp(); addStamp();
+
+/* ── AI moment: rotating status lines ── */
+const LINES = ['Finding the best sunset spots', 'Checking what fits ₹12,000', 'Adding street food you can’t miss', 'Packing for 31°C and a little rain'];
+let li = 0; if (!reduceMotion) setInterval(() => (document.getElementById('genline').textContent = LINES[++li % LINES.length]), 2200);
+
+/* ── 3D globe: textured Earth, India facing you, flight arcs, flying plane ── */
+(function globe() {
+  const canvas = document.getElementById('globe');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+  camera.position.set(0, 0.3, 6.2);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+  const sun = new THREE.DirectionalLight(0xffe2b8, 0.9); sun.position.set(4, 3, 5); scene.add(sun);
+  const world = new THREE.Group(); scene.add(world);
+  const R = 1.6;
+  const tex = new THREE.TextureLoader().load('https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_atmos_2048.jpg');
+  const earth = new THREE.Mesh(new THREE.SphereGeometry(R, 64, 64), new THREE.MeshPhongMaterial({ map: tex, color: 0xdaf4ff, emissive: 0x0b3a5a, emissiveIntensity: 0.22, shininess: 18 }));
+  world.add(earth);
+  const glow = new THREE.ShaderMaterial({ uniforms: { c: { value: new THREE.Color(0xffffff) } },
+    vertexShader: 'varying vec3 vN; void main(){ vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+    fragmentShader: 'uniform vec3 c; varying vec3 vN; void main(){ float i = pow(0.62 - dot(vN, vec3(0.0,0.0,1.0)), 3.0); gl_FragColor = vec4(c, 1.0) * i * 0.9; }',
+    side: THREE.BackSide, blending: THREE.AdditiveBlending, transparent: true });
+  scene.add(new THREE.Mesh(new THREE.SphereGeometry(R * 1.12, 64, 64), glow));
+  const toVec = (lat, lon, r = R) => { const p = (90 - lat) * Math.PI / 180, t = (lon + 180) * Math.PI / 180;
+    return new THREE.Vector3(-r * Math.sin(p) * Math.cos(t), r * Math.cos(p), r * Math.sin(p) * Math.sin(t)); };
+  const C = { delhi: [28.6, 77.2], goa: [15.3, 74.0], bali: [-8.4, 115.2], tokyo: [35.7, 139.7], dubai: [25.2, 55.3], paris: [48.9, 2.35], leh: [34.2, 77.6] };
+  Object.values(C).forEach(([la, lo]) => { const m = new THREE.Mesh(new THREE.SphereGeometry(0.045, 16, 16), new THREE.MeshBasicMaterial({ color: 0xffc72c }));
+    m.position.copy(toVec(la, lo, R * 1.01)); world.add(m); });
+  const ROUTES = [['delhi', 'paris', 0xff9933], ['delhi', 'tokyo', 0xffc72c], ['goa', 'bali', 0x9be08a], ['delhi', 'dubai', 0xe63946], ['delhi', 'goa', 0xff7a00], ['delhi', 'leh', 0x5bc8f5]];
+  const curves = ROUTES.map(([a, b, col]) => { const s = toVec(...C[a], R * 1.01), e = toVec(...C[b], R * 1.01);
+    const lift = 1 + s.distanceTo(e) * 0.35; const curve = new THREE.QuadraticBezierCurve3(s, s.clone().add(e).multiplyScalar(0.5).normalize().multiplyScalar(R * lift), e);
+    world.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 64, 0.013, 8), new THREE.MeshBasicMaterial({ color: col }))); return curve; });
+  const plane = new THREE.Mesh(new THREE.ConeGeometry(0.055, 0.17, 12), new THREE.MeshPhongMaterial({ color: 0xffffff, emissive: 0xff9933, emissiveIntensity: 0.7 }));
+  world.add(plane);
+  const HOME = Math.PI + 0.25; world.rotation.set(0.35, HOME, 0);
+  let drag = false, lastX = 0, vel = 0, t = 0, r = 0, clock = 0;
+  canvas.addEventListener('pointerdown', (e) => { drag = true; lastX = e.clientX; canvas.setPointerCapture(e.pointerId); });
+  canvas.addEventListener('pointermove', (e) => { if (!drag) return; vel = (e.clientX - lastX) * 0.005; world.rotation.y += vel; lastX = e.clientX; });
+  canvas.addEventListener('pointerup', () => (drag = false));
+  window.setGlobeTheme = (dark) => { earth.material.color.set(dark ? 0x9fc8ff : 0xdaf4ff); glow.uniforms.c.value.set(dark ? 0xff9933 : 0xffffff); };
+  const resize = () => { const w = canvas.clientWidth, h = canvas.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); };
+  // Watch the canvas itself: layout shifts (e.g. web fonts loading) resize it without a window resize.
+  new ResizeObserver(resize).observe(canvas); resize();
+  (function frame() {
+    t += 0.005; if (t >= 1) { t = 0; r = (r + 1) % curves.length; }
+    plane.position.copy(curves[r].getPoint(t));
+    plane.lookAt(curves[r].getPoint(Math.min(t + 0.01, 1)).clone().applyMatrix4(world.matrixWorld)); plane.rotateX(Math.PI / 2);
+    if (!drag) { clock += 0.006; vel *= 0.94; world.rotation.y += vel + (HOME + Math.sin(clock) * 0.4 - world.rotation.y) * 0.02; }
+    renderer.render(scene, camera);
+    if (!reduceMotion) requestAnimationFrame(frame);
+  })();
+})();
+</script>
+</body>
+</html>

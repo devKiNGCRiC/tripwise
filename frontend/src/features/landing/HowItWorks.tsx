@@ -22,8 +22,8 @@ export function HowItWorks() {
             {/* Alternate tilts so the cards feel hand-placed, like stickers on a scrapbook page. */}
             <Card className={index === 1 ? 'h-full p-6 md:-rotate-1' : 'h-full p-6 md:rotate-1'}>
               <div className="flex items-center justify-between">
-                <span className="font-mono text-4xl font-bold text-ink/20">{n}</span>
-                <span className="grid size-11 place-items-center rounded-xl border-2 border-line bg-mustard text-on-accent">
+                <span className=" text-4xl font-bold text-ink/20">{n}</span>
+                <span className="grid size-11 place-items-center rounded-xl border-2 border-line bg-yellow text-on-accent">
                   <Icon className="size-5" aria-hidden />
                 </span>
               </div>

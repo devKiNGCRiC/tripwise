@@ -41,7 +41,7 @@ export function MobileTabBar() {
             >
               {({ isActive }) => (
                 <>
-                  <span className={cn('grid h-7 w-12 place-items-center rounded-full transition', isActive && 'bg-mustard text-on-accent')}>
+                  <span className={cn('grid h-7 w-12 place-items-center rounded-full transition', isActive && 'bg-yellow text-on-accent')}>
                     <Icon className="size-5" aria-hidden />
                   </span>
                   {label}

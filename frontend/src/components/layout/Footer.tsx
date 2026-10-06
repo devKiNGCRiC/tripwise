@@ -24,7 +24,7 @@ export function Footer() {
             Create account
           </Link>
         </nav>
-        <p className="font-mono text-xs text-ink-soft">
+        <p className=" text-xs text-ink-soft">
           Photos:{' '}
           <a href="https://unsplash.com" className="underline" target="_blank" rel="noreferrer">
             Unsplash
