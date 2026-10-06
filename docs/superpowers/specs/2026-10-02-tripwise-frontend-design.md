@@ -30,7 +30,7 @@
 
 | Layer | Choice (all free) |
 |---|---|
-| Frontend hosting | Vercel (free Hobby plan) |
+| Frontend hosting | Cloudflare Pages (free plan; commercial use and ads allowed, SPA fallback built in) |
 | Backend | Node.js and Express on Render's free plan (sleeps when idle, so cold starts take ~30s) |
 | Database | MongoDB Atlas M0 |
 | AI | Gemini Flash-Lite as primary (~500 RPD), with Groq `openai/gpt-oss-120b` as fallback (200K TPD). The backend caches results. |

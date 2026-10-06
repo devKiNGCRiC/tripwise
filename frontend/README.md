@@ -54,10 +54,23 @@ src/
   The mock API and the real API share the contract in `src/lib/api/types.ts`.
 - **Cold starts:** requests slower than 3s show a "waking up the server" banner (Render free tier sleeps).
 
-## Deploy (free) — Vercel
+## Deploy (free) — Cloudflare Pages
 
-1. Import the GitHub repo in Vercel, set **Root Directory** to `frontend`.
-2. Framework preset: Vite. Build command `npm run build`, output `dist`.
-3. Add env vars `VITE_API_URL` and `VITE_USE_MOCKS` (keep `true` until the backend is live).
-4. `vercel.json` rewrites every route to `index.html` so deep links like `/trips/123` work
-   (real files such as `mockServiceWorker.js` are still served first).
+Cloudflare Pages' free plan allows commercial use (ads included) and has a built-in
+single-page-app fallback: with no `404.html`, every URL is served `index.html`, so deep links
+like `/trips/123` work without any config file.
+
+1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git** → pick `tripwise`.
+2. Build settings:
+
+   | Setting | Value |
+   |---|---|
+   | Production branch | `main` |
+   | Framework preset | None (or Vite) |
+   | Root directory | `frontend` |
+   | Build command | `npm run build` |
+   | Build output directory | `dist` |
+
+3. Environment variables: `NODE_VERSION=24`, `VITE_API_URL=/api`, `VITE_USE_MOCKS=true`
+   (switch to the Render URL and `false` once the backend is live).
+4. Every push to `main` redeploys; every other branch gets its own preview URL.

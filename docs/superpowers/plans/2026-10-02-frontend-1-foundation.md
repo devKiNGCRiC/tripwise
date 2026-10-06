@@ -25,7 +25,7 @@
   - Every file starts with a header comment saying what the file is and why it exists.
   - Every component, hook, function, constant group and meaningful block gets a comment explaining *why*.
   - Where the format allows comments, config files get them too. `package.json` and `vercel.json` cannot.
-- **No AI attribution:** never add "Co-Authored-By", "Generated with" or any AI/Claude mention in commits, code or docs.
+- **No tool attribution:** never add "Co-Authored-By" or "Generated with" lines, or any assistant-tool mention, in commits, code or docs.
 - **Commits:** use plain conventional messages (`feat:`, `test:`, `chore:`, `docs:`), signed by the repo's configured user only.
 - **TypeScript:** pin `typescript@~6.0`, because typescript-eslint 8.x supports only `<6.1`. Strict mode on, with simple types and no clever generics.
 - **Node:** version 22 or newer (MSW 3 and React Router 8 require it). This machine has v24.
