@@ -102,3 +102,19 @@ public/world/            textures (WebP/JPG 512–1k, ~0.5 MB total) + water nor
 - Photorealistic water simulation.
 - Volumetric clouds.
 - Explore/planner page content (Plan 2).
+
+## 7. Implementation notes (deviations, decided while building)
+
+- **Fixed background, not section-tied stages.** The scenery is one fixed layer driven by a single progress
+  value (`scene/descent.ts`). Content scrolls normally on glass panels, revealed by GSAP. The photo pack
+  **cross-fades** its six photos with a slow drift instead of stacking bands, which gives smoother transitions.
+- **No `useDescentStage` hook.** Panels reveal themselves (`useReveal`), and the altitude meter reads progress.
+- **Other pages use still photos (`StillScenery`), not a 3D still frame.** There's no GPU cost on pages for
+  doing things, and they look consistent with the photo pack.
+- **Kite sky, lanterns and the CSS globe were removed**, replaced by the real scenery.
+- **Load time:** the terrain worker starts at mount, in parallel with the 3D chunk download. Trees are placed
+  from the already-built grid. Shaders compile asynchronously before the fade-in.
+  Measured on a production build: page content in about 0.5 s (fast Wi-Fi) or 2.8 s (slow 4G), and the
+  3D world in about 2.9 s or 3.6 s.
+- **Custom exposure step before ACES tone mapping**, because post-processing tone mapping ignores the
+  renderer's exposure setting.

@@ -15,8 +15,8 @@ You can then save it, download it as a PDF, or share it with your friends.
 |---|---|---|
 | 🔐 | Sign up / log in (email + Google), secure JWT sessions | ✅ Frontend done (mock API) |
 | 🏠 | Landing page with trending destinations | ✅ Done |
-| 🌗 | "Day" (kite sky) and "Night Flight" (lantern sky) themes | ✅ Done |
-| 🌍 | 3D globe with flight routes, departure-board headline | ✅ Done |
+| 🏔️ | "The Descent": scroll-driven 3D world from sky to fields, with a photo fallback | ✅ Done |
+| 🌗 | Day and "Night Flight" (stars, northern lights, diyas on the river) | ✅ Done |
 | 📱 | Mobile-first layout with an app-style bottom tab bar | ✅ Done |
 | 🧭 | Explore destinations by vibe, budget and best season | 🛠️ Next |
 | 🪄 | Trip planner wizard + AI itinerary generation | 🛠️ Next |
@@ -25,28 +25,30 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 📊 | Admin dashboard: analytics, destinations, users, moderation | 📅 Planned |
 | 📲 | React Native mobile app | 📅 Phase 2 |
 
-## 🎨 Design: "Yatra Mela"
+## 🎨 Design: "The Descent"
 
-The look borrows from Indian journeys, made for Gen-Z travellers:
+The home page is one continuous journey. As you scroll, a camera flies down through a **3D world**:
+**sky → glacier → mountains → waterfall → river → fields**. It all shares one sun, one atmosphere and one haze,
+so the scenes connect naturally.
 
-- **A railway departure board is the headline.** Flip letters cycle through *GOA → MANALI → JAIPUR…*,
-  with the Hindi name underneath.
-- **The sky is alive.** Paper kites sway in an Uttarayan sky by day. In the "Night Flight" theme they give way
-  to stars and rising sky lanterns.
-- **A 3D globe** (Three.js) shows flight routes from India. It loads lazily and falls back to a light CSS
-  globe on phones or when reduced motion is on.
-- **Truck-art colours with one job each:** saffron→orange for the brand, board yellow for signs,
-  sky blue for the sky and AI, green for success and red for alerts.
-- **Fonts:** Anybody (variable width, stretched for signboards) and Mukta (designed in India, with Devanagari).
-
-Every colour lives in one file ([`frontend/src/theme/tokens.css`](frontend/src/theme/tokens.css)).
-All motion stops for people who turn on "reduce motion".
+- **Day and Night Flight:** switching to night really sets the sun. Stars, a moon, **northern lights**,
+  moonlit snow, diyas floating on the river and fireflies appear.
+- **Realistic detail, all free:** Poly Haven photo textures (CC0) on the terrain, a reflective river, a waterfall
+  with mist, a swaying pine forest, sun shadows, and a cinematic finish (bloom, film tone mapping, grade, grain).
+- **Fast on every device:** a real-photo version of the journey appears instantly. The 3D world builds in a
+  background worker and fades in once ready. Weaker phones, Data Saver and "reduce motion" users keep the photo
+  version, and anyone can choose on their Passport page.
+- **Indian touches:** a railway departure board flips through *GOA → MANALI → JAIPUR…* with Hindi names,
+  and the login and signup cards are bilingual station boards (Arrivals/आगमन, Departures/प्रस्थान).
+- **Fonts:** Anybody (variable width) and Mukta (designed in India, with Devanagari). Colours: saffron, board
+  yellow, sky blue, green, red, black and white, each with one job (`frontend/src/theme/tokens.css`).
+- **Smooth motion:** smooth scrolling (Lenis) and scroll-choreographed reveals (GSAP ScrollTrigger).
 
 ## 🧰 Tech stack (100% free tiers)
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 19, TypeScript, Vite, Tailwind CSS 4, React Router, TanStack Query, React Hook Form + Zod, Motion, Three.js |
+| Frontend | React 19, TypeScript, Vite, Tailwind CSS 4, React Router, TanStack Query, React Hook Form + Zod, Three.js, postprocessing, GSAP + Lenis |
 | Backend | Node.js, Express, MongoDB (Mongoose) |
 | AI | Google Gemini Flash-Lite (primary) with Groq (`gpt-oss-120b`) as automatic fallback |
 | Database | MongoDB Atlas (free M0 cluster) |

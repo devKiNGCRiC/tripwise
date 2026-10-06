@@ -1,9 +1,10 @@
 # TripWise — Frontend
 
 React + TypeScript web app for **TripWise**, the AI travel itinerary planner.
-Design language: **"Yatra Mela"**, the visual language of Indian journeys: a railway departure-board
-headline, truck-art colours, a kite-festival sky by day and sky lanterns by night ("Night Flight").
-Fonts: Anybody (stretched display) and Mukta (body text and Hindi). Design reference: `docs/design/yatra-mela-preview.html`.
+Design: **"The Descent"**. The home page is a scroll-driven 3D world (Three.js), flying from the sky down to
+the fields, with an instant photo fallback. The Indian touches include a railway departure-board headline,
+truck-art colours and bilingual station signs.
+Fonts: Anybody (stretched display) and Mukta (body text and Hindi). Design references: `docs/design/`.
 
 ## Quick start
 
@@ -42,6 +43,7 @@ Demo accounts (mock mode):
 
 ```
 src/
+  scene/        The Descent: quality choice, photo pack, 3D world (worker-built terrain, sky, water, effects)
   theme/        tokens.css (ALL colours/shadows/fonts) + ThemeProvider
   components/   ui/ (Button, Chip, Input, Card, Ticket, Stamp, Toast…) · layout/ (navbar, guards…)
   features/     auth/ · explore/ · landing/   (Plan 2 adds planner/, trips/, passport/)
