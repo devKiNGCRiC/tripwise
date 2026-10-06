@@ -87,8 +87,8 @@ export function DestinationCard({ destination, featured = false, className }: De
             'font-black uppercase',
             // Long names ("Kerala Backwaters") get smaller, narrower letters so they fit the plate.
             destination.name.length > 9
-              ? 'text-2xl [font-stretch:110%]'
-              : cn('[font-stretch:135%]', featured ? 'text-4xl sm:text-5xl' : 'text-[32px]'),
+              ? 'text-2xl font-stretch-110%'
+              : cn('font-stretch-135%', featured ? 'text-4xl sm:text-5xl' : 'text-[32px]'),
           )}
         >
           {destination.name}

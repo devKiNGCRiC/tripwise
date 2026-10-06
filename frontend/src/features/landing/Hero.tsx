@@ -43,7 +43,7 @@ export function Hero() {
         <div>
           <DepartureBoard stops={BOARD_STOPS} className="mt-8" />
 
-          <h1 className="mt-9 max-w-[18ch] text-[clamp(32px,3.6vw,48px)] leading-[1.05] font-extrabold [font-stretch:112%]">
+          <h1 className="mt-9 max-w-[18ch] text-[clamp(32px,3.6vw,48px)] leading-[1.05] font-extrabold font-stretch-112%">
             Your whole trip, planned day by day in seconds.
           </h1>
 
@@ -71,11 +71,11 @@ export function Hero() {
           <Globe />
           {/* Floating notes: a peek at what you'll get */}
           <div aria-hidden className="absolute top-[10%] left-0 rounded-xl border-[2.5px] border-black bg-white px-3 py-2 leading-tight text-black shadow-[4px_4px_0_#000]">
-            <span className="block font-display text-lg font-extrabold [font-stretch:120%]">₹12,000</span>
+            <span className="block font-display text-lg font-extrabold font-stretch-120%">₹12,000</span>
             <span className="text-[15px] font-semibold">Goa, 3 days for 2</span>
           </div>
           <div aria-hidden className="absolute right-0 bottom-[12%] rotate-2 rounded-xl border-[2.5px] border-black bg-green px-3 py-2 leading-tight text-black shadow-[4px_4px_0_#000]">
-            <span className="block font-display text-lg font-extrabold [font-stretch:120%]">Saved!</span>
+            <span className="block font-display text-lg font-extrabold font-stretch-120%">Saved!</span>
             <span className="text-[15px] font-semibold">Stamp added to your passport</span>
           </div>
         </div>

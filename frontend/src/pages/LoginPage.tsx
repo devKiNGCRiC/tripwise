@@ -18,7 +18,8 @@ export default function LoginPage() {
     <>
       <title>Log in · TripWise</title>
       <AuthLayout
-        ticketLabel="BOARDING PASS · LOGIN"
+        board="Arrivals"
+        boardLocal="आगमन"
         title="Welcome back"
         subtitle="Your trips are waiting where you left them."
         footer={

@@ -16,7 +16,8 @@ export default function SignupPage() {
     <>
       <title>Sign up · TripWise</title>
       <AuthLayout
-        ticketLabel="BOARDING PASS · NEW"
+        board="Departures"
+        boardLocal="प्रस्थान"
         title="Start your passport"
         subtitle="Free forever. Plan up to 5 AI trips every day."
         footer={

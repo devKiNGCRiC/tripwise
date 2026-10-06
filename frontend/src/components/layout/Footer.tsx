@@ -1,36 +1,41 @@
 /**
- * Footer.tsx — site footer with quick links, photo credit and copyright.
- * Extra bottom padding on mobile so the tab bar never covers it.
+ * Footer.tsx — site footer: brand line, quick links, photo credit and copyright.
+ * Festival bunting on top ties it to the rest of the page. Extra bottom padding
+ * on mobile so the tab bar never covers it.
  */
 import { Link } from 'react-router';
+import { Bunting } from '@/components/signature/Bunting';
 import { Logo } from './Logo';
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t-2 border-line bg-paper-2 pb-24 md:pb-0">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 md:flex-row md:items-center md:justify-between">
+    <footer className="mt-auto bg-paper-2 pb-24 md:pb-0">
+      <Bunting />
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-[1.4fr_1fr_1fr] md:items-start">
         <div>
           <Logo />
-          <p className="mt-2 max-w-xs text-sm text-ink-soft">AI-planned trips for wanderers on any budget. Free, always.</p>
+          <p className="mt-3 max-w-xs text-ink-soft">AI-planned trips for wanderers on any budget. Free, always.</p>
         </div>
-        <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold">
-          <Link to="/explore" className="hover:underline">
-            Explore
+        <nav aria-label="Footer" className="flex flex-col gap-2 font-semibold">
+          <Link to="/explore" className="w-fit hover:underline">
+            Explore destinations
           </Link>
-          <Link to="/plan" className="hover:underline">
+          <Link to="/plan" className="w-fit hover:underline">
             Plan a trip
           </Link>
-          <Link to="/signup" className="hover:underline">
-            Create account
+          <Link to="/signup" className="w-fit hover:underline">
+            Create an account
           </Link>
         </nav>
-        <p className=" text-xs text-ink-soft">
-          Photos:{' '}
-          <a href="https://unsplash.com" className="underline" target="_blank" rel="noreferrer">
-            Unsplash
-          </a>{' '}
-          · © {new Date().getFullYear()} TripWise
-        </p>
+        <div className="text-ink-soft">
+          <p>
+            Photos from{' '}
+            <a href="https://unsplash.com" className="underline" target="_blank" rel="noreferrer">
+              Unsplash
+            </a>
+          </p>
+          <p>© {new Date().getFullYear()} TripWise</p>
+        </div>
       </div>
     </footer>
   );

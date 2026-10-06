@@ -67,7 +67,7 @@ export function DepartureBoard({
         <div
           aria-hidden
           key={stop.name}
-          className="my-2 flex gap-1.5 font-display leading-none font-black [font-size:calc(clamp(40px,6.6vw,88px)*min(1,5.5/var(--n)))] [font-stretch:135%] [perspective:400px]"
+          className="my-2 flex gap-1.5 font-display leading-none font-black [font-size:calc(clamp(40px,6.6vw,88px)*min(1,5.5/var(--n)))] font-stretch-135% [perspective:400px]"
           style={{ '--n': Math.max(letters.length, 3) } as CSSProperties}
         >
           {letters.map((letter, i) => (

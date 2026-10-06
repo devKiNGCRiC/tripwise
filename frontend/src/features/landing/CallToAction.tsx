@@ -13,7 +13,7 @@ export function CallToAction() {
         {/* Faint platform-edge stripe along the bottom */}
         <span aria-hidden className="absolute inset-x-0 bottom-0 h-3 [background:repeating-linear-gradient(90deg,var(--trip-yellow)_0_26px,#000_26px_52px)]" />
         <div>
-          <h2 className="text-[clamp(36px,4.8vw,64px)] text-yellow [font-stretch:125%]">Your train leaves when you say so.</h2>
+          <h2 className="text-[clamp(36px,4.8vw,64px)] text-yellow font-stretch-125%">Your train leaves when you say so.</h2>
           <p className="mt-4 max-w-[46ch] text-xl text-white/80">Free to use, no card needed. Tell us where and we'll do the planning.</p>
         </div>
         <Link to="/plan" className={buttonClasses({ size: 'lg', className: 'shrink-0 border-white' })}>

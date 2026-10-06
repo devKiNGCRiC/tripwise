@@ -22,7 +22,7 @@ const VARIANTS: Record<ButtonVariant, string> = {
   primary: 'brand-fill text-on-accent border-line shadow-pop pop-press',
   secondary: 'bg-surface text-ink border-line shadow-pop pop-press',
   ghost: 'bg-transparent text-ink border-transparent hover:bg-ink/5',
-  glow: 'aurora-fill text-white border-transparent shadow-glow hover:brightness-110',
+  glow: 'aurora-fill text-black border-line shadow-glow hover:brightness-110',
 };
 
 /** Heights are ≥ 36px so buttons stay comfortable touch targets on phones. */

@@ -30,7 +30,7 @@ export function HowItWorks() {
   return (
     <section aria-labelledby="how-heading" className="rangoli-dots py-24">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 id="how-heading" className="text-[clamp(40px,5.6vw,76px)] [font-stretch:125%]">
+        <h2 id="how-heading" className="text-[clamp(40px,5.6vw,76px)] font-stretch-125%">
           Three stops to a full plan
         </h2>
         <p className="mt-4 max-w-[54ch] text-xl text-ink-soft">
@@ -63,7 +63,7 @@ export function HowItWorks() {
                 >
                   {i + 1}
                 </span>
-                <h3 className="mt-5 text-3xl [font-stretch:118%]">{step.title}</h3>
+                <h3 className="mt-5 text-3xl font-stretch-118%">{step.title}</h3>
                 <p className="mt-2 max-w-[32ch] text-ink-soft">{step.text}</p>
               </li>
             ))}

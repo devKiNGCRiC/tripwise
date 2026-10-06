@@ -17,7 +17,7 @@ export function PopularDestinations() {
       <div className="mx-auto max-w-6xl px-4">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <h2 id="popular-heading" className="text-[clamp(40px,5.6vw,76px)] [font-stretch:125%]">
+            <h2 id="popular-heading" className="text-[clamp(40px,5.6vw,76px)] font-stretch-125%">
               Where India is heading
             </h2>
             <p className="mt-4 max-w-[54ch] text-xl text-ink-soft">Every postcard opens a ready-made plan you can tweak.</p>

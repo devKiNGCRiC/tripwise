@@ -1,25 +1,25 @@
 /**
- * ComingSoonPage.tsx — temporary stand-in for pages built in Plans 2 and 3.
- * Keeps every navigation link working while the app grows.
+ * ComingSoonPage.tsx — temporary stand-in for pages built in later plans.
+ * Styled as a small station board ("Boarding soon"), so every navigation link
+ * still lands somewhere friendly while the app grows.
  */
 import { Link } from 'react-router';
 import { buttonClasses } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
 
 export default function ComingSoonPage({ title }: { title: string }) {
   return (
-    <div className="mx-auto max-w-xl px-4 py-20">
-      <title>{`${title} · TripWise`}</title>
-      <Card className="flex flex-col items-center gap-4 p-10 text-center">
-        <span className="-rotate-6 rounded-full border-4 border-double border-green-deep px-4 py-1 text-xs font-bold tracking-[0.2em] text-green-deep">
-          BOARDING SOON
-        </span>
-        <h1 className="text-4xl font-extrabold">{title}</h1>
-        <p className="text-ink-soft">This part of TripWise is being built right now. Check back soon!</p>
+    <div className="rangoli-dots">
+      <div className="mx-auto flex max-w-xl flex-col items-center gap-6 px-4 py-24 text-center">
+        <title>{`${title} · TripWise`}</title>
+        <div className="w-full rounded-xl border-[3px] border-black bg-yellow px-6 py-5 text-black shadow-[8px_8px_0_#000]">
+          <p className="text-lg font-semibold">Boarding soon</p>
+          <h1 className="mt-1 text-[clamp(32px,6vw,52px)] uppercase font-stretch-130%">{title}</h1>
+        </div>
+        <p className="text-xl text-ink-soft">This part of TripWise is being built right now. Check back soon.</p>
         <Link to="/" className={buttonClasses({ variant: 'secondary' })}>
           Back to home
         </Link>
-      </Card>
+      </div>
     </div>
   );
 }

@@ -1,14 +1,19 @@
 /**
  * AuthLayout.tsx — shared look for /login and /signup.
- * Left: a "boarding pass" card holding the form. Right (desktop only): an aurora
- * panel with passport stamps — the Passport Pop identity at first touch.
+ *
+ * Left: a card whose header is a bilingual station board — "Arrivals / आगमन" for
+ *       people coming back (login), "Departures / प्रस्थान" for new travellers (signup).
+ * Right (desktop only): a slice of the kite-festival sky with a one-line promise.
  */
 import type { ReactNode } from 'react';
 import { Card } from '@/components/ui/Card';
+import { FestivalSky } from '@/components/signature/FestivalSky';
 
 interface AuthLayoutProps {
-  /** Small mono label on the ticket header, e.g. "BOARDING PASS · LOGIN" */
-  ticketLabel: string;
+  /** Board header, English, e.g. "Arrivals". */
+  board: string;
+  /** Board header in Hindi, e.g. "आगमन". */
+  boardLocal: string;
   title: string;
   subtitle: string;
   children: ReactNode;
@@ -16,44 +21,33 @@ interface AuthLayoutProps {
   footer: ReactNode;
 }
 
-export function AuthLayout({ ticketLabel, title, subtitle, children, footer }: AuthLayoutProps) {
+export function AuthLayout({ board, boardLocal, title, subtitle, children, footer }: AuthLayoutProps) {
   return (
-    <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-10 md:grid-cols-2 md:py-16">
-      <Card className="mx-auto w-full max-w-md overflow-hidden">
-        {/* Ticket header strip */}
-        <div className="flex items-center justify-between border-b-2 border-dashed border-line/40 bg-yellow px-6 py-3 text-on-accent">
-          <span className=" text-xs font-bold tracking-[0.2em]">{ticketLabel}</span>
-          <span className=" text-xs font-bold">TW · 2026</span>
-        </div>
-        <div className="flex flex-col gap-6 p-6 sm:p-8">
-          <header>
-            <h1 className="text-3xl font-extrabold sm:text-4xl">{title}</h1>
-            <p className="mt-2 text-ink-soft">{subtitle}</p>
-          </header>
-          {children}
-          <div className="text-center text-sm text-ink-soft">{footer}</div>
-        </div>
-      </Card>
-
-      {/* Decorative side panel — hidden from screen readers and on small screens */}
-      <div aria-hidden className="relative hidden h-[30rem] overflow-hidden rounded-card border-2 border-line shadow-pop md:block">
-        <div className="aurora-fill absolute inset-0" />
-        <div className="absolute inset-0 grid place-items-center p-10 text-center text-white">
-          <div>
-            <p className="font-display text-5xl leading-none font-extrabold">
-              Collect places,
-              <br />
-              not things.
-            </p>
-            <p className="mt-4 text-sm tracking-widest opacity-90">EVERY TRIP = A NEW STAMP</p>
+    <div className="rangoli-dots">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-10 md:grid-cols-2 md:py-16">
+        <Card className="mx-auto w-full max-w-md overflow-hidden">
+          {/* Station-board header: always black on yellow */}
+          <div className="flex items-baseline justify-between border-b-[3px] border-black bg-yellow px-6 py-3 text-black">
+            <span className="font-display text-xl font-black uppercase font-stretch-130%">{board}</span>
+            <span className="text-xl font-extrabold">{boardLocal}</span>
           </div>
+          <div className="flex flex-col gap-6 p-6 sm:p-8">
+            <header>
+              <h1 className="text-4xl font-stretch-115%">{title}</h1>
+              <p className="mt-2 text-ink-soft">{subtitle}</p>
+            </header>
+            {children}
+            <div className="text-center text-ink-soft">{footer}</div>
+          </div>
+        </Card>
+
+        {/* Decorative sky panel — hidden from screen readers and on small screens */}
+        <div aria-hidden className="sky-fill relative hidden h-128 overflow-hidden rounded-card border-[3px] border-line shadow-pop md:block">
+          <FestivalSky />
+          <p className="absolute inset-x-10 bottom-12 font-display text-5xl leading-none font-black text-black font-stretch-120% dark:text-white">
+            Collect places, not things.
+          </p>
         </div>
-        <span className="absolute top-8 left-8 -rotate-12 rounded-full border-4 border-double border-white/80 px-4 py-2 text-sm font-bold text-white">
-          GOA ✓
-        </span>
-        <span className="absolute right-10 bottom-10 rotate-6 rounded-full border-4 border-double border-white/80 px-4 py-2 text-sm font-bold text-white">
-          TOKYO ✓
-        </span>
       </div>
     </div>
   );
