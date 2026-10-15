@@ -1,0 +1,388 @@
+<!doctype html>
+<!--
+  tripwise-monsoon-editorial.html — PREVIEW of the chosen direction: "Monsoon Editorial".
+  Material & motion from Liquid Monsoon (living colour, glass, ripples) +
+  voice from Rangoli Editorial (serif type, Hindi accents, gold rangoli, cinematic photography).
+  Day = dawn palette, Night = monsoon palette. Not part of the app.
+-->
+<html lang="en" data-theme="day">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TripWise Monsoon Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hind:wght@400;500;600&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  /* ── Tokens ──────────────────────────────────────────────────────── */
+  :root {
+    --bg: #f6efe3; --bg-2: #efe4d2; --ink: #1c1814; --ink-soft: #5b5148; --line: rgb(28 24 20 / .14);
+    --gold: #a8701c; --accent: #0e6b70; --cta: #1c1814; --cta-ink: #f6efe3;
+    --glass: rgb(255 252 246 / .5); --glass-line: rgb(255 255 255 / .75); --glass-shadow: 0 30px 70px -30px rgb(80 50 20 / .35);
+    color-scheme: light;
+  }
+  [data-theme='night'] {
+    --bg: #0a1230; --bg-2: #0f1a40; --ink: #f6efe3; --ink-soft: #b9b4c9; --line: rgb(246 239 227 / .14);
+    --gold: #e6b765; --accent: #6fd3d0; --cta: #e6b765; --cta-ink: #0a1230;
+    --glass: rgb(16 26 64 / .45); --glass-line: rgb(255 255 255 / .18); --glass-shadow: 0 30px 70px -30px rgb(0 0 0 / .6);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); transition: background .9s ease; }
+  body { margin: 0; font: 400 18px/1.6 Hind, system-ui, sans-serif; color: var(--ink); background: var(--bg); transition: background .9s ease, color .9s ease; overflow-x: clip; }
+  h1, h2, h3 { font-family: Gloock, Georgia, serif; font-weight: 400; margin: 0; line-height: .98; letter-spacing: -.01em; }
+  .hi { font-family: 'Tiro Devanagari Hindi', serif; }
+  .wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
+  a { color: inherit; }
+  ::selection { background: var(--gold); color: var(--bg); }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 6px; }
+
+  /* Glass: the one material we reuse everywhere */
+  .glass { background: var(--glass); border: 1px solid var(--glass-line); backdrop-filter: blur(22px) saturate(1.5); -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), var(--glass-shadow); transition: background .9s, border-color .9s; }
+
+  /* ── Nav ─────────────────────────────────────────────────────────── */
+  .nav { position: fixed; z-index: 40; inset: 16px 0 auto; }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px 10px 22px; border-radius: 999px; }
+  .brand { font: 400 26px Gloock; text-decoration: none; display: flex; align-items: baseline; gap: 8px; }
+  .brand small { font: 400 15px 'Tiro Devanagari Hindi'; color: var(--gold); }
+  .nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-weight: 500; font-size: 16px; }
+  .nav ul a { text-decoration: none; opacity: .85; }
+  .nav .right { display: flex; gap: 8px; align-items: center; }
+  .switch { display: flex; padding: 4px; gap: 2px; border-radius: 999px; border: 1px solid var(--line); }
+  .switch button { border: 0; background: none; color: var(--ink); padding: 8px 14px; border-radius: 999px; font: 500 14px Hind; cursor: pointer; }
+  .switch button[aria-pressed='true'] { background: var(--ink); color: var(--bg); }
+  .btn { white-space: nowrap; display: inline-flex; align-items: center; gap: 10px; border: 1px solid transparent; border-radius: 999px; padding: 14px 24px; font: 600 16px Hind;
+    background: var(--cta); color: var(--cta-ink); cursor: pointer; text-decoration: none; transition: transform .35s cubic-bezier(.2,.8,.2,1), background .9s, color .9s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.quiet { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn.sm { padding: 10px 18px; font-size: 15px; }
+
+  /* ── Hero: living liquid + serif + self-drawing rangoli ─────────── */
+  .hero { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; }
+  #liquid { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero::after { content: ''; position: absolute; inset: auto 0 0; height: 30%; background: linear-gradient(transparent, var(--bg)); transition: background .9s; pointer-events: none; }
+  .hero .wrap { position: relative; z-index: 2; display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; padding-top: 110px; }
+  .eyebrow-hi { font: 400 24px 'Tiro Devanagari Hindi'; color: var(--gold); }
+  .hero h1 { font-size: clamp(64px, 9vw, 148px); margin-top: 8px; }
+  .hero h1 em { font-style: italic; font-family: 'Tiro Devanagari Hindi', Gloock, serif; }
+  .lede { font-size: 21px; color: var(--ink-soft); max-width: 40ch; margin: 22px 0 30px; }
+  .search { display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 22px; max-width: 580px; }
+  .search input { flex: 1; min-width: 0; border: 0; background: none; outline: none; font: 500 19px Hind; color: var(--ink); padding: 0 14px; }
+  .search input::placeholder { color: var(--ink-soft); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chips button { border: 1px solid var(--line); background: none; color: var(--ink); border-radius: 999px; padding: 7px 14px; font: 500 15px Hind; cursor: pointer; transition: background .3s, border-color .3s; }
+  .chips button:hover, .chips button[aria-pressed='true'] { background: var(--glass); border-color: var(--gold); }
+  .rangoli { width: 100%; max-width: 520px; justify-self: end; animation: spin 120s linear infinite; }
+  .rangoli * { fill: none; stroke: var(--gold); stroke-width: 1.2; transition: stroke .9s; }
+  .rangoli .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 3.4s cubic-bezier(.6,0,.2,1) forwards; animation-delay: var(--d); }
+  .rangoli .dot { fill: var(--gold); stroke: none; opacity: 0; animation: pop .5s ease forwards; animation-delay: var(--d); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes pop { to { opacity: 1; } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .scroll-cue { position: absolute; z-index: 2; right: max(24px, calc((100vw - 1200px) / 2)); bottom: 30px; font-size: 14px; color: var(--ink-soft); display: grid; justify-items: center; gap: 8px; }
+  .scroll-cue span { width: 1px; height: 44px; background: linear-gradient(var(--gold), transparent); animation: cue 2s ease-in-out infinite; transform-origin: top; }
+  @keyframes cue { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+
+  /* Line-by-line text reveal */
+  .reveal-line { display: block; overflow: hidden; }
+  .reveal-line > span { display: block; transform: translateY(105%); transition: transform 1.1s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0s); }
+  .in .reveal-line > span, .reveal-line.in > span { transform: none; }
+  .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0s); }
+  .fade-up.in { opacity: 1; transform: none; }
+
+  /* ── Section heads ───────────────────────────────────────────────── */
+  section.block { padding: 140px 0; position: relative; }
+  .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 56px; }
+  .head h2 { font-size: clamp(44px, 6vw, 88px); max-width: 12ch; }
+  .head p { max-width: 38ch; color: var(--ink-soft); margin: 0; }
+
+  /* ── Journeys: horizontal cinematic gallery (pinned while scrolling) ── */
+  .journeys { height: 360vh; padding: 0; }
+  .journeys .pin { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+  .journeys .pin { padding-top: 70px; }
+  .journeys .head { margin-bottom: 32px; }
+  .journeys .head h2 { font-size: clamp(40px, 4.6vw, 68px); max-width: 16ch; }
+  .track { display: flex; gap: 28px; padding-left: max(24px, calc((100vw - 1200px) / 2)); will-change: transform; }
+  .story { position: relative; flex: 0 0 min(560px, 78vw); height: min(62vh, 560px); border-radius: 28px; overflow: hidden; color: #f6efe3; text-decoration: none;
+    clip-path: inset(0 100% 0 0 round 28px); transition: clip-path 1.3s cubic-bezier(.77,0,.18,1); }
+  .story.in { clip-path: inset(0 0 0 0 round 28px); }
+  .story img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.15); transition: transform 1.6s cubic-bezier(.2,.8,.2,1); }
+  .story.in img { transform: scale(1.02); }
+  .story:hover img { transform: scale(1.07); }
+  .story::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 40%, rgb(10 8 6 / .78)); }
+  .story .cap { position: absolute; z-index: 2; left: 28px; right: 28px; bottom: 26px; }
+  .story .cap .hi { font-size: 22px; color: #e6b765; }
+  .story .cap h3 { font-size: clamp(40px, 4vw, 60px); }
+  .story .cap p { margin: 8px 0 0; font-size: 17px; opacity: .9; }
+  .story .tag { position: absolute; z-index: 2; top: 20px; left: 20px; padding: 7px 14px; border-radius: 999px; font: 500 14px Hind; color: #f6efe3;
+    background: rgb(20 16 12 / .35); border: 1px solid rgb(255 255 255 / .3); backdrop-filter: blur(10px); }
+
+  /* ── How it works: a gold thread through three steps ─────────────── */
+  .steps { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .thread { position: absolute; left: 0; right: 0; top: 46px; height: 120px; overflow: visible; pointer-events: none; }
+  .thread path { fill: none; stroke: var(--gold); stroke-width: 1.5; stroke-dasharray: 1600; stroke-dashoffset: 1600; transition: stroke-dashoffset 2.6s cubic-bezier(.6,0,.2,1), stroke .9s; }
+  .steps.in .thread path { stroke-dashoffset: 0; }
+  .step { position: relative; padding: 30px; border-radius: 26px; }
+  .step .num { font: 400 64px Gloock; color: var(--gold); line-height: 1; }
+  .step h3 { font-size: 34px; margin-top: 18px; }
+  .step p { color: var(--ink-soft); margin: 10px 0 0; }
+
+  /* ── Itinerary sheet over a liquid strip ─────────────────────────── */
+  .sheet-band { position: relative; border-radius: 40px; overflow: hidden; padding: 70px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 50px; align-items: center; }
+  #liquid2 { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sheet-band > *:not(canvas) { position: relative; z-index: 2; }
+  .sheet-band h2 { font-size: clamp(40px, 5vw, 72px); }
+  .sheet { border-radius: 28px; padding: 28px; }
+  .sheet header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+  .sheet header h3 { font-size: 32px; }
+  .sheet header span { color: var(--ink-soft); font-size: 15px; }
+  .days { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 4px; }
+  .days li { display: grid; grid-template-columns: 70px 1fr auto; gap: 14px; align-items: baseline; padding: 12px 0; border-bottom: 1px dashed var(--line); }
+  .days li b { font: 400 22px Gloock; color: var(--gold); }
+  .days li strong { font-weight: 600; display: block; }
+  .days li small { color: var(--ink-soft); font-size: 15px; }
+  .days li em { font-style: normal; font-weight: 600; font-size: 15px; white-space: nowrap; }
+  .sheet footer { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; }
+  .sheet footer strong { font: 400 30px Gloock; }
+
+  /* ── Closing: kolam dot border + CTA ─────────────────────────────── */
+  .closing { text-align: center; }
+  .kolam { display: block; width: min(560px, 90%); margin: 0 auto 40px; }
+  .kolam circle { fill: var(--gold); transition: fill .9s; }
+  .kolam path { fill: none; stroke: var(--gold); stroke-width: 1.2; transition: stroke .9s; }
+  .closing h2 { font-size: clamp(54px, 8vw, 128px); }
+  .closing p { color: var(--ink-soft); font-size: 20px; margin: 18px auto 34px; max-width: 40ch; }
+  footer.site { border-top: 1px solid var(--line); padding: 34px 0 48px; color: var(--ink-soft); font-size: 15px; }
+  footer.site .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+  /* ── Custom cursor ring (pointer devices only) ──────────────────── */
+  .cursor { position: fixed; z-index: 100; left: 0; top: 0; width: 28px; height: 28px; margin: -14px 0 0 -14px; border-radius: 50%; border: 1.5px solid var(--gold);
+    pointer-events: none; transition: width .3s, height .3s, margin .3s, background .3s, border-color .9s; mix-blend-mode: normal; }
+  .cursor.big { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: rgb(230 183 101 / .12); }
+  @media (hover: none) { .cursor { display: none; } }
+
+  @media (max-width: 900px) {
+    .hero .wrap, .sheet-band, .steps { grid-template-columns: minmax(0, 1fr); }
+    .nav .wrap { padding: 8px 8px 8px 16px; } .brand small, .scroll-cue { display: none; }
+    .switch button { padding: 7px 10px; } .search .btn { padding: 12px 16px; font-size: 15px; }
+    .rangoli { position: absolute; right: -30%; top: 10%; width: 90%; opacity: .25; z-index: -1; }
+    .nav ul { display: none; }
+    .thread { display: none; }
+    .sheet-band { padding: 34px 20px; border-radius: 28px; }
+    section.block { padding: 90px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .reveal-line > span, .fade-up { transform: none; opacity: 1; } .story { clip-path: none; } }
+</style>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" } }</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
+</head>
+<body>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<header class="nav"><div class="wrap glass">
+  <a class="brand" href="#">TripWise <small>यात्री</small></a>
+  <ul><li><a href="#journeys">Journeys</a></li><li><a href="#how">How it works</a></li><li><a href="#sheet">Sample trip</a></li></ul>
+  <div class="right">
+    <div class="switch" role="group" aria-label="Theme"><button id="dayBtn" aria-pressed="true">Day</button><button id="nightBtn" aria-pressed="false">Night</button></div>
+    <a class="btn sm" href="#">Sign in</a>
+  </div>
+</div></header>
+
+<main>
+  <section class="hero">
+    <canvas id="liquid" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div>
+        <p class="eyebrow-hi fade-up" style="--d:.1s">यात्रा, बिना झंझट</p>
+        <h1><span class="reveal-line"><span style="--d:.2s">India,</span></span><span class="reveal-line"><span style="--d:.35s"><em>unhurried.</em></span></span></h1>
+        <p class="lede fade-up" style="--d:.6s">Tell us where you're headed and how you like to travel. TripWise shapes every day — routes, food, stays and costs — around you.</p>
+        <form class="search glass fade-up" style="--d:.75s" onsubmit="event.preventDefault()">
+          <input aria-label="Where do you want to go?" placeholder="Where does your heart want to go?" />
+          <button class="btn">Plan my journey</button>
+        </form>
+        <div class="chips fade-up" style="--d:.9s" role="group" aria-label="Travel style">
+          <button>Slow &amp; scenic</button><button>Food trails</button><button>Mountains</button><button>Temples &amp; ghats</button><button>With friends</button>
+        </div>
+      </div>
+      <svg class="rangoli" id="rangoli" viewBox="-210 -210 420 420" aria-hidden="true"></svg>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">Scroll<span></span></div>
+  </section>
+
+  <section class="block journeys" id="journeys">
+    <div class="pin">
+      <div class="wrap head"><h2 class="fade-up">Journeys worth slowing down for</h2><p class="fade-up" style="--d:.15s">Hand-picked starting points. Every one opens a plan you can reshape in seconds.</p></div>
+      <div class="track" id="track"></div>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="wrap">
+      <div class="head"><h2 class="fade-up">Three steps, one calm plan</h2><p class="fade-up" style="--d:.15s">No forms that feel like paperwork. Answer a few questions and let the plan take shape.</p></div>
+      <ol class="steps" id="steps" style="list-style:none;padding:0;margin:0">
+        <svg class="thread" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M20 60 C 200 -10, 300 130, 420 60 S 680 -10, 800 60 S 1060 130, 1180 60" /></svg>
+        <li class="step glass fade-up"><div class="num">01</div><h3>Choose your pace</h3><p>Where, when, budget, who's coming, and how slow or packed you like your days.</p></li>
+        <li class="step glass fade-up" style="--d:.15s"><div class="num">02</div><h3>Watch it take shape</h3><p>Morning to night for every day, with travel times, local food and rough costs.</p></li>
+        <li class="step glass fade-up" style="--d:.3s"><div class="num">03</div><h3>Share and set off</h3><p>Send it to your crew, download the PDF, and keep it handy on the road.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="sheet">
+    <div class="wrap">
+      <div class="sheet-band glass">
+        <canvas id="liquid2" aria-hidden="true"></canvas>
+        <div>
+          <p class="eyebrow-hi fade-up">नमूना यात्रा</p>
+          <h2 class="fade-up" style="--d:.1s">Three days in Udaipur, planned in eight seconds.</h2>
+          <p class="lede fade-up" style="--d:.2s">This is what you get: every day thought through, with honest costs you can trust.</p>
+          <a class="btn fade-up" style="--d:.3s" href="#">Plan one like this</a>
+        </div>
+        <article class="sheet glass fade-up" style="--d:.2s" aria-label="Sample itinerary for Udaipur">
+          <header><h3>Udaipur</h3><span>3 days · 2 travellers</span></header>
+          <ol class="days">
+            <li><b>Day 1</b><div><strong>City Palace and Lake Pichola</strong><small>Sunset boat ride, dinner at Ambrai ghat</small></div><em>₹4,200</em></li>
+            <li><b>Day 2</b><div><strong>Old city lanes and Bagore ki Haveli</strong><small>Morning walk, evening folk dance show</small></div><em>₹3,600</em></li>
+            <li><b>Day 3</b><div><strong>Sajjangarh at dawn</strong><small>Monsoon Palace views, brunch by Fateh Sagar</small></div><em>₹3,100</em></li>
+          </ol>
+          <footer><span>Estimated total</span><strong>₹10,900</strong></footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block closing">
+    <div class="wrap">
+      <svg class="kolam fade-up" id="kolam" viewBox="0 0 560 60" aria-hidden="true"></svg>
+      <h2><span class="reveal-line"><span>Where to,</span></span><span class="reveal-line"><span style="--d:.15s"><em class="hi">यात्री?</em></span></span></h2>
+      <p class="fade-up" style="--d:.25s">Free to use, no card needed. Your first plan is a minute away.</p>
+      <a class="btn fade-up" style="--d:.35s" href="#">Start planning</a>
+    </div>
+  </section>
+</main>
+<footer class="site"><div class="wrap"><span>© 2026 TripWise. Made for every kind of yatri.</span><span>Photos from Unsplash</span></div></footer>
+
+<script type="module">
+import * as THREE from 'three';
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const root = document.documentElement;
+
+/* ── Smooth scroll (Lenis) ── */
+const lenis = reduce ? null : new Lenis({ lerp: .085 });
+function raf(t) { lenis?.raf(t); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+/* ── Liquid colour field (shared shader for hero + sheet band) ──
+   Two palettes (dawn / monsoon) blended by `night`, so the theme switch flows. */
+const FRAG = `precision highp float; varying vec2 vUv; uniform float t; uniform float night; uniform vec2 res; uniform vec2 m; uniform vec3 ripples[6];
+  vec2 hash(vec2 p){ p = vec2(dot(p,vec2(127.1,311.7)), dot(p,vec2(269.5,183.3))); return -1. + 2.*fract(sin(p)*43758.5453); }
+  float noise(vec2 p){ vec2 i = floor(p), f = fract(p); vec2 u = f*f*(3.-2.*f);
+    return mix(mix(dot(hash(i),f), dot(hash(i+vec2(1,0)),f-vec2(1,0)),u.x), mix(dot(hash(i+vec2(0,1)),f-vec2(0,1)), dot(hash(i+vec2(1,1)),f-vec2(1,1)),u.x),u.y); }
+  float fbm(vec2 p){ float s = 0., a = .5; for (int i = 0; i < 5; i++){ s += a*noise(p); p *= 2.02; a *= .5; } return s; }
+  void main(){
+    vec2 asp = vec2(res.x/res.y, 1.); vec2 p = (vUv - .5) * asp * 2.;
+    float rip = 0.;
+    for (int i = 0; i < 6; i++){ vec3 r = ripples[i]; float age = t - r.z; if (age < 0. || age > 3.) continue;
+      float d = length((vUv - r.xy) * asp); rip += sin(d*38. - age*9.) * exp(-d*4.) * exp(-age*1.4) * .05; }
+    vec2 q = vec2(fbm(p + t*.04), fbm(p + vec2(5.2,1.3) - t*.035));
+    vec2 r = vec2(fbm(p + 3.*q + vec2(1.7,9.2) + t*.05 + rip*4.), fbm(p + 3.*q + vec2(8.3,2.8) - t*.04));
+    float f = fbm(p + 3.5*r + rip*6.);
+    // Dawn: ivory, peach, soft teal, saffron light
+    vec3 d1 = vec3(.965,.937,.89), d2 = vec3(.98,.80,.66), d3 = vec3(.55,.78,.76), d4 = vec3(.93,.64,.30);
+    vec3 dawn = mix(d1, d2, smoothstep(-.25,.45,f)); dawn = mix(dawn, d3, smoothstep(.3,.75,length(r))*.55); dawn = mix(dawn, d4, smoothstep(.6,1.,f+length(q)*.3)*.45);
+    // Monsoon: indigo, rain teal, sky, marigold
+    vec3 n1 = vec3(.04,.07,.19), n2 = vec3(.03,.36,.42), n3 = vec3(.3,.62,.78), n4 = vec3(.95,.62,.25);
+    vec3 mon = mix(n1, n2, smoothstep(-.3,.4,f)); mon = mix(mon, n3, smoothstep(.3,.7,length(r))*.5); mon = mix(mon, n4, smoothstep(.58,.95,f+length(q)*.3)*.7);
+    vec3 col = mix(dawn, mon, night) + rip * mix(1.2, 2.2, night);
+    col *= mix(1., .82 + .3*smoothstep(1.4, 0., length((vUv - m) * asp)), night);
+    gl_FragColor = vec4(col, 1.); }`;
+function liquid(canvas, { follow = true } = {}) {
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.25));
+  const scene = new THREE.Scene(), cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const u = { t: { value: 0 }, night: { value: 0 }, res: { value: new THREE.Vector2(1, 1) }, m: { value: new THREE.Vector2(.5, .5) }, ripples: { value: Array.from({ length: 6 }, () => new THREE.Vector3(0, 0, -99)) } };
+  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({ uniforms: u, vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position,1.); }', fragmentShader: FRAG })));
+  const resize = () => { const w = canvas.clientWidth, h = canvas.clientHeight; renderer.setSize(w, h, false); u.res.value.set(w, h); };
+  new ResizeObserver(resize).observe(canvas); resize();
+  let ri = 0, last = 0, visible = true; const host = canvas.parentElement;
+  const drop = (e) => { const r = canvas.getBoundingClientRect(); u.ripples.value[ri].set((e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height, u.t.value); ri = (ri + 1) % 6; };
+  host.addEventListener('pointerdown', drop);
+  host.addEventListener('pointermove', (e) => { const r = canvas.getBoundingClientRect(); u.m.value.set((e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height); if (follow && u.t.value - last > .4) { drop(e); last = u.t.value; } });
+  new IntersectionObserver(([en]) => (visible = en.isIntersecting)).observe(canvas);
+  const clock = new THREE.Clock();
+  (function loop() { requestAnimationFrame(loop); if (!visible) return; u.t.value = reduce ? 4 : clock.getElapsedTime(); renderer.render(scene, cam); })();
+  return u;
+}
+const liquids = [liquid(document.getElementById('liquid')), liquid(document.getElementById('liquid2'), { follow: false })];
+
+/* ── Day / Night: the page cross-fades and the liquid flows into the new palette ── */
+let nightTarget = 0;
+function setTheme(night) {
+  root.dataset.theme = night ? 'night' : 'day';
+  document.getElementById('dayBtn').setAttribute('aria-pressed', String(!night));
+  document.getElementById('nightBtn').setAttribute('aria-pressed', String(night));
+  nightTarget = night ? 1 : 0;
+}
+(function tweenNight() { requestAnimationFrame(tweenNight); liquids.forEach((u) => (u.night.value += (nightTarget - u.night.value) * (reduce ? 1 : .03))); })();
+document.getElementById('dayBtn').onclick = () => setTheme(false);
+document.getElementById('nightBtn').onclick = () => setTheme(true);
+
+/* ── Rangoli: concentric petals, rings and dots that draw themselves ── */
+(function rangoli() {
+  const svg = document.getElementById('rangoli'); let out = '';
+  const petal = (r1, r2, w) => `M0 ${-r1} C ${w} ${-r1 - (r2 - r1) * .3}, ${w} ${-r2 + 12}, 0 ${-r2} C ${-w} ${-r2 + 12}, ${-w} ${-r1 - (r2 - r1) * .3}, 0 ${-r1} Z`;
+  [[8, 0, 34, 10], [16, 44, 110, 24], [16, 116, 170, 26], [32, 168, 200, 9]].forEach(([n, r1, r2, w], ring) => {
+    for (let k = 0; k < n; k++) out += `<path class="draw" d="${petal(r1, r2, w)}" transform="rotate(${(360 / n) * k + ring * 5.6})" style="--len:620;--d:${ring * .45 + k * .015}s"/>`;
+  });
+  [40, 114, 205].forEach((r, k) => (out += `<circle class="draw" r="${r}" style="--len:${Math.ceil(2 * Math.PI * r)};--d:${k * .55}s"/>`));
+  for (let k = 0; k < 36; k++) { const a = (k / 36) * Math.PI * 2; out += `<circle class="dot" cx="${(Math.cos(a) * 140).toFixed(1)}" cy="${(Math.sin(a) * 140).toFixed(1)}" r="2.6" style="--d:${2 + k * .03}s"/>`; }
+  svg.innerHTML = out;
+})();
+
+/* ── Kolam border: a dot grid threaded with a looping line ── */
+(function kolam() {
+  // Two mirrored waves cross between every dot, so each dot sits inside its own loop (a chain kolam).
+  const svg = document.getElementById('kolam'); let out = '';
+  const wave = (sign) => { let d = 'M0 30'; for (let x = 1; x <= 560; x += 4) d += ` L${x} ${(30 + sign * 20 * Math.sin((Math.PI * x) / 40)).toFixed(1)}`; return `<path d="${d}"/>`; };
+  for (let i = 0; i < 14; i++) out += `<circle cx="${20 + i * 40}" cy="30" r="3"/>`;
+  svg.innerHTML = wave(1) + wave(-1) + out;
+})();
+
+/* ── Journeys: build the cinematic cards ── */
+const STORIES = [
+  ['1477587458883-47145ed94245', 'जयपुर', 'Jaipur', 'Palaces, bazaars and pink-walled lanes.', '3 days from ₹9k'],
+  ['1571536802807-30451e3955d8', 'वाराणसी', 'Varanasi', 'Dawn boats and evening aarti on the ghats.', '2 days from ₹6k'],
+  ['1602216056096-3b40cc0c9944', 'केरल', 'Kerala', 'Houseboats drifting through green backwaters.', '4 days from ₹16k'],
+  ['1581793745862-99fde7fa73d2', 'लद्दाख', 'Ladakh', 'High passes, blue lakes and quiet monasteries.', '6 days from ₹28k'],
+  ['1512343879784-a960bf40e7f2', 'गोवा', 'Goa', 'Slow beach days and Portuguese quarters.', '3 days from ₹10k'],
+];
+const track = document.getElementById('track');
+STORIES.forEach(([id, hi, en, line, tag]) => {
+  const a = document.createElement('a'); a.className = 'story'; a.href = '#';
+  a.innerHTML = `<img src="https://images.unsplash.com/photo-${id}?w=1100&q=70&auto=format&fit=crop" alt="" loading="lazy" /><span class="tag">${tag}</span>
+    <div class="cap"><div class="hi">${hi}</div><h3>${en}</h3><p>${line}</p></div>`;
+  track.appendChild(a);
+});
+
+/* ── Scroll choreography: reveals + the pinned horizontal gallery ── */
+const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .2 });
+document.querySelectorAll('.fade-up, .reveal-line, #steps').forEach((el) => io.observe(el));
+const journeys = document.getElementById('journeys');
+function onScroll() {
+  const r = journeys.getBoundingClientRect(); const total = journeys.offsetHeight - innerHeight;
+  const p = Math.min(1, Math.max(0, -r.top / total));
+  const max = track.scrollWidth - innerWidth + 48;
+  track.style.transform = `translate3d(${-p * max}px, 0, 0)`;
+  // Each card wipes open as it slides into view (clip-path hides it from IntersectionObserver, so we measure ourselves).
+  if (r.top < innerHeight * .6) track.querySelectorAll('.story:not(.in)').forEach((c) => { if (c.getBoundingClientRect().left < innerWidth * .92) c.classList.add('in'); });
+}
+(lenis ? lenis.on('scroll', onScroll) : addEventListener('scroll', onScroll, { passive: true })); onScroll();
+
+/* ── Cursor ring: follows smoothly, grows over things you can press ── */
+const cursor = document.getElementById('cursor'); const pos = { x: -100, y: -100 }, cur = { x: -100, y: -100 };
+addEventListener('pointermove', (e) => { pos.x = e.clientX; pos.y = e.clientY; cursor.classList.toggle('big', !!e.target.closest('a, button, input')); });
+(function follow() { requestAnimationFrame(follow); cur.x += (pos.x - cur.x) * (reduce ? 1 : .2); cur.y += (pos.y - cur.y) * (reduce ? 1 : .2); cursor.style.transform = `translate(${cur.x}px, ${cur.y}px)`; })();
+document.querySelectorAll('.chips button').forEach((b) => b.onclick = () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true')));
+</script>
+</body>
+</html>
