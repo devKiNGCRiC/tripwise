@@ -1,0 +1,324 @@
+<!doctype html>
+<!--
+  tripwise-moods.html — MOOD PAGE: three original directions for the TripWise redesign.
+  Switch with the tabs at the bottom. Not part of the app.
+   A. Clay Chhatri   — soft 3D clay world (Rajasthani chhatri, hot-air balloon, kite, paper boat)
+   B. Liquid Monsoon — living fluid colour + frosted glass; your cursor makes ripples
+   C. Rangoli Editorial — cinematic photography framed by a self-drawing rangoli
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TripWise Moods</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Unbounded:wght@400;600;800&family=Hind:wght@400;500;600&family=Gloock&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #111; }
+  .mood { position: fixed; inset: 0; opacity: 0; visibility: hidden; transition: opacity .7s ease, visibility .7s; }
+  .mood.on { opacity: 1; visibility: visible; }
+  .tabs { position: fixed; z-index: 50; left: 50%; bottom: 22px; transform: translateX(-50%); display: flex; gap: 6px; padding: 6px;
+    border-radius: 999px; background: rgb(20 20 24 / .72); backdrop-filter: blur(12px); border: 1px solid rgb(255 255 255 / .15); }
+  .tabs button { border: 0; border-radius: 999px; padding: 10px 18px; font: 600 14px Hind, sans-serif; color: #fff; background: transparent; cursor: pointer; }
+  .tabs button[aria-pressed='true'] { background: #fff; color: #111; }
+  canvas { display: block; }
+  nav.top { position: absolute; z-index: 5; inset: 0 0 auto 0; display: flex; justify-content: space-between; align-items: center; padding: 22px 40px; }
+  nav.top .links { display: flex; gap: 28px; }
+  nav.top a { text-decoration: none; }
+
+  /* ── A. CLAY CHHATRI ─────────────────────────────────────────────── */
+  #clay { background: radial-gradient(120% 90% at 70% 30%, #ffe9d6 0%, #fbd3c0 40%, #f3b9a8 100%); font-family: 'Baloo 2', sans-serif; color: #4a2c2a; }
+  #clay canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  #clay .brand { font: 800 26px 'Baloo 2'; color: #4a2c2a; display: flex; align-items: center; gap: 10px; }
+  #clay .brand i { width: 38px; height: 38px; border-radius: 14px; background: #ff8a5c; display: grid; place-items: center; font-style: normal; color: #fff;
+    box-shadow: inset -4px -5px 8px rgb(0 0 0 / .18), inset 4px 4px 8px rgb(255 255 255 / .45), 0 8px 18px -6px rgb(160 70 40 / .5); }
+  #clay nav a { color: #4a2c2a; font-weight: 700; font-size: 17px; }
+  .clay-copy { position: absolute; z-index: 4; left: 7vw; top: 50%; transform: translateY(-46%); max-width: 520px; }
+  .clay-copy h1 { margin: 0; font: 800 clamp(48px, 6.4vw, 92px)/.92 'Baloo 2'; letter-spacing: -.02em; color: #3d2220; }
+  .clay-copy p { font-size: 21px; line-height: 1.45; color: #6b4440; margin: 18px 0 30px; max-width: 30ch; }
+  .clay-box { display: flex; align-items: center; gap: 10px; padding: 10px 10px 10px 24px; border-radius: 32px; background: #fff4ec;
+    box-shadow: inset -6px -8px 14px rgb(214 140 112 / .35), inset 6px 6px 12px #fff, 0 18px 40px -16px rgb(150 70 50 / .55); }
+  .clay-box input { flex: 1; border: 0; background: transparent; font: 600 19px 'Baloo 2'; color: #4a2c2a; outline: none; min-width: 0; }
+  .clay-btn { border: 0; cursor: pointer; padding: 14px 24px; border-radius: 24px; font: 800 18px 'Baloo 2'; color: #fff; background: #ff7a45;
+    box-shadow: inset -5px -6px 10px rgb(140 40 10 / .35), inset 5px 5px 10px rgb(255 255 255 / .35), 0 12px 22px -8px rgb(200 70 30 / .6);
+    transition: transform .2s cubic-bezier(.3,1.6,.5,1); }
+  .clay-btn:hover { transform: translateY(-3px) scale(1.04); }
+  .clay-btn:active { transform: translateY(2px) scale(.97); }
+  .clay-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+  .clay-chips span { padding: 8px 16px; border-radius: 18px; font-weight: 700; color: #4a2c2a; background: var(--c);
+    box-shadow: inset -4px -5px 8px rgb(0 0 0 / .12), inset 4px 4px 8px rgb(255 255 255 / .5), 0 8px 14px -8px rgb(120 60 40 / .45);
+    animation: bob 3s ease-in-out infinite alternate; animation-delay: var(--d); }
+  @keyframes bob { to { transform: translateY(-5px); } }
+
+  /* ── B. LIQUID MONSOON ───────────────────────────────────────────── */
+  #liquid { font-family: Hind, sans-serif; color: #f4f7fb; background: #0b1530; }
+  #liquid canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  #liquid .brand { font: 800 22px Unbounded; color: #fff; letter-spacing: -.02em; }
+  #liquid nav a { color: rgb(255 255 255 / .85); font-weight: 500; }
+  .rain { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: .35;
+    background-image: repeating-linear-gradient(105deg, transparent 0 22px, rgb(255 255 255 / .12) 22px 23px, transparent 23px 61px);
+    background-size: 200px 400px; animation: rain .7s linear infinite; mask-image: linear-gradient(transparent, #000 30%, #000 70%, transparent); }
+  @keyframes rain { to { background-position: -70px 400px; } }
+  .liq-copy { position: absolute; z-index: 4; inset: 0; display: grid; place-content: center; text-align: center; padding: 0 20px; }
+  .liq-copy h1 { margin: 0; font: 800 clamp(46px, 7.4vw, 118px)/.95 Unbounded; letter-spacing: -.04em; }
+  .liq-copy h1 span { font-family: 'Tiro Devanagari Hindi'; font-weight: 400; letter-spacing: 0; font-size: .62em; display: block; opacity: .85; margin-top: 10px; }
+  .glass { margin: 34px auto 0; width: min(640px, 92vw); display: flex; gap: 10px; padding: 10px; border-radius: 26px;
+    background: linear-gradient(135deg, rgb(255 255 255 / .22), rgb(255 255 255 / .06)); border: 1px solid rgb(255 255 255 / .35);
+    backdrop-filter: blur(22px) saturate(1.6); box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), 0 30px 60px -20px rgb(0 0 0 / .5); }
+  .glass input { flex: 1; min-width: 0; border: 0; background: transparent; color: #fff; font: 500 19px Hind; padding: 0 16px; outline: none; }
+  .glass input::placeholder { color: rgb(255 255 255 / .7); }
+  .glass button { border: 0; cursor: pointer; border-radius: 18px; padding: 15px 26px; font: 600 16px Unbounded; color: #0b1530;
+    background: linear-gradient(135deg, #ffd27a, #ff9d5c); box-shadow: 0 10px 30px -8px rgb(255 157 92 / .8); }
+  .liq-meta { margin-top: 26px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .liq-meta span { padding: 8px 14px; border-radius: 999px; font-size: 15px; background: rgb(255 255 255 / .1); border: 1px solid rgb(255 255 255 / .2); backdrop-filter: blur(10px); }
+  .liq-hint { position: absolute; z-index: 4; bottom: 92px; left: 50%; transform: translateX(-50%); font-size: 14px; opacity: .7; }
+
+  /* ── C. RANGOLI EDITORIAL ────────────────────────────────────────── */
+  #edit { font-family: Hind, sans-serif; color: #fbf6ee; background: #120d0a; }
+  .slides { position: absolute; inset: 0; }
+  .slide { position: absolute; inset: 0; clip-path: inset(0 0 0 100%); transition: clip-path 1.4s cubic-bezier(.77,0,.18,1); }
+  .slide.on { clip-path: inset(0 0 0 0); }
+  .slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: transform 7s ease-out; }
+  .slide.on img { transform: scale(1); }
+  .slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(18 13 10 / .85) 0%, rgb(18 13 10 / .35) 55%, rgb(18 13 10 / .1)); }
+  #edit .brand { font: 400 30px Gloock; color: #fbf6ee; }
+  #edit nav a { color: #fbf6ee; font-size: 15px; letter-spacing: .02em; }
+  .ed-copy { position: absolute; z-index: 4; left: 7vw; top: 50%; transform: translateY(-50%); max-width: 560px; }
+  .ed-copy .place { font-family: 'Tiro Devanagari Hindi'; font-size: 22px; color: #e8b46a; }
+  .ed-copy h1 { margin: 6px 0 0; font: 400 clamp(54px, 7.6vw, 120px)/.92 Gloock; letter-spacing: -.01em; }
+  .ed-copy p { font-size: 20px; line-height: 1.55; color: rgb(251 246 238 / .82); max-width: 36ch; margin: 22px 0 32px; }
+  .ed-cta { display: inline-flex; align-items: center; gap: 14px; padding: 16px 28px; border-radius: 999px; border: 1px solid #e8b46a; color: #120d0a;
+    background: #e8b46a; font: 600 17px Hind; text-decoration: none; transition: background .3s, color .3s; }
+  .ed-cta:hover { background: transparent; color: #e8b46a; }
+  .ed-cta.ghost { background: transparent; color: #fbf6ee; border-color: rgb(251 246 238 / .4); margin-left: 10px; }
+  .rangoli { position: absolute; z-index: 3; right: 6vw; top: 50%; width: min(42vw, 560px); transform: translateY(-50%); opacity: .9; pointer-events: none; }
+  .rangoli path, .rangoli circle { fill: none; stroke: #e8b46a; stroke-width: 1.4; stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 3.2s cubic-bezier(.6,0,.2,1) forwards; animation-delay: var(--d); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .ed-index { position: absolute; z-index: 4; left: 7vw; bottom: 96px; display: flex; gap: 22px; }
+  .ed-index button { background: none; border: 0; color: rgb(251 246 238 / .5); font: 500 15px Hind; cursor: pointer; padding: 0 0 6px; border-bottom: 1px solid transparent; }
+  .ed-index button.on { color: #fbf6ee; border-color: #e8b46a; }
+
+  @media (max-width: 760px) { nav.top .links { display: none; } .rangoli { opacity: .35; width: 90vw; right: -20vw; } nav.top { padding: 18px 20px; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" } }</script>
+</head>
+<body>
+
+<!-- A ─────────────────────────────────────────────────────────── -->
+<section class="mood on" id="clay" aria-label="Direction A: Clay Chhatri">
+  <nav class="top"><div class="brand"><i>✈</i>tripwise</div><div class="links"><a href="#">Explore</a><a href="#">Plan</a><a href="#">Crew</a></div></nav>
+  <canvas id="clayCanvas"></canvas>
+  <div class="clay-copy">
+    <h1>Pack light.<br />Plan bright.</h1>
+    <p>Tell us where and how you like to travel. We'll shape every day of the trip, budget included.</p>
+    <div class="clay-box"><input placeholder="Jaisalmer, Gokarna, Spiti…" aria-label="Where to?" /><button class="clay-btn">Plan it</button></div>
+    <div class="clay-chips"><span style="--c:#ffd59e;--d:0s">Desert nights</span><span style="--c:#bfe6d2;--d:.4s">Chai stops</span><span style="--c:#c9d7ff;--d:.8s">Mountain air</span><span style="--c:#ffc2c7;--d:1.2s">Street food</span></div>
+  </div>
+</section>
+
+<!-- B ─────────────────────────────────────────────────────────── -->
+<section class="mood" id="liquid" aria-label="Direction B: Liquid Monsoon">
+  <canvas id="liquidCanvas"></canvas>
+  <div class="rain"></div>
+  <nav class="top"><div class="brand">tripwise</div><div class="links"><a href="#">Explore</a><a href="#">Plan</a><a href="#">Crew</a></div></nav>
+  <div class="liq-copy">
+    <h1>Let the trip flow.<span>यात्रा, बिना झंझट</span></h1>
+    <div class="glass"><input placeholder="Where does your heart want to go?" aria-label="Where to?" /><button>Plan</button></div>
+    <div class="liq-meta"><span>Day-by-day plans</span><span>Fits your budget</span><span>Share with your crew</span></div>
+  </div>
+  <p class="liq-hint">Move or click anywhere — the colours ripple</p>
+</section>
+
+<!-- C ─────────────────────────────────────────────────────────── -->
+<section class="mood" id="edit" aria-label="Direction C: Rangoli Editorial">
+  <div class="slides" id="slides"></div>
+  <nav class="top" style="z-index:6"><div class="brand">TripWise</div><div class="links"><a href="#">Journeys</a><a href="#">Destinations</a><a href="#">Journal</a></div></nav>
+  <svg class="rangoli" viewBox="-200 -200 400 400" aria-hidden="true" id="rangoli"></svg>
+  <div class="ed-copy">
+    <div class="place" id="edPlace">जयपुर · Jaipur</div>
+    <h1>India,<br />unhurried.</h1>
+    <p>Thoughtful itineraries for every kind of traveller — from your first backpacking trip to your fortieth.</p>
+    <a class="ed-cta" href="#">Plan a journey</a><a class="ed-cta ghost" href="#">See sample trips</a>
+  </div>
+  <div class="ed-index" id="edIndex"></div>
+</section>
+
+<div class="tabs" role="group" aria-label="Design directions">
+  <button data-m="clay" aria-pressed="true">A · Clay</button>
+  <button data-m="liquid" aria-pressed="false">B · Liquid</button>
+  <button data-m="edit" aria-pressed="false">C · Editorial</button>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let active = 'clay';
+document.querySelectorAll('.tabs button').forEach((b) => b.onclick = () => {
+  active = b.dataset.m;
+  document.querySelectorAll('.tabs button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  document.querySelectorAll('.mood').forEach((m) => m.classList.toggle('on', m.id === active));
+  if (active === 'edit') drawRangoli();
+});
+const mouse = { x: 0, y: 0 };
+addEventListener('pointermove', (e) => { mouse.x = e.clientX / innerWidth - 0.5; mouse.y = e.clientY / innerHeight - 0.5; });
+
+/* ═══ A. Clay world: soft matte 3D objects floating over a sandstone island ═══ */
+(function clay() {
+  const canvas = document.getElementById('clayCanvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 200);
+  camera.position.set(0, 3.2, 16);
+  scene.add(new THREE.HemisphereLight(0xfff1e6, 0xd98a74, 1.6));
+  const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(-5, 9, 7); key.castShadow = true;
+  key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 8; Object.assign(key.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8 }); scene.add(key);
+  /* Clay = rough, non-metallic, pastel; rounded shapes everywhere */
+  const clay = (c) => new THREE.MeshStandardMaterial({ color: c, roughness: .95, metalness: 0 });
+  const world = new THREE.Group(); world.position.x = 3.2; scene.add(world);
+  const add = (geo, mat, x, y, z, parent = world) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = m.receiveShadow = true; parent.add(m); return m; };
+
+  // Floating sandstone island (rounded cylinder) with a little water pool
+  add(new THREE.CylinderGeometry(3.4, 2.4, 1.1, 48), clay(0xf0b27a), 0, -1.6, 0);
+  add(new THREE.CylinderGeometry(3.42, 3.42, .22, 48), clay(0xa8d98a), 0, -1.0, 0);
+  add(new THREE.CylinderGeometry(1.1, 1.1, .05, 40), clay(0x7cc6e8), 1.6, -.86, 1.2);
+
+  // Rajasthani chhatri: plinth, four pillars, a dome and a finial
+  const chhatri = new THREE.Group(); chhatri.position.set(-.6, -.88, -.3); world.add(chhatri);
+  add(new THREE.BoxGeometry(2.2, .35, 2.2), clay(0xf6c08c), 0, .18, 0, chhatri);
+  for (const [x, z] of [[-.8, -.8], [.8, -.8], [-.8, .8], [.8, .8]]) add(new THREE.CylinderGeometry(.12, .14, 1.4, 16), clay(0xfbe3c4), x, 1.05, z, chhatri);
+  add(new THREE.BoxGeometry(2.3, .22, 2.3), clay(0xf6c08c), 0, 1.85, 0, chhatri);
+  add(new THREE.SphereGeometry(1.0, 40, 20, 0, Math.PI * 2, 0, Math.PI / 2), clay(0xffd59e), 0, 1.95, 0, chhatri);
+  add(new THREE.ConeGeometry(.12, .5, 16), clay(0xff8a5c), 0, 3.1, 0, chhatri);
+  // Two clay palms
+  for (const [x, z, s] of [[2.2, -1.2, 1], [-2.4, 1.3, .8]]) {
+    const palm = new THREE.Group(); palm.position.set(x, -.9, z); palm.scale.setScalar(s); world.add(palm);
+    add(new THREE.CylinderGeometry(.1, .16, 1.8, 10), clay(0xb98563), 0, .9, 0, palm);
+    for (let i = 0; i < 5; i++) { const leaf = add(new THREE.SphereGeometry(.55, 20, 10), clay(0x6fc47e), 0, 1.85, 0, palm); leaf.scale.set(1.2, .18, .45); leaf.rotation.y = i * 1.26; leaf.position.x = Math.cos(i * 1.26) * .45; leaf.position.z = -Math.sin(i * 1.26) * .45; }
+  }
+  // Hot-air balloon (bobbing) with saffron stripes
+  const balloon = new THREE.Group(); balloon.position.set(.6, 3.2, -3.5); scene.add(balloon);
+  for (let i = 0; i < 8; i++) { const seg = add(new THREE.SphereGeometry(1, 32, 24, i * Math.PI / 4, Math.PI / 4), clay(i % 2 ? 0xff8a5c : 0xffd59e), 0, 0, 0, balloon); seg.scale.set(1, 1.15, 1); }
+  add(new THREE.CylinderGeometry(.28, .2, .3, 16), clay(0xb98563), 0, -1.55, 0, balloon);
+  // Kite (diamond) with a tail of bows
+  const kite = new THREE.Group(); kite.position.set(4.6, 3.6, -2); scene.add(kite);
+  const kshape = new THREE.Shape([new THREE.Vector2(0, .9), new THREE.Vector2(.65, 0), new THREE.Vector2(0, -.9), new THREE.Vector2(-.65, 0)]);
+  add(new THREE.ExtrudeGeometry(kshape, { depth: .08, bevelEnabled: true, bevelSize: .05, bevelThickness: .05, bevelSegments: 4 }), clay(0xc9a7ff), 0, 0, 0, kite);
+  for (let i = 0; i < 3; i++) add(new THREE.SphereGeometry(.1, 12, 8), clay(0xff8a5c), .1 * i, -1.1 - i * .35, 0, kite);
+  // Paper boat floating in front
+  const boat = new THREE.Group(); boat.position.set(6.2, -.6, 2.4); scene.add(boat);
+  const hull = add(new THREE.CylinderGeometry(.9, .45, .45, 4, 1), clay(0xfffaf3), 0, 0, 0, boat); hull.scale.set(1.4, 1, .6); hull.rotation.y = Math.PI / 4;
+  add(new THREE.ConeGeometry(.45, .8, 4), clay(0xfffaf3), 0, .55, 0, boat);
+  // Soft clay clouds
+  const clouds = [];
+  for (const [x, y, z, s] of [[-1.5, 5.4, -6, 1], [6.5, 1.2, -3, .8], [1.5, 5.2, -6, 1.2]]) {
+    const c = new THREE.Group(); c.position.set(x, y, z); c.scale.setScalar(s); scene.add(c); clouds.push(c);
+    for (const [dx, dy, r] of [[0, 0, .8], [.8, -.1, .6], [-.8, -.15, .55], [.3, .35, .55]]) add(new THREE.SphereGeometry(r, 24, 16), clay(0xffffff), dx, dy, 0, c);
+  }
+  // Shadow catcher on the "ground" far below so objects feel grounded
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: .12 })); ground.rotation.x = -Math.PI / 2; ground.position.y = -3; ground.receiveShadow = true; scene.add(ground);
+
+  const resize = () => { const w = canvas.clientWidth, h = canvas.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); world.position.x = w < 760 ? 0 : 3.2; };
+  new ResizeObserver(resize).observe(canvas); resize();
+  const clock = new THREE.Clock();
+  (function loop() {
+    requestAnimationFrame(loop);
+    if (active !== 'clay') return;
+    const t = clock.getElapsedTime();
+    if (!reduce) {
+      world.rotation.y = Math.sin(t * .25) * .25 + mouse.x * .5;
+      world.position.y = Math.sin(t * .8) * .12;
+      balloon.position.y = 3.2 + Math.sin(t * .9) * .3; balloon.rotation.y = t * .2;
+      kite.rotation.z = Math.sin(t * 1.3) * .2; kite.position.y = 3.6 + Math.sin(t * 1.1) * .2;
+      boat.rotation.z = Math.sin(t * 1.6) * .08; boat.position.y = -.6 + Math.sin(t * 1.4) * .08;
+      clouds.forEach((c, i) => (c.position.x += Math.sin(t * .2 + i) * .003));
+      camera.position.x += (mouse.x * 1.4 - camera.position.x) * .03; camera.position.y += (3.2 - mouse.y * 1 - camera.position.y) * .03; camera.lookAt(world.position.x * .5, .4, 0);
+    }
+    renderer.render(scene, camera);
+  })();
+})();
+
+/* ═══ B. Liquid Monsoon: domain-warped fluid colour field + click/move ripples ═══ */
+(function liquid() {
+  const canvas = document.getElementById('liquidCanvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+  const scene = new THREE.Scene(), cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const uniforms = { t: { value: 0 }, res: { value: new THREE.Vector2() }, m: { value: new THREE.Vector2(.5, .5) }, ripples: { value: Array.from({ length: 6 }, () => new THREE.Vector3(0, 0, -99)) } };
+  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({ uniforms, vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position,1.); }',
+    fragmentShader: `precision highp float; varying vec2 vUv; uniform float t; uniform vec2 res; uniform vec2 m; uniform vec3 ripples[6];
+      vec2 hash(vec2 p){ p = vec2(dot(p,vec2(127.1,311.7)), dot(p,vec2(269.5,183.3))); return -1. + 2.*fract(sin(p)*43758.5453); }
+      float noise(vec2 p){ vec2 i = floor(p), f = fract(p); vec2 u = f*f*(3.-2.*f);
+        return mix(mix(dot(hash(i),f), dot(hash(i+vec2(1,0)),f-vec2(1,0)),u.x), mix(dot(hash(i+vec2(0,1)),f-vec2(0,1)), dot(hash(i+vec2(1,1)),f-vec2(1,1)),u.x),u.y); }
+      float fbm(vec2 p){ float s=0., a=.5; for(int i=0;i<5;i++){ s+=a*noise(p); p*=2.02; a*=.5; } return s; }
+      void main(){
+        vec2 uv = vUv; vec2 p = (uv - .5) * vec2(res.x/res.y, 1.) * 2.2;
+        // Ripples: expanding rings from clicks / cursor trail push the liquid
+        float rip = 0.;
+        for (int i = 0; i < 6; i++) { vec3 r = ripples[i]; float age = t - r.z; if (age < 0. || age > 3.) continue;
+          vec2 d = (uv - r.xy) * vec2(res.x/res.y, 1.); float dist = length(d);
+          rip += sin(dist * 38. - age * 9.) * exp(-dist * 4.) * exp(-age * 1.4) * .06; }
+        vec2 q = vec2(fbm(p + t*.05), fbm(p + vec2(5.2,1.3) - t*.04));
+        vec2 r2 = vec2(fbm(p + 3.*q + vec2(1.7,9.2) + t*.07 + rip*4.), fbm(p + 3.*q + vec2(8.3,2.8) - t*.05));
+        float f = fbm(p + 3.5*r2 + rip*6.);
+        // Monsoon palette: deep indigo → teal rain → marigold light breaking through
+        vec3 indigo = vec3(.04,.07,.2), teal = vec3(.02,.42,.48), sky = vec3(.35,.72,.86), marigold = vec3(1.,.66,.25);
+        vec3 col = mix(indigo, teal, smoothstep(-.3,.4,f));
+        col = mix(col, sky, smoothstep(.25,.7,length(r2)) * .6);
+        col = mix(col, marigold, smoothstep(.55,.95,f + length(q)*.3) * .75);
+        col += rip * 2.2;
+        col *= .78 + .35 * smoothstep(1.4, 0., length((uv - m) * vec2(res.x/res.y,1.)));   // soft light following the cursor
+        col = pow(col, vec3(.95)); gl_FragColor = vec4(col, 1.); }` })));
+  let ri = 0, lastDrop = 0;
+  const drop = (x, y) => { uniforms.ripples.value[ri].set(x, 1 - y, uniforms.t.value); ri = (ri + 1) % 6; };
+  canvas.parentElement.addEventListener('pointerdown', (e) => drop(e.clientX / innerWidth, e.clientY / innerHeight));
+  canvas.parentElement.addEventListener('pointermove', (e) => { if (uniforms.t.value - lastDrop > .35) { drop(e.clientX / innerWidth, e.clientY / innerHeight); lastDrop = uniforms.t.value; } });
+  const resize = () => { renderer.setSize(innerWidth, innerHeight, false); uniforms.res.value.set(innerWidth, innerHeight); };
+  addEventListener('resize', resize); resize();
+  const clock = new THREE.Clock();
+  (function loop() {
+    requestAnimationFrame(loop);
+    if (active !== 'liquid') return;
+    uniforms.t.value = reduce ? 1 : clock.getElapsedTime();
+    uniforms.m.value.lerp(new THREE.Vector2(mouse.x + .5, .5 - mouse.y), .05);
+    renderer.render(scene, cam);
+  })();
+})();
+
+/* ═══ C. Rangoli Editorial: cinematic wipes + a mandala that draws itself ═══ */
+const SLIDES = [
+  ['1477587458883-47145ed94245', 'जयपुर · Jaipur'], ['1571536802807-30451e3955d8', 'वाराणसी · Varanasi'],
+  ['1602216056096-3b40cc0c9944', 'केरल · Kerala'], ['1581793745862-99fde7fa73d2', 'लद्दाख · Ladakh'],
+];
+const slidesEl = document.getElementById('slides'), indexEl = document.getElementById('edIndex');
+SLIDES.forEach(([id, name], i) => {
+  const s = document.createElement('div'); s.className = 'slide' + (i === 0 ? ' on' : '');
+  s.innerHTML = `<img src="https://images.unsplash.com/photo-${id}?w=1800&q=70&auto=format&fit=crop" alt="" />`; slidesEl.appendChild(s);
+  const b = document.createElement('button'); b.textContent = name.split(' · ')[1]; b.className = i === 0 ? 'on' : ''; b.onclick = () => go(i); indexEl.appendChild(b);
+});
+let cur = 0;
+function go(i) {
+  const all = slidesEl.children, btns = indexEl.children;
+  // New slide wipes in on top; the old one leaves after the wipe
+  all[i].style.zIndex = 2; all[cur].style.zIndex = 1; all[i].classList.add('on');
+  const prev = cur; setTimeout(() => { if (prev !== i) all[prev].classList.remove('on'); }, 1400);
+  [...btns].forEach((b, k) => b.classList.toggle('on', k === i));
+  document.getElementById('edPlace').textContent = SLIDES[i][1]; cur = i;
+}
+if (!reduce) setInterval(() => { if (active === 'edit') go((cur + 1) % SLIDES.length); }, 5200);
+function drawRangoli() {
+  // A kolam-style mandala: concentric petals, dots and rings, drawn stroke by stroke
+  const svg = document.getElementById('rangoli'); let out = '';
+  const petal = (r1, r2, w) => `M0 ${-r1} C ${w} ${-r1 - (r2 - r1) * .3}, ${w} ${-r2 + 10}, 0 ${-r2} C ${-w} ${-r2 + 10}, ${-w} ${-r1 - (r2 - r1) * .3}, 0 ${-r1} Z`;
+  const rings = [[16, 0, 18, 0], [12, 40, 105, 26], [12, 110, 160, 30], [24, 150, 190, 14]];
+  rings.forEach(([n, r1, r2, w], ring) => { for (let k = 0; k < n; k++) out += `<path d="${petal(r1, r2, w)}" transform="rotate(${(360 / n) * k + ring * 7.5})" style="--len:600;--d:${ring * .45 + k * .02}s"/>`; });
+  [30, 36, 108, 196].forEach((r, k) => (out += `<circle r="${r}" style="--len:${Math.ceil(2 * Math.PI * r)};--d:${k * .5}s"/>`));
+  for (let k = 0; k < 24; k++) { const a = (k / 24) * Math.PI * 2; out += `<circle cx="${Math.cos(a) * 128}" cy="${Math.sin(a) * 128}" r="3" style="--len:20;--d:${1.6 + k * .03}s"/>`; }
+  svg.innerHTML = out;
+}
+</script>
+</body>
+</html>
