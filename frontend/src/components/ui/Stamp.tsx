@@ -22,19 +22,21 @@ interface StampProps {
   tone?: StampTone;
   /** Tilt in degrees — real stamps are never straight. */
   rotate?: number;
+  /** md = 96px (default), lg = 128px (the passport's stamp page) */
+  size?: 'md' | 'lg';
   className?: string;
 }
 
 /** A tilted passport stamp. */
-export function Stamp({ label, localLabel, tone = 'gold', rotate = -8, className }: StampProps) {
+export function Stamp({ label, localLabel, tone = 'gold', rotate = -8, size = 'md', className }: StampProps) {
   return (
     <span
-      className={cn('inline-grid size-24 shrink-0 place-content-center rounded-full border-4 border-double text-center leading-tight', TONES[tone], className)}
+      className={cn('inline-grid shrink-0 place-content-center rounded-full border-4 border-double text-center leading-tight', size === 'lg' ? 'size-32' : 'size-24', TONES[tone], className)}
       style={{ transform: `rotate(${rotate}deg)` }}
     >
-      <span className="font-display text-[15px] tracking-wider uppercase">{label}</span>
+      <span className={cn('font-display tracking-wider uppercase', size === 'lg' ? 'text-lg' : 'text-[15px]')}>{label}</span>
       {localLabel && (
-        <span lang="hi" className="text-[13px]">
+        <span lang="hi" className={size === 'lg' ? 'text-base' : 'text-[13px]'}>
           {localLabel}
         </span>
       )}

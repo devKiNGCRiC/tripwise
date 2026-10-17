@@ -7,11 +7,13 @@
  */
 import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { MotionChoice } from '@/features/passport/MotionChoice';
+import { TravelStats } from '@/features/passport/TravelStats';
 import { QuotaMeter } from '@/features/passport/QuotaMeter';
 import { StampGrid } from '@/features/passport/StampGrid';
 import { ThemeToggle } from '@/theme/ThemeToggle';
@@ -35,16 +37,11 @@ export default function PassportPage() {
   const memberSince = new Date(user.createdAt).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
 
   return (
-    <div className="mx-auto max-w-5xl px-4 pt-28 pb-20">
+    <div className="mx-auto max-w-6xl px-4 pt-28 pb-20">
       <title>Your passport · TripWise</title>
-      <header className="glass inline-block rounded-[28px] px-7 py-5">
-        <p lang="hi" className="text-2xl text-accent-2">
-          पासपोर्ट
-        </p>
-        <h1 className="mt-1 text-[clamp(44px,6vw,76px)]">Your passport</h1>
-      </header>
+      <PageHeader eyebrow="पासपोर्ट · Traveller profile" title="Your passport" actions={<TravelStats />} />
 
-      <div className="mt-10 grid overflow-hidden rounded-card border border-line shadow-[0_40px_80px_-40px_rgb(0_0_0/.45)] md:grid-cols-[0.9fr_1.1fr]">
+      <div className="grid overflow-hidden rounded-card border border-line shadow-[0_40px_80px_-40px_rgb(0_0_0/.45)] md:grid-cols-[0.9fr_1.1fr]">
         {/* Cover: navy with gold foil, like the real document */}
         <section aria-label="Passport cover" className="relative isolate overflow-hidden bg-[#0f1a40] p-8 text-[#f6efe3]">
           {/* Gold-foil emblem: nested gateway arches, like the crest on a real passport */}

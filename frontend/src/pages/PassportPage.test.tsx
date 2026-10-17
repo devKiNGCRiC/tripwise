@@ -38,6 +38,10 @@ describe('PassportPage', () => {
     expect(stamp).toHaveAttribute('href', `/trips/${itinerary.id}`);
     expect(within(stamp).getByText('गोवा')).toBeInTheDocument();
     expect(await screen.findByText('4 of 5 AI plans left today')).toBeInTheDocument();
+    const stats = screen.getByRole('list', { name: 'Travel stats' });
+    expect(within(stats).getByText('Trips planned').previousSibling).toHaveTextContent('1');
+    expect(within(stats).getByText('Worlds explored').previousSibling).toHaveTextContent('1');
+    expect(within(stats).getByText('Days on the road').previousSibling).toHaveTextContent('2');
   });
 
   it('starts on Full motion and remembers Calm', async () => {

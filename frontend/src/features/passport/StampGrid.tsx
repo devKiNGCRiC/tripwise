@@ -11,9 +11,10 @@ import { Stamp, type StampTone } from '@/components/ui/Stamp';
 import { useDestinations } from '@/features/explore/hooks';
 import { useTrips } from '@/features/trips/hooks';
 
-/** Stamp inks and tilts, cycled so neighbours never look the same. */
+/** Stamp inks, tilts and nudges, cycled so the page looks hand-stamped, not gridded. */
 const TONES: StampTone[] = ['teal', 'gold', 'red'];
 const TILTS = [-9, 6, -4, 11, -12, 3];
+const NUDGES = ['translate-y-2', '-translate-y-3', 'translate-y-4 -translate-x-2', '-translate-y-1 translate-x-3', 'translate-y-3', '-translate-y-4'];
 
 /** The stamp page. */
 export function StampGrid() {
@@ -51,14 +52,14 @@ export function StampGrid() {
       <h2 className="text-3xl">
         {trips.length} {trips.length === 1 ? 'stamp' : 'stamps'} collected
       </h2>
-      <ul aria-label="Stamps" className="flex flex-wrap justify-center gap-4">
+      <ul aria-label="Stamps" className="flex flex-wrap justify-center gap-x-6 gap-y-8 py-2">
         {trips.map((trip, i) => {
           const place = trip.request.destination;
           const local = destinations?.find((d) => d.name.toLowerCase() === place.trim().toLowerCase())?.localName;
           return (
             <li key={trip.id}>
-              <Link to={`/trips/${trip.id}`} aria-label={`${place} — ${trip.title}`} className="block rounded-full transition hover:scale-105">
-                <Stamp label={place} localLabel={local} tone={TONES[i % TONES.length]} rotate={TILTS[i % TILTS.length]} />
+              <Link to={`/trips/${trip.id}`} aria-label={`${place} — ${trip.title}`} className={`block rounded-full opacity-90 mix-blend-multiply transition hover:scale-105 hover:opacity-100 dark:mix-blend-normal ${NUDGES[i % NUDGES.length]}`}>
+                <Stamp size="lg" label={place} localLabel={local} tone={TONES[i % TONES.length]} rotate={TILTS[i % TILTS.length]} />
               </Link>
             </li>
           );
