@@ -6,10 +6,21 @@
  * personalisation controls are there.
  */
 import { screen, waitFor, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { renderApp } from '@/test/render';
 
 describe('LandingPage', () => {
+  it('the navbar "Seven worlds" link reaches the section from any page, without reloading', async () => {
+    const scrollIntoView = vi.fn();
+    Element.prototype.scrollIntoView = scrollIntoView;
+    const { user, router } = renderApp('/login');
+    const nav = await screen.findByRole('navigation', { name: 'Main' });
+    await user.click(within(nav).getByRole('link', { name: 'Seven worlds' }));
+    await waitFor(() => expect(router.state.location.hash).toBe('#worlds'));
+    expect(router.state.location.pathname).toBe('/');
+    await waitFor(() => expect(scrollIntoView.mock.contexts.some((el) => (el as Element).id === 'worlds')).toBe(true));
+  });
+
   it('opens on the Himalaya', async () => {
     renderApp('/');
     expect(await screen.findByRole('heading', { level: 1, name: /Where the mountains keep time\./ })).toBeInTheDocument();

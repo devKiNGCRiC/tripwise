@@ -4,7 +4,7 @@
  * Mobile: logo + switch + account (main links live in MobileTabBar).
  * It floats over the content (fixed), so pages leave room at the top for it.
  */
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import { buttonClasses } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { cn } from '@/lib/utils/cn';
@@ -47,10 +47,10 @@ export function Navbar() {
             <NavLink to="/plan" className={navLinkClass}>
               Plan a trip
             </NavLink>
-            {/* A section of the homepage (plain link: it's never "the current page") */}
-            <a href="/#worlds" className={navLinkClass({ isActive: false })}>
+            {/* A section of the homepage: in-app navigation (no reload); the homepage glides to it */}
+            <Link to="/#worlds" className={navLinkClass({ isActive: false })}>
               Seven worlds
-            </a>
+            </Link>
             {user && (
               <NavLink to="/trips" className={navLinkClass}>
                 My trips

@@ -104,7 +104,9 @@ export const REGIONS: Region[] = [
       { kind: 'mist', y: 0.5, day: '#ffffff', night: '#9fb3d1', alpha: 0.35, speed: 6 },
       { kind: 'land', shape: 'mountains', base: 0.66, amp: 0.3, freq: 2.2, seed: 23, day: '#8ea7bd', night: '#2b3d5a', depth: 0.14, snow: 0.35 },
       { kind: 'mist', y: 0.62, day: '#ffffff', night: '#8aa0c2', alpha: 0.3, speed: 10 },
-      { kind: 'land', shape: 'hills', base: 0.8, amp: 0.16, freq: 2.6, seed: 37, day: '#4c6e63', night: '#142630', depth: 0.26, deco: 'pines', landmarks: [{ kind: 'shrine', at: 0.5 }, { kind: 'flags', at: 0.42 }] },
+      // A high meadow under the snow peaks, where the temple and prayer flags stand (clear of the page's panels)
+      { kind: 'land', shape: 'hills', base: 0.66, amp: 0.05, freq: 1.1, seed: 29, day: '#7f9c8c', night: '#1d3038', depth: 0.18, landmarks: [{ kind: 'flags', at: 0.47 }, { kind: 'shrine', at: 0.535 }] },
+      { kind: 'land', shape: 'hills', base: 0.8, amp: 0.16, freq: 2.6, seed: 37, day: '#4c6e63', night: '#142630', depth: 0.26, deco: 'pines' },
       { kind: 'land', shape: 'hills', base: 0.93, amp: 0.1, freq: 3.2, seed: 41, day: '#2f4b42', night: '#0b171c', depth: 0.42, deco: 'pines' },
     ],
     fx: { day: ['birds'], night: ['stars', 'snow'] },

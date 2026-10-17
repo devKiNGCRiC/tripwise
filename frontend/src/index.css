@@ -83,18 +83,18 @@
     font-family: var(--trip-font-hindi);
   }
   /*
-   * Scrollbar in the app's own style: a pill in the region colour on a frosted track
+   * Scrollbar in the app's own style: a pill in the region colour, no track
    * (standard properties for Firefox/new Chromium, ::-webkit-scrollbar for Safari & older Chromium).
    */
   html {
-    scrollbar-color: var(--trip-accent) color-mix(in srgb, var(--trip-glass-strong) 60%, transparent);
+    scrollbar-color: var(--trip-accent) transparent;
   }
   ::-webkit-scrollbar {
     width: 12px;
     height: 12px;
   }
   ::-webkit-scrollbar-track {
-    background: color-mix(in srgb, var(--trip-glass-strong) 60%, transparent);
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
     border: 3px solid transparent;

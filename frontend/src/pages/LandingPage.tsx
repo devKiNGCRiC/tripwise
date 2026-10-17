@@ -9,6 +9,7 @@
  * planner and the traveller cards.
  */
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
 import { Hero } from '@/features/landing/Hero';
 import { KINDS } from '@/features/landing/kinds';
 import { RegionGuide } from '@/features/landing/RegionGuide';
@@ -21,6 +22,14 @@ import { useWorld } from '@/world/WorldProvider';
 export default function LandingPage() {
   const { region, startTour, stopTour } = useWorld();
   const [who, setWho] = useState(KINDS[0].who);
+  const { hash } = useLocation();
+
+  // Arriving at "/#worlds" (navbar) or similar: glide to that section once the page has laid out.
+  useEffect(() => {
+    if (!hash) return;
+    const timer = window.setTimeout(() => document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+    return () => window.clearTimeout(timer);
+  }, [hash]);
 
   // Tour the regions only while the homepage is open.
   useEffect(() => {
