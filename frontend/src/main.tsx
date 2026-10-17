@@ -6,15 +6,13 @@
  * 3. Mounts <App /> into #root.
  */
 // Self-hosted fonts (Fontsource): no Google Fonts request, faster first paint.
-// Gloock — the editorial serif for headlines and numbers (one weight).
-import '@fontsource/gloock/400.css';
-// Hind (by Indian Type Foundry) — body text, Latin + Devanagari, in the three weights we use.
-import '@fontsource/hind/400.css';
-import '@fontsource/hind/500.css';
-import '@fontsource/hind/600.css';
-// Tiro Devanagari Hindi — Hindi accents, plus its italic for the hero's italic word.
+// Fraunces — the soft, characterful serif for headlines (all variable axes: weight, optical size, softness), upright + italic.
+import '@fontsource-variable/fraunces/full.css';
+import '@fontsource-variable/fraunces/full-italic.css';
+// Plus Jakarta Sans — the clean, friendly interface font (variable weight).
+import '@fontsource-variable/plus-jakarta-sans/wght.css';
+// Tiro Devanagari Hindi — every Hindi name and accent.
 import '@fontsource/tiro-devanagari-hindi/400.css';
-import '@fontsource/tiro-devanagari-hindi/400-italic.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';

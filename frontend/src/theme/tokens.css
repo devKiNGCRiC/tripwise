@@ -1,76 +1,71 @@
 /**
- * tokens.css — THE single source of truth for TripWise's look ("Monsoon Editorial").
+ * tokens.css — THE single source of truth for TripWise's look ("Seven Worlds").
  *
- * Day = dawn (ivory, peach, soft teal, saffron light). Night = monsoon (indigo, rain teal, marigold).
- * Every colour has ONE job (see docs/superpowers/specs/2026-10-17-monsoon-editorial.md §2).
- * Want a different look later? Edit this file only — Tailwind utilities
- * (bg-paper, text-gold, bg-cta…) are mapped to these variables in index.css.
- * The liquid shader's two palettes live in components/signature/liquidShader.ts.
+ * The page floats as frosted glass over a living landscape (src/world/). Ink, glass and
+ * scrim colours depend on Day / Night; the ACCENT colours and the fallback sky depend on
+ * the region on screen — WorldProvider sets those at runtime (--trip-accent, --trip-sky-top…).
+ * Spec: docs/superpowers/specs/2026-10-17-seven-worlds-design.md §4.
  */
 
 /* ── Day theme (default) ─────────────────────────────────────────────── */
 :root {
-  /* Page surfaces: warm ivory page, a slightly deeper sand for alternate areas */
-  --trip-paper: #f6efe3;
-  --trip-paper-2: #efe4d2;
-
   /* Text and hairlines */
-  --trip-ink: #1c1814;
-  --trip-ink-soft: #5b5148;
-  --trip-line: rgb(28 24 20 / 0.14);
+  --trip-ink: #121417;
+  --trip-soft: #4a4f57;
+  --trip-line: rgb(18 20 23 / 0.12);
 
-  /* Gold — the one accent metal: Hindi accents, ornaments, numbers. Deep enough for AA text on ivory. */
-  --trip-gold: #8f5d14;
-  /* Teal — links, focus rings, success */
-  --trip-accent: #0e6b70;
-  /* Primary button fill and the text on it */
-  --trip-cta: #1c1814;
-  --trip-on-cta: #f6efe3;
+  /* Frosted glass: normal and strong (forms, dense panels), with a bright edge */
+  --trip-glass: rgb(255 255 255 / 0.52);
+  --trip-glass-strong: rgb(255 255 255 / 0.72);
+  --trip-glass-edge: rgb(255 255 255 / 0.7);
+  --trip-glass-shadow: 0 30px 80px -40px rgb(0 0 0 / 0.45);
+
+  /* Soft wash behind the hero text so it reads over any landscape */
+  --trip-scrim: rgb(255 255 255 / 0.55);
+
+  /* Region colours — defaults are Himalaya by day; WorldProvider overrides them live */
+  --trip-accent: #2f6f9f;
+  --trip-accent-2: #c8553d;
+  --trip-on-accent: #ffffff;
+  --trip-sky-top: #8fbfe2;
+  --trip-sky-bottom: #e9f1f4;
+
   /* Errors */
   --trip-danger: #b42318;
 
-  /* Frosted glass: translucent fill, bright edge, soft warm shadow */
-  --trip-glass: rgb(255 252 246 / 0.5);
-  --trip-glass-strong: rgb(255 252 246 / 0.78);
-  --trip-glass-line: rgb(255 255 255 / 0.75);
-  --trip-glass-shadow: 0 30px 70px -30px rgb(80 50 20 / 0.35);
-
-  /* Shape */
+  /* Shape and page width */
   --trip-radius-card: 1.75rem;
-
-  /* Page width: content grows up to 1360px; side padding grows with the screen (20px phones → 56px desktops) */
   --trip-page-max: 1360px;
-  --trip-page-pad: clamp(20px, 4vw, 56px);
-  /* Distance from the screen edge to where content starts (for full-bleed rows that align with it) */
-  --trip-gutter: max(var(--trip-page-pad), calc((100vw - var(--trip-page-max)) / 2 + var(--trip-page-pad)));
+  --trip-page-pad: clamp(16px, 4.5vw, 56px);
 
   /* Fonts (self-hosted via Fontsource, imported in main.tsx) */
-  --trip-font-display: 'Gloock', Georgia, serif;
-  --trip-font-body: 'Hind', system-ui, sans-serif;
+  --trip-font-display: 'Fraunces Variable', Georgia, serif;
+  --trip-font-body: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
   --trip-font-hindi: 'Tiro Devanagari Hindi', Georgia, serif;
 
   color-scheme: light;
 }
 
-/* ── Night theme (monsoon) ───────────────────────────────────────────── */
+/* ── Night theme ─────────────────────────────────────────────────────── */
 [data-theme='dark'] {
-  --trip-paper: #0a1230;
-  --trip-paper-2: #0f1a40;
+  --trip-ink: #f3efe7;
+  --trip-soft: #b7b4ad;
+  --trip-line: rgb(255 255 255 / 0.14);
 
-  --trip-ink: #f6efe3;
-  --trip-ink-soft: #b9b4c9;
-  --trip-line: rgb(246 239 227 / 0.14);
+  --trip-glass: rgb(10 16 30 / 0.42);
+  --trip-glass-strong: rgb(10 16 30 / 0.66);
+  --trip-glass-edge: rgb(255 255 255 / 0.14);
+  --trip-glass-shadow: 0 30px 80px -40px rgb(0 0 0 / 0.7);
 
-  --trip-gold: #e6b765;
-  --trip-accent: #6fd3d0;
-  --trip-cta: #e6b765;
-  --trip-on-cta: #0a1230;
+  --trip-scrim: rgb(4 8 18 / 0.55);
+
+  --trip-accent: #8fc1e3;
+  --trip-accent-2: #e8b04b;
+  --trip-on-accent: #0b1020;
+  --trip-sky-top: #040a18;
+  --trip-sky-bottom: #1c2b49;
+
   --trip-danger: #ff8a80;
-
-  --trip-glass: rgb(16 26 64 / 0.45);
-  --trip-glass-strong: rgb(16 26 64 / 0.78);
-  --trip-glass-line: rgb(255 255 255 / 0.16);
-  --trip-glass-shadow: 0 30px 70px -30px rgb(0 0 0 / 0.6);
 
   color-scheme: dark;
 }
