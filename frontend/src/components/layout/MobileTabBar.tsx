@@ -1,6 +1,7 @@
 /**
- * MobileTabBar.tsx — app-style bottom navigation on phones (hidden from md up).
- * Five thumb-reachable tabs; the account tab becomes "Log in" for guests.
+ * MobileTabBar.tsx — app-style bottom navigation on phones (hidden from md up):
+ * a floating glass pill with five thumb-reachable tabs. The active tab gets a
+ * solid ink (Day) / gold (Night) bubble. The account tab becomes "Log in" for guests.
  */
 import { Compass, House, LogIn, Sparkles, Ticket, UserRound, type LucideIcon } from 'lucide-react';
 import { NavLink } from 'react-router';
@@ -25,28 +26,22 @@ export function MobileTabBar() {
   ];
 
   return (
-    <nav
-      aria-label="Mobile"
-      className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-line bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
-    >
-      <ul className="grid grid-cols-5">
+    <nav aria-label="Mobile" className="fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+12px)] z-40 md:hidden">
+      <ul className="glass grid grid-cols-5 rounded-full p-1.5">
         {tabs.map(({ to, label, icon: Icon }) => (
           <li key={to}>
             <NavLink
               to={to}
               end={to === '/'}
               className={({ isActive }) =>
-                cn('flex flex-col items-center gap-0.5 py-2 text-[11px] font-bold', isActive ? 'text-ink' : 'text-ink-soft')
+                cn(
+                  'flex flex-col items-center gap-0.5 rounded-full py-1.5 text-[11px] font-medium transition-colors duration-300',
+                  isActive ? 'bg-cta text-on-cta' : 'text-ink-soft',
+                )
               }
             >
-              {({ isActive }) => (
-                <>
-                  <span className={cn('grid h-7 w-12 place-items-center rounded-full transition', isActive && 'bg-yellow text-on-accent')}>
-                    <Icon className="size-5" aria-hidden />
-                  </span>
-                  {label}
-                </>
-              )}
+              <Icon className="size-5" aria-hidden />
+              {label}
             </NavLink>
           </li>
         ))}

@@ -1,7 +1,8 @@
 /**
- * Navbar.tsx — sticky top bar.
- * Desktop: logo, main links, theme toggle, account area.
- * Mobile: just logo + theme toggle + account (main links live in MobileTabBar).
+ * Navbar.tsx — a floating glass pill at the top of every page.
+ * Desktop: logo, main links, Day/Night switch, account area.
+ * Mobile: logo + switch + account (main links live in MobileTabBar).
+ * It floats over the content (fixed), so pages leave room at the top for it.
  */
 import { NavLink } from 'react-router';
 import { buttonClasses } from '@/components/ui/Button';
@@ -10,11 +11,12 @@ import { cn } from '@/lib/utils/cn';
 import { ThemeToggle } from '@/theme/ThemeToggle';
 import { Logo } from './Logo';
 
-/** Desktop nav link: yellow station-board pill when active, soft highlight on hover. */
+/** Desktop nav link: a gold underline grows under the active/hovered link. */
 function navLinkClass({ isActive }: { isActive: boolean }) {
   return cn(
-    'rounded-full px-3 py-1.5 font-display font-bold transition focus-visible:outline-3 focus-visible:outline-sky-deep',
-    isActive ? 'bg-yellow text-on-accent' : 'hover:bg-ink/5',
+    'relative rounded-full px-3 py-1.5 font-medium transition-colors',
+    'after:absolute after:inset-x-3 after:bottom-0.5 after:h-px after:origin-left after:bg-gold after:transition-transform after:duration-500 after:ease-out-expo',
+    isActive ? 'text-ink after:scale-x-100' : 'text-ink-soft after:scale-x-0 hover:text-ink hover:after:scale-x-100',
   );
 }
 
@@ -32,8 +34,8 @@ export function Navbar() {
   const { user, status } = useAuth();
 
   return (
-    <header className="sticky top-0 z-40 border-b-2 border-line bg-paper/85 backdrop-blur-md">
-      <nav aria-label="Main" className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
+    <header className="fixed inset-x-0 top-3 z-40 px-3 sm:top-4">
+      <nav aria-label="Main" className="glass mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 rounded-full pr-2.5 pl-6">
         <Logo />
 
         <div className="hidden items-center gap-1 md:flex">
@@ -62,7 +64,7 @@ export function Navbar() {
             <NavLink
               to="/passport"
               aria-label="Your passport"
-              className="grid size-10 place-items-center rounded-full border-2 border-line bg-yellow font-display text-sm font-extrabold text-on-accent shadow-pop-sm"
+              className="grid size-11 place-items-center rounded-full bg-cta font-display text-[15px] text-on-cta transition hover:-translate-y-0.5"
             >
               {initials(user.name)}
             </NavLink>
@@ -75,7 +77,7 @@ export function Navbar() {
                   Log in
                 </NavLink>
               </span>
-              <NavLink to="/signup" className={buttonClasses({ size: 'sm' })}>
+              <NavLink to="/signup" className={buttonClasses({ size: 'sm', className: 'h-11 px-5' })}>
                 Sign up
               </NavLink>
             </>

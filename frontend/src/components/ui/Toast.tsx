@@ -37,9 +37,9 @@ const ToastContext = createContext<ToastContextValue | null>(null);
 
 /** Icon + accent colour for each tone. */
 const TONES: Record<ToastTone, { icon: typeof Info; accent: string }> = {
-  success: { icon: CircleCheck, accent: 'bg-green-deep' },
-  error: { icon: CircleAlert, accent: 'bg-danger' },
-  info: { icon: Info, accent: 'bg-sky' },
+  success: { icon: CircleCheck, accent: 'text-accent' },
+  error: { icon: CircleAlert, accent: 'text-danger' },
+  info: { icon: Info, accent: 'text-gold' },
 };
 
 /** Ever-increasing id so React can track each toast. */
@@ -82,23 +82,23 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               <motion.div
                 key={toast.id}
                 layout
-                initial={{ opacity: 0, y: 16, rotate: -2 }}
-                animate={{ opacity: 1, y: 0, rotate: 0 }}
+                initial={{ opacity: 0, y: 16, filter: 'blur(6px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, y: 8, transition: { duration: 0.15 } }}
-                className="pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-2xl border-2 border-line bg-surface p-3 pr-2 shadow-pop"
+                className="glass-strong pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-2xl p-3 pr-2"
               >
-                <span className={cn('grid size-8 shrink-0 place-items-center rounded-full text-white', accent)}>
+                <span className={cn('grid size-8 shrink-0 place-items-center', accent)}>
                   <Icon className="size-4" aria-hidden />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="font-display font-bold">{toast.title}</p>
+                  <p className="font-semibold">{toast.title}</p>
                   {toast.description && <p className="text-sm text-ink-soft">{toast.description}</p>}
                 </div>
                 <button
                   type="button"
                   onClick={() => dismiss(toast.id)}
                   aria-label="Dismiss notification"
-                  className="grid size-8 place-items-center rounded-full hover:bg-ink/5 focus-visible:outline-3 focus-visible:outline-sky-deep"
+                  className="grid size-8 place-items-center rounded-full hover:bg-ink/6"
                 >
                   <X className="size-4" aria-hidden />
                 </button>

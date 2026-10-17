@@ -1,18 +1,17 @@
 /**
  * Stamp.tsx — a round, double-ringed passport stamp: a place name with its Hindi
  * name underneath ("GOA / गोवा"), tilted like it was thumped on by hand.
- * Used on the passport page (one per saved trip) and as a playful badge.
+ * Used on the passport page (one per saved trip).
  */
 import { cn } from '@/lib/utils/cn';
 
-// Only deep inks: lighter ones (like orange) fail text contrast on paper.
-export type StampTone = 'green' | 'red' | 'sky';
+// Inks that read on both the ivory and the indigo page.
+export type StampTone = 'gold' | 'teal' | 'red';
 
-/** Ink colours — the deep shades so the text stays readable on paper. */
 const TONES: Record<StampTone, string> = {
-  green: 'border-green-deep text-green-deep',
+  gold: 'border-gold text-gold',
+  teal: 'border-accent text-accent',
   red: 'border-danger text-danger',
-  sky: 'border-sky-deep text-sky-deep',
 };
 
 interface StampProps {
@@ -26,18 +25,18 @@ interface StampProps {
   className?: string;
 }
 
-export function Stamp({ label, localLabel, tone = 'green', rotate = -8, className }: StampProps) {
+export function Stamp({ label, localLabel, tone = 'gold', rotate = -8, className }: StampProps) {
   return (
     <span
-      className={cn(
-        'inline-grid size-24 shrink-0 place-content-center rounded-full border-4 border-double text-center leading-tight',
-        TONES[tone],
-        className,
-      )}
+      className={cn('inline-grid size-24 shrink-0 place-content-center rounded-full border-4 border-double text-center leading-tight', TONES[tone], className)}
       style={{ transform: `rotate(${rotate}deg)` }}
     >
-      <span className="font-display text-[15px] font-black uppercase font-stretch-125%">{label}</span>
-      {localLabel && <span className="text-[13px] font-extrabold">{localLabel}</span>}
+      <span className="font-display text-[15px] tracking-wider uppercase">{label}</span>
+      {localLabel && (
+        <span lang="hi" className="text-[13px]">
+          {localLabel}
+        </span>
+      )}
     </span>
   );
 }

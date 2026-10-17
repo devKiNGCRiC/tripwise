@@ -1,13 +1,11 @@
 /**
- * FullPageLoader.tsx — centred "plane in flight" loader used while auth restores
- * or a page chunk downloads. Has a screen-reader-only status message.
+ * FullPageLoader.tsx — centred loader used while auth restores or a page chunk downloads:
+ * a small gold ring tracing itself, with a screen-reader-only status message.
  */
-import { Plane } from 'lucide-react';
-
 export function FullPageLoader({ label = 'Loading…' }: { label?: string }) {
   return (
-    <div role="status" className="grid min-h-[50vh] place-items-center">
-      <Plane className="size-10 animate-pulse text-green-deep" aria-hidden />
+    <div role="status" className="grid min-h-[60vh] place-items-center">
+      <span aria-hidden className="size-10 animate-spin rounded-full border-[1.5px] border-gold/25 border-t-gold" />
       <span className="sr-only">{label}</span>
     </div>
   );

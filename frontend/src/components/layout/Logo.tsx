@@ -1,16 +1,17 @@
 /**
- * Logo.tsx — the TripWise wordmark: a tilted saffron "stamp" tile with a plane + name.
+ * Logo.tsx — the TripWise wordmark: the name in the editorial serif, with
+ * "यात्री" (traveller) set small in gold beside it.
  */
-import { Plane } from 'lucide-react';
 import { Link } from 'react-router';
+import { cn } from '@/lib/utils/cn';
 
-export function Logo() {
+export function Logo({ className }: { className?: string }) {
   return (
-    <Link to="/" className="group flex items-center gap-2 rounded-full focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-sky-deep">
-      <span className="grid size-9 -rotate-6 place-items-center rounded-xl border-2 border-line brand-fill text-on-accent shadow-pop-sm transition group-hover:rotate-0">
-        <Plane className="size-5" aria-hidden />
+    <Link to="/" aria-label="TripWise home" className={cn('group flex items-baseline gap-1.5 rounded-full', className)}>
+      <span className="font-display text-[26px] leading-none tracking-tight">TripWise</span>
+      <span lang="hi" aria-hidden className="text-[15px] text-gold transition-transform duration-500 ease-out-expo group-hover:-translate-y-0.5">
+        यात्री
       </span>
-      <span className="font-display text-xl font-extrabold tracking-tight">TripWise</span>
     </Link>
   );
 }

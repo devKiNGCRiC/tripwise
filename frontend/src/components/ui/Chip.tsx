@@ -1,8 +1,8 @@
 /**
  * Chip.tsx — two small pill components:
- *   Chip → a toggle (aria-pressed) used for filters and the interest "stickers".
- *          When selected it turns board-yellow and tilts, like a sticker slapped on.
- *   Tag  → a static, non-interactive label (e.g. a destination's vibes).
+ *   Chip → a toggle (aria-pressed) used for filters and quick picks.
+ *          Selected chips fill with ink (Day) / gold (Night).
+ *   Tag  → a static, non-interactive label (e.g. a destination's vibe).
  */
 import type { ComponentProps, ReactNode } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -24,8 +24,8 @@ export function Chip({ selected = false, icon, className, children, onClick, onS
         onSelectedChange?.(!selected);
       }}
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border-2 border-line px-3.5 py-1.5 text-sm font-semibold transition focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-deep',
-        selected ? '-rotate-2 bg-yellow text-on-accent shadow-pop-sm' : 'bg-surface text-ink hover:-rotate-1',
+        'inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-[15px] font-medium transition duration-300',
+        selected ? 'border-transparent bg-cta text-on-cta' : 'border-line text-ink hover:border-gold hover:bg-glass',
         className,
       )}
       {...rest}
@@ -39,12 +39,7 @@ export function Chip({ selected = false, icon, className, children, onClick, onS
 /** Static label pill — purely informational, not clickable. */
 export function Tag({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <span
-      className={cn(
-        'inline-flex items-center rounded-full border border-line/30 bg-paper-2 px-2.5 py-0.5 text-xs font-semibold capitalize text-ink',
-        className,
-      )}
-    >
+    <span className={cn('inline-flex items-center rounded-full border border-line px-2.5 py-0.5 text-xs font-medium capitalize text-ink', className)}>
       {children}
     </span>
   );

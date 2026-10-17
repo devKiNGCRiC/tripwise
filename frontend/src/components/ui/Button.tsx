@@ -1,9 +1,9 @@
 /**
  * Button.tsx — the TripWise button in four flavours:
- *   primary   → saffron-to-orange gradient, outlined, hard shadow (main call-to-action)
- *   secondary → white card face, outlined, hard shadow
- *   ghost     → no border/shadow (low-emphasis actions)
- *   glow      → aurora gradient + glow (reserved for AI actions like "Generate")
+ *   primary   → solid ink (Day) / gold (Night) pill — the main call to action
+ *   secondary → frosted glass pill with a hairline edge
+ *   ghost     → text only, soft tint on hover (low-emphasis actions)
+ *   glow      → gold-to-teal gradient with a halo — reserved for AI actions like "Generate"
  * `buttonClasses()` is exported so <Link>s can look exactly like buttons.
  */
 import { LoaderCircle } from 'lucide-react';
@@ -13,17 +13,16 @@ import { cn } from '@/lib/utils/cn';
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'glow';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
-/** Shared look: pill shape, display font, accessible focus ring, dimmed when disabled. */
+/** Shared look: pill shape, semibold body font, gentle lift on hover, dimmed when disabled. */
 const BASE =
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border-2 font-display font-bold tracking-tight select-none transition disabled:pointer-events-none disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-deep';
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border font-semibold select-none transition duration-300 ease-out-expo hover:-translate-y-0.5 active:translate-y-0 disabled:pointer-events-none disabled:opacity-60';
 
-/** Per-variant colours and effects (all from design tokens). */
+/** Per-variant colours (all from design tokens). */
 const VARIANTS: Record<ButtonVariant, string> = {
-  // Signboard touch: the letters stretch a little wider on hover.
-  primary: 'brand-fill text-on-accent border-line shadow-pop pop-press hover:font-stretch-115%',
-  secondary: 'bg-surface text-ink border-line shadow-pop pop-press hover:font-stretch-115%',
-  ghost: 'bg-transparent text-ink border-transparent hover:bg-ink/5',
-  glow: 'aurora-fill text-black border-line shadow-glow hover:brightness-110',
+  primary: 'border-transparent bg-cta text-on-cta shadow-[0_14px_30px_-14px_rgb(0_0_0/.5)] hover:shadow-[0_18px_34px_-14px_rgb(0_0_0/.55)]',
+  secondary: 'glass border-line text-ink',
+  ghost: 'border-transparent bg-transparent text-ink hover:translate-y-0 hover:bg-ink/6',
+  glow: 'border-transparent bg-[linear-gradient(120deg,#e6b765,#f29e40_45%,#6fd3d0)] text-[#1c1814] shadow-[0_10px_40px_-8px_rgb(230_183_101/.7)] hover:brightness-105',
 };
 
 /** Heights are ≥ 36px so buttons stay comfortable touch targets on phones. */
