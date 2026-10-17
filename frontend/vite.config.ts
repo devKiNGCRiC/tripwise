@@ -20,6 +20,10 @@ export default defineConfig({
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
 
+  // The PDF maker (@react-pdf/renderer, ~1.2 MB) is its own chunk, downloaded only when a
+  // traveller presses "Download PDF" — so a larger warning limit for that one file is fine.
+  build: { chunkSizeWarningLimit: 1300 },
+
   // Unit tests run in jsdom (a fake browser) with shared setup (matchers, mock API).
   test: {
     environment: 'jsdom',
