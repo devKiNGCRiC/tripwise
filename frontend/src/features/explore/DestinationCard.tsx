@@ -1,42 +1,26 @@
 /**
- * DestinationCard.tsx — a destination "postcard": a photo with a railway
- * station-sign name plate (English + Hindi), a price tag and a vibe tag.
- * The whole card links to the destination page and leans toward the pointer in 3D.
+ * DestinationCard.tsx — a cinematic destination card: a full-bleed photo, a price
+ * tag and a vibe tag on frosted glass, and the place name in the editorial serif
+ * with its Hindi name in gold above it. The whole card links to the destination page.
  *
- * `featured` makes a wide landscape card (used for the first card in a grid),
- * so destination grids aren't a row of identical boxes.
+ * Add the `wipe` class (index.css) to have it open left-to-right when revealed;
+ * the photo then settles from a slight zoom as it opens.
  */
-import type { CSSProperties } from 'react';
 import { Link } from 'react-router';
-import type { Destination, Vibe } from '@/lib/api/types';
+import type { Destination } from '@/lib/api/types';
 import { cn } from '@/lib/utils/cn';
 import { formatMoney } from '@/lib/utils/format';
 import { sizedImage } from '@/lib/utils/images';
-import { useTilt } from '@/lib/useTilt';
 
-/** Each vibe tag gets a palette colour, so a glance tells you the kind of trip. */
-const VIBE_COLOR: Record<Vibe, string> = {
-  beach: 'bg-sky',
-  mountains: 'bg-green',
-  culture: 'bg-yellow',
-  // Red tags use the darker `danger` red so white text passes WCAG AA (4.5:1).
-  party: 'bg-danger text-white',
-  adventure: 'brand-fill',
-  spiritual: 'bg-yellow',
-  food: 'brand-fill',
-  nature: 'bg-green',
-  city: 'bg-sky',
-  romantic: 'bg-danger text-white',
-};
+/** Small frosted label sitting on the photo. */
+const GLASS_TAG = 'absolute top-4 rounded-full border border-white/30 bg-black/30 px-3 py-1 text-sm font-medium backdrop-blur-md';
 
 interface DestinationCardProps {
   destination: Destination;
-  featured?: boolean;
   className?: string;
 }
 
-export function DestinationCard({ destination, featured = false, className }: DestinationCardProps) {
-  const tilt = useTilt();
+export function DestinationCard({ destination, className }: DestinationCardProps) {
   const vibe = destination.vibes[0];
   const price = formatMoney(destination.avgDailyCost);
   // Screen readers hear the place first ("Goa, India, from ₹3,500 a day, beach"),
@@ -47,61 +31,29 @@ export function DestinationCard({ destination, featured = false, className }: De
     <Link
       to={`/destinations/${destination.slug}`}
       aria-label={accessibleName}
-      {...tilt}
-      className={cn(
-        'group relative block text-black [transform-style:preserve-3d] [transform:perspective(1000px)_rotateX(var(--rx,0deg))_rotateY(var(--ry,0deg))] transition-transform duration-150 ease-out',
-        'rounded-2xl focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-sky-deep',
-        className,
-      )}
-      style={{ '--mx': '50%', '--my': '50%' } as CSSProperties}
+      className={cn('group relative block overflow-hidden rounded-card text-[#f6efe3]', className)}
     >
-      <div className="relative h-full overflow-hidden rounded-2xl border-[3px] border-line shadow-pop">
-        <img
-          src={sizedImage(destination.image.url, featured ? 1100 : 700)}
-          alt=""
-          width={featured ? 1100 : 700}
-          height={featured ? 620 : 875}
-          loading="lazy"
-          decoding="async"
-          className={cn(
-            'size-full object-cover transition-transform duration-700 group-hover:scale-105',
-            featured ? 'aspect-[16/9] lg:aspect-auto' : 'aspect-[4/5]',
-          )}
-        />
-        {/* Light that follows the pointer */}
-        <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 [background:radial-gradient(circle_at_var(--mx)_var(--my),rgb(255_255_255/.45),transparent_45%)]" />
-      </div>
+      <img
+        src={sizedImage(destination.image.url, 1000)}
+        alt=""
+        width={1000}
+        height={1100}
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 size-full scale-[1.02] object-cover transition-transform duration-[1600ms] ease-out-expo group-hover:scale-[1.07] [.wipe:not(.is-in)_&]:scale-[1.15]"
+      />
+      {/* Darken the bottom so the caption always reads */}
+      <span aria-hidden className="absolute inset-0 bg-gradient-to-b from-transparent from-40% to-[rgb(10_8_6/.8)]" />
 
-      <span className="absolute top-3.5 left-3.5 rounded-full border-[2.5px] border-black bg-white px-3 py-0.5 text-[15px] font-semibold [transform:translateZ(40px)]">
-        from {price}/day
-      </span>
-      {vibe && (
-        <span
-          className={cn(
-            'absolute top-3.5 right-3.5 rounded-full border-[2.5px] border-black px-3 py-0.5 text-[15px] font-semibold capitalize [transform:translateZ(40px)_rotate(6deg)]',
-            VIBE_COLOR[vibe],
-          )}
-        >
-          {vibe}
-        </span>
-      )}
+      <span className={cn(GLASS_TAG, 'left-4')}>from {price}/day</span>
+      {vibe && <span className={cn(GLASS_TAG, 'right-4 capitalize')}>{vibe}</span>}
 
-      {/* Station-sign name plate: always black on yellow, like the real thing */}
-      <div className="absolute inset-x-4 bottom-4 rounded-lg border-[3px] border-black bg-yellow px-3 pt-2 pb-1.5 text-center shadow-[4px_4px_0_#000] [transform:translateZ(50px)]">
-        <h3
-          className={cn(
-            'font-black uppercase',
-            // Long names ("Kerala Backwaters") get smaller, narrower letters so they fit the plate.
-            destination.name.length > 9
-              ? 'text-2xl font-stretch-110%'
-              : cn('font-stretch-135%', featured ? 'text-4xl sm:text-5xl' : 'text-[32px]'),
-          )}
-        >
-          {destination.name}
-        </h3>
-        <p lang={destination.localName ? 'hi' : undefined} className="text-xl leading-tight font-extrabold">
+      <div className="absolute inset-x-6 bottom-6">
+        <p lang={destination.localName ? 'hi' : undefined} className="text-xl text-[#e6b765]">
           {destination.localName ?? destination.country}
         </p>
+        <h3 className="mt-1 text-[clamp(38px,4vw,58px)] leading-none">{destination.name}</h3>
+        <p className="mt-2 line-clamp-2 max-w-[34ch] text-base opacity-90">{destination.summary}</p>
       </div>
     </Link>
   );

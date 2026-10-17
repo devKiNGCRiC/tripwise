@@ -1,37 +1,25 @@
 /**
- * LandingPage.test.tsx — "The Descent" landing page: six stages over the scenery,
- * the departure-board hero, destination postcards from the API, the three steps
- * in order, the AI and crew sections, and the quick-plan hand-off to the planner.
+ * LandingPage.test.tsx — the Monsoon Editorial homepage: the editorial hero over the
+ * liquid colour, destination cards from the API with their Hindi names, the three
+ * steps in order, the sample itinerary and crew sections, and the quick-plan hand-off
+ * to the planner (with quick-pick chips).
  */
 import { screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { renderApp } from '@/test/render';
 
 describe('LandingPage', () => {
-  it('lays the page out as the six stages of the descent over the scenery', async () => {
+  it('shows the editorial hero over the liquid colour', async () => {
     const { container } = renderApp('/');
-    await screen.findByRole('heading', { level: 1, name: /planned day by day/i });
-    expect([...container.querySelectorAll('[data-descent-stage]')].map((el) => el.getAttribute('data-descent-stage'))).toEqual([
-      'Sky',
-      'Glacier',
-      'Mountains',
-      'Waterfall',
-      'River',
-      'Land',
-    ]);
-    expect(container.querySelector('[data-stage="0"]')).not.toBeNull(); // photo scenery (jsdom has no WebGL)
-    expect(screen.getByText('9,000 m')).toBeInTheDocument(); // altitude meter
+    expect(await screen.findByRole('heading', { level: 1, name: /India, unhurried\./ })).toBeInTheDocument();
+    expect(screen.getByText('यात्रा, बिना झंझट')).toHaveAttribute('lang', 'hi');
+    // jsdom has no WebGL, so the liquid keeps its CSS gradient stand-in.
+    expect(container.querySelector('.liquid-fallback canvas')).not.toBeNull();
   });
 
-  it('shows the hero headline and the departure board', async () => {
+  it('shows destination cards from the API with their local names', async () => {
     renderApp('/');
-    expect(await screen.findByRole('heading', { level: 1, name: /planned day by day/i })).toBeInTheDocument();
-    expect(screen.getByText(/^Next stop: Goa/)).toBeInTheDocument();
-  });
-
-  it('shows destination postcards from the API with their local names', async () => {
-    renderApp('/');
-    const goa = await screen.findByRole('link', { name: /goa/i });
+    const goa = await screen.findByRole('link', { name: /^goa/i });
     expect(within(goa).getByText('गोवा')).toBeInTheDocument();
   });
 
@@ -39,24 +27,33 @@ describe('LandingPage', () => {
     renderApp('/');
     const steps = await screen.findByRole('list', { name: 'How TripWise works' });
     expect(within(steps).getAllByRole('listitem').map((li) => within(li).getByRole('heading').textContent)).toEqual([
-      'Pick your vibe',
-      'AI plans every day',
-      'Save, share, go',
+      'Choose your pace',
+      'Watch it take shape',
+      'Share and set off',
     ]);
   });
 
-  it('explains the AI planner and the crew features', async () => {
+  it('shows a sample itinerary and the crew preview', async () => {
     renderApp('/');
-    expect(await screen.findByRole('heading', { name: 'Ideas pour in. The plan comes out.' })).toBeInTheDocument();
+    const sample = await screen.findByRole('article', { name: 'Sample itinerary for Udaipur' });
+    expect(within(sample).getAllByRole('listitem')).toHaveLength(3);
     expect(screen.getByRole('heading', { name: 'Better with your crew' })).toBeInTheDocument();
   });
 
   it('sends the quick-plan destination to the planner (through login for guests)', async () => {
     const { user, router } = renderApp('/');
     await user.type(await screen.findByLabelText('Where do you want to go?'), 'Goa');
-    await user.click(screen.getByRole('button', { name: 'Plan my trip' }));
+    await user.click(screen.getByRole('button', { name: 'Plan my journey' }));
 
     await waitFor(() => expect(router.state.location.pathname).toBe('/login'));
     expect(router.state.location.search).toBe(`?next=${encodeURIComponent('/plan?destination=Goa')}`);
+  });
+
+  it('fills the destination from a quick-pick chip', async () => {
+    const { user } = renderApp('/');
+    const picks = await screen.findByRole('group', { name: 'Popular picks' });
+    await user.click(within(picks).getByRole('button', { name: 'Ladakh' }));
+    expect(screen.getByLabelText('Where do you want to go?')).toHaveValue('Ladakh');
+    expect(within(picks).getByRole('button', { name: 'Ladakh' })).toHaveAttribute('aria-pressed', 'true');
   });
 });

@@ -1,34 +1,78 @@
 /**
- * CrewTeaser.tsx — Stage 5, the River: a preview of the upcoming crew features
- * (invite friends, split expenses, shared notes and photos).
+ * CrewTeaser.tsx — previews Crew mode (coming after the traveller features):
+ * plan together, split costs fairly, keep notes and photos in one place.
+ * The glass "crew card" on the right is a static illustration of the feature.
  */
-import { DescentStage, GlassPanel } from './DescentStage';
+import { useReveal } from '@/components/signature/useReveal';
+import { Tag } from '@/components/ui/Chip';
+import { delay } from './delay';
 
-const FEATURES = [
-  { icon: '🔗', title: 'Invite the gang', text: "One WhatsApp link and everyone's in the trip." },
-  { icon: '💸', title: 'Split expenses', text: 'Who paid what and who owes whom. Settle up by UPI.' },
-  { icon: '📸', title: 'Notes and photos', text: 'PNRs, bookings and memories, all in one place.' },
+/** Crew members in the illustration: initial + avatar tint. */
+const CREW = [
+  { name: 'Riya', tint: 'bg-[#e6b765]' },
+  { name: 'Arjun', tint: 'bg-[#6fd3d0]' },
+  { name: 'Kabir', tint: 'bg-[#f29e40]' },
+  { name: 'Meera', tint: 'bg-[#8cc7c2]' },
 ];
+/** Shared expenses in the illustration. */
+const EXPENSES = [
+  { who: 'Riya', what: 'Scooters for the day', amount: '₹2,400' },
+  { who: 'Arjun', what: 'Dinner at the shack', amount: '₹1,800' },
+  { who: 'Meera', what: 'Ferry tickets', amount: '₹640' },
+];
+/** Promises listed beside the card. */
+const FEATURES = ['Invite friends with a link', 'Split expenses fairly, settle up in a tap', 'Shared notes, checklists and photos'];
 
 export function CrewTeaser() {
+  const reveal = useReveal<HTMLElement>();
+
   return (
-    <DescentStage name="River" side="right">
-      <GlassPanel>
-        <p className="font-semibold text-orange">Coming soon</p>
-        <h2 className="mt-1 text-[clamp(32px,4.2vw,56px)] font-stretch-122%">Better with your crew</h2>
-        <p className="mt-3 text-lg text-ink-soft">Plan together, split costs fairly, and keep the whole trip in one place.</p>
-        <ul className="mt-7 grid gap-4 sm:grid-cols-3">
-          {FEATURES.map((f) => (
-            <li key={f.title} className="rounded-2xl border border-line/15 bg-surface/60 p-4">
-              <span aria-hidden className="text-2xl">
-                {f.icon}
-              </span>
-              <h3 className="mt-2 text-lg font-stretch-112%">{f.title}</h3>
-              <p className="mt-1 text-ink-soft">{f.text}</p>
+    <section ref={reveal} aria-labelledby="crew-title" className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-28 md:py-36 lg:grid-cols-2">
+      <div>
+        <Tag className="reveal-up border-gold text-gold">Coming soon</Tag>
+        <h2 id="crew-title" className="reveal-up mt-5 text-[clamp(44px,6vw,84px)]" style={delay(0.1)}>
+          Better with your crew
+        </h2>
+        <p className="reveal-up mt-5 max-w-[42ch] text-lg text-ink-soft" style={delay(0.2)}>
+          Plan, share and go together. One trip, everyone's ideas, and nobody stuck doing the maths at the end.
+        </p>
+        <ul className="mt-8 grid gap-3">
+          {FEATURES.map((feature, i) => (
+            <li key={feature} className="reveal-up flex items-center gap-3" style={delay(0.3 + i * 0.1)}>
+              <span aria-hidden className="size-1.5 rotate-45 bg-gold" />
+              {feature}
             </li>
           ))}
         </ul>
-      </GlassPanel>
-    </DescentStage>
+      </div>
+
+      {/* Illustration of a crew trip (decorative: the text beside it says it all) */}
+      <div aria-hidden className="reveal-up glass relative rounded-card p-7" style={delay(0.2)}>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="font-display text-3xl">Goa with the gang</p>
+            <p className="text-[15px] text-ink-soft">4 travellers · 5 days</p>
+          </div>
+          <div className="flex -space-x-2">
+            {CREW.map((member) => (
+              <span key={member.name} className={`grid size-10 place-items-center rounded-full border-2 border-paper font-semibold text-[#1c1814] ${member.tint}`}>
+                {member.name[0]}
+              </span>
+            ))}
+          </div>
+        </div>
+        <ul className="mt-6 grid gap-1">
+          {EXPENSES.map((expense) => (
+            <li key={expense.what} className="flex items-baseline justify-between gap-3 border-b border-dashed border-line py-3">
+              <span>
+                <strong className="font-semibold">{expense.who}</strong> <span className="text-ink-soft">paid for {expense.what.toLowerCase()}</span>
+              </span>
+              <span className="font-semibold">{expense.amount}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-5 rounded-2xl bg-cta px-4 py-3 text-on-cta">You owe Riya ₹600 — settle up?</p>
+      </div>
+    </section>
   );
 }
