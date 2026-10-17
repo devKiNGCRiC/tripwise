@@ -5,9 +5,10 @@
  * descendant with a reveal class (`reveal-line`, `reveal-up`, `wipe`) get `.is-in`,
  * which starts their CSS transitions (see index.css). One shared IntersectionObserver
  * serves the whole app. Without IntersectionObserver (old browsers, tests) or with
- * reduced motion, content is revealed immediately.
+ * reduced/calm motion, content is revealed immediately.
  */
 import { useCallback } from 'react';
+import { prefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
 /** Elements inside a revealed section that animate in. */
 const TARGETS = '.reveal-line, .reveal-up, .wipe';
@@ -39,8 +40,7 @@ function getObserver() {
 export function useReveal<T extends Element>() {
   return useCallback((el: T | null) => {
     if (!el) return;
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (typeof IntersectionObserver === 'undefined' || reduce) {
+    if (typeof IntersectionObserver === 'undefined' || prefersReducedMotion()) {
       reveal(el);
       return;
     }

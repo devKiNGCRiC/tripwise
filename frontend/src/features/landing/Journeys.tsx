@@ -7,7 +7,7 @@
  * row whose cards open together when the row scrolls into view.
  * Destinations come from the API (cached by TanStack Query).
  */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { useReveal } from '@/components/signature/useReveal';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { DestinationCard } from '@/features/explore/DestinationCard';
@@ -17,6 +17,14 @@ import { delay } from './delay';
 
 /** Width from which the gallery pins and scrolls sideways. */
 const PIN_QUERY = '(min-width: 768px)';
+/** Live "is the screen wide enough to pin?" (re-evaluates on resize/rotation). */
+function subscribeWide(onChange: () => void) {
+  const mql = window.matchMedia?.(PIN_QUERY);
+  mql?.addEventListener?.('change', onChange);
+  return () => mql?.removeEventListener?.('change', onChange);
+}
+const getWide = () => window.matchMedia?.(PIN_QUERY).matches ?? false;
+
 /** Card size: tall portrait on phones, wide cinematic frame on desktop. */
 const CARD = 'h-[min(64vh,560px)] w-[min(82vw,520px)] shrink-0 snap-start';
 
@@ -26,6 +34,7 @@ export function Journeys() {
   const trackRef = useRef<HTMLDivElement>(null);
   const reduceMotion = usePrefersReducedMotion();
   const revealHead = useReveal<HTMLDivElement>();
+  const wide = useSyncExternalStore(subscribeWide, getWide, () => false);
   const count = destinations?.length ?? 0;
 
   useEffect(() => {
@@ -33,7 +42,6 @@ export function Journeys() {
     const track = trackRef.current;
     if (!section || !track || count === 0) return;
     const cards = [...track.querySelectorAll('.wipe')];
-    const wide = window.matchMedia?.(PIN_QUERY).matches ?? false;
 
     // ── Not pinned (phones, reduced motion): open every card once the row is on screen ──
     if (!wide || reduceMotion || typeof IntersectionObserver === 'undefined') {
@@ -91,7 +99,7 @@ export function Journeys() {
       section.style.height = '';
       track.style.transform = '';
     };
-  }, [count, reduceMotion]);
+  }, [count, reduceMotion, wide]);
 
   return (
     <section ref={sectionRef} aria-labelledby="journeys-title" className="group relative">
@@ -107,7 +115,7 @@ export function Journeys() {
 
         <div
           ref={trackRef}
-          className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-4 scrollbar-none group-data-[pinned=true]:snap-none group-data-[pinned=true]:overflow-visible group-data-[pinned=true]:pb-0 md:px-[max(20px,calc((100vw-72rem)/2+20px))]"
+          className="flex snap-x snap-mandatory scroll-px-5 gap-6 overflow-x-auto px-5 pb-4 scrollbar-none group-data-[pinned=true]:snap-none group-data-[pinned=true]:overflow-visible group-data-[pinned=true]:pb-0 md:px-[max(20px,calc((100vw-72rem)/2+20px))]"
         >
           {isPending &&
             Array.from({ length: 3 }, (_, i) => (

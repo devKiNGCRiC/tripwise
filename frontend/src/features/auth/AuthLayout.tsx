@@ -1,23 +1,21 @@
 /**
  * AuthLayout.tsx — shared look for /login and /signup.
  *
- * Real scenery fills the page (glacier for login, mountains for signup). The
- * form sits on a card whose header is a bilingual station board — "Arrivals /
- * आगमन" for people coming back, "Departures / प्रस्थान" for new travellers.
- * On desktop, a one-line promise floats over the view beside it.
+ * Living liquid colour fills the page. On desktop, the promise sits on the left in
+ * the editorial serif beside a turning rangoli; the form floats on the right on strong
+ * glass. The card opens with a bilingual eyebrow — "Arrivals / आगमन" for people coming
+ * back, "Departures / प्रस्थान" for new travellers.
  */
 import type { ReactNode } from 'react';
+import { LiquidCanvas } from '@/components/signature/LiquidCanvas';
+import { Rangoli } from '@/components/signature/Rangoli';
 import { Card } from '@/components/ui/Card';
-import { StillScenery } from '@/scene/photo/StillScenery';
-import type { StageName } from '@/scene/photo/scenePhotos';
 
 interface AuthLayoutProps {
-  /** Board header, English, e.g. "Arrivals". */
-  board: string;
-  /** Board header in Hindi, e.g. "आगमन". */
-  boardLocal: string;
-  /** Which stage of the journey shows behind the page. */
-  scene: StageName;
+  /** Eyebrow, English, e.g. "Arrivals". */
+  eyebrow: string;
+  /** Eyebrow in Hindi, e.g. "आगमन". */
+  eyebrowLocal: string;
   title: string;
   subtitle: string;
   children: ReactNode;
@@ -25,39 +23,43 @@ interface AuthLayoutProps {
   footer: ReactNode;
 }
 
-export function AuthLayout({ board, boardLocal, scene, title, subtitle, children, footer }: AuthLayoutProps) {
+export function AuthLayout({ eyebrow, eyebrowLocal, title, subtitle, children, footer }: AuthLayoutProps) {
   return (
-    <div>
-      <StillScenery stage={scene} />
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-10 md:grid-cols-2 md:py-16">
-        <Card className="mx-auto w-full max-w-md overflow-hidden">
-          {/* Station-board header: always black on yellow */}
-          <div className="flex items-baseline justify-between border-b-[3px] border-black bg-yellow px-6 py-3 text-black">
-            <span className="font-display text-xl font-black uppercase font-stretch-130%">{board}</span>
-            <span lang="hi" className="text-xl font-extrabold">
-              {boardLocal}
+    <section className="relative isolate overflow-hidden">
+      <LiquidCanvas />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-paper" />
+
+      <div className="relative mx-auto grid min-h-svh w-full max-w-6xl items-center gap-12 px-4 pt-28 pb-20 lg:grid-cols-[1fr_minmax(0,460px)]">
+        {/* The promise, beside the form (desktop only) */}
+        <div aria-hidden className="relative hidden lg:block">
+          <Rangoli className="absolute -top-24 -left-24 -z-10 w-[520px] opacity-40" />
+          <p lang="hi" className="text-2xl text-gold">
+            जगहें इकट्ठा करो
+          </p>
+          <p className="mt-3 font-display text-[clamp(56px,6vw,92px)] leading-[0.95]">
+            Collect places,
+            <br />
+            <em className="font-hindi">not things.</em>
+          </p>
+        </div>
+
+        <Card className="w-full p-7 sm:p-9">
+          <p className="flex items-baseline justify-between text-sm font-medium tracking-[0.2em] text-ink-soft uppercase">
+            {eyebrow}
+            <span lang="hi" className="text-xl tracking-normal text-gold normal-case">
+              {eyebrowLocal}
             </span>
-          </div>
-          <div className="flex flex-col gap-6 p-6 sm:p-8">
-            <header>
-              <h1 className="text-4xl font-stretch-115%">{title}</h1>
-              <p className="mt-2 text-ink-soft">{subtitle}</p>
-            </header>
+          </p>
+          <header className="mt-5">
+            <h1 className="text-[44px]">{title}</h1>
+            <p className="mt-2 text-ink-soft">{subtitle}</p>
+          </header>
+          <div className="mt-7 flex flex-col gap-5">
             {children}
             <div className="text-center text-ink-soft">{footer}</div>
           </div>
         </Card>
-
-        {/* The promise, floating over the view (desktop only) */}
-        <p
-          aria-hidden
-          className="hidden font-display text-6xl leading-[0.95] font-black text-white font-stretch-122% [text-shadow:0_6px_40px_rgb(0_0_0/.5)] md:block"
-        >
-          Collect places,
-          <br />
-          not things.
-        </p>
       </div>
-    </div>
+    </section>
   );
 }

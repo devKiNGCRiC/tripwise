@@ -4,7 +4,9 @@
  */
 import { isRouteErrorResponse, Link, useRouteError } from 'react-router';
 import { Button, buttonClasses } from '@/components/ui/Button';
+import { GlassPanel } from '@/components/ui/GlassPanel';
 import NotFoundPage from '@/pages/NotFoundPage';
+import { LiquidScene } from './LiquidScene';
 
 export function RouteError() {
   const error = useRouteError();
@@ -13,15 +15,17 @@ export function RouteError() {
   if (isRouteErrorResponse(error) && error.status === 404) return <NotFoundPage />;
 
   return (
-    <div className="mx-auto flex max-w-xl flex-col items-center gap-5 px-4 py-24 text-center">
-      <h1 className="text-5xl font-stretch-125%">Turbulence</h1>
-      <p className="text-xl text-ink-soft">This page didn't load properly. Reloading usually fixes it.</p>
-      <div className="flex gap-3">
-        <Button onClick={() => window.location.reload()}>Reload page</Button>
-        <Link to="/" className={buttonClasses({ variant: 'secondary' })}>
-          Go home
-        </Link>
-      </div>
-    </div>
+    <LiquidScene className="pt-20">
+      <GlassPanel className="flex flex-col items-center gap-5 text-center">
+        <h1 className="text-[clamp(48px,8vw,76px)]">Turbulence</h1>
+        <p className="max-w-[34ch] text-xl text-ink-soft">This page didn't load properly. Reloading usually fixes it.</p>
+        <div className="flex flex-wrap justify-center gap-3">
+          <Button onClick={() => window.location.reload()}>Reload page</Button>
+          <Link to="/" className={buttonClasses({ variant: 'secondary' })}>
+            Go home
+          </Link>
+        </div>
+      </GlassPanel>
+    </LiquidScene>
   );
 }

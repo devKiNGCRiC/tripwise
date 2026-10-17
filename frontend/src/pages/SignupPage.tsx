@@ -16,15 +16,14 @@ export default function SignupPage() {
     <>
       <title>Sign up · TripWise</title>
       <AuthLayout
-        board="Departures"
-        boardLocal="प्रस्थान"
-        scene="Mountains"
+        eyebrow="Departures"
+        eyebrowLocal="प्रस्थान"
         title="Start your passport"
         subtitle="Free forever. Plan up to 5 AI trips every day."
         footer={
           <>
             Already have an account?{' '}
-            <Link to={loginHref} className="font-bold text-ink underline decoration-orange decoration-2 underline-offset-4">
+            <Link to={loginHref} className="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">
               Log in
             </Link>
           </>

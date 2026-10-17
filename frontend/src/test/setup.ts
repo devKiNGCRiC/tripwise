@@ -3,21 +3,22 @@
  *  - DOM matchers (toBeInTheDocument, …)
  *  - the MSW mock API, reset after each test so tests never leak data into each other
  *  - stubs for browser APIs jsdom lacks (matchMedia, scrollTo)
- *  - Motion animations finish instantly
+ *  - a fresh motion preference (Calm/Full) for every test
  */
 import '@testing-library/jest-dom/vitest';
 import { cleanup, configure } from '@testing-library/react';
-import { MotionGlobalConfig } from 'motion/react';
 import { afterAll, afterEach, beforeAll } from 'vitest';
 import { api } from '@/lib/api/client';
+import { motionPreference } from '@/lib/motionPreference';
 import { resetDb } from '@/mocks/db';
 import { server } from '@/mocks/node';
 
 /**
- * findBy… queries and waitFor wait up to 4s (default 1s). Lazy-loaded pages can take longer than
- * 1s on a cold, busy machine — that made tests fail at random before.
+ * findBy… queries and waitFor wait up to 8s (default 1s). The first lazy-loaded page in each test
+ * file is compiled on demand; with the whole suite running in parallel that can take ~5s on a
+ * busy machine — shorter limits made tests fail at random.
  */
-configure({ asyncUtilTimeout: 4000 });
+configure({ asyncUtilTimeout: 8000 });
 
 // Start intercepting fetch before any test runs.
 beforeAll(() => server.listen());
@@ -28,13 +29,12 @@ afterEach(() => {
   server.resetHandlers();
   resetDb();
   localStorage.clear();
+  motionPreference.reset();
+  delete document.documentElement.dataset.motion;
   api.setAccessToken(null);
 });
 
 afterAll(() => server.close());
-
-/** Finish every Motion animation instantly so exit animations don't linger in jsdom. */
-MotionGlobalConfig.skipAnimations = true;
 
 /**
  * jsdom has no window.matchMedia. Components ask it about the OS colour scheme

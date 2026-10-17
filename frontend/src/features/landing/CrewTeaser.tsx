@@ -29,7 +29,9 @@ export function CrewTeaser() {
   return (
     <section ref={reveal} aria-labelledby="crew-title" className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-28 md:py-36 lg:grid-cols-2">
       <div>
-        <Tag className="reveal-up border-gold text-gold">Coming soon</Tag>
+        <Tag tone="gold" className="reveal-up">
+          Coming soon
+        </Tag>
         <h2 id="crew-title" className="reveal-up mt-5 text-[clamp(44px,6vw,84px)]" style={delay(0.1)}>
           Better with your crew
         </h2>

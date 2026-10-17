@@ -54,7 +54,7 @@ export function LoginForm() {
 /** Red banner for errors that come back from the server. */
 export function FormAlert({ message }: { message: string }) {
   return (
-    <p role="alert" className="rounded-2xl border-2 border-danger bg-danger/10 px-4 py-3 text-sm font-semibold text-danger">
+    <p role="alert" className="rounded-2xl border border-danger/40 bg-danger/10 px-4 py-3 text-sm font-medium text-danger">
       {message}
     </p>
   );

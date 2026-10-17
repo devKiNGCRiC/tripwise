@@ -7,7 +7,6 @@
  * On phones they sit above the bottom tab bar; on desktop, bottom-right.
  */
 import { CircleAlert, CircleCheck, Info, X } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import { cn } from '@/lib/utils/cn';
 
@@ -75,20 +74,16 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         aria-live="polite"
         className="pointer-events-none fixed inset-x-0 bottom-24 z-50 flex flex-col items-center gap-2 px-4 md:inset-x-auto md:right-6 md:bottom-6 md:items-end"
       >
-        <AnimatePresence initial={false}>
           {toasts.map((toast) => {
             const { icon: Icon, accent } = TONES[toast.tone];
             return (
-              <motion.div
+              // Rises in from a soft blur (CSS keyframes in index.css — no animation library needed).
+              <div
                 key={toast.id}
-                layout
-                initial={{ opacity: 0, y: 16, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, y: 8, transition: { duration: 0.15 } }}
-                className="glass-strong pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-2xl p-3 pr-2"
+                className="glass-strong pointer-events-auto flex w-full max-w-sm animate-toast-in items-start gap-3 rounded-2xl p-3 pr-2"
               >
                 <span className={cn('grid size-8 shrink-0 place-items-center', accent)}>
-                  <Icon className="size-4" aria-hidden />
+                  <Icon className="size-5" aria-hidden />
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold">{toast.title}</p>
@@ -102,10 +97,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 >
                   <X className="size-4" aria-hidden />
                 </button>
-              </motion.div>
+              </div>
             );
           })}
-        </AnimatePresence>
       </div>
     </ToastContext>
   );

@@ -8,9 +8,11 @@
 import { ShieldAlert } from 'lucide-react';
 import { Link, Navigate, Outlet, useLocation, useSearchParams } from 'react-router';
 import { buttonClasses } from '@/components/ui/Button';
+import { GlassPanel } from '@/components/ui/GlassPanel';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { safeNext } from '@/features/auth/safeNext';
 import { FullPageLoader } from './FullPageLoader';
+import { LiquidScene } from './LiquidScene';
 
 export function ProtectedRoute() {
   const { status } = useAuth();
@@ -34,14 +36,16 @@ export function AdminRoute() {
   }
   if (user?.role !== 'admin') {
     return (
-      <div className="mx-auto flex max-w-xl flex-col items-center gap-4 px-4 py-24 text-center">
-        <ShieldAlert className="size-12 text-danger" aria-hidden />
-        <h1 className="text-4xl font-extrabold">Admins only</h1>
-        <p className="text-ink-soft">This area is for the TripWise crew. Your trips are safe in your passport.</p>
-        <Link to="/passport" className={buttonClasses()}>
-          Go to my passport
-        </Link>
-      </div>
+      <LiquidScene>
+        <GlassPanel className="flex flex-col items-center gap-4 text-center">
+          <ShieldAlert className="size-10 text-gold" aria-hidden />
+          <h1 className="text-[clamp(44px,7vw,64px)]">Admins only</h1>
+          <p className="text-lg text-ink-soft">This area is for the TripWise crew. Your trips are safe in your passport.</p>
+          <Link to="/passport" className={buttonClasses({ className: 'mt-2' })}>
+            Go to my passport
+          </Link>
+        </GlassPanel>
+      </LiquidScene>
     );
   }
   return <Outlet />;

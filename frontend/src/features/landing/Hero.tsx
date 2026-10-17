@@ -33,7 +33,7 @@ export function Hero() {
     <section ref={reveal} className="relative isolate flex min-h-svh items-center overflow-hidden">
       <LiquidCanvas />
       {/* Melt the liquid into the page colour at the bottom edge */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-paper transition-colors duration-900" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-b from-transparent to-paper transition-colors duration-900" />
 
       <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-5 pt-32 pb-24 lg:grid-cols-[1.15fr_0.85fr]">
         <div className="min-w-0">
@@ -66,8 +66,9 @@ export function Hero() {
               placeholder="Where does your heart want to go?"
               className="h-12 min-w-0 flex-1 bg-transparent px-3 text-lg font-medium text-ink outline-none placeholder:text-ink-soft"
             />
-            <Button type="submit" size="lg" className="h-12 px-5 sm:px-6" icon={<ArrowRight className="size-4" aria-hidden />}>
-              Plan my journey
+            {/* Icon-only on small phones so the field keeps its room; the label stays for screen readers. */}
+            <Button type="submit" size="lg" className="h-12 px-4 sm:px-6" icon={<ArrowRight className="size-4" aria-hidden />}>
+              <span className="max-sm:sr-only">Plan my journey</span>
             </Button>
           </form>
 
@@ -86,7 +87,7 @@ export function Hero() {
 
       <div aria-hidden className="absolute right-[max(20px,calc((100vw-72rem)/2+20px))] bottom-8 hidden flex-col items-center gap-2 text-sm text-ink-soft lg:flex">
         Scroll
-        <span className="h-11 w-px origin-top animate-pulse bg-gradient-to-b from-gold to-transparent" />
+        <span className="h-11 w-px origin-top animate-pulse bg-linear-to-b from-gold to-transparent" />
       </div>
     </section>
   );

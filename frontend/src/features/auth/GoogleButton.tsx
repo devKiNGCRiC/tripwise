@@ -47,7 +47,7 @@ export function GoogleButton() {
       <Button variant="secondary" size="lg" fullWidth loading={pending} icon={<GoogleMark />} onClick={handleClick}>
         Continue with Google
       </Button>
-      {error && <p className="text-sm font-semibold text-danger">{error}</p>}
+      {error && <p className="text-sm font-medium text-danger">{error}</p>}
     </div>
   );
 }

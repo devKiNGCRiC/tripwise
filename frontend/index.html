@@ -31,6 +31,8 @@
                 ? 'dark'
                 : 'light';
           document.documentElement.dataset.theme = theme;
+          // Calm motion (Passport setting, key "tw_motion" — see src/lib/motionPreference.ts)
+          if (localStorage.getItem('tw_motion') === 'calm') document.documentElement.dataset.motion = 'calm';
         } catch (e) {}
       })();
     </script>

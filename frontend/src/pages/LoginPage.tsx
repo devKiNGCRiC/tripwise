@@ -1,5 +1,6 @@
 /**
  * LoginPage.tsx — route /login. Thin page: layout + form + Google + links.
+ * In mock mode, a dashed note shows the demo account.
  * React 19 hoists the <title> element into <head> automatically.
  */
 import { Link, useSearchParams } from 'react-router';
@@ -18,15 +19,14 @@ export default function LoginPage() {
     <>
       <title>Log in · TripWise</title>
       <AuthLayout
-        board="Arrivals"
-        boardLocal="आगमन"
-        scene="Glacier"
+        eyebrow="Arrivals"
+        eyebrowLocal="आगमन"
         title="Welcome back"
         subtitle="Your trips are waiting where you left them."
         footer={
           <>
             New to TripWise?{' '}
-            <Link to={signupHref} className="font-bold text-ink underline decoration-orange decoration-2 underline-offset-4">
+            <Link to={signupHref} className="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">
               Create a free account
             </Link>
           </>
@@ -35,7 +35,7 @@ export default function LoginPage() {
         <GoogleButton />
         <LoginForm />
         {USE_MOCKS && (
-          <p className="rounded-2xl bg-paper-2 px-4 py-3 text-center text-xs text-ink-soft">
+          <p className="rounded-2xl border border-dashed border-line px-4 py-3 text-center text-sm text-ink-soft">
             Demo: demo@tripwise.app / password123
           </p>
         )}

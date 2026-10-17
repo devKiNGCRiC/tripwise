@@ -183,11 +183,19 @@
 @theme {
   --animate-spin-slow: spin 120s linear infinite;
   --animate-fade-in: fade-in 0.5s ease var(--delay, 0s) forwards;
+  --animate-toast-in: toast-in 0.5s var(--ease-out-expo) both;
 }
 
 @keyframes draw {
   to {
     stroke-dashoffset: 0;
+  }
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(6px);
   }
 }
 @keyframes fade-in {
@@ -199,7 +207,10 @@
   }
 }
 
-/* Respect users who ask the OS for less motion: show everything, animate nothing. */
+/*
+ * Respect users who ask for less motion — through the OS, or with TripWise's own "Calm"
+ * switch (<html data-motion="calm">, see lib/motionPreference.ts): show everything, animate nothing.
+ */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -209,4 +220,12 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+:root[data-motion='calm'] *,
+:root[data-motion='calm'] ::before,
+:root[data-motion='calm'] ::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }

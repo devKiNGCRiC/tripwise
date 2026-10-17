@@ -1,26 +1,25 @@
 /**
- * NotFoundPage.tsx — the 404 page ("Lost luggage"), with a station board
- * announcing the missing platform.
+ * NotFoundPage.tsx — the 404 page ("Lost luggage" / खोया सामान), on glass over the liquid colour.
  */
-import { Luggage } from 'lucide-react';
 import { Link } from 'react-router';
+import { LiquidScene } from '@/components/layout/LiquidScene';
 import { buttonClasses } from '@/components/ui/Button';
 import { GlassPanel } from '@/components/ui/GlassPanel';
-import { StillScenery } from '@/scene/photo/StillScenery';
 
 export default function NotFoundPage() {
   return (
-    <div>
-      <StillScenery stage="Land" />
-      <GlassPanel className="mx-auto my-20 flex max-w-xl flex-col items-center gap-5 text-center">
-        <title>Lost luggage · TripWise</title>
-        <Luggage className="size-16 -rotate-6 text-orange" aria-hidden />
-        <h1 className="text-6xl font-stretch-125%">Lost luggage</h1>
-        <p className="text-xl text-ink-soft">Error 404: this page missed its train. Let's get you somewhere better.</p>
-        <Link to="/" className={buttonClasses({ size: 'lg' })}>
+    <LiquidScene>
+      <title>Lost luggage · TripWise</title>
+      <GlassPanel className="flex flex-col items-center gap-5 text-center">
+        <p lang="hi" className="text-2xl text-gold">
+          खोया सामान
+        </p>
+        <h1 className="text-[clamp(52px,8vw,84px)]">Lost luggage</h1>
+        <p className="max-w-[34ch] text-xl text-ink-soft">Error 404: this page missed its train. Let's get you somewhere better.</p>
+        <Link to="/" className={buttonClasses({ size: 'lg', className: 'mt-2' })}>
           Back to home
         </Link>
       </GlassPanel>
-    </div>
+    </LiquidScene>
   );
 }

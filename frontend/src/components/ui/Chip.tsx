@@ -36,10 +36,16 @@ export function Chip({ selected = false, icon, className, children, onClick, onS
   );
 }
 
+/** Tag colours: quiet hairline, or gold for highlights like "Coming soon". */
+const TAG_TONES = {
+  default: 'border-line text-ink',
+  gold: 'border-gold/60 text-gold',
+};
+
 /** Static label pill — purely informational, not clickable. */
-export function Tag({ children, className }: { children: ReactNode; className?: string }) {
+export function Tag({ children, tone = 'default', className }: { children: ReactNode; tone?: keyof typeof TAG_TONES; className?: string }) {
   return (
-    <span className={cn('inline-flex items-center rounded-full border border-line px-2.5 py-0.5 text-xs font-medium capitalize text-ink', className)}>
+    <span className={cn('inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium', TAG_TONES[tone], className)}>
       {children}
     </span>
   );
