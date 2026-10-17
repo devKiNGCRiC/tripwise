@@ -1,65 +1,77 @@
 /**
  * YourColours.tsx — "Your trip. Your palette.": choose (or drop) a photo from a trip you
  * loved; its colours are read right here on the device (nothing is uploaded) and tint the
- * whole living world and the interface. Or "Use my location" to show the region nearest
- * to you. "Reset colours" goes back to the region's own palette.
+ * whole living world and the interface. Until then the frame shows the current region's
+ * photo, and "Try it with this photo" demonstrates the effect in one click. Or "Use my
+ * location" to show the region nearest to you. "Reset colours" goes back to the region's palette.
  */
 import { useEffect, useRef, useState, type DragEvent } from 'react';
 import { useReveal } from '@/components/signature/useReveal';
 import { Button } from '@/components/ui/Button';
 import { nearestRegion } from '@/world/geo';
-import { paletteFromPixels } from '@/world/palette';
+import { paletteFromPixels, type Palette } from '@/world/palette';
 import { regionByKey } from '@/world/regions';
 import { useWorld } from '@/world/WorldProvider';
 
 /** Size the photo is shrunk to before reading its colours (small = fast). */
 const SAMPLE = 48;
 
-/** Read a photo file's palette on the device. Resolves null if it can't be read. */
-function readPalette(file: File) {
-  return new Promise<{ url: string; palette: ReturnType<typeof paletteFromPixels> } | null>((resolve) => {
-    const url = URL.createObjectURL(file);
+/** A photo in the frame: its address, and whether it's a temporary in-memory copy to release later. */
+interface Shown {
+  src: string;
+  temporary: boolean;
+}
+
+/** Read the palette of the image at `src` (same-origin or an object URL). Resolves null if unreadable. */
+function readPalette(src: string) {
+  return new Promise<Palette | null>((resolve) => {
     const img = new Image();
     img.onload = () => {
       const canvas = document.createElement('canvas');
       canvas.width = canvas.height = SAMPLE;
       const ctx = canvas.getContext('2d');
-      if (!ctx) {
-        URL.revokeObjectURL(url);
-        return resolve(null);
-      }
+      if (!ctx) return resolve(null);
       ctx.drawImage(img, 0, 0, SAMPLE, SAMPLE);
-      resolve({ url, palette: paletteFromPixels(ctx.getImageData(0, 0, SAMPLE, SAMPLE).data) });
+      resolve(paletteFromPixels(ctx.getImageData(0, 0, SAMPLE, SAMPLE).data));
     };
-    img.onerror = () => {
-      URL.revokeObjectURL(url);
-      resolve(null);
-    };
-    img.src = url;
+    img.onerror = () => resolve(null);
+    img.src = src;
   });
 }
 
 /** The "Your colours" personalisation section. */
 export function YourColours() {
   const reveal = useReveal<HTMLElement>();
-  const { tint, setTint, setRegion } = useWorld();
+  const { region, tint, setTint, setRegion } = useWorld();
   const fileRef = useRef<HTMLInputElement>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<Shown | null>(null);
   const [message, setMessage] = useState('');
 
   // Release the previous photo's memory whenever it's replaced or cleared, and on leaving the page.
   useEffect(() => {
-    if (!preview) return;
-    return () => URL.revokeObjectURL(preview);
+    if (!preview?.temporary) return;
+    return () => URL.revokeObjectURL(preview.src);
   }, [preview]);
 
   /** Theme the world from a chosen photo. */
   async function applyPhoto(file: File | undefined) {
     if (!file?.type.startsWith('image/')) return;
-    const result = await readPalette(file);
-    if (!result) return setMessage('That photo couldn’t be read — try another.');
-    setPreview(result.url);
-    setTint(result.palette);
+    const url = URL.createObjectURL(file);
+    const palette = await readPalette(url);
+    if (!palette) {
+      URL.revokeObjectURL(url);
+      return setMessage('That photo couldn’t be read — try another.');
+    }
+    setPreview({ src: url, temporary: true });
+    setTint(palette);
+    setMessage('Your photo’s colours now tint the whole world.');
+  }
+  /** One-click demo: tint the world from the current region's own photo. */
+  async function tryRegionPhoto() {
+    const palette = await readPalette(region.photo.src);
+    if (!palette) return setMessage('That photo couldn’t be read — try another.');
+    setPreview({ src: region.photo.src, temporary: false });
+    setTint(palette);
     setMessage('Your photo’s colours now tint the whole world.');
   }
   /** Jump to the region nearest the traveller (asks the browser for permission). */
@@ -103,6 +115,11 @@ export function YourColours() {
             <Button variant="glow" onClick={() => fileRef.current?.click()}>
               Choose a photo
             </Button>
+            {!preview && (
+              <Button variant="secondary" onClick={() => void tryRegionPhoto()}>
+                Try it with this photo
+              </Button>
+            )}
             <Button variant="secondary" onClick={findMyRegion}>
               Use my location
             </Button>
@@ -126,7 +143,7 @@ export function YourColours() {
         <label
           onDragOver={(event) => event.preventDefault()}
           onDrop={onDrop}
-          className="relative grid aspect-4/3 cursor-pointer place-items-center overflow-hidden rounded-3xl border-[1.5px] border-dashed border-line text-center text-soft"
+          className="group relative grid aspect-4/3 cursor-pointer place-items-end overflow-hidden rounded-3xl text-center"
         >
           <input ref={fileRef} type="file" accept="image/*" className="sr-only" onChange={(event) => {
               void applyPhoto(event.target.files?.[0]);
@@ -135,13 +152,17 @@ export function YourColours() {
             }}
           />
           {preview ? (
-            <img src={preview} alt="Your trip photo" className="absolute inset-0 size-full object-cover" />
+            <img src={preview.src} alt="Your trip photo" className="absolute inset-0 size-full object-cover" />
           ) : (
-            <span>
-              Drop a trip photo here
-              <br />
-              <small>or click to choose</small>
-            </span>
+            <>
+              {/* Until a photo is chosen: the region's own photo, waiting to be swapped for yours */}
+              <img src={region.photo.src} alt={region.photo.place} className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <span className="relative m-4 rounded-2xl border border-dashed border-white/70 bg-black/35 px-5 py-3 text-white backdrop-blur-md">
+                Drop your own trip photo here
+                <br />
+                <small className="opacity-85">or click to choose one</small>
+              </span>
+            </>
           )}
         </label>
       </div>

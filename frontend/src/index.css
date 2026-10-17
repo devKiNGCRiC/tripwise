@@ -83,26 +83,15 @@
     font-family: var(--trip-font-hindi);
   }
   /*
-   * Scrollbar in the app's own style: a pill in the region colour, no track
-   * (standard properties for Firefox/new Chromium, ::-webkit-scrollbar for Safari & older Chromium).
+   * The browser's scrollbar is hidden: it always reserves a pale strip at the window edge,
+   * outside the living landscape. TripWise draws its own floating pill instead
+   * (components/signature/ScrollThumb.tsx). Wheel, keys, touch and trackpad scroll as normal.
    */
   html {
-    scrollbar-color: var(--trip-accent) transparent;
+    scrollbar-width: none;
   }
   ::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    border: 3px solid transparent;
-    border-radius: 999px;
-    background: var(--trip-accent) padding-box;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--trip-ink) padding-box;
+    display: none;
   }
   ::selection {
     background: var(--trip-accent);

@@ -9,6 +9,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 import { ToastProvider } from '@/components/ui/Toast';
+import { ScrollThumb } from '@/components/signature/ScrollThumb';
 import { SmoothScroll } from '@/components/signature/SmoothScroll';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { createQueryClient } from '@/lib/queryClient';
@@ -29,6 +30,7 @@ export default function App() {
         <WorldProvider>
           <WorldDefs />
           <LivingWorld />
+          <ScrollThumb />
           <ToastProvider>
             <AuthProvider>
               {/* Buttery inertial scrolling (Lenis) */}

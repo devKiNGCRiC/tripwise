@@ -1,17 +1,15 @@
 /**
- * RegionBar.tsx — the seven worlds as a bar of buttons, each with its own little painted
- * landscape (arch-framed), name, Hindi name and terrain. While the page tours the regions by
+ * RegionBar.tsx — the seven worlds as a bar of buttons, each with a tiny real photo of the
+ * place in an arch frame, its name, Hindi name and terrain. While the page tours the regions by
  * itself, a progress line fills under the current one; picking any region ends the tour.
  */
 import { cn } from '@/lib/utils/cn';
 import { REGIONS } from '@/world/regions';
-import { useThumbnails } from '@/world/useThumbnails';
 import { TOUR_SECONDS, useWorld } from '@/world/WorldProvider';
 
 /** The bar of seven region buttons with painted thumbnails. */
 export function RegionBar({ className }: { className?: string }) {
   const { index, setRegion, touring } = useWorld();
-  const thumbs = useThumbnails();
 
   return (
     <nav aria-label="Regions" className={cn('glass grid grid-flow-col auto-cols-[minmax(190px,1fr)] gap-1.5 overflow-x-auto rounded-[28px] p-2 [scrollbar-width:none]', className)}>
@@ -26,11 +24,7 @@ export function RegionBar({ className }: { className?: string }) {
             i === index ? 'bg-ink/8' : 'hover:bg-ink/5',
           )}
         >
-          {thumbs[i] ? (
-            <img src={thumbs[i]} alt="" className="h-[64px] w-[54px] shrink-0 object-cover [clip-path:url(#archClip)]" />
-          ) : (
-            <span aria-hidden className="h-[64px] w-[54px] shrink-0 bg-accent/30 [clip-path:url(#archClip)]" />
-          )}
+          <img src={region.photo.thumb} alt="" width={54} height={64} className="h-[64px] w-[54px] shrink-0 bg-accent/20 object-cover [clip-path:url(#archClip)]" />
           <span className="min-w-0">
             <b className="block truncate text-[14.5px] leading-tight font-semibold">{region.name}</b>
             <small className="block truncate text-[12.5px] text-soft">

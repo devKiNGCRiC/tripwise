@@ -4,7 +4,7 @@
  * Far-to-near terrain layers (mountains, dunes, plateaus, hills, water, mist) with details
  * (pines, ghat temples, a desert fort, camels, ruins, waterfalls, tea terraces, palms),
  * signature landmarks (a Himalayan shrine, prayer flags, a chhatri, a gopuram, a monastery,
- * a lighthouse), light-and-shade on every slope, and haze that fades distant ridges,
+ * a lighthouse, small villages), light-and-shade on every slope, and haze that fades distant ridges,
  * a sky with sun or moon, and weather & life (birds, kites, stars, snow, rain, fireflies,
  * diyas, boats, glitter). Everything is procedural — no images — and seeded, so a region
  * always looks the same. Layers shift with the pointer and the scroll (parallax).
@@ -375,6 +375,23 @@ export class Scene {
           ctx.lineTo(x + reach, y - 86 * u);
           ctx.lineTo(x + reach, y - 26 * u);
           ctx.fill();
+        }
+        break;
+      }
+      case 'village': {
+        // A small village: a cluster of houses with sloping roofs; windows glow after dark
+        const houses: [number, number, number][] = [[-38, 14, 13], [-22, 18, 16], [-4, 15, 12], [12, 20, 17], [30, 14, 12], [44, 16, 14]];
+        for (const [ox, hw, hh] of houses) {
+          const bx = x + ox * u;
+          ctx.fillStyle = dark;
+          ctx.fillRect(bx - (hw / 2) * u, y - hh * u, hw * u, hh * u + 4 * u);
+          ctx.beginPath();
+          ctx.moveTo(bx - (hw / 2 + 3) * u, y - hh * u);
+          ctx.lineTo(bx, y - (hh + 8) * u);
+          ctx.lineTo(bx + (hw / 2 + 3) * u, y - hh * u);
+          ctx.fill();
+          ctx.fillStyle = night > 0.2 ? lit : `rgba(255,255,255,${0.18 * (1 - night)})`;
+          ctx.fillRect(bx - 2.5 * u, y - hh * u + 4 * u, 4 * u, 4 * u);
         }
         break;
       }

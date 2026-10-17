@@ -1,7 +1,7 @@
 /**
- * YourColours.test.tsx — photo previews don't leak memory: each photo's temporary
- * object URL is released when another photo replaces it, on "Reset colours", and when
- * the section goes away.
+ * YourColours.test.tsx — photo previews don't leak memory (each photo's temporary object
+ * URL is released when replaced, reset, or the section goes away), and visitors can try
+ * the feature in one click with the current region's own photo.
  */
 import { screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -39,6 +39,15 @@ describe('YourColours', () => {
 
   /** Choose a photo through the hidden file input. */
   const photo = (name: string) => new File(['x'], name, { type: 'image/jpeg' });
+
+  it('shows the region photo and tints the world from it in one click', async () => {
+    const { user } = renderWithProviders(<YourColours />);
+    expect(screen.getByRole('img', { name: /Valley of Flowers/ })).toHaveAttribute('src', '/regions/himalaya.jpg');
+    await user.click(screen.getByRole('button', { name: 'Try it with this photo' }));
+    expect(await screen.findByText('Your photo’s colours now tint the whole world.')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Reset colours' })).toBeInTheDocument();
+    expect(revoke).not.toHaveBeenCalled(); // the region photo is a real file, not a temporary URL
+  });
 
   it('releases a photo when it is replaced, reset, or the section closes', async () => {
     const { user, container, unmount } = renderWithProviders(<YourColours />);
