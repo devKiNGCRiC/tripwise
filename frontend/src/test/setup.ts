@@ -56,3 +56,9 @@ Object.defineProperty(window, 'matchMedia', {
 
 /** jsdom doesn't implement scrolling; React Router's scroll restoration calls it. */
 window.scrollTo = () => {};
+
+/**
+ * jsdom has no canvas drawing and logs a noisy "not implemented" error when asked.
+ * Report "no context" instead — the same path a browser without WebGL takes (CSS gradient fallback).
+ */
+HTMLCanvasElement.prototype.getContext = (() => null) as typeof HTMLCanvasElement.prototype.getContext;

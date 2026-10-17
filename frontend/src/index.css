@@ -115,6 +115,25 @@
 }
 
 /*
+ * The liquid's stand-in: the same palette as soft overlapping glows, shown behind the
+ * WebGL canvas (before its first frame, or for good when WebGL is unavailable).
+ */
+@utility liquid-fallback {
+  background:
+    radial-gradient(60% 70% at 20% 30%, rgb(250 204 168 / 0.9), transparent 70%),
+    radial-gradient(50% 60% at 80% 70%, rgb(140 199 194 / 0.7), transparent 70%),
+    radial-gradient(40% 40% at 70% 20%, rgb(237 163 77 / 0.45), transparent 70%),
+    #f6efe3;
+  [data-theme='dark'] & {
+    background:
+      radial-gradient(60% 70% at 20% 30%, rgb(8 92 107 / 0.85), transparent 70%),
+      radial-gradient(50% 60% at 80% 70%, rgb(77 158 199 / 0.45), transparent 70%),
+      radial-gradient(40% 40% at 70% 20%, rgb(242 158 64 / 0.35), transparent 70%),
+      #0a1230;
+  }
+}
+
+/*
  * Reveals (toggled by components/signature/Reveal.tsx adding `.is-in`):
  *   reveal-line → a headline line rises out of a mask
  *   reveal-up   → a block fades up
