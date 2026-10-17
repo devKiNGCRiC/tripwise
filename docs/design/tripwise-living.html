@@ -1,0 +1,608 @@
+<!doctype html>
+<!--
+  tripwise-living.html — THROWAWAY PROTOTYPE #2 of the "many Indias" idea.
+  A living, procedurally drawn landscape fills the background and never stops moving:
+  seven regions by landscape (Himalaya, Thar, Gangetic Plains, Deccan, Western Ghats,
+  Konkan & Malabar, Seven Sisters), each with its own terrain, weather and life, in Day and Night.
+  Layers move with the mouse and with scrolling (parallax). A layered glass UI floats on top.
+  Not part of the app.
+-->
+<html lang="en" data-mode="day">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TripWise — seven worlds (prototype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #121417; --soft: #4a4f57; --line: rgb(18 20 23 / .12);
+    --glass: rgb(255 255 255 / .52); --glass-strong: rgb(255 255 255 / .72); --glass-edge: rgb(255 255 255 / .7);
+    --accent: #2f6f9f; --accent2: #c8553d; --on-accent: #fff;
+    --scrim: rgb(255 255 255 / .55);
+    --ease: cubic-bezier(.2,.8,.2,1);
+  }
+  [data-mode='night'] {
+    --ink: #f3efe7; --soft: #b7b4ad; --line: rgb(255 255 255 / .14);
+    --glass: rgb(10 16 30 / .42); --glass-strong: rgb(10 16 30 / .66); --glass-edge: rgb(255 255 255 / .14);
+    --scrim: rgb(4 8 18 / .55);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font: 400 16px/1.6 'Plus Jakarta Sans', system-ui, sans-serif; color: var(--ink); background: #0b1020; overflow-x: clip; transition: color .8s; }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 580; font-variation-settings: 'SOFT' 50, 'opsz' 144; letter-spacing: -.025em; line-height: 1; margin: 0; }
+  em { font-style: italic; font-weight: 400; color: var(--accent); transition: color .8s; }
+  [lang='hi'] { font-family: 'Tiro Devanagari Hindi', serif; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  .wrap { width: min(1360px, 100% - clamp(32px, 7vw, 112px)); margin-inline: auto; }
+  .label { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--soft); transition: color .8s; }
+  .glass { background: var(--glass); border: 1px solid var(--glass-edge); backdrop-filter: blur(22px) saturate(1.5); -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    box-shadow: 0 30px 80px -40px rgb(0 0 0 / .45), inset 0 1px 0 rgb(255 255 255 / .25); transition: background-color .8s, border-color .8s; }
+  .glass-strong { background: var(--glass-strong); }
+
+  /* The living landscape, fixed behind everything */
+  #scene { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -2; display: block; }
+  .scrim { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(100deg, var(--scrim) 0%, transparent 55%); transition: background .8s; }
+
+  /* Nav */
+  .nav { position: fixed; z-index: 40; inset: 14px 0 auto; }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 62px; padding: 0 10px 0 22px; border-radius: 999px; }
+  .logo { display: flex; align-items: center; gap: 10px; font: 600 21px Fraunces; color: inherit; text-decoration: none; }
+  .logo i { width: 26px; height: 30px; background: var(--accent); clip-path: url(#archClip); transition: background .8s; }
+  .links { display: flex; gap: 26px; font-size: 14.5px; font-weight: 500; color: var(--soft); }
+  .links a { color: inherit; text-decoration: none; } .links a:hover { color: var(--ink); }
+  .navr { display: flex; gap: 8px; align-items: center; }
+  .icon-btn { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); background: transparent; }
+  .btn { white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 999px; padding: 12px 22px; font-weight: 600; font-size: 15px; background: var(--ink); color: var(--glass-strong); text-decoration: none; transition: transform .3s var(--ease), background .8s, color .8s; }
+  [data-mode='day'] .btn { color: #fff; } [data-mode='night'] .btn { color: #0b1020; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.accent { background: var(--accent); color: var(--on-accent); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+
+  /* Hero */
+  .hero { min-height: 100svh; display: grid; grid-template-rows: 1fr auto; padding-top: 96px; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
+  .eyebrow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .eyebrow .num { font: 600 13px 'Plus Jakarta Sans'; padding: 5px 11px; border-radius: 999px; background: var(--accent); color: var(--on-accent); transition: background .8s; }
+  .eyebrow .hi { font-size: 22px; color: var(--accent2); transition: color .8s; }
+  .hero h1 { font-size: clamp(44px, min(6vw, 10vh), 108px); margin-top: 16px; }
+  .swap { display: inline-block; animation: up .8s var(--ease) both; }
+  @keyframes up { from { opacity: 0; transform: translateY(22px); filter: blur(8px); } }
+  .lede { max-width: 46ch; font-size: clamp(16px, 1.25vw, 18.5px); color: var(--soft); margin: 18px 0 26px; transition: color .8s; }
+
+  .planner { display: grid; grid-template-columns: 1.25fr .9fr .9fr 1.1fr auto; border-radius: 24px; padding: 6px; }
+  .planner .f { padding: 8px 14px; border-right: 1px solid var(--line); display: grid; align-content: center; min-width: 0; }
+  .planner .f:nth-child(4) { border-right: 0; }
+  .planner .f span { font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
+  .planner input, .planner select { border: 0; background: none; outline: none; font: 600 15px 'Plus Jakarta Sans'; color: var(--ink); padding: 2px 0; min-width: 0; }
+  .planner select option { color: #111; }
+  .planner input[type=range] { accent-color: var(--accent); width: 100%; }
+  .planner .btn { border-radius: 18px; align-self: stretch; }
+  .who { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  .who button { border: 1px solid var(--line); background: var(--glass); backdrop-filter: blur(10px); border-radius: 999px; padding: 7px 14px; font-size: 13.5px; font-weight: 500; transition: all .3s; }
+  .who button[aria-pressed='true'] { background: var(--ink); color: var(--glass-strong); border-color: transparent; }
+  [data-mode='day'] .who button[aria-pressed='true'] { color: #fff; }
+
+  /* Dossier: the region at a glance */
+  .dossier { border-radius: 28px; padding: 22px 24px; display: grid; gap: 16px; }
+  .d-top { display: flex; justify-content: space-between; align-items: center; }
+  .d-title { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .d-title h3 { font-size: 30px; } .d-title .hi { font-size: 20px; color: var(--accent2); transition: color .8s; }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0; }
+  .facts div { border-radius: 16px; background: color-mix(in srgb, var(--ink) 5%, transparent); padding: 10px 12px; }
+  .facts dt { font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
+  .facts dd { margin: 2px 0 0; font-weight: 600; font-size: 14px; }
+  .months { display: grid; grid-template-columns: repeat(12, 1fr); gap: 5px; align-items: end; height: 74px; }
+  .months div { display: grid; gap: 4px; justify-items: center; align-self: end; }
+  .months i { width: 100%; border-radius: 6px 6px 3px 3px; background: color-mix(in srgb, var(--accent) 35%, transparent); transition: height .7s var(--ease), background .8s; }
+  .months i.best { background: var(--accent); }
+  .months b { font-size: 10px; font-weight: 600; color: var(--soft); }
+  .months .now b { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent2); text-underline-offset: 3px; }
+  .sig { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .sig li { display: flex; align-items: center; gap: 12px; font-weight: 500; font-size: 14.5px; }
+  .sig li span { font: 600 12px 'Plus Jakarta Sans'; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--accent); color: var(--accent); flex: none; transition: all .8s; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chips span { font-size: 12.5px; font-weight: 600; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); }
+
+  /* Region bar with live thumbnails + auto-tour progress */
+  .regionbar { margin: 26px auto 22px; border-radius: 26px; padding: 8px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .rb { position: relative; border: 0; background: none; padding: 6px; border-radius: 18px; display: flex; gap: 10px; align-items: center; text-align: left; transition: background .3s; overflow: hidden; }
+  .rb:hover, .rb[aria-pressed='true'] { background: color-mix(in srgb, var(--ink) 7%, transparent); }
+  .rb img { width: 42px; height: 50px; object-fit: cover; clip-path: url(#archClip); flex: none; }
+  .rb b { display: block; font-size: 13px; font-weight: 600; line-height: 1.2; }
+  .rb small { font-size: 12px; color: var(--soft); }
+  .rb .bar { position: absolute; left: 12px; right: 12px; bottom: 3px; height: 2px; border-radius: 2px; background: var(--accent); transform-origin: left; transform: scaleX(0); }
+  .rb[aria-pressed='true'] .bar.run { animation: fill var(--tour, 10s) linear forwards; }
+  @keyframes fill { to { transform: scaleX(1); } }
+
+  /* Sections floating over the scene */
+  section.block { padding: clamp(70px, 12vh, 140px) 0; }
+  .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 34px; }
+  .head h2 { font-size: clamp(36px, 4.6vw, 70px); max-width: 15ch; }
+  .head p { max-width: 42ch; margin: 0; color: var(--soft); }
+  .panel { border-radius: 36px; padding: clamp(24px, 3.4vw, 48px); }
+
+  .kinds { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; transition: grid-template-columns .6s var(--ease); }
+  .kind { text-align: left; border: 1px solid var(--line); background: color-mix(in srgb, var(--ink) 4%, transparent); border-radius: 24px; padding: 20px; min-height: 250px; display: flex; flex-direction: column; gap: 10px; transition: background .4s, border-color .4s; overflow: hidden; }
+  .kind[aria-pressed='true'] { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+  .kind .ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: color-mix(in srgb, currentColor 12%, transparent); }
+  .kind h3 { font-size: 26px; }
+  .kind p { margin: 0; font-size: 14px; opacity: .85; }
+  .kind ul { list-style: none; padding: 0; margin: auto 0 0; display: grid; gap: 6px; font-size: 13.5px; font-weight: 600; max-height: 0; opacity: 0; transition: max-height .5s var(--ease), opacity .4s; }
+  .kind[aria-pressed='true'] ul { max-height: 120px; opacity: 1; }
+  .kind ul li::before { content: '✓  '; }
+
+  .worlds { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .world { position: relative; border: 0; padding: 0; border-radius: 26px; overflow: hidden; text-align: left; color: #fff; min-height: 220px; }
+  .world img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+  .world:hover img { transform: scale(1.06); }
+  .world::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 35%, rgb(0 0 0 / .55)); }
+  .world div { position: absolute; z-index: 1; left: 18px; right: 18px; bottom: 16px; }
+  .world b { font: 600 24px Fraunces; display: block; } .world span { font-size: 14px; opacity: .9; }
+  .world .n { position: absolute; z-index: 1; top: 14px; left: 16px; font-size: 12px; font-weight: 700; letter-spacing: .14em; }
+  .world.intro { background: var(--glass-strong); color: var(--ink); padding: 22px; display: flex; flex-direction: column; justify-content: space-between; }
+  .world.intro::after { display: none; }
+
+  .yours { display: grid; grid-template-columns: 1.1fr .9fr; gap: 36px; align-items: center; }
+  .drop { aspect-ratio: 4/3; border-radius: 26px; border: 1.5px dashed var(--line); display: grid; place-items: center; text-align: center; color: var(--soft); position: relative; overflow: hidden; cursor: pointer; }
+  .drop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .sw { display: flex; gap: 8px; margin: 18px 0 22px; } .sw i { width: 46px; height: 46px; border-radius: 14px; border: 1px solid var(--line); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+  footer { padding: 40px 0 60px; color: var(--soft); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  @media (max-width: 1180px) { .regionbar { grid-template-columns: repeat(4, 1fr); } .kinds { grid-template-columns: repeat(3, 1fr); } .worlds { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 920px) {
+    .hero-grid, .yours { grid-template-columns: 1fr; } .links { display: none; }
+    .planner { grid-template-columns: 1fr 1fr; } .planner .f { border-right: 0; border-bottom: 1px solid var(--line); } .planner .btn { grid-column: span 2; }
+    .regionbar { grid-template-columns: repeat(7, 140px); overflow-x: auto; }
+    .kinds { grid-template-columns: 1fr 1fr; } .scrim { background: linear-gradient(180deg, var(--scrim) 0%, transparent 70%); }
+  }
+  @media (max-width: 560px) { .worlds, .kinds { grid-template-columns: 1fr; } .facts { grid-template-columns: 1fr 1fr; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <clipPath id="archClip" clipPathUnits="objectBoundingBox"><path d="M0,1 V0.36 C0,0.17 0.2,0.06 0.5,0 C0.8,0.06 1,0.17 1,0.36 V1 Z" /></clipPath>
+</defs></svg>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="scrim"></div>
+
+<header class="nav"><div class="wrap glass">
+  <a class="logo" href="#"><i></i>TripWise</a>
+  <nav class="links"><a href="#worlds">Seven worlds</a><a href="#kinds">Plan a trip</a><a href="#yours">Your colours</a><a href="#">World trips</a></nav>
+  <div class="navr"><button class="icon-btn" id="modeBtn" aria-label="Switch to night">☾</button><a class="btn" href="#">Sign up</a></div>
+</div></header>
+
+<main>
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="num" id="eNum">01 / 07</span><span class="label" id="eName">Himalaya</span><span class="hi" lang="hi" id="eHi">हिमालय</span></div>
+        <h1 id="headline"></h1>
+        <p class="lede" id="lede"></p>
+        <form class="planner glass glass-strong" onsubmit="event.preventDefault()">
+          <label class="f"><span>Where to</span><input id="where" /></label>
+          <label class="f"><span>When</span><select><option>Any month</option><option>This month</option><option>Next 3 months</option><option>Festival season</option></select></label>
+          <label class="f"><span>Who's going</span><select id="whoSel"><option>Just me</option><option>Friends</option><option>Backpacking</option><option>Family</option><option>Partner</option></select></label>
+          <label class="f"><span>Budget / day · <b id="budgetOut">₹3,000</b></span><input id="budget" type="range" min="1000" max="15000" step="500" value="3000" /></label>
+          <button class="btn accent">Plan →</button>
+        </form>
+        <div class="who" id="whoChips"></div>
+      </div>
+      <aside class="dossier glass glass-strong" aria-label="Region dossier">
+        <div class="d-top"><span class="label">Region dossier</span><span class="label" id="dNum">01 / 07</span></div>
+        <div class="d-title"><h3 id="dName">Himalaya</h3><span class="hi" lang="hi" id="dHi">हिमालय</span></div>
+        <dl class="facts"><div><dt>Elevation</dt><dd id="fElev"></dd></div><div><dt>Terrain</dt><dd id="fTerr"></dd></div><div><dt>Best</dt><dd id="fBest"></dd></div></dl>
+        <div><span class="label">When to go</span><div class="months" id="months" style="margin-top:8px"></div></div>
+        <div><span class="label">Signature experiences</span><ul class="sig" id="sig" style="margin-top:10px"></ul></div>
+        <div class="chips" id="places"></div>
+      </aside>
+    </div>
+    <nav class="regionbar glass" id="regionbar" aria-label="Regions"></nav>
+  </section>
+
+  <section class="block" id="kinds"><div class="wrap panel glass">
+    <div class="head"><h2>However you travel, <em>it bends to you.</em></h2><p>Pick how you're travelling — the plan changes its pace, budget and stays to fit. Tap a card to see what changes.</p></div>
+    <div class="kinds" id="kindCards"></div>
+  </div></section>
+
+  <section class="block" id="worlds" style="padding-top:0"><div class="wrap">
+    <div class="worlds" id="worldCards"></div>
+  </div></section>
+
+  <section class="block" id="yours" style="padding-top:0"><div class="wrap panel glass glass-strong">
+    <div class="yours">
+      <div>
+        <span class="label">Your colours</span>
+        <h2 style="font-size:clamp(32px,3.6vw,54px);margin-top:12px">Your trip. <em>Your palette.</em></h2>
+        <p style="color:var(--soft);max-width:44ch">Choose a photo from a trip you loved — TripWise reads its colours on your device (nothing is uploaded) and tints the whole world to match. Or let it use your location to show the India around you.</p>
+        <div class="sw" id="sw"><i></i><i></i><i></i><i></i></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn accent" id="pickBtn">Choose a photo</button><button class="btn ghost" id="locBtn">Use my location</button><button class="btn ghost" id="clearBtn" hidden>Reset colours</button></div>
+        <p id="msg" style="color:var(--soft);font-size:14px;min-height:22px"></p>
+      </div>
+      <label class="drop" id="drop"><input type="file" accept="image/*" id="file" hidden /><span>Drop a trip photo here<br /><small>or click to choose</small></span></label>
+    </div>
+  </div></section>
+</main>
+<footer><div class="wrap glass" style="border-radius:24px;padding:18px 24px"><span>© 2026 TripWise · <span lang="hi">शुभ यात्रा</span></span><span>Every landscape here is drawn live in your browser · prototype</span></div></footer>
+
+<script>
+/* ═════════════ Helpers ═════════════ */
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+function rng(seed) { let s = seed >>> 0 || 1; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+function hex(c) { const n = parseInt(c.slice(1), 16); return [n >> 16, (n >> 8) & 255, n & 255]; }
+function mix(a, b, t) { const A = hex(a), B = hex(b); return `rgb(${A.map((v, i) => Math.round(lerp(v, B[i], t))).join(',')})`; }
+function rgba(c, a) { const [r, g, b] = hex(c); return `rgba(${r},${g},${b},${a})`; }
+/* 1-D value noise + fractal sum, seeded */
+function noise1(seed) { const r = rng(seed); const p = Array.from({ length: 512 }, r);
+  return (x) => { const i = Math.floor(x), f = x - i, u = f * f * (3 - 2 * f); return lerp(p[i & 511], p[(i + 1) & 511], u) * 2 - 1; }; }
+function fbm1(seed) { const n = noise1(seed); return (x) => { let s = 0, a = .5, f = 1; for (let k = 0; k < 5; k++) { s += a * n(x * f); f *= 2.03; a *= .5; } return s; }; }
+
+/* ═════════════ The seven regions ═════════════ */
+const MONTHS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+const R = [
+  { key: 'himalaya', name: 'Himalaya', hi: 'हिमालय', h: 'Where the mountains <em>keep time.</em>',
+    lede: 'Valleys of flowers, high passes and temple towns above the clouds — planned around altitude, weather and your pace.',
+    elev: '1,800–5,600 m', terr: 'Peaks & valleys', best: 'May–Jun, Sep–Oct', months: [1,1,1,2,3,3,2,2,3,3,1,1],
+    sig: ['Char Dham — Badrinath & Mana', 'Valley of Flowers trek', 'Pangong Tso at first light'], places: ['Badrinath', 'Mana', 'Leh', 'Spiti', 'Rishikesh'],
+    ui: { day: ['#2f6f9f', '#c8553d'], night: ['#8fc1e3', '#e8b04b'] },
+    sky: { day: ['#8fbfe2', '#e9f1f4'], night: ['#040a18', '#1c2b49'] }, sun: [.74, .2],
+    layers: [
+      { shape: 'mountains', base: .56, amp: .36, freq: 1.6, seed: 11, day: '#c9d7e3', night: '#3c4f6e', depth: .06, snow: .55 },
+      { type: 'mist', y: .5, day: '#ffffff', night: '#9fb3d1', a: .35, speed: 6 },
+      { shape: 'mountains', base: .66, amp: .3, freq: 2.2, seed: 23, day: '#8ea7bd', night: '#2b3d5a', depth: .14, snow: .35 },
+      { type: 'mist', y: .62, day: '#ffffff', night: '#8aa0c2', a: .3, speed: 10 },
+      { shape: 'hills', base: .8, amp: .16, freq: 2.6, seed: 37, day: '#4c6e63', night: '#142630', depth: .26, deco: 'pines' },
+      { shape: 'hills', base: .93, amp: .1, freq: 3.2, seed: 41, day: '#2f4b42', night: '#0b171c', depth: .42, deco: 'pines' },
+    ], fx: { day: ['birds'], night: ['stars', 'snow'] } },
+  { key: 'thar', name: 'Thar', hi: 'थार', h: 'Where the sand <em>remembers kings.</em>',
+    lede: 'Golden forts, stepwells and desert camps under a sky full of stars — with the heat and the distances already worked out.',
+    elev: '150–300 m', terr: 'Dunes & forts', best: 'Oct–Mar', months: [3,3,2,1,1,1,1,1,2,3,3,3],
+    sig: ['A night at a desert camp', 'Jaisalmer fort at golden hour', 'Camel trail at sunset'], places: ['Jaisalmer', 'Jodhpur', 'Bikaner', 'Pushkar', 'Barmer'],
+    ui: { day: ['#b8562a', '#c9922a'], night: ['#f08a5d', '#e9c060'] },
+    sky: { day: ['#9cc4dc', '#f8e2c2'], night: ['#0a0920', '#33203f'] }, sun: [.7, .26],
+    layers: [
+      { shape: 'dunes', base: .64, amp: .1, freq: 2.2, seed: 5, day: '#efcf9f', night: '#4b3756', depth: .05, deco: 'fort' },
+      { shape: 'dunes', base: .72, amp: .14, freq: 1.6, seed: 9, day: '#e2ad6c', night: '#3b2a47', depth: .14 },
+      { type: 'sand', y: .72 },
+      { shape: 'dunes', base: .84, amp: .16, freq: 1.2, seed: 15, day: '#cf8a48', night: '#2c1f37', depth: .26, deco: 'camels' },
+      { shape: 'dunes', base: .97, amp: .14, freq: .9, seed: 21, day: '#a8632f', night: '#1d1426', depth: .42 },
+    ], fx: { day: ['birds', 'heat'], night: ['stars', 'stars2'] } },
+  { key: 'ganga', name: 'Gangetic Plains', hi: 'गंगा का मैदान', h: 'Where the river <em>remembers everything.</em>',
+    lede: 'Ghats at dawn, aarti at dusk and three thousand years of stories — Varanasi, Rishikesh, Prayagraj and beyond.',
+    elev: '70–400 m', terr: 'River & ghats', best: 'Oct–Mar', months: [3,3,3,1,1,1,1,1,2,3,3,3],
+    sig: ['Ganga aarti at Dashashwamedh', 'Dawn boat past 80 ghats', 'Old-city food trail'], places: ['Varanasi', 'Rishikesh', 'Prayagraj', 'Bodh Gaya', 'Ayodhya'],
+    ui: { day: ['#b4541c', '#c9971a'], night: ['#f0a24b', '#ffd36b'] },
+    sky: { day: ['#f1b98e', '#fbe6cd'], night: ['#0b0a1c', '#3d2440'] }, sun: [.6, .44],
+    layers: [
+      { shape: 'flat', base: .69, amp: .03, freq: 2, seed: 3, day: '#cf9f80', night: '#2b1b2e', depth: .06, deco: 'temples' },
+      { type: 'water', base: .71, day: ['#f0c39a', '#b8805e'], night: ['#2a1a33', '#120c1c'], depth: .12 },
+      { type: 'mist', y: .69, day: '#fff3e2', night: '#5a3e66', a: .3, speed: 5 },
+    ], fx: { day: ['kites', 'birds', 'boats'], night: ['stars', 'diyas', 'boats'] } },
+  { key: 'deccan', name: 'Deccan Plateau', hi: 'दक्कन', h: 'Where stone tells <em>the oldest stories.</em>',
+    lede: 'Boulder-strewn kingdoms, rock-cut caves and fort cities — Hampi, Ajanta, Ellora and Hyderabad, routed through the heat.',
+    elev: '300–900 m', terr: 'Plateau & ruins', best: 'Oct–Feb', months: [3,3,2,1,1,1,2,2,2,3,3,3],
+    sig: ['Hampi from Matanga Hill at sunrise', 'Ajanta & Ellora caves', 'Golconda fort by lantern'], places: ['Hampi', 'Ellora', 'Hyderabad', 'Bijapur', 'Badami'],
+    ui: { day: ['#9a4f2c', '#4f7a8a'], night: ['#e8956a', '#8fc6d6'] },
+    sky: { day: ['#a7c9dd', '#f3e5d2'], night: ['#060c1b', '#24263f'] }, sun: [.78, .3],
+    layers: [
+      { shape: 'plateau', base: .62, amp: .14, freq: 1.4, seed: 7, day: '#d3b496', night: '#3a3552', depth: .05 },
+      { shape: 'plateau', base: .72, amp: .12, freq: 2, seed: 17, day: '#b58a66', night: '#2c2742', depth: .14, deco: 'ruins' },
+      { shape: 'hills', base: .86, amp: .1, freq: 2.4, seed: 27, day: '#8a6346', night: '#1f1b30', depth: .26, deco: 'boulders' },
+      { shape: 'hills', base: .97, amp: .07, freq: 3, seed: 31, day: '#5e4331', night: '#141122', depth: .42, deco: 'boulders' },
+    ], fx: { day: ['birds'], night: ['stars', 'fireflies'] } },
+  { key: 'ghats', name: 'Western Ghats', hi: 'सह्याद्रि', h: 'Where the monsoon <em>paints everything green.</em>',
+    lede: 'Rainforest ridges, roaring waterfalls and tea-and-coffee hills — Munnar, Coorg and the Sahyadri treks, timed with the rains.',
+    elev: '600–2,600 m', terr: 'Rainforest & falls', best: 'Jun–Jan', months: [2,2,1,1,1,3,3,3,3,3,2,2],
+    sig: ['Monsoon waterfall treks', 'Munnar tea-estate mornings', 'Coorg coffee trails'], places: ['Munnar', 'Coorg', 'Matheran', 'Wayanad', 'Agumbe'],
+    ui: { day: ['#2a7a4c', '#3f8fa0'], night: ['#6fcf97', '#7fd3e0'] },
+    sky: { day: ['#aebfbd', '#e2ebe6'], night: ['#06110e', '#1a2b27'] }, sun: [.62, .16],
+    layers: [
+      { shape: 'mountains', base: .58, amp: .22, freq: 1.3, seed: 13, day: '#a8bdb0', night: '#22382f', depth: .05, round: true },
+      { type: 'mist', y: .52, day: '#ffffff', night: '#7f9a90', a: .45, speed: 7 },
+      { shape: 'mountains', base: .7, amp: .22, freq: 1.8, seed: 19, day: '#76a084', night: '#1a2e25', depth: .14, round: true, deco: 'falls' },
+      { type: 'mist', y: .66, day: '#ffffff', night: '#6d8a80', a: .4, speed: 11 },
+      { shape: 'hills', base: .84, amp: .12, freq: 2.6, seed: 29, day: '#3f7556', night: '#11221a', depth: .26, deco: 'canopy' },
+      { shape: 'hills', base: .96, amp: .09, freq: 3.4, seed: 33, day: '#285a3d', night: '#0a1610', depth: .42, deco: 'canopy' },
+    ], fx: { day: ['rain', 'birds'], night: ['rain', 'fireflies'] } },
+  { key: 'konkan', name: 'Konkan & Malabar', hi: 'कोंकण–मालाबार', h: 'Where the sun <em>clocks out late.</em>',
+    lede: 'Beach mornings, sea forts, backwaters and fish thalis — the quiet coves and the best sunsets, sorted.',
+    elev: 'Sea level', terr: 'Coast & backwaters', best: 'Nov–Mar', months: [3,3,3,2,1,1,1,1,2,2,3,3],
+    sig: ['A night on a backwater houseboat', 'Sunset from a sea fort', 'Fish-thali crawl along the coast'], places: ['Goa', 'Gokarna', 'Alleppey', 'Varkala', 'Malvan'],
+    ui: { day: ['#d9553a', '#1f7a8c'], night: ['#ff8a6b', '#4fc3d4'] },
+    sky: { day: ['#7ec6dd', '#fde0c6'], night: ['#061325', '#22325a'] }, sun: [.66, .34],
+    layers: [
+      { shape: 'hills', base: .6, amp: .08, freq: 1.4, seed: 2, day: '#7fa597', night: '#1d2c40', depth: .05 },
+      { type: 'water', base: .6, day: ['#3fb3c4', '#0f6f86'], night: ['#123050', '#06121f'], depth: .12, sea: true },
+      { shape: 'flat', base: .9, amp: .02, freq: 2, seed: 8, day: '#f2d8ae', night: '#2a3346', depth: .3 },
+      { shape: 'flat', base: 1.08, amp: .0, freq: 1, seed: 1, day: '#e8c894', night: '#1f2738', depth: .42, deco: 'palms' },
+    ], fx: { day: ['birds', 'glitter'], night: ['stars', 'glitter'] } },
+  { key: 'sisters', name: 'Seven Sisters', hi: 'सात बहनें', h: 'Where the clouds <em>come to rest.</em>',
+    lede: 'Living root bridges, monasteries and tea gardens rolling into the mist — permits, seasons and road times handled for you.',
+    elev: '100–4,000 m', terr: 'Cloud forest & tea', best: 'Oct–Apr', months: [3,3,3,3,2,1,1,1,2,3,3,3],
+    sig: ['Double-decker living root bridge', 'Tawang monastery in the clouds', 'Kaziranga rhino safari'], places: ['Shillong', 'Cherrapunji', 'Tawang', 'Ziro', 'Majuli'],
+    ui: { day: ['#4f7a34', '#b23a48'], night: ['#9bd06c', '#ef6f7c'] },
+    sky: { day: ['#c4d4d2', '#eef0e8'], night: ['#040b0a', '#162420'] }, sun: [.6, .18],
+    layers: [
+      { shape: 'hills', base: .6, amp: .16, freq: 1.1, seed: 4, day: '#b4c6bd', night: '#1d2e2a', depth: .05 },
+      { type: 'mist', y: .55, day: '#ffffff', night: '#7d948d', a: .5, speed: 5 },
+      { shape: 'hills', base: .72, amp: .16, freq: 1.6, seed: 14, day: '#86a991', night: '#16251f', depth: .14, deco: 'terraces' },
+      { type: 'mist', y: .68, day: '#ffffff', night: '#6c8279', a: .42, speed: 8 },
+      { shape: 'hills', base: .86, amp: .14, freq: 2.2, seed: 24, day: '#55835f', night: '#0f1c16', depth: .26, deco: 'terraces' },
+      { shape: 'hills', base: .98, amp: .1, freq: 3, seed: 34, day: '#335c3f', night: '#09130e', depth: .42, deco: 'canopy' },
+    ], fx: { day: ['birds'], night: ['fireflies', 'stars'] } },
+];
+
+/* ═════════════ Scene: one region's landscape, drawn live ═════════════ */
+class Scene {
+  constructor(region) {
+    this.r = region; this.t0 = performance.now() / 1000;
+    this.shapes = region.layers.map((L, i) => (L.shape ? this.shapeFn(L) : null));
+    const rand = rng(region.key.length * 977 + 3);
+    this.stars = Array.from({ length: 160 }, () => [rand(), rand() * .55, rand() * 1.4 + .3, rand() * 6]);
+    this.snow = Array.from({ length: 140 }, () => [rand(), rand(), rand() * 1.8 + .6, rand()]);
+    this.rain = Array.from({ length: 220 }, () => [rand(), rand(), rand() * .5 + .5]);
+    this.sand = Array.from({ length: 160 }, () => [rand(), rand() * .35 + .55, rand() * 1.2 + .4, rand()]);
+    this.flies = Array.from({ length: 46 }, () => [rand(), rand() * .3 + .62, rand() * 6, rand() * 6]);
+    this.diyas = Array.from({ length: 34 }, () => [rand(), rand() * .26 + .7, rand() * 6]);
+    this.birds = Array.from({ length: 7 }, () => [rand(), rand() * .25 + .12, rand() * .5 + .6, rand() * 6]);
+    this.kites = Array.from({ length: 5 }, () => [rand() * .9 + .05, rand() * .25 + .14, rand() * 6, Math.floor(rand() * 4)]);
+    this.boats = Array.from({ length: 4 }, () => [rand(), rand() * .18 + .7, rand() * .5 + .5]);
+  }
+  /* Height function (0..1, 1 = tallest) for a terrain layer */
+  shapeFn(L) {
+    const f = fbm1(L.seed * 131 + 7);
+    switch (L.shape) {
+      case 'mountains': return L.round ? (x) => Math.pow((f(x * L.freq) + 1) / 2, 1.3) : (x) => Math.pow(1 - Math.abs(f(x * L.freq)), 2.2);
+      case 'hills': return (x) => (f(x * L.freq) + 1) / 2;
+      case 'dunes': return (x) => { const p = (x * L.freq * 3 + L.seed * .37) % 1; const d = p < .72 ? Math.pow(p / .72, 1.6) : Math.pow(1 - (p - .72) / .28, .9); return d * .75 + (f(x * L.freq) + 1) * .12; };
+      case 'plateau': return (x) => { const n = (f(x * L.freq) + 1) / 2; return smooth(.42, .5, n) * .8 + n * .2; };
+      default: return (x) => (f(x * L.freq) + 1) / 2;
+    }
+  }
+  /* Draw the whole scene. night: 0..1, mx/my: -0.5..0.5 pointer, scroll: px */
+  draw(ctx, W, H, now, night, mx, my, scroll, alpha = 1) {
+    const r = this.r, t = now - this.t0;
+    const col = (L) => (L.day && L.night && typeof L.day === 'string' ? mix(L.day, L.night, night) : '#000');
+    ctx.save(); ctx.globalAlpha = alpha;
+    // Sky
+    const sk = ctx.createLinearGradient(0, 0, 0, H * .75);
+    sk.addColorStop(0, mix(r.sky.day[0], r.sky.night[0], night)); sk.addColorStop(1, mix(r.sky.day[1], r.sky.night[1], night));
+    ctx.fillStyle = sk; ctx.fillRect(0, 0, W, H);
+    // Stars (night)
+    if (night > .01) { for (const [x, y, s, ph] of this.stars) { ctx.fillStyle = `rgba(255,255,255,${night * (.35 + .35 * Math.sin(t * 1.3 + ph))})`; ctx.fillRect(x * W, y * H - scroll * .02, s, s); } }
+    // Sun / moon
+    const [sx, sy] = r.sun; const cx = sx * W + mx * 12, cy = sy * H + my * 8 - scroll * .03;
+    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, H * .32);
+    glow.addColorStop(0, night > .5 ? `rgba(220,230,255,${.28 * night})` : `rgba(255,236,190,${.55 * (1 - night)})`); glow.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = glow; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = night > .5 ? `rgba(236,240,250,${night})` : `rgba(255,248,226,${1 - night})`;
+    ctx.beginPath(); ctx.arc(cx, cy, Math.min(W, H) * .035, 0, 7); ctx.fill();
+    if (night > .5) { ctx.fillStyle = mix(r.sky.day[1], r.sky.night[1], night); ctx.beginPath(); ctx.arc(cx + Math.min(W, H) * .014, cy - Math.min(W, H) * .008, Math.min(W, H) * .03, 0, 7); ctx.fill(); }
+    // Birds & kites (day), in the sky behind the land
+    if (night < .99) { ctx.globalAlpha = alpha * (1 - night); this.fxSky(ctx, W, H, t, scroll); ctx.globalAlpha = alpha; }
+
+    // Layers, far to near
+    r.layers.forEach((L, i) => {
+      const depth = L.depth ?? .1, dx = mx * depth * 90, dy = my * depth * 30 - scroll * depth * .55;
+      if (L.type === 'mist') return this.mist(ctx, W, H, t, L, night, dy * .6, dx);
+      if (L.type === 'water') return this.water(ctx, W, H, t, L, night, dx, dy);
+      if (L.type === 'sand') return night < .9 && this.sandFx(ctx, W, H, t, 1 - night);
+      const fn = this.shapes[i], base = L.base * H + dy, amp = L.amp * H, pad = 140;
+      const ys = []; ctx.beginPath(); ctx.moveTo(-pad + dx, H + 400);
+      for (let x = -pad; x <= W + pad; x += 6) { const y = base - fn((x - dx) / W + L.seed) * amp; ys.push([x + dx, y]); ctx.lineTo(x + dx, y); }
+      ctx.lineTo(W + pad + dx, H + 400); ctx.closePath();
+      const c = col(L); const g = ctx.createLinearGradient(0, base - amp, 0, base + H * .25);
+      g.addColorStop(0, c); g.addColorStop(1, mix(L.day, L.night, Math.min(1, night + .25)));
+      ctx.fillStyle = g; ctx.fill();
+      // Snow on the highest parts
+      if (L.snow) { ctx.save(); ctx.clip(); const sg = ctx.createLinearGradient(0, base - amp, 0, base - amp * (1 - L.snow));
+        sg.addColorStop(0, `rgba(255,255,255,${.95 - night * .45})`); sg.addColorStop(1, 'rgba(255,255,255,0)'); ctx.fillStyle = sg; ctx.fillRect(-pad, base - amp - 10, W + pad * 2, amp); ctx.restore(); }
+      if (L.deco) this.deco(ctx, W, H, t, L, ys, night, base, amp, dx);
+    });
+    // Weather & life in front
+    for (const k of r.fx.day) if (night < .99) { ctx.globalAlpha = alpha * (1 - night); this.fxFront(ctx, W, H, t, k, 0); }
+    for (const k of r.fx.night) if (night > .01) { ctx.globalAlpha = alpha * night; this.fxFront(ctx, W, H, t, k, 1); }
+    ctx.restore();
+  }
+  mist(ctx, W, H, t, L, night, dy, dx) {
+    const c = mix(L.day, L.night, night);
+    for (let k = 0; k < 5; k++) {
+      const x = ((k * .27 + t * L.speed / W * 12) % 1.4 - .2) * W + dx, y = L.y * H + dy + Math.sin(t * .2 + k) * 10, rx = W * .38, ry = H * .07;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, rx); g.addColorStop(0, c.replace('rgb', 'rgba').replace(')', `,${L.a})`)); g.addColorStop(1, c.replace('rgb', 'rgba').replace(')', ',0)'));
+      ctx.save(); ctx.translate(x, y); ctx.scale(1, ry / rx); ctx.translate(-x, -y); ctx.fillStyle = g; ctx.fillRect(x - rx, y - rx, rx * 2, rx * 2); ctx.restore();
+    }
+  }
+  water(ctx, W, H, t, L, night, dx, dy) {
+    const y0 = L.base * H + dy;
+    const g = ctx.createLinearGradient(0, y0, 0, H); g.addColorStop(0, mix(L.day[0], L.night[0], night)); g.addColorStop(1, mix(L.day[1], L.night[1], night));
+    ctx.fillStyle = g; ctx.fillRect(0, y0, W, H - y0 + 400);
+    // Moving ripple lines, closer = bigger & faster
+    ctx.strokeStyle = `rgba(255,255,255,${.22 - night * .1})`; ctx.lineWidth = 1;
+    for (let k = 0; k < 26; k++) {
+      const depth = k / 26, y = y0 + Math.pow(depth, 1.6) * (H - y0) + 4, len = 20 + depth * 90, sp = 8 + depth * 40;
+      for (let j = 0; j < 6; j++) { const x = ((j * 211 + k * 97 + t * sp) % (W + 200)) - 100 + dx * depth;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x + len / 2, y - 2 - depth * 3, x + len, y); ctx.stroke(); }
+    }
+    // Sun / moon path on the water
+    const sx = this.r.sun[0] * W; const pg = ctx.createLinearGradient(sx - 60, 0, sx + 60, 0);
+    pg.addColorStop(0, 'rgba(255,255,255,0)'); pg.addColorStop(.5, night > .5 ? 'rgba(220,230,255,.18)' : 'rgba(255,230,180,.35)'); pg.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = pg; for (let k = 0; k < 18; k++) { const yy = y0 + k * (H - y0) / 18; const w = 30 + k * 6 + Math.sin(t * 2 + k) * 8; ctx.fillRect(sx - w / 2, yy, w, 2); }
+    if (L.sea) { // waves breaking on the shore
+      ctx.strokeStyle = `rgba(255,255,255,${.6 - night * .3})`; ctx.lineWidth = 2;
+      for (let k = 0; k < 3; k++) { const ph = (t * .25 + k / 3) % 1, y = lerp(H * .78, H * .89, ph) + dy * .4; ctx.globalAlpha = (1 - ph) * .8;
+        ctx.beginPath(); for (let x = 0; x <= W; x += 10) ctx.lineTo(x, y + Math.sin(x * .012 + k * 2 + t) * 4); ctx.stroke(); }
+      ctx.globalAlpha = 1;
+    }
+  }
+  deco(ctx, W, H, t, L, ys, night, base, amp, dx) {
+    const dark = mix(L.day, L.night, Math.min(1, night + .35)), at = (fx) => ys[clamp(Math.round(fx * (ys.length - 1)), 0, ys.length - 1)];
+    ctx.fillStyle = dark; ctx.strokeStyle = dark;
+    if (L.deco === 'pines' || L.deco === 'canopy') {
+      for (let i = 0; i < ys.length; i += 2) { const [x, y] = ys[i]; const h = (L.deco === 'pines' ? 14 : 10) * (1 + L.depth * 2) * (.6 + ((i * 37) % 10) / 14);
+        ctx.beginPath(); if (L.deco === 'pines') { ctx.moveTo(x - h * .32, y + 2); ctx.lineTo(x, y - h); ctx.lineTo(x + h * .32, y + 2); } else ctx.arc(x, y, h * .55, Math.PI, 0); ctx.fill(); }
+    }
+    if (L.deco === 'temples') { // ghats skyline: houses, shikhara spires, flags, steps
+      for (let i = 0; i < 26; i++) { const fx = i / 26 + .01; const [x, y] = at(fx); const w = 22 + (i * 53 % 30), h = 20 + (i * 71 % 50);
+        ctx.fillRect(x, y - h, w, h + 40);
+        if (i % 4 === 1) { const sh = 40 + (i * 13 % 30); ctx.beginPath(); ctx.moveTo(x + 2, y - h); ctx.quadraticCurveTo(x + w / 2 - 6, y - h - sh * .4, x + w / 2, y - h - sh); ctx.quadraticCurveTo(x + w / 2 + 6, y - h - sh * .4, x + w - 2, y - h); ctx.fill();
+          ctx.fillRect(x + w / 2 - .5, y - h - sh - 12, 1.2, 12); ctx.fillStyle = mix('#e8742a', '#ffb347', night); ctx.beginPath(); ctx.moveTo(x + w / 2, y - h - sh - 12); ctx.lineTo(x + w / 2 + 9 + Math.sin(t * 3 + i) * 2, y - h - sh - 9); ctx.lineTo(x + w / 2, y - h - sh - 6); ctx.fill(); ctx.fillStyle = dark; }
+        if (night > .2) { ctx.fillStyle = `rgba(255,190,90,${night * .8})`; for (let k = 0; k < 3; k++) ctx.fillRect(x + 4 + k * 6, y - h + 8 + (i % 3) * 6, 2.5, 3.5); ctx.fillStyle = dark; } }
+      ctx.fillStyle = mix('#b98e6e', '#1e1424', night); for (let k = 0; k < 4; k++) ctx.fillRect(0, base + 6 + k * 5, W, 2.5); ctx.fillStyle = dark;
+    }
+    if (L.deco === 'fort') { const [x, y] = at(.24); const w = W * .16, h = H * .05;
+      ctx.fillRect(x, y - h, w, h + 20); for (let k = 0; k <= 10; k++) ctx.fillRect(x + k * w / 10 - 3, y - h - 6, 6, 6);
+      for (const p of [0, .33, .66, 1]) { ctx.fillRect(x + p * w - 9, y - h * 1.6, 18, h * 1.6); ctx.beginPath(); ctx.arc(x + p * w, y - h * 1.6, 9, Math.PI, 0); ctx.fill(); } }
+    if (L.deco === 'camels') { for (const [fx, s] of [[.62, 1], [.66, .9], [.7, .95]]) { const [x0, y0] = at((fx + t * .004) % 1); const sc = 16 * s * Math.min(1, W / 1200);
+      ctx.beginPath(); ctx.ellipse(x0, y0 - sc * 1.6, sc * 1.1, sc * .55, 0, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(x0 - sc * .2, y0 - sc * 2.05, sc * .45, Math.PI, 0); ctx.fill();
+      ctx.fillRect(x0 + sc * .9, y0 - sc * 2.6, sc * .25, sc * 1.1); ctx.fillRect(x0 + sc * .9, y0 - sc * 2.7, sc * .55, sc * .3);
+      for (const lx of [-.8, -.4, .3, .7]) ctx.fillRect(x0 + lx * sc, y0 - sc * 1.2, sc * .14, sc * 1.25 + Math.sin(t * 4 + lx * 5) * 1.5); } }
+    if (L.deco === 'ruins') { for (const fx of [.18, .55]) { const [x, y] = at(fx); const w = W * .09, h = H * .06;
+      ctx.fillRect(x - 6, y - h - 8, w + 12, 8); ctx.fillRect(x - 10, y - h - 14, w + 20, 6); for (let k = 0; k <= 5; k++) ctx.fillRect(x + k * w / 5 - 3, y - h, 6, h + 12);
+      ctx.beginPath(); ctx.moveTo(x + w * .2, y - h - 14); ctx.lineTo(x + w * .5, y - h - 44); ctx.lineTo(x + w * .8, y - h - 14); ctx.fill(); } }
+    if (L.deco === 'boulders') { for (let i = 3; i < ys.length; i += 11) { const [x, y] = ys[i]; const s = (8 + (i * 29 % 14)) * (1 + L.depth * 2);
+      ctx.beginPath(); ctx.ellipse(x, y, s * 1.2, s, 0, 0, 7); ctx.fill(); ctx.beginPath(); ctx.ellipse(x + s * .9, y - s * .9, s * .8, s * .7, .4, 0, 7); ctx.fill(); } }
+    if (L.deco === 'falls') { ctx.strokeStyle = `rgba(255,255,255,${.75 - night * .45})`; ctx.lineWidth = 2.2; ctx.setLineDash([10, 8]);
+      for (const fx of [.3, .47, .71]) { const [x, y] = at(fx); ctx.lineDashOffset = -t * 60; ctx.beginPath(); ctx.moveTo(x, y + 4); ctx.lineTo(x + 2, y + amp * .9); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x + 5, y + 8); ctx.lineTo(x + 7, y + amp * .85); ctx.stroke(); }
+      ctx.setLineDash([]); }
+    if (L.deco === 'terraces') { ctx.save(); ctx.beginPath(); ctx.moveTo(ys[0][0], H + 400); ys.forEach(([x, y]) => ctx.lineTo(x, y)); ctx.lineTo(ys[ys.length - 1][0], H + 400); ctx.clip();
+      ctx.strokeStyle = `rgba(255,255,255,${.16 - night * .1})`; ctx.lineWidth = 1.2;
+      for (let k = 0; k < 18; k++) { ctx.beginPath(); ys.forEach(([x, y], i) => { const yy = y + 8 + k * 9 + Math.sin(i * .2 + k) * 2; i ? ctx.lineTo(x, yy) : ctx.moveTo(x, yy); }); ctx.stroke(); } ctx.restore(); }
+    if (L.deco === 'palms') { const trunk = mix('#3b2a1e', '#05080d', night);
+      for (const [px, lean, hh] of [[.9, -.16, .64], [.97, .08, .5]]) {
+        const x0 = px * W + dx * 1.2, y0 = H + 10, x1 = x0 + lean * W * .5, y1 = H - hh * H;
+        ctx.strokeStyle = trunk; ctx.lineWidth = 12; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(x0 + lean * W * .1, (y0 + y1) / 2, x1, y1); ctx.stroke();
+        ctx.lineWidth = 7; for (let k = 0; k < 9; k++) { const a = (k / 9) * Math.PI * 2 + Math.sin(t * .8 + k) * .06; const L2 = 90 + (k % 3) * 25;
+          ctx.beginPath(); ctx.moveTo(x1, y1); ctx.quadraticCurveTo(x1 + Math.cos(a) * L2 * .6, y1 + Math.sin(a) * L2 * .3 - 30, x1 + Math.cos(a) * L2, y1 + Math.sin(a) * L2 * .45 + 20); ctx.stroke(); } } }
+  }
+  fxSky(ctx, W, H, t, scroll) {
+    const fx = this.r.fx.day; ctx.strokeStyle = 'rgba(30,30,40,.55)'; ctx.lineWidth = 1.6;
+    if (fx.includes('birds')) for (const [x0, y0, sp, ph] of this.birds) { const x = ((x0 + t * sp * .012) % 1.2 - .1) * W, y = y0 * H + Math.sin(t * .6 + ph) * 12 - scroll * .05, w = Math.sin(t * 6 + ph) * 4;
+      ctx.beginPath(); ctx.moveTo(x - 8, y - w); ctx.quadraticCurveTo(x - 3, y - 2, x, y); ctx.quadraticCurveTo(x + 3, y - 2, x + 8, y - w); ctx.stroke(); }
+    if (fx.includes('kites')) { const cols = ['#e2483c', '#f2a93b', '#3c8dd8', '#d94f9a'];
+      for (const [x0, y0, ph, c] of this.kites) { const x = x0 * W + Math.sin(t * .7 + ph) * 18, y = y0 * H + Math.cos(t * .9 + ph) * 10 - scroll * .05, s = 14;
+        ctx.save(); ctx.translate(x, y); ctx.rotate(Math.sin(t + ph) * .25); ctx.fillStyle = cols[c]; ctx.beginPath(); ctx.moveTo(0, -s); ctx.lineTo(s * .8, 0); ctx.lineTo(0, s * 1.1); ctx.lineTo(-s * .8, 0); ctx.fill();
+        ctx.strokeStyle = 'rgba(40,30,30,.35)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, s * 1.1); for (let k = 1; k < 8; k++) ctx.lineTo(Math.sin(t * 3 + k + ph) * 4, s * 1.1 + k * 6); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-x * .3 + 20, H); ctx.strokeStyle = 'rgba(40,30,30,.12)'; ctx.stroke(); ctx.restore(); } }
+  }
+  fxFront(ctx, W, H, t, k) {
+    if (k === 'stars' || k === 'stars2') return;
+    if (k === 'snow') { ctx.fillStyle = '#fff'; for (const p of this.snow) { const x = ((p[0] + Math.sin(t * .4 + p[3] * 6) * .02 + t * .006) % 1) * W, y = ((p[1] + t * .02 * p[2]) % 1) * H; ctx.globalAlpha *= 1; ctx.beginPath(); ctx.arc(x, y, p[2], 0, 7); ctx.fill(); } }
+    if (k === 'rain') { ctx.strokeStyle = 'rgba(220,235,240,.35)'; ctx.lineWidth = 1; ctx.beginPath(); for (const [x0, y0, s] of this.rain) { const y = ((y0 + t * 1.1 * s) % 1) * H, x = ((x0 + t * .08) % 1) * W; ctx.moveTo(x, y); ctx.lineTo(x - 5, y + 16 * s); } ctx.stroke(); }
+    if (k === 'fireflies') for (const [x0, y0, a, b] of this.flies) { const x = (x0 + Math.sin(t * .3 + a) * .03) * W, y = (y0 + Math.cos(t * .25 + b) * .03) * H, fl = .5 + .5 * Math.sin(t * 3 + a * 3);
+      const g = ctx.createRadialGradient(x, y, 0, x, y, 8); g.addColorStop(0, `rgba(230,255,140,${fl})`); g.addColorStop(1, 'rgba(230,255,140,0)'); ctx.fillStyle = g; ctx.fillRect(x - 8, y - 8, 16, 16); }
+    if (k === 'diyas') for (const [x0, y0, ph] of this.diyas) { const x = ((x0 + t * .006) % 1) * W, y = y0 * H + Math.sin(t * 1.5 + ph) * 2, fl = .75 + .25 * Math.sin(t * 9 + ph * 4);
+      const g = ctx.createRadialGradient(x, y, 0, x, y, 14 * fl); g.addColorStop(0, 'rgba(255,200,90,.95)'); g.addColorStop(.3, 'rgba(255,150,40,.45)'); g.addColorStop(1, 'rgba(255,120,20,0)'); ctx.fillStyle = g; ctx.fillRect(x - 16, y - 16, 32, 32);
+      ctx.fillStyle = 'rgba(255,170,60,.25)'; ctx.fillRect(x - 1, y + 3, 2, 12 * fl); }
+    if (k === 'boats') { ctx.fillStyle = 'rgba(40,24,20,.85)'; for (const [x0, y0, s] of this.boats) { const x = ((x0 + t * .004 * s) % 1.2 - .1) * W, y = y0 * H + Math.sin(t + x0 * 9) * 1.5, L = 70 * s;
+      ctx.beginPath(); ctx.moveTo(x - L / 2, y); ctx.quadraticCurveTo(x, y + 12 * s, x + L / 2, y - 4); ctx.lineTo(x - L / 2, y); ctx.fill(); ctx.fillRect(x - 2, y - 26 * s, 2, 26 * s); } }
+    if (k === 'glitter') for (let i = 0; i < 60; i++) { const x = ((i * 0.618 + Math.floor(t * 2 + i) * .37) % 1) * W, y = H * (.62 + ((i * .41) % 1) * .25), a = Math.max(0, Math.sin(t * 5 + i * 3));
+      ctx.fillStyle = `rgba(255,255,255,${a * .8})`; ctx.fillRect(x, y, 2.4, 1.2); }
+  }
+  sandFx(ctx, W, H, t, a) { ctx.fillStyle = `rgba(255,236,200,${.55 * a})`; for (const [x0, y0, s, ph] of this.sand) { const x = ((x0 + t * .06 * s) % 1) * W, y = y0 * H + Math.sin(t * 2 + ph * 9) * 6; ctx.fillRect(x, y, 1.6 * s + 1, 1); } }
+}
+
+/* ═════════════ Renderer: loop, parallax, day/night, region cross-fade ═════════════ */
+const cv = $('scene'), ctx = cv.getContext('2d');
+let W = 0, H = 0, dpr = 1, cur = new Scene(R[0]), prev = null, fadeStart = 0;
+let night = 0, nightTarget = 0, mx = 0, my = 0, tmx = 0, tmy = 0, tint = null;
+function resize() { dpr = Math.min(devicePixelRatio || 1, 1.5); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+addEventListener('resize', resize); resize();
+addEventListener('pointermove', (e) => { tmx = e.clientX / W - .5; tmy = e.clientY / H - .5; });
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function frame(ms) {
+  requestAnimationFrame(frame); if (document.hidden) return;
+  const now = reduce ? 30 : ms / 1000;
+  night += (nightTarget - night) * .05; mx += (tmx - mx) * .06; my += (tmy - my) * .06;
+  const scroll = Math.min(scrollY, H * 2);
+  cur.draw(ctx, W, H, now, night, mx, my, scroll);
+  if (prev) { const k = (ms - fadeStart) / 1400; if (k >= 1) prev = null; else prev.draw(ctx, W, H, now, night, mx, my, scroll, 1 - smooth(0, 1, k)); }
+  if (tint) { ctx.save(); ctx.globalCompositeOperation = 'color'; ctx.globalAlpha = .38; ctx.fillStyle = tint; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+}
+requestAnimationFrame(frame);
+
+/* Thumbnails: render each region once into a small canvas (day) */
+const thumbs = R.map((r) => { const c = document.createElement('canvas'); c.width = 360; c.height = 420; const x = c.getContext('2d'); new Scene(r).draw(x, 360, 420, 3, 0, 0, 0, 0); return c.toDataURL('image/jpeg', .85); });
+
+/* ═════════════ UI ═════════════ */
+let idx = 0, tour = true, tourTimer = 0, accentOverride = null;
+const TOUR = 10;
+const nowMonth = new Date().getMonth();
+$('regionbar').innerHTML = R.map((r, i) => `<button class="rb" data-i="${i}" aria-pressed="false"><img src="${thumbs[i]}" alt="" /><span><b>${r.name}</b><small lang="hi">${r.hi}</small></span><i class="bar"></i></button>`).join('');
+$('worldCards').innerHTML = `<div class="world intro glass"><span class="label">Seven worlds</span><h2 style="font-size:clamp(30px,3vw,44px)">One India. <em>Seven worlds.</em></h2><p style="margin:0;color:var(--soft)">Divided by landscape, not lines on a map. Tap one and the whole page becomes it.</p></div>` +
+  R.map((r, i) => `<button class="world" data-i="${i}"><img src="${thumbs[i]}" alt="" /><span class="n">${String(i + 1).padStart(2, '0')}</span><div><b>${r.name}</b><span lang="hi">${r.hi}</span> · <span>${r.terr}</span></div></button>`).join('');
+
+function applyAccent() {
+  const r = R[idx], [a, b] = accentOverride ? accentOverride[nightTarget ? 1 : 0] : r.ui[nightTarget ? 'night' : 'day'];
+  const s = document.documentElement.style; s.setProperty('--accent', a); s.setProperty('--accent2', b);
+  const [rr, gg, bb] = a.startsWith('#') ? hex(a) : [128, 128, 128]; s.setProperty('--on-accent', (rr * .299 + gg * .587 + bb * .114) / 255 > .55 ? '#111' : '#fff');
+}
+function go(i, user = false) {
+  if (user) stopTour();
+  if (i !== idx) { prev = cur; fadeStart = performance.now(); cur = new Scene(R[i]); }
+  idx = i; const r = R[i], n = `${String(i + 1).padStart(2, '0')} / 07`;
+  $('eNum').textContent = n; $('dNum').textContent = n; $('eName').textContent = r.name; $('eHi').textContent = r.hi; $('dName').textContent = r.name; $('dHi').textContent = r.hi;
+  $('headline').innerHTML = `<span class="swap">${r.h}</span>`; $('lede').innerHTML = `<span class="swap" style="animation-delay:.08s">${r.lede}</span>`;
+  $('fElev').textContent = r.elev; $('fTerr').textContent = r.terr; $('fBest').textContent = r.best;
+  $('months').innerHTML = r.months.map((s, m) => `<div class="${m === nowMonth ? 'now' : ''}"><i class="${s === 3 ? 'best' : ''}" style="height:${s * 18}px"></i><b>${MONTHS[m]}</b></div>`).join('');
+  $('sig').innerHTML = r.sig.map((s, k) => `<li class="swap" style="animation-delay:${k * .06}s"><span>${k + 1}</span>${s}</li>`).join('');
+  $('places').innerHTML = r.places.map((p) => `<span>${p}</span>`).join('');
+  $('where').placeholder = r.places.slice(0, 3).join(', ') + '…';
+  document.querySelectorAll('.rb').forEach((b) => { const on = +b.dataset.i === i; b.setAttribute('aria-pressed', String(on)); const bar = b.querySelector('.bar'); bar.classList.remove('run'); if (on && tour) { void bar.offsetWidth; bar.classList.add('run'); } });
+  applyAccent();
+}
+function stopTour() { tour = false; clearInterval(tourTimer); document.querySelectorAll('.bar').forEach((b) => b.classList.remove('run')); }
+document.documentElement.style.setProperty('--tour', TOUR + 's');
+tourTimer = setInterval(() => tour && go((idx + 1) % R.length), TOUR * 1000);
+$('regionbar').onclick = (e) => { const b = e.target.closest('.rb'); if (b) go(+b.dataset.i, true); };
+$('worldCards').onclick = (e) => { const b = e.target.closest('.world[data-i]'); if (b) { go(+b.dataset.i, true); scrollTo({ top: 0, behavior: 'smooth' }); } };
+$('modeBtn').onclick = () => { nightTarget = nightTarget ? 0 : 1; document.documentElement.dataset.mode = nightTarget ? 'night' : 'day'; $('modeBtn').textContent = nightTarget ? '☀' : '☾'; applyAccent(); };
+$('budget').oninput = (e) => ($('budgetOut').textContent = '₹' + Number(e.target.value).toLocaleString('en-IN'));
+
+/* Every kind of traveller */
+const KINDS = [
+  ['Solo', 'Just me', 'Freedom, safety and good company when you want it.', ['Safe, social stays', 'Flexible day plans', 'Meet-up spots & walks'], '<circle cx="12" cy="7" r="3.5"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>'],
+  ['Friends', 'Friends', 'One plan, everyone’s ideas, nobody doing maths at the end.', ['Costs split fairly', 'Vote on the plan', 'Shared checklist'], '<circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c0-3.5 2.7-6 6-6s6 2.5 6 6M10 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/>'],
+  ['Backpackers', 'Backpacking', 'Go further for less, without missing the good stuff.', ['₹ shoestring routes', 'Overnight trains & buses', 'Street-food maps'], '<path d="M7 8V6a5 5 0 0 1 10 0v2"/><rect x="5" y="8" width="14" height="13" rx="3"/><path d="M9 14h6"/>'],
+  ['Family', 'Family', 'Gentle days that work for grandparents and toddlers alike.', ['Easy pacing & rest stops', 'Kid-friendly sights', 'Rooms for everyone'], '<circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><circle cx="12" cy="13" r="2"/><path d="M2 21c0-3 2-6 5-6M22 21c0-3-2-6-5-6M9 21c0-2 1.3-4 3-4s3 2 3 4"/>'],
+  ['Couples', 'Partner', 'Sunsets, quiet corners and one well-timed splurge.', ['Sunset timing', 'Quiet, scenic stays', 'A little splurge'], '<path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.7-7 10-7 10z"/>'],
+];
+$('kindCards').innerHTML = KINDS.map(([t, v, d, list, ic], i) => `<button class="kind" data-v="${v}" aria-pressed="${i === 0}"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></span><h3>${t}</h3><p>${d}</p><ul>${list.map((l) => `<li>${l}</li>`).join('')}</ul></button>`).join('');
+$('whoChips').innerHTML = KINDS.map(([t, v], i) => `<button data-v="${v}" aria-pressed="${i === 0}">${t}</button>`).join('');
+function setWho(v) { $('whoSel').value = v; document.querySelectorAll('#whoChips button, .kind').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
+  const cols = KINDS.map(([, kv]) => (kv === v ? '1.6fr' : '1fr')).join(' '); if (innerWidth > 1180) $('kindCards').style.gridTemplateColumns = cols; }
+$('kindCards').onclick = (e) => { const b = e.target.closest('.kind'); if (b) setWho(b.dataset.v); };
+$('whoChips').onclick = (e) => { const b = e.target.closest('button'); if (b) setWho(b.dataset.v); };
+$('whoSel').onchange = (e) => setWho(e.target.value);
+setWho('Just me');
+
+/* Location → nearest region */
+const CENTRES = [[32, 78], [26.8, 71.5], [25.5, 82], [16.5, 76.5], [11.5, 76.2], [15, 74.2], [26, 92.5]];
+$('locBtn').onclick = () => { if (!navigator.geolocation) return ($('msg').textContent = 'Location isn’t available here.'); $('msg').textContent = 'Finding the India around you…';
+  navigator.geolocation.getCurrentPosition(({ coords: c }) => { let best = 0, d = 1e9; CENTRES.forEach(([a, b], i) => { const dd = (a - c.latitude) ** 2 + (b - c.longitude) ** 2; if (dd < d) { d = dd; best = i; } });
+    go(best, true); $('msg').textContent = `Closest to you: ${R[best].name}.`; scrollTo({ top: 0, behavior: 'smooth' }); }, () => ($('msg').textContent = 'No problem — pick a region above.')); };
+
+/* Your colours: read a photo's palette on-device; tint the world + accents */
+function rgbToHex(r, g, b) { return '#' + [r, g, b].map((v) => Math.round(v).toString(16).padStart(2, '0')).join(''); }
+function palette(img) { const c = document.createElement('canvas'); c.width = c.height = 48; const x = c.getContext('2d'); x.drawImage(img, 0, 0, 48, 48); const d = x.getImageData(0, 0, 48, 48).data; const m = new Map();
+  for (let i = 0; i < d.length; i += 4) { const k = (d[i] >> 5) << 6 | (d[i + 1] >> 5) << 3 | (d[i + 2] >> 5); const e = m.get(k) || [0, 0, 0, 0]; e[0] += d[i]; e[1] += d[i + 1]; e[2] += d[i + 2]; e[3]++; m.set(k, e); }
+  const cols = [...m.values()].map(([r, g, b, n]) => { r /= n; g /= n; b /= n; const mx = Math.max(r, g, b), mn = Math.min(r, g, b); return { r, g, b, n, s: mx ? (mx - mn) / mx : 0, l: (mx + mn) / 510 }; }).sort((a, b) => b.n - a.n);
+  const vivid = cols.filter((c) => c.s > .3 && c.l > .2 && c.l < .75).sort((a, b) => b.s * Math.sqrt(b.n) - a.s * Math.sqrt(a.n));
+  const h = (c) => rgbToHex(c.r, c.g, c.b), dom = cols[0], a = vivid[0] || cols[1] || dom, b = vivid[1] || cols[2] || dom;
+  const light = (c, k) => rgbToHex(c.r + (255 - c.r) * k, c.g + (255 - c.g) * k, c.b + (255 - c.b) * k), darkC = (c, k) => rgbToHex(c.r * k, c.g * k, c.b * k);
+  return { tint: h(dom), sw: [h(dom), h(a), h(b), darkC(dom, .3)], acc: [[darkC(a, .8), darkC(b, .85)], [light(a, .35), light(b, .35)]] }; }
+function usePhoto(f) { const url = URL.createObjectURL(f), img = new Image(); img.onload = () => { const p = palette(img); tint = p.tint; accentOverride = p.acc; applyAccent();
+  [...$('sw').children].forEach((s, i) => (s.style.background = p.sw[i])); $('drop').querySelector('img')?.remove(); $('drop').appendChild(img.cloneNode()); $('clearBtn').hidden = false;
+  $('msg').textContent = 'Your photo’s colours now tint the whole world.'; }; img.src = url; }
+$('pickBtn').onclick = () => $('file').click(); $('file').onchange = (e) => e.target.files[0] && usePhoto(e.target.files[0]);
+$('drop').ondragover = (e) => e.preventDefault(); $('drop').ondrop = (e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f?.type.startsWith('image/')) usePhoto(f); };
+$('clearBtn').onclick = () => { tint = null; accentOverride = null; applyAccent(); $('clearBtn').hidden = true; $('msg').textContent = ''; };
+
+go(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!doctype html>
+<!--
+  tripwise-rang.html — THROWAWAY PROTOTYPE of the "many Indias" idea.
+  One constant frame (layout, type, arch window); colours, pattern, photo and words change with the region:
+  Himalayas, Ganga & heartland, Rajasthan, Kerala, Goa, North-East — each with Day and Night.
+  "Use my location" picks the nearest region; "Your colours" themes the page from a photo you choose (on-device).
+  Not part of the app.
+-->
+<html lang="en" data-mode="day">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TripWise — many Indias (prototype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet" />
+<style>
+  /* Theme tokens are set by JS per region + mode; these are the Himalayas-day defaults. */
+  :root {
+    --bg: #eef3f6; --bg2: #e2ebf0; --surface: #ffffff; --ink: #14222f; --soft: #4d5f6e; --line: rgb(20 34 47 / .12);
+    --accent: #2f6f9f; --accent2: #c8553d; --on-accent: #ffffff; --pattern: none;
+    --ease: cubic-bezier(.2,.8,.2,1);
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); transition: background-color .8s var(--ease); }
+  body { margin: 0; font: 400 17px/1.6 'Plus Jakarta Sans', system-ui, sans-serif; color: var(--ink); background: var(--bg);
+    transition: background-color .8s var(--ease), color .8s var(--ease); overflow-x: clip; }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 560; font-variation-settings: 'SOFT' 60, 'opsz' 120; letter-spacing: -.02em; line-height: 1.02; margin: 0; }
+  em { font-style: italic; font-weight: 420; color: var(--accent); transition: color .8s var(--ease); }
+  [lang='hi'] { font-family: 'Tiro Devanagari Hindi', serif; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  .wrap { width: min(1320px, 100% - clamp(40px, 8vw, 112px)); margin-inline: auto; }
+  .label { font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--soft); }
+
+  /* ── Nav ── */
+  .nav { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(16px) saturate(1.4); background: color-mix(in srgb, var(--bg) 78%, transparent);
+    border-bottom: 1px solid var(--line); transition: background-color .8s var(--ease); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
+  .logo { display: flex; align-items: center; gap: 10px; font: 600 22px Fraunces; text-decoration: none; }
+  .logo-mark { width: 30px; height: 34px; background: var(--accent); clip-path: url(#archClip); transition: background-color .8s var(--ease); }
+  .links { display: flex; gap: 28px; font-weight: 500; font-size: 15px; color: var(--soft); }
+  .links a { text-decoration: none; } .links a:hover { color: var(--ink); }
+  .right { display: flex; align-items: center; gap: 10px; }
+  .region-btn { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 14px 7px 8px; font-weight: 600; font-size: 14px; transition: background-color .8s; }
+  .region-btn .dots { display: flex; } .region-btn .dots i { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--surface); margin-left: -5px; }
+  .region-btn .dots i:first-child { margin-left: 0; }
+  .icon-btn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); transition: background-color .8s; }
+  .btn { white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 999px; padding: 12px 22px; font-weight: 600; font-size: 15px; background: var(--ink); color: var(--bg); text-decoration: none; transition: transform .3s var(--ease), background-color .8s, color .8s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.accent { background: var(--accent); color: var(--on-accent); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .menu { position: absolute; right: 0; top: 52px; width: 300px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 8px; box-shadow: 0 24px 60px -20px rgb(0 0 0 / .3); display: none; }
+  .menu.open { display: block; }
+  .menu button { width: 100%; display: flex; align-items: center; gap: 12px; border: 0; background: none; padding: 10px; border-radius: 12px; text-align: left; }
+  .menu button:hover, .menu button[aria-pressed='true'] { background: var(--bg); }
+  .menu .sw { width: 34px; height: 34px; border-radius: 10px; flex: none; }
+  .menu small { display: block; color: var(--soft); font-size: 12px; }
+
+  /* ── Hero ── */
+  .hero { position: relative; padding: clamp(32px, 6vh, 72px) 0 clamp(48px, 8vh, 96px); }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 5vw, 80px); align-items: center; }
+  .eyebrow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .eyebrow .hi { font-size: 22px; color: var(--accent2); transition: color .8s; }
+  .hero h1 { font-size: clamp(48px, min(6.4vw, 11vh), 104px); margin-top: 18px; }
+  .swap { display: inline-block; animation: up .7s var(--ease) both; }
+  @keyframes up { from { opacity: 0; transform: translateY(18px); filter: blur(6px); } }
+  .lede { font-size: clamp(17px, 1.3vw, 19px); color: var(--soft); max-width: 44ch; margin: 22px 0 30px; }
+  /* Planner bar: where, when, who — the "for everyone" promise in one control */
+  .planner { display: grid; grid-template-columns: 1.3fr 1fr 1fr auto; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 6px; box-shadow: 0 20px 50px -30px rgb(0 0 0 / .35); transition: background-color .8s; }
+  .planner label { display: grid; padding: 8px 16px; border-right: 1px solid var(--line); }
+  .planner label:nth-child(3) { border-right: 0; }
+  .planner span { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); }
+  .planner input, .planner select { border: 0; background: none; outline: none; font: 600 16px 'Plus Jakarta Sans'; color: var(--ink); padding: 2px 0; min-width: 0; }
+  .planner .btn { align-self: stretch; border-radius: 16px; }
+  .who { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .who button { border: 1px solid var(--line); background: transparent; border-radius: 999px; padding: 7px 14px; font-size: 14px; font-weight: 500; transition: all .3s; }
+  .who button[aria-pressed='true'] { background: var(--ink); color: var(--bg); border-color: transparent; }
+
+  /* The arch window — one shape from India's gateways, temples and jharokhas, used everywhere */
+  .stage { position: relative; aspect-ratio: 4 / 5; max-height: 76vh; justify-self: end; width: 100%; max-width: 560px; }
+  .pattern { position: absolute; inset: -6% -10% -4% 8%; border-radius: 32px; background-color: var(--bg2); background-image: var(--pattern); background-size: var(--pattern-size, 80px);
+    transition: background-color .8s; }
+  .pattern::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, var(--bg) 0%, transparent 40%); transition: background .8s; }
+  .arch { position: absolute; inset: 0 6% 0 0; clip-path: url(#archClip); overflow: hidden; background: var(--bg2); }
+  .arch img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.08); transition: opacity 1s var(--ease), transform 6s var(--ease); }
+  .arch img.on { opacity: 1; transform: scale(1); }
+  .arch-line { position: absolute; inset: -14px calc(6% - 14px) -14px -14px; pointer-events: none; }
+  .arch-line path { fill: none; stroke: var(--accent2); stroke-width: 1.4; vector-effect: non-scaling-stroke; transition: stroke .8s; }
+  .tag { position: absolute; left: -28px; bottom: 9%; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 14px 18px; box-shadow: 0 24px 50px -24px rgb(0 0 0 / .35); min-width: 230px; transition: background-color .8s; }
+  .tag b { font: 600 20px Fraunces; display: block; }
+  .tag p { margin: 2px 0 0; font-size: 13px; color: var(--soft); }
+  .tag .row { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .tag .row span { font-size: 12px; font-weight: 600; background: var(--bg); border-radius: 999px; padding: 4px 10px; transition: background-color .8s; }
+
+  /* ── Regions ── */
+  section.block { padding: clamp(64px, 10vh, 120px) 0; }
+  .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .head h2 { font-size: clamp(36px, 4.4vw, 64px); max-width: 16ch; }
+  .head p { color: var(--soft); max-width: 40ch; margin: 0; }
+  .regions { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+  .region { position: relative; border: 0; padding: 0; text-align: left; background: none; }
+  .region .win { aspect-ratio: 3 / 4.4; clip-path: url(#archClip); overflow: hidden; position: relative; }
+  .region img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+  .region:hover img { transform: scale(1.06); }
+  .region .win::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 50%, rgb(0 0 0 / .55)); }
+  .region .name { position: absolute; left: 16px; right: 12px; bottom: 14px; color: #fff; z-index: 1; }
+  .region .name b { font: 600 22px Fraunces; display: block; line-height: 1.1; }
+  .region .name span { font-size: 15px; opacity: .9; }
+  .region .pal { display: flex; gap: 4px; margin-top: 12px; }
+  .region .pal i { flex: 1; height: 6px; border-radius: 3px; }
+  .region[aria-pressed='true'] .win { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .region small { display: block; margin-top: 8px; color: var(--soft); font-size: 13px; }
+
+  /* ── Every kind of traveller ── */
+  .kinds { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .kind { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 22px; transition: background-color .8s, transform .4s var(--ease); }
+  .kind:hover { transform: translateY(-4px); }
+  .kind .ic { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); transition: all .8s; }
+  .kind h3 { font-size: 24px; margin: 18px 0 6px; }
+  .kind p { margin: 0; font-size: 14.5px; color: var(--soft); }
+
+  /* ── Your colours ── */
+  .yours { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 36px; padding: clamp(28px, 4vw, 56px); transition: background-color .8s; }
+  .drop { position: relative; aspect-ratio: 4/3; border: 1.5px dashed color-mix(in srgb, var(--ink) 30%, transparent); border-radius: 24px; display: grid; place-items: center; text-align: center; color: var(--soft); overflow: hidden; cursor: pointer; }
+  .drop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .swatches { display: flex; gap: 10px; margin: 20px 0 26px; }
+  .swatches i { width: 52px; height: 52px; border-radius: 16px; border: 1px solid var(--line); transition: background-color .6s; }
+  footer { border-top: 1px solid var(--line); padding: 36px 0 60px; color: var(--soft); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 1100px) { .regions { grid-template-columns: repeat(3, 1fr); } .kinds { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) {
+    .hero .wrap, .yours { grid-template-columns: 1fr; }
+    .stage { justify-self: center; max-height: none; max-width: 420px; } .tag { left: -8px; }
+    .links { display: none; } .planner { grid-template-columns: 1fr; } .planner label { border-right: 0; border-bottom: 1px solid var(--line); }
+    .region-btn .txt { display: none; } .nav .btn { padding: 10px 16px; }
+  }
+  @media (max-width: 560px) { .regions { grid-template-columns: repeat(2, 1fr); } .kinds { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<!-- The arch: a gently pointed gateway arch, in 0–1 units so it fits any box -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <clipPath id="archClip" clipPathUnits="objectBoundingBox"><path d="M0,1 V0.36 C0,0.17 0.2,0.06 0.5,0 C0.8,0.06 1,0.17 1,0.36 V1 Z" /></clipPath>
+</defs></svg>
+
+<header class="nav"><div class="wrap">
+  <a class="logo" href="#"><span class="logo-mark"></span>TripWise</a>
+  <nav class="links"><a href="#regions">Explore India</a><a href="#kinds">Plan a trip</a><a href="#yours">Crew</a><a href="#">World</a></nav>
+  <div class="right" style="position:relative">
+    <button class="region-btn" id="regionBtn" aria-haspopup="true" aria-expanded="false"><span class="dots" id="regionDots"></span><span class="txt" id="regionName">Himalayas</span> ▾</button>
+    <div class="menu" id="menu" role="menu"></div>
+    <button class="icon-btn" id="modeBtn" aria-label="Switch to night">☾</button>
+    <a class="btn" href="#">Sign up</a>
+  </div>
+</div></header>
+
+<main>
+  <section class="hero"><div class="wrap">
+    <div>
+      <div class="eyebrow"><span class="label" id="nowShowing">Now showing · Himalayas</span><span class="hi" lang="hi" id="regionHi">हिमालय</span></div>
+      <h1 id="headline"></h1>
+      <p class="lede" id="lede"></p>
+      <form class="planner" onsubmit="event.preventDefault()">
+        <label><span>Where to</span><input id="where" placeholder="Badrinath, Mana, Valley of Flowers…" /></label>
+        <label><span>When</span><input placeholder="Any month" /></label>
+        <label><span>Who's going</span><select id="whoSel"><option>Just me</option><option>Friends</option><option>Family</option><option>Partner</option><option>Backpacking</option></select></label>
+        <button class="btn accent">Plan my trip →</button>
+      </form>
+      <div class="who" id="whoChips" aria-label="Travelling as"></div>
+    </div>
+    <div class="stage">
+      <div class="pattern"></div>
+      <div class="arch" id="arch"></div>
+      <svg class="arch-line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0,100 V36 C0,17 20,6 50,0 C80,6 100,17 100,36 V100" /></svg>
+      <div class="tag"><b id="tagPlace"></b><p id="tagBest"></p><div class="row" id="tagRow"></div></div>
+    </div>
+  </div></section>
+
+  <section class="block" id="regions"><div class="wrap">
+    <div class="head"><h2>One country. <em>Many colours.</em></h2><p>Every region of India looks, tastes and feels different. TripWise dresses itself in the colours of where you're going — tap one to try it.</p></div>
+    <div class="regions" id="regionCards"></div>
+  </div></section>
+
+  <section class="block" id="kinds" style="padding-top:0"><div class="wrap">
+    <div class="head"><h2>However you travel, <em>it fits.</em></h2><p>Solo or with the whole family, on a shoestring or a splurge — the plan bends to you.</p></div>
+    <div class="kinds" id="kindCards"></div>
+  </div></section>
+
+  <section class="block" id="yours" style="padding-top:0"><div class="wrap">
+    <div class="yours">
+      <div>
+        <span class="label">Your colours</span>
+        <h2 style="font-size:clamp(34px,3.6vw,54px);margin-top:12px">Your trip. <em>Your palette.</em></h2>
+        <p style="color:var(--soft);max-width:42ch">Pick a photo from a trip you loved. TripWise reads its colours right here on your device (nothing is uploaded) and dresses the page in them — or let it use your location to show the India around you.</p>
+        <div class="swatches" id="swatches"><i></i><i></i><i></i><i></i></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn accent" id="pickBtn">Choose a photo</button>
+          <button class="btn ghost" id="locBtn">Use my location</button>
+        </div>
+        <p id="locMsg" style="color:var(--soft);font-size:14px;min-height:22px"></p>
+      </div>
+      <label class="drop" id="drop"><input type="file" accept="image/*" id="file" hidden /><span>Drop a trip photo here<br /><small>or click to choose</small></span></label>
+    </div>
+  </div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 TripWise · <span lang="hi">शुभ यात्रा</span></span><span>Photos: Unsplash · prototype</span></div></footer>
+
+<script>
+const U = (id, w = 1400) => `https://images.unsplash.com/photo-${id}?w=${w}&q=72&auto=format&fit=crop`;
+/* Pattern tiles (SVG), coloured per theme. Each comes from the region's craft or landscape. */
+const P = {
+  contour: (c) => [`<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' fill='none' stroke='${c}' stroke-width='1.1' opacity='.55'>` +
+    [0,1,2,3,4,5,6].map((k) => `<path d='M-10 ${20 + k * 30} C 40 ${5 + k * 30}, 80 ${45 + k * 30}, 120 ${22 + k * 30} S 200 ${8 + k * 30}, 240 ${26 + k * 30}'/>`).join('') + `</svg>`, 220],
+  jaali: (c) => [`<svg xmlns='http://www.w3.org/2000/svg' width='56' height='56' fill='none' stroke='${c}' stroke-width='1.2' opacity='.6'><circle cx='0' cy='0' r='28'/><circle cx='56' cy='0' r='28'/><circle cx='0' cy='56' r='28'/><circle cx='56' cy='56' r='28'/><circle cx='28' cy='28' r='28'/></svg>`, 56],
+  leaf: (c) => [`<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' fill='none' stroke='${c}' stroke-width='1.2' opacity='.55'><path d='M10 80 C 20 40, 50 20, 80 10 C 70 40, 50 70, 10 80 Z'/><path d='M10 80 L 80 10'/></svg>`, 90],
+  azulejo: (c) => [`<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='none' stroke='${c}' stroke-width='1.2' opacity='.6'><rect x='0.5' y='0.5' width='79' height='79'/><path d='M0 20 A20 20 0 0 0 20 0 M60 0 A20 20 0 0 0 80 20 M80 60 A20 20 0 0 0 60 80 M20 80 A20 20 0 0 0 0 60'/><path d='M40 18 L62 40 L40 62 L18 40 Z'/><circle cx='40' cy='40' r='7'/></svg>`, 80],
+  weave: (c) => [`<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' fill='none' stroke='${c}' stroke-width='1.2' opacity='.6'><path d='M0 24 L24 0 L48 24 L24 48 Z'/><path d='M12 24 L24 12 L36 24 L24 36 Z'/></svg>`, 48],
+  ghat: (c) => [`<svg xmlns='http://www.w3.org/2000/svg' width='60' height='36' fill='none' stroke='${c}' stroke-width='1.2' opacity='.6'><path d='M0 36 A30 30 0 0 1 60 36 M-30 18 A30 30 0 0 1 30 18 M30 18 A30 30 0 0 1 90 18'/></svg>`, 60],
+};
+/* The regions: words, facts, photos, pattern, and Day/Night palettes. */
+const R = {
+  himalaya: { name: 'Himalayas', hi: 'हिमालय', h: 'Where the mountains <em>keep time.</em>', lede: 'Valleys of flowers, high passes and temple towns above the clouds — planned around altitude, weather and your pace.',
+    place: 'Valley of Flowers', best: 'Best Jul – Sep · 3,658 m', tags: ['Badrinath', 'Mana', 'Leh', 'Manali'], ph: '1598091383021-15ddea10925d', ph2: '1581793745862-99fde7fa73d2', pat: 'contour', hint: 'Contour lines',
+    day: { bg: '#eef3f6', bg2: '#dfe9ef', surface: '#ffffff', ink: '#14222f', soft: '#4d5f6e', accent: '#2f6f9f', accent2: '#c8553d' },
+    night: { bg: '#0c1622', bg2: '#132233', surface: '#15263a', ink: '#eaf2f8', soft: '#9fb2c3', accent: '#8fc1e3', accent2: '#e8b04b' } },
+  ganga: { name: 'Ganga & heartland', hi: 'गंगा', h: 'Where the river <em>remembers everything.</em>', lede: 'Ghats at dawn, aarti at dusk and three thousand years of stories — Varanasi, Rishikesh, Haridwar and beyond.',
+    place: 'Varanasi ghats', best: 'Best Oct – Mar · sunrise boats', tags: ['Varanasi', 'Rishikesh', 'Haridwar', 'Bodh Gaya'], ph: '1571536802807-30451e3955d8', pat: 'ghat', hint: 'Ghat arches',
+    day: { bg: '#f7efe4', bg2: '#efe1cd', surface: '#fffaf3', ink: '#2a1a10', soft: '#6b5442', accent: '#b4541c', accent2: '#c9971a' },
+    night: { bg: '#1a120c', bg2: '#251a12', surface: '#2a1d14', ink: '#f7ead9', soft: '#c4ab92', accent: '#f0a24b', accent2: '#ffd36b' } },
+  rajasthan: { name: 'Rajasthan', hi: 'राजस्थान', h: 'Where the sand <em>remembers kings.</em>', lede: 'Forts on hilltops, stepwells and desert camps under a sky full of stars — with the heat and the distances already worked out.',
+    place: 'Hawa Mahal, Jaipur', best: 'Best Oct – Mar', tags: ['Jaipur', 'Udaipur', 'Jaisalmer', 'Jodhpur'], ph: '1477587458883-47145ed94245', pat: 'jaali', hint: 'Jaali lattice',
+    day: { bg: '#f8ece2', bg2: '#f1dccb', surface: '#fffaf5', ink: '#2b1912', soft: '#6e4f40', accent: '#b94a2c', accent2: '#c99227' },
+    night: { bg: '#1c110d', bg2: '#291812', surface: '#2c1b15', ink: '#fbeee4', soft: '#c9a993', accent: '#f08a5d', accent2: '#e9c060' } },
+  kerala: { name: 'Kerala', hi: 'केरल', h: 'Where the water <em>sets the pace.</em>', lede: 'Houseboats, spice hills and long lazy lunches — slow days, easy transfers, nothing rushed.',
+    place: 'Alleppey backwaters', best: 'Best Sep – Mar', tags: ['Alleppey', 'Munnar', 'Kochi', 'Varkala'], ph: '1602216056096-3b40cc0c9944', pat: 'leaf', hint: 'Palm leaves',
+    day: { bg: '#eef3ea', bg2: '#dde9d6', surface: '#fbfdf9', ink: '#11261a', soft: '#4a6253', accent: '#2c7a4b', accent2: '#c99512' },
+    night: { bg: '#0b1710', bg2: '#122218', surface: '#14271c', ink: '#e8f3ea', soft: '#9dbaa5', accent: '#6fcf97', accent2: '#f2c94c' } },
+  goa: { name: 'Goa', hi: 'गोवा', h: 'Where the sun <em>clocks out late.</em>', lede: 'Beach mornings, Portuguese lanes and sunsets that turn into music — the best shacks and quiet coves, sorted.',
+    place: 'Palolem, South Goa', best: 'Best Nov – Mar', tags: ['Palolem', 'Fontainhas', 'Anjuna', 'Divar'], ph: '1512343879784-a960bf40e7f2', pat: 'azulejo', hint: 'Azulejo tiles',
+    day: { bg: '#fdf1ea', bg2: '#f6dfd2', surface: '#fffaf7', ink: '#132a3a', soft: '#4f6575', accent: '#d9553a', accent2: '#1f7a8c' },
+    night: { bg: '#0d1b28', bg2: '#132638', surface: '#15293b', ink: '#f6ece6', soft: '#a9bccb', accent: '#ff8a6b', accent2: '#4fc3d4' } },
+  northeast: { name: 'North-East', hi: 'पूर्वोत्तर', h: 'Where the clouds <em>come to rest.</em>', lede: 'Living root bridges, tea gardens and rivers clear as glass — permits, seasons and road times handled for you.',
+    place: 'Rivers of Meghalaya', best: 'Best Oct – Apr', tags: ['Shillong', 'Tawang', 'Ziro', 'Kaziranga'], ph: '1609920658906-8223bd289001', pat: 'weave', hint: 'Woven textile',
+    day: { bg: '#eef1ec', bg2: '#dee5da', surface: '#fbfcfa', ink: '#18241e', soft: '#536359', accent: '#4f7a34', accent2: '#b23a48' },
+    night: { bg: '#0e1612', bg2: '#16221b', surface: '#18261e', ink: '#ebf2ec', soft: '#a3b8a9', accent: '#9bd06c', accent2: '#ef6f7c' } },
+};
+const KINDS = [
+  ['Solo', 'Safe stays, social hostels and days you can change on a whim.', '<circle cx="12" cy="7" r="3.5"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>'],
+  ['Friends', 'Split costs fairly, vote on plans and keep everyone in the loop.', '<circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c0-3.5 2.7-6 6-6s6 2.5 6 6M10 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/>'],
+  ['Backpackers', 'Shoestring routes, overnight trains and the cheapest good food.', '<path d="M7 8V6a5 5 0 0 1 10 0v2"/><rect x="5" y="8" width="14" height="13" rx="3"/><path d="M9 14h6"/>'],
+  ['Family', 'Kid-friendly pacing, rest stops and rooms that fit everyone.', '<circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><circle cx="12" cy="13" r="2"/><path d="M2 21c0-3 2-6 5-6M22 21c0-3-2-6-5-6M9 21c0-2 1.3-4 3-4s3 2 3 4"/>'],
+  ['Couples', 'Sunset spots, quiet corners and a little splurge, well-timed.', '<path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.7-7 10-7 10z"/>'],
+];
+
+let region = 'himalaya', mode = 'day', custom = null, who = 'Just me';
+const $ = (id) => document.getElementById(id);
+
+/* Apply a palette to the page (CSS variables) + the region's pattern. */
+function paint(p, patKey) {
+  const s = document.documentElement.style;
+  for (const [k, v] of Object.entries(p)) s.setProperty('--' + (k === 'surface' ? 'surface' : k), v);
+  s.setProperty('--line', hexA(p.ink, mode === 'day' ? .12 : .16));
+  s.setProperty('--on-accent', luminance(p.accent) > .45 ? '#111' : '#fff');
+  const [svg, size] = P[patKey](p.accent);
+  s.setProperty('--pattern', `url("data:image/svg+xml,${encodeURIComponent(svg)}")`);
+  s.setProperty('--pattern-size', size + 'px');
+}
+function show(key, opts = {}) {
+  region = key; const r = R[key];
+  if (!opts.keepCustom) custom = null;
+  paint(custom ? custom[mode] : r[mode], r.pat);
+  $('regionName').textContent = custom ? 'Your colours' : r.name;
+  $('nowShowing').textContent = `Now showing · ${custom ? 'Your colours' : r.name}`;
+  $('regionHi').textContent = custom ? 'आपके रंग' : r.hi;
+  $('headline').innerHTML = `<span class="swap">${custom ? 'Your trip, <em>in your colours.</em>' : r.h}</span>`;
+  $('lede').innerHTML = `<span class="swap" style="animation-delay:.08s">${custom ? 'Every colour on this page now comes from your photo — and your trips can wear them too.' : r.lede}</span>`;
+  $('tagPlace').textContent = custom ? 'From your photo' : r.place; $('tagBest').textContent = custom ? 'Read on your device · nothing uploaded' : r.best;
+  $('tagRow').innerHTML = r.tags.map((t) => `<span>${t}</span>`).join('');
+  $('where').placeholder = r.tags.slice(0, 3).join(', ') + '…';
+  if (!opts.keepPhoto) setPhoto(U(r.ph));
+  $('regionDots').innerHTML = ['bg2', 'accent', 'accent2'].map((k) => `<i style="background:${(custom ? custom[mode] : r[mode])[k]}"></i>`).join('');
+  document.querySelectorAll('.region').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.key === key && !custom)));
+  document.querySelectorAll('#menu button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.key === key && !custom)));
+}
+/* Cross-fade the arch photo. */
+function setPhoto(src) {
+  const arch = $('arch'); const img = new Image(); img.alt = ''; img.src = src;
+  img.onload = () => { arch.appendChild(img); requestAnimationFrame(() => requestAnimationFrame(() => img.classList.add('on'))); setTimeout(() => [...arch.children].slice(0, -1).forEach((n) => n.remove()), 1100); };
+}
+
+/* Build the menu, the region cards and the traveller cards. */
+$('menu').innerHTML = Object.entries(R).map(([k, r]) => `<button data-key="${k}" role="menuitem"><span class="sw" style="background:linear-gradient(135deg,${r.day.bg2} 0 40%,${r.day.accent} 40% 70%,${r.day.accent2} 70%)"></span><span>${r.name}<small>${r.hint} · <span lang="hi">${r.hi}</span></small></span></button>`).join('');
+$('regionCards').innerHTML = Object.entries(R).map(([k, r]) => `<button class="region" data-key="${k}" aria-pressed="false"><div class="win"><img src="${U(r.ph, 600)}" alt="" loading="lazy" /><div class="name"><b>${r.name}</b><span lang="hi">${r.hi}</span></div></div><div class="pal"><i style="background:${r.day.bg2}"></i><i style="background:${r.day.accent}"></i><i style="background:${r.day.accent2}"></i><i style="background:${r.night.bg}"></i></div><small>${r.tags.slice(0, 3).join(' · ')}</small></button>`).join('');
+$('kindCards').innerHTML = KINDS.map(([t, d, ic]) => `<article class="kind"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></div><h3>${t}</h3><p>${d}</p></article>`).join('');
+$('whoChips').innerHTML = ['Just me', 'Friends', 'Family', 'Partner', 'Backpacking'].map((w) => `<button aria-pressed="${w === who}">${w}</button>`).join('');
+$('whoChips').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; who = b.textContent; $('whoSel').value = who; [...$('whoChips').children].forEach((c) => c.setAttribute('aria-pressed', String(c === b))); };
+$('whoSel').onchange = (e) => [...$('whoChips').children].forEach((c) => c.setAttribute('aria-pressed', String(c.textContent === e.target.value)));
+
+$('regionBtn').onclick = () => { const m = $('menu'); m.classList.toggle('open'); $('regionBtn').setAttribute('aria-expanded', String(m.classList.contains('open'))); };
+$('menu').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; show(b.dataset.key); $('menu').classList.remove('open'); };
+$('regionCards').onclick = (e) => { const b = e.target.closest('.region'); if (!b) return; show(b.dataset.key); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+document.addEventListener('click', (e) => { if (!e.target.closest('.right')) $('menu').classList.remove('open'); });
+$('modeBtn').onclick = () => { mode = mode === 'day' ? 'night' : 'day'; document.documentElement.dataset.mode = mode; $('modeBtn').textContent = mode === 'day' ? '☾' : '☀'; show(region, { keepCustom: true, keepPhoto: true }); };
+
+/* ── Use my location: nearest region by distance to each region's centre ── */
+const CENTRES = { himalaya: [31.5, 78], ganga: [25.5, 82], rajasthan: [26.5, 73], kerala: [10, 76.4], goa: [15.3, 74.1], northeast: [26, 92.5] };
+$('locBtn').onclick = () => {
+  if (!navigator.geolocation) return ($('locMsg').textContent = 'Location isn’t available in this browser.');
+  $('locMsg').textContent = 'Finding the India around you…';
+  navigator.geolocation.getCurrentPosition(({ coords }) => {
+    let best = 'himalaya', d = Infinity;
+    for (const [k, [la, lo]] of Object.entries(CENTRES)) { const dd = (la - coords.latitude) ** 2 + (lo - coords.longitude) ** 2; if (dd < d) { d = dd; best = k; } }
+    show(best); $('locMsg').textContent = `Closest to you: ${R[best].name}.`; window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, () => ($('locMsg').textContent = 'No problem — pick a region above instead.'));
+};
+
+/* ── Your colours: read a photo's palette on-device and theme the page with it ── */
+function rgb2hsl(r, g, b) { r /= 255; g /= 255; b /= 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, s = 0; const l = (mx + mn) / 2;
+  if (mx !== mn) { const d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h /= 6; } return [h * 360, s, l]; }
+const hsl = (h, s, l) => `hsl(${h.toFixed(0)} ${(s * 100).toFixed(0)}% ${(l * 100).toFixed(0)}%)`;
+function hexA(c, a) { return `color-mix(in srgb, ${c} ${a * 100}%, transparent)`; }
+function luminance(c) { const h = c.match(/^hsl\([\d.]+ [\d.]+% ([\d.]+)%\)$/); if (h) return h[1] / 100; const m = c.match(/^#(..)(..)(..)$/); if (!m) return .3; return (0.2126 * parseInt(m[1], 16) + 0.7152 * parseInt(m[2], 16) + 0.0722 * parseInt(m[3], 16)) / 255; }
+function paletteFrom(img) {
+  const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d'); x.drawImage(img, 0, 0, 64, 64);
+  const px = x.getImageData(0, 0, 64, 64).data; const buckets = new Map();
+  for (let i = 0; i < px.length; i += 4) { const k = (px[i] >> 4) << 8 | (px[i + 1] >> 4) << 4 | (px[i + 2] >> 4); const e = buckets.get(k) || [0, 0, 0, 0]; e[0] += px[i]; e[1] += px[i + 1]; e[2] += px[i + 2]; e[3]++; buckets.set(k, e); }
+  const cols = [...buckets.values()].map(([r, g, b, n]) => ({ hsl: rgb2hsl(r / n, g / n, b / n), n })).sort((a, b) => b.n - a.n);
+  const dominant = cols[0].hsl;
+  // Accent: the most colourful common colour; second accent: a colourful one with a different hue.
+  const vivid = cols.slice(0, 40).filter((c) => c.hsl[1] > .25 && c.hsl[2] > .2 && c.hsl[2] < .75).sort((a, b) => b.hsl[1] * Math.sqrt(b.n) - a.hsl[1] * Math.sqrt(a.n));
+  const a1 = (vivid[0] || cols[0]).hsl;
+  const a2 = (vivid.find((c) => Math.abs(((c.hsl[0] - a1[0] + 540) % 360) - 180) > 40) || vivid[1] || cols[1] || cols[0]).hsl;
+  const H = dominant[0], S = Math.min(dominant[1], .45);
+  return {
+    day: { bg: hsl(H, S * .55, .95), bg2: hsl(H, S * .6, .88), surface: hsl(H, S * .3, .985), ink: hsl(a1[0], .35, .13), soft: hsl(a1[0], .15, .38), accent: hsl(a1[0], Math.max(a1[1], .45), .38), accent2: hsl(a2[0], Math.max(a2[1], .45), .45) },
+    night: { bg: hsl(H, S * .7, .08), bg2: hsl(H, S * .7, .12), surface: hsl(H, S * .6, .14), ink: hsl(H, .2, .93), soft: hsl(H, .12, .7), accent: hsl(a1[0], Math.max(a1[1], .5), .7), accent2: hsl(a2[0], Math.max(a2[1], .5), .68) },
+  };
+}
+function usePhoto(file) {
+  const url = URL.createObjectURL(file); const img = new Image();
+  img.onload = () => {
+    custom = paletteFrom(img);
+    $('drop').querySelector('img')?.remove(); const prev = img.cloneNode(); $('drop').appendChild(prev);
+    [...$('swatches').children].forEach((s, i) => (s.style.background = custom.day[['bg2', 'accent', 'accent2', 'ink'][i]]));
+    setPhoto(url); show(region, { keepCustom: true, keepPhoto: true });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  img.src = url;
+}
+$('pickBtn').onclick = () => $('file').click();
+$('file').onchange = (e) => e.target.files[0] && usePhoto(e.target.files[0]);
+$('drop').ondragover = (e) => e.preventDefault();
+$('drop').ondrop = (e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f && f.type.startsWith('image/')) usePhoto(f); };
+
+show('himalaya');
+</script>
+</body>
+</html>
