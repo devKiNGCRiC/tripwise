@@ -44,7 +44,7 @@ export const routes: RouteObject[] = [
       {
         Component: ProtectedRoute,
         children: [
-          { path: 'plan', element: <ComingSoonPage title="Trip planner" /> },
+          { path: 'plan', lazy: lazyPage(() => import('@/pages/PlanPage')) },
           { path: 'trips', element: <ComingSoonPage title="My trips" /> },
           { path: 'trips/:id', element: <ComingSoonPage title="Your itinerary" /> },
           { path: 'passport', lazy: lazyPage(() => import('@/pages/PassportPage')) },

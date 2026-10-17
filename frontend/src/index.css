@@ -184,6 +184,15 @@
     transform: scale(1.04);
   }
 }
+/* The generating screen's progress light sweeping along its track. */
+@keyframes sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
 @keyframes tour-fill {
   from {
     transform: scaleX(0);
