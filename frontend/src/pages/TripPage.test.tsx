@@ -14,14 +14,21 @@ import { session } from '@/mocks/db';
 import { server } from '@/mocks/node';
 import { renderApp } from '@/test/render';
 
-/** Plan a 3-day Goa trip for the demo user straight through the mock API. */
+/** "YYYY-MM-DD" n days from today (local). */
+function inDays(n: number) {
+  const d = new Date();
+  d.setDate(d.getDate() + n);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+/** Plan a 3-day Goa trip (starting in ~3 weeks) for the demo user straight through the mock API. */
 async function planGoa(): Promise<Itinerary> {
   session.set('u_demo');
   await api.refreshSession();
   const { itinerary } = await itinerariesApi.generate({
     destination: 'Goa',
-    startDate: '2026-12-12',
-    endDate: '2026-12-14',
+    startDate: inDays(20),
+    endDate: inDays(22),
     budget: { amount: 3000, currency: 'INR' },
     travellers: 'couple',
     interests: ['food'],
@@ -93,8 +100,8 @@ describe('TripsPage', () => {
 
     const trip = await planGoa();
     renderApp('/trips');
-    const card = await screen.findByRole('link', { name: new RegExp(trip.title) });
-    expect(card).toHaveAttribute('href', `/trips/${trip.id}`);
+    const next = await screen.findByRole('region', { name: 'Next trip' });
+    expect(within(next).getByRole('link', { name: /Open itinerary/ })).toHaveAttribute('href', `/trips/${trip.id}`);
   });
 
   it('offers a retry when the trip fails to load (not a missing trip)', async () => {
@@ -111,5 +118,23 @@ describe('TripsPage', () => {
     await user.click(await screen.findByRole('button', { name: 'Delete trip' }));
     await user.click(within(screen.getByRole('dialog', { name: 'Delete this trip?' })).getByRole('button', { name: 'Delete' }));
     expect(await screen.findByText("Couldn't delete the trip — try again.")).toBeInTheDocument();
+  });
+
+  it('puts the next trip up front and splits upcoming from past', async () => {
+    await planGoa();
+    await itinerariesApi.generate({
+      destination: 'Jaipur',
+      startDate: '2025-01-10',
+      endDate: '2025-01-12',
+      budget: { amount: 3000, currency: 'INR' },
+      travellers: 'friends',
+      interests: ['history'],
+      pace: 'balanced',
+    });
+    renderApp('/trips');
+    const next = await screen.findByRole('region', { name: 'Next trip' });
+    expect(within(next).getByRole('heading', { name: '3 days in Goa' })).toBeInTheDocument();
+    expect(within(next).getByText(/^In \d+ days$/)).toBeInTheDocument();
+    expect(within(screen.getByRole('region', { name: 'Past trips' })).getByRole('link', { name: /Jaipur/ })).toBeInTheDocument();
   });
 });

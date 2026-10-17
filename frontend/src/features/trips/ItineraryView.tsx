@@ -34,21 +34,21 @@ export function ItineraryView({ itinerary, actions, onRegenerateDay, regeneratin
       {/* Ticket header */}
       <header className="glass-strong grid overflow-hidden rounded-[32px] lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
         <div className="p-6 sm:p-8">
-        <p className="flex items-center gap-2 text-xs font-bold tracking-[0.16em] text-soft uppercase">
-          <Plane aria-hidden className="size-4 text-accent" /> Your itinerary
-        </p>
-        <h1 className="mt-2 text-[clamp(38px,5vw,72px)]">{itinerary.title}</h1>
-        <p className="mt-3 max-w-[60ch] text-lg text-soft">{itinerary.summary}</p>
-        <ul className="mt-5 flex flex-wrap gap-2 text-sm font-semibold">
-          <li className="flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5">
-            <CalendarDays aria-hidden className="size-4" /> {rangeLabel(request.startDate, request.endDate)}
-          </li>
-          <li className="flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5">
-            <Users aria-hidden className="size-4" /> {TRAVELLER_LABEL[request.travellers]}
-          </li>
-          <li className="rounded-full border border-line px-3 py-1.5">{PACE_LABEL[request.pace]}</li>
-        </ul>
-        {actions && <div className="mt-6 flex flex-wrap gap-2.5 border-t border-line pt-5">{actions}</div>}
+          <p className="flex items-center gap-2 text-xs font-bold tracking-[0.16em] text-soft uppercase">
+            <Plane aria-hidden className="size-4 text-accent" /> Your itinerary
+          </p>
+          <h1 className="mt-2 text-[clamp(38px,5vw,72px)]">{itinerary.title}</h1>
+          <p className="mt-3 max-w-[60ch] text-lg text-soft">{itinerary.summary}</p>
+          <ul className="mt-5 flex flex-wrap gap-2 text-sm font-semibold">
+            <li className="flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5">
+              <CalendarDays aria-hidden className="size-4" /> {rangeLabel(request.startDate, request.endDate)}
+            </li>
+            <li className="flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5">
+              <Users aria-hidden className="size-4" /> {TRAVELLER_LABEL[request.travellers]}
+            </li>
+            <li className="rounded-full border border-line px-3 py-1.5">{PACE_LABEL[request.pace]}</li>
+          </ul>
+          {actions && <div className="mt-6 flex flex-wrap gap-2.5 border-t border-line pt-5">{actions}</div>}
         </div>
         {/* The place itself: its photo fills the right side (on top on phones), melting into the glass */}
         {place && (
