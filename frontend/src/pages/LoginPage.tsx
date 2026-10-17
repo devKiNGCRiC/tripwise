@@ -26,7 +26,7 @@ export default function LoginPage() {
         footer={
           <>
             New to TripWise?{' '}
-            <Link to={signupHref} className="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">
+            <Link to={signupHref} className="font-semibold text-ink underline decoration-accent decoration-2 underline-offset-4">
               Create a free account
             </Link>
           </>
@@ -35,7 +35,7 @@ export default function LoginPage() {
         <GoogleButton />
         <LoginForm />
         {USE_MOCKS && (
-          <p className="rounded-2xl border border-dashed border-line px-4 py-3 text-center text-sm text-ink-soft">
+          <p className="rounded-2xl border border-dashed border-line px-4 py-3 text-center text-sm text-soft">
             Demo: demo@tripwise.app / password123
           </p>
         )}

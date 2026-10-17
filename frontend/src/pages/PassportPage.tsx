@@ -1,12 +1,11 @@
 /**
  * PassportPage.tsx — route /passport (profile), styled like a real passport:
- * a navy cover with a gold rangoli emblem and your details (always navy, in both
+ * a navy cover with a gold gateway-arch emblem and your details (always navy, in both
  * themes, like the real document), then a stamp page that fills up as you save
  * trips (stamps arrive with Plan 2), then settings: motion, theme, log out.
  */
 import { LogOut } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
-import { Rangoli } from '@/components/signature/Rangoli';
 import { Button, buttonClasses } from '@/components/ui/Button';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 import { useToast } from '@/components/ui/Toast';
@@ -32,17 +31,24 @@ export default function PassportPage() {
   const memberSince = new Date(user.createdAt).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
 
   return (
-    <div className="mx-auto max-w-5xl px-4 pt-32 pb-20">
+    <div className="mx-auto max-w-5xl px-4 pt-28 pb-20">
       <title>Your passport · TripWise</title>
-      <p lang="hi" className="text-2xl text-gold">
-        पासपोर्ट
-      </p>
-      <h1 className="mt-2 text-[clamp(48px,6vw,80px)]">Your passport</h1>
+      <header className="glass inline-block rounded-[28px] px-7 py-5">
+        <p lang="hi" className="text-2xl text-accent-2">
+          पासपोर्ट
+        </p>
+        <h1 className="mt-1 text-[clamp(44px,6vw,76px)]">Your passport</h1>
+      </header>
 
       <div className="mt-10 grid overflow-hidden rounded-card border border-line shadow-[0_40px_80px_-40px_rgb(0_0_0/.45)] md:grid-cols-[0.9fr_1.1fr]">
         {/* Cover: navy with gold foil, like the real document */}
         <section aria-label="Passport cover" className="relative isolate overflow-hidden bg-[#0f1a40] p-8 text-[#f6efe3]">
-          <Rangoli className="absolute -right-24 -bottom-24 -z-10 w-80 text-[#e6b765] opacity-60" />
+          {/* Gold-foil emblem: nested gateway arches, like the crest on a real passport */}
+          <svg aria-hidden viewBox="0 0 100 120" className="absolute -right-10 -bottom-12 -z-10 w-64 text-[#e6b765] opacity-50" fill="none" stroke="currentColor" strokeWidth="1">
+            {[0, 8, 16, 24].map((i) => (
+              <path key={i} d={`M${i} 120 V${45 + i * 0.6} C${i} ${25 + i} ${22 + i * 0.3} ${12 + i * 0.4} 50 ${4 + i} C${78 - i * 0.3} ${12 + i * 0.4} ${100 - i} ${25 + i} ${100 - i} ${45 + i * 0.6} V120`} />
+            ))}
+          </svg>
           <p className="font-display text-2xl text-[#e6b765]">TripWise passport</p>
           <p lang="hi" className="text-[#e6b765]/80">
             यात्री पासपोर्ट
@@ -67,14 +73,14 @@ export default function PassportPage() {
         </section>
 
         {/* Stamp page: empty until the first saved trip */}
-        <section className="flex min-h-80 flex-col items-center justify-center gap-4 bg-paper-2 bg-[radial-gradient(circle,var(--trip-line)_1.2px,transparent_1.4px)] bg-size-[20px_20px] p-8 text-center">
-          <div aria-hidden className="grid size-24 place-items-center rounded-full border-2 border-dashed border-gold/60 font-display text-sm tracking-widest text-gold uppercase">
+        <section className="flex min-h-80 flex-col items-center justify-center gap-4 glass-strong bg-[radial-gradient(circle,var(--trip-line)_1.2px,transparent_1.4px)] bg-size-[20px_20px] p-8 text-center">
+          <div aria-hidden className="grid size-24 place-items-center rounded-full border-2 border-dashed border-accent-2/60 font-display text-sm tracking-widest text-accent-2 uppercase">
             Your
             <br />
             stamp
           </div>
           <h2 className="text-3xl">No stamps yet</h2>
-          <p className="max-w-[32ch] text-ink-soft">Every trip you save lands here as a stamp. Where's the first one going to be?</p>
+          <p className="max-w-[32ch] text-soft">Every trip you save lands here as a stamp. Where's the first one going to be?</p>
           <Link to="/plan" className={buttonClasses()}>
             Plan your first trip
           </Link>

@@ -23,7 +23,7 @@ export default function SignupPage() {
         footer={
           <>
             Already have an account?{' '}
-            <Link to={loginHref} className="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">
+            <Link to={loginHref} className="font-semibold text-ink underline decoration-accent decoration-2 underline-offset-4">
               Log in
             </Link>
           </>

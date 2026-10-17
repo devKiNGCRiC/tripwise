@@ -12,7 +12,7 @@ import { GlassPanel } from '@/components/ui/GlassPanel';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { safeNext } from '@/features/auth/safeNext';
 import { FullPageLoader } from './FullPageLoader';
-import { LiquidScene } from './LiquidScene';
+import { WorldStage } from './WorldStage';
 
 export function ProtectedRoute() {
   const { status } = useAuth();
@@ -36,7 +36,7 @@ export function AdminRoute() {
   }
   if (user?.role !== 'admin') {
     return (
-      <LiquidScene>
+      <WorldStage>
         <GlassPanel className="flex flex-col items-center gap-4 text-center">
           <ShieldAlert className="size-10 text-accent-2" aria-hidden />
           <h1 className="text-[clamp(44px,7vw,64px)]">Admins only</h1>
@@ -45,7 +45,7 @@ export function AdminRoute() {
             Go to my passport
           </Link>
         </GlassPanel>
-      </LiquidScene>
+      </WorldStage>
     );
   }
   return <Outlet />;

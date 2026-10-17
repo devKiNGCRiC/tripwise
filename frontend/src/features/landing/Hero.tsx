@@ -25,7 +25,7 @@ export function Hero({ who, onWhoChange }: HeroProps) {
   return (
     <section className="relative isolate">
       {/* Readability wash: from the left on desktop, from the top on phones */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-[var(--trip-scrim)] via-[var(--trip-scrim)] to-transparent lg:bg-linear-to-r lg:via-transparent lg:via-55%" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-(--trip-scrim) via-(--trip-scrim) to-transparent lg:bg-linear-to-r lg:via-transparent lg:via-55%" />
 
       <div className="page-wrap grid min-h-svh grid-rows-[1fr_auto] gap-6 pt-24 pb-5">
         <div className="grid items-center gap-[clamp(24px,4vw,64px)] lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">

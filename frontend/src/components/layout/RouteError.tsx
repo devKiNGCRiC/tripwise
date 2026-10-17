@@ -6,7 +6,7 @@ import { isRouteErrorResponse, Link, useRouteError } from 'react-router';
 import { Button, buttonClasses } from '@/components/ui/Button';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 import NotFoundPage from '@/pages/NotFoundPage';
-import { LiquidScene } from './LiquidScene';
+import { WorldStage } from './WorldStage';
 
 export function RouteError() {
   const error = useRouteError();
@@ -15,7 +15,7 @@ export function RouteError() {
   if (isRouteErrorResponse(error) && error.status === 404) return <NotFoundPage />;
 
   return (
-    <LiquidScene className="pt-20">
+    <WorldStage className="pt-20">
       <GlassPanel className="flex flex-col items-center gap-5 text-center">
         <h1 className="text-[clamp(48px,8vw,76px)]">Turbulence</h1>
         <p className="max-w-[34ch] text-xl text-soft">This page didn't load properly. Reloading usually fixes it.</p>
@@ -26,6 +26,6 @@ export function RouteError() {
           </Link>
         </div>
       </GlassPanel>
-    </LiquidScene>
+    </WorldStage>
   );
 }
