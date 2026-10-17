@@ -45,7 +45,8 @@ function NextTrip({ trip, destination }: { trip: Itinerary; destination?: Destin
 function TripGrid({ label, trips, place }: { label: string; trips: Itinerary[]; place: (name: string) => Destination | undefined }) {
   return (
     <section aria-label={label} className="mb-10">
-      <h2 className="mb-4 text-xs font-bold tracking-[0.16em] text-ink uppercase [text-shadow:0_1px_8px_var(--trip-scrim)]">{label}</h2>
+      {/* A small glass pill keeps the label readable over any landscape. */}
+      <h2 className="glass mb-4 inline-block rounded-full px-4 py-1.5 text-xs font-bold tracking-[0.16em] text-ink uppercase">{label}</h2>
       <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         {trips.map((trip) => (
           <li key={trip.id}>
