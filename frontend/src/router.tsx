@@ -27,8 +27,8 @@ export const routes: RouteObject[] = [
     children: [
       // Public pages
       { index: true, lazy: lazyPage(() => import('@/pages/LandingPage')) },
-      { path: 'explore', element: <ComingSoonPage title="Explore destinations" /> },
-      { path: 'destinations/:slug', element: <ComingSoonPage title="Destination guide" /> },
+      { path: 'explore', lazy: lazyPage(() => import('@/pages/ExplorePage')) },
+      { path: 'destinations/:slug', lazy: lazyPage(() => import('@/pages/DestinationPage')) },
       { path: 't/:shareId', element: <ComingSoonPage title="Shared trip" /> },
 
       // Only for logged-out visitors
