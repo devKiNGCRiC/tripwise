@@ -69,7 +69,7 @@ Scrolling is smooth via Lenis (native for reduced motion). GSAP is no longer use
 ## 5. Pages
 
 - **Landing (`/`):**
-  1. Hero over liquid: "India, *unhurried.*", the Hindi line, a self-drawing rangoli, and a glass quick-plan search ("Where do you want to go?", "Plan my journey") with destination chips that fill the field.
+  1. Hero (revised 2026-10-17, see §8) over liquid photographs: "India, *unhurried.*", the Hindi line, a self-drawing rangoli, and a glass quick-plan search ("Where do you want to go?", "Plan my journey") with destination chips that fill the field.
   2. Journeys: the section pins while the destination cards (from the API) slide sideways; each card wipes open as it enters.
   3. How it works: three glass steps joined by a gold thread that draws itself.
   4. Sample trip: a glass itinerary sheet (Udaipur, 3 days, costs) over its own liquid band.
@@ -93,3 +93,23 @@ Scrolling is smooth via Lenis (native for reduced motion). GSAP is no longer use
 ## 7. Kept unchanged
 
 The API client, auth and its forms' logic, the mocks, the query client, the router and guards, the theme storage, and all non-UI tests.
+
+## 8. Revision: the liquid photo hero
+
+The first build kept the two halves apart: liquid colour in the hero, photography only in cards.
+It read as "Liquid Monsoon with a serif", so the hero now fuses them.
+
+- **Photos as the stage.** The hero is full-screen photography (Varanasi, Jaipur, Kerala, Ladakh) with a slow Ken Burns zoom.
+- **Photos as water.** `PhotoLiquid` (`photoLiquidShader.ts`, `photoLiquidRenderer.ts`) displaces the photo's pixels:
+  - a constant shimmer;
+  - ripples under the pointer;
+  - a liquid front that pours each new place in over the last (1.8 s), with a bright crest.
+- **Grades.**
+  - Day: warm dawn light.
+  - Night: monsoon indigo, plus a lantern glow at the pointer and CSS rain over the photo.
+- **Layout.**
+  - Desktop: the photo melts into the page from the left, where the headline sits. A gold rangoli is drawn over the photo.
+  - Phones: the photo fills the top 62% of the screen and the words start below it.
+- **Navigation.** A slide index (01–04, with a gold progress line) and the place name in Hindi let visitors jump between places. Slides auto-advance every 7 s, but not with reduced or Calm motion.
+- **Fallback.** Without WebGL, plain `<img>` stand-ins cross-fade instead. They are also what shows before the first water frame.
+- **Shared code.** The WebGL helpers in `webgl.ts` are shared with the liquid colour field.

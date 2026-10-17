@@ -173,6 +173,20 @@
   }
 }
 
+/*
+ * Monsoon rain: two layers of fine slanted streaks drifting down at different speeds.
+ * Pure CSS (no images); shown over the hero photo at night.
+ */
+@utility rain {
+  background-image:
+    repeating-linear-gradient(104deg, transparent 0 26px, rgb(210 225 255 / 0.16) 26px 27px, transparent 27px 58px),
+    repeating-linear-gradient(100deg, transparent 0 41px, rgb(210 225 255 / 0.1) 41px 42px, transparent 42px 97px);
+  background-size:
+    100% 180px,
+    100% 260px;
+  animation: rain 0.9s linear infinite;
+}
+
 /* Self-drawing line art: each stroke sets --len (its length) and --delay. */
 @utility draw-stroke {
   stroke-dasharray: var(--len);
@@ -186,6 +200,22 @@
   --animate-toast-in: toast-in 0.5s var(--ease-out-expo) both;
 }
 
+@keyframes rain {
+  to {
+    background-position:
+      -50px 180px,
+      -45px 260px;
+  }
+}
+/* The hero's slide index: a thin line fills while a place is on screen. */
+@keyframes slide-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
 @keyframes draw {
   to {
     stroke-dashoffset: 0;

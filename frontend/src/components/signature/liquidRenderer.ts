@@ -8,7 +8,8 @@
  *  - `still` mode (reduced motion) draws a frozen frame and only redraws on resize/theme change
  * Returns null when WebGL is unavailable; callers keep a CSS gradient behind the canvas.
  */
-import { LIQUID_FRAGMENT, LIQUID_VERTEX, MAX_RIPPLES } from './liquidShader';
+import { LIQUID_FRAGMENT } from './liquidShader';
+import { createFullscreenProgram, createRipples, getGL } from './webgl';
 
 export interface LiquidOptions {
   /** Starting palette: 0 = dawn, 1 = monsoon. */
@@ -24,54 +25,22 @@ export interface LiquidOptions {
 export interface LiquidHandle {
   /** Ease the palette toward 0 (dawn) or 1 (monsoon). */
   setNight: (target: number) => void;
-  /** Stop drawing and free the GPU context. */
+  /** Stop drawing and free the GPU resources. */
   dispose: () => void;
 }
 
 /** Fraction of CSS pixels we actually render (see file header). */
 const RESOLUTION = 0.6;
-/** Seconds between ripples while the pointer moves. */
-const MOVE_RIPPLE_GAP = 0.4;
 /** A fixed, pleasant moment in time used for the frozen (still) frame. */
 const STILL_TIME = 4;
 
-/** Compile one shader stage; throws with the GPU's message if it fails. */
-function compile(gl: WebGLRenderingContext, type: number, source: string) {
-  const shader = gl.createShader(type)!;
-  gl.shaderSource(shader, source);
-  gl.compileShader(shader);
-  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(shader) ?? 'shader');
-  return shader;
-}
-
 /** Start drawing the liquid into `canvas`. Returns null if WebGL isn't available. */
 export function createLiquid(canvas: HTMLCanvasElement, options: LiquidOptions): LiquidHandle | null {
-  let gl: WebGLRenderingContext | null = null;
-  try {
-    gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
-  } catch {
-    gl = null;
-  }
+  const gl = getGL(canvas);
   if (!gl) return null;
-
-  // ── Program + full-screen triangle ──
-  const program = gl.createProgram()!;
-  try {
-    gl.attachShader(program, compile(gl, gl.VERTEX_SHADER, LIQUID_VERTEX));
-    gl.attachShader(program, compile(gl, gl.FRAGMENT_SHADER, LIQUID_FRAGMENT));
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return null;
-  } catch {
-    return null;
-  }
-  gl.useProgram(program);
-  const buffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  // One triangle bigger than the screen covers it completely (cheaper than two).
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-  const position = gl.getAttribLocation(program, 'position');
-  gl.enableVertexAttribArray(position);
-  gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+  const setup = createFullscreenProgram(gl, LIQUID_FRAGMENT);
+  if (!setup) return null;
+  const { program, buffer } = setup;
 
   const u = {
     t: gl.getUniformLocation(program, 't'),
@@ -82,10 +51,6 @@ export function createLiquid(canvas: HTMLCanvasElement, options: LiquidOptions):
   };
 
   // ── State ──
-  const ripples = new Float32Array(MAX_RIPPLES * 3).fill(-99); // start times far in the past = inactive
-  let nextRipple = 0;
-  let lastMoveRipple = 0;
-  const pointer = [0.5, 0.5];
   let night = options.night;
   let nightTarget = options.night;
   let visible = true;
@@ -95,6 +60,7 @@ export function createLiquid(canvas: HTMLCanvasElement, options: LiquidOptions):
   const start = performance.now();
   let lastTick = start;
   const now = () => (options.still ? STILL_TIME : (performance.now() - start) / 1000);
+  const touch = createRipples(canvas, options.host ?? canvas.parentElement, now, options.interactive && !options.still);
 
   /** Match the drawing buffer to the element's size (at reduced resolution). */
   function resize() {
@@ -107,31 +73,6 @@ export function createLiquid(canvas: HTMLCanvasElement, options: LiquidOptions):
       gl!.viewport(0, 0, w, h);
     }
     dirty = true;
-  }
-
-  /** Pointer position → 0–1 coordinates inside the canvas (y up, like the shader). */
-  function toUv(event: PointerEvent) {
-    const rect = canvas.getBoundingClientRect();
-    return [(event.clientX - rect.left) / rect.width, 1 - (event.clientY - rect.top) / rect.height];
-  }
-  /** Start a ripple at the pointer (overwrites the oldest one). */
-  function addRipple(event: PointerEvent) {
-    const [x, y] = toUv(event);
-    ripples.set([x, y, now()], nextRipple * 3);
-    nextRipple = (nextRipple + 1) % MAX_RIPPLES;
-  }
-  const onDown = (event: PointerEvent) => addRipple(event);
-  const onMove = (event: PointerEvent) => {
-    [pointer[0], pointer[1]] = toUv(event);
-    if (now() - lastMoveRipple > MOVE_RIPPLE_GAP) {
-      addRipple(event);
-      lastMoveRipple = now();
-    }
-  };
-  const host = options.host ?? canvas.parentElement;
-  if (options.interactive && !options.still && host) {
-    host.addEventListener('pointerdown', onDown);
-    host.addEventListener('pointermove', onMove);
   }
 
   // Pause while scrolled out of view; resize with the element.
@@ -171,8 +112,8 @@ export function createLiquid(canvas: HTMLCanvasElement, options: LiquidOptions):
     gl!.uniform1f(u.t, now());
     gl!.uniform1f(u.night, night);
     gl!.uniform2f(u.res, canvas.width, canvas.height);
-    gl!.uniform2f(u.pointer, pointer[0], pointer[1]);
-    gl!.uniform3fv(u.ripples, ripples);
+    gl!.uniform2f(u.pointer, touch.pointer[0], touch.pointer[1]);
+    gl!.uniform3fv(u.ripples, touch.ripples);
     gl!.drawArrays(gl!.TRIANGLES, 0, 3);
     dirty = false;
   }
@@ -188,11 +129,10 @@ export function createLiquid(canvas: HTMLCanvasElement, options: LiquidOptions):
       cancelAnimationFrame(frame);
       sizeObserver.disconnect();
       viewObserver?.disconnect();
-      host?.removeEventListener('pointerdown', onDown);
-      host?.removeEventListener('pointermove', onMove);
+      touch.detach();
       canvas.removeEventListener('webglcontextlost', onLost);
-      gl!.deleteBuffer(buffer);
-      gl!.deleteProgram(program);
+      gl.deleteBuffer(buffer);
+      gl.deleteProgram(program);
       // No loseContext() here: React may re-mount on the same <canvas> (StrictMode), and a
       // lost context can't be reused. The context is freed with the canvas element.
     },

@@ -1,6 +1,6 @@
 /**
  * LandingPage.test.tsx — the Monsoon Editorial homepage: the editorial hero over the
- * liquid colour, destination cards from the API with their Hindi names, the three
+ * liquid photographs (with its slide index), destination cards from the API with their Hindi names, the three
  * steps in order, the sample itinerary and crew sections, and the quick-plan hand-off
  * to the planner (with quick-pick chips).
  */
@@ -9,12 +9,23 @@ import { describe, expect, it } from 'vitest';
 import { renderApp } from '@/test/render';
 
 describe('LandingPage', () => {
-  it('shows the editorial hero over the liquid colour', async () => {
+  it('shows the editorial hero over the liquid photographs', async () => {
     const { container } = renderApp('/');
     expect(await screen.findByRole('heading', { level: 1, name: /India, unhurried\./ })).toBeInTheDocument();
     expect(screen.getByText('यात्रा, बिना झंझट')).toHaveAttribute('lang', 'hi');
-    // jsdom has no WebGL, so the liquid keeps its CSS gradient stand-in.
-    expect(container.querySelector('.liquid-fallback canvas')).not.toBeNull();
+    // jsdom has no WebGL, so the plain photo stand-ins carry the hero.
+    expect(container.querySelectorAll('section img[src*="images.unsplash.com"]').length).toBeGreaterThanOrEqual(4);
+  });
+
+  it('visits each place from the slide index', async () => {
+    const { user } = renderApp('/');
+    const places = await screen.findByRole('group', { name: 'Choose a place' });
+    expect(within(places).getByRole('button', { name: 'Show Varanasi' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByText('वाराणसी', { selector: '[aria-live]' })).toBeInTheDocument();
+
+    await user.click(within(places).getByRole('button', { name: 'Show Ladakh' }));
+    expect(within(places).getByRole('button', { name: 'Show Ladakh' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByText('लद्दाख', { selector: '[aria-live]' })).toBeInTheDocument();
   });
 
   it('shows destination cards from the API with their local names', async () => {
