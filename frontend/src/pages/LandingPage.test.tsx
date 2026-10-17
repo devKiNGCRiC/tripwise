@@ -24,6 +24,16 @@ describe('LandingPage', () => {
     expect(within(bar).getByRole('button', { name: /^Thar/ })).toHaveAttribute('aria-pressed', 'true');
   });
 
+  it("shows a real photo of the region in the dossier, credited, and swaps it with the region", async () => {
+    const { user } = renderApp('/');
+    const dossier = await screen.findByRole('complementary', { name: 'Region dossier' });
+    expect(within(dossier).getByRole('img', { name: /Valley of Flowers/ })).toHaveAttribute('src', '/regions/himalaya.jpg');
+    expect(within(dossier).getByRole('link', { name: /Photo: .*CC BY-SA 4\.0/ })).toHaveAttribute('href', expect.stringContaining('commons.wikimedia.org'));
+
+    await user.click(within(screen.getByRole('navigation', { name: 'Regions' })).getByRole('button', { name: /^Deccan Plateau/ }));
+    expect(within(dossier).getByRole('img', { name: /Hampi/ })).toHaveAttribute('src', '/regions/deccan.jpg');
+  });
+
   it('charts all twelve months in the dossier and marks this one', async () => {
     renderApp('/');
     const dossier = await screen.findByRole('complementary', { name: 'Region dossier' });

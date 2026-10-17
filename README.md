@@ -47,6 +47,8 @@ India is not one place, so TripWise isn't one look. The whole site floats as fro
 - **For every traveller:** Solo, Friends, Backpackers, Family and Couples each change what the plan offers.
 - **Your colours:** pick a photo from a trip you loved and its colours tint the whole world
   (read on your device, never uploaded), or use your location to see the world nearest you.
+- **Real places, blended in:** a photo of each region (Wikimedia Commons, free licences, credited on the
+  photo) melts into the dossier and into the "Seven worlds" cards, where it dissolves into the painted landscape.
 - **Fonts:** Fraunces (headlines), Plus Jakarta Sans (interface), Tiro Devanagari Hindi (Hindi).
 - **Calm mode** (Passport page) and the OS "reduce motion" setting hold the world still.
 

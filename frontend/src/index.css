@@ -82,6 +82,29 @@
   [lang='hi'] {
     font-family: var(--trip-font-hindi);
   }
+  /*
+   * Scrollbar in the app's own style: a slim pill in the region colour on a clear track
+   * (standard properties for Firefox/new Chromium, ::-webkit-scrollbar for Safari & older Chromium).
+   */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--trip-accent) 70%, transparent) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--trip-accent) 70%, transparent) padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--trip-accent) padding-box;
+  }
   ::selection {
     background: var(--trip-accent);
     color: var(--trip-on-accent);
@@ -165,6 +188,12 @@
     opacity: 0;
     transform: translateY(16px);
     filter: blur(6px);
+  }
+}
+@keyframes photo-in {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
   }
 }
 @keyframes tour-fill {

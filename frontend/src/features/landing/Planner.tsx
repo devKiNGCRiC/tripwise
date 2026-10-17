@@ -13,8 +13,8 @@ import { KINDS } from './kinds';
 
 /** Shared look of each field's small caps label. */
 const FIELD_LABEL = 'text-[10.5px] font-bold tracking-[0.14em] text-soft uppercase';
-/** One field cell; the divider becomes horizontal when the bar stacks on small screens. */
-const FIELD = 'grid min-w-0 content-center gap-0.5 border-line px-4 py-2 max-lg:border-b lg:border-r';
+/** One field cell; dividers run between fields in a 2×2 grid, then in a single row on wide screens. */
+const FIELD = 'grid min-w-0 content-center gap-0.5 border-line px-4 py-2 max-sm:border-b sm:max-2xl:[&:nth-child(-n+2)]:border-b sm:max-2xl:[&:nth-child(odd)]:border-r 2xl:border-r';
 
 interface PlannerProps {
   /** Places in the current region, used as the placeholder. */
@@ -37,7 +37,7 @@ export function Planner({ places, who, onWhoChange }: PlannerProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="glass-strong grid rounded-3xl p-1.5 lg:grid-cols-[1.3fr_0.9fr_0.95fr_1.15fr_auto]">
+    <form onSubmit={handleSubmit} className="glass-strong grid rounded-3xl p-1.5 sm:grid-cols-2 2xl:grid-cols-[1.3fr_0.9fr_0.95fr_1.15fr_auto]">
       <label className={FIELD}>
         <span aria-hidden className={FIELD_LABEL}>
           Where to
@@ -69,7 +69,7 @@ export function Planner({ places, who, onWhoChange }: PlannerProps) {
           ))}
         </select>
       </label>
-      <label className={`${FIELD} lg:border-r-0`}>
+      <label className={`${FIELD} 2xl:border-r-0`}>
         <span className={FIELD_LABEL}>
           Budget per day · <b className="text-ink">{formatMoney({ amount: budget, currency: 'INR' })}</b>
         </span>
@@ -83,7 +83,7 @@ export function Planner({ places, who, onWhoChange }: PlannerProps) {
           className="w-full accent-[var(--trip-accent)]"
         />
       </label>
-      <Button type="submit" variant="glow" size="lg" className="m-0.5 h-auto min-h-12 rounded-[18px]" icon={<ArrowRight aria-hidden className="order-last size-4" />}>
+      <Button type="submit" variant="glow" size="lg" className="m-0.5 h-auto min-h-12 rounded-[18px] sm:col-span-2 2xl:col-span-1" icon={<ArrowRight aria-hidden className="order-last size-4" />}>
         Plan
       </Button>
     </form>

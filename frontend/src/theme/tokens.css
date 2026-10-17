@@ -36,8 +36,8 @@
 
   /* Shape and page width */
   --trip-radius-card: 1.75rem;
-  --trip-page-max: 1360px;
-  --trip-page-pad: clamp(16px, 4.5vw, 56px);
+  --trip-page-max: 1720px;
+  --trip-page-pad: clamp(16px, 3vw, 40px);
 
   /* Fonts (self-hosted via Fontsource, imported in main.tsx) */
   --trip-font-display: 'Fraunces Variable', Georgia, serif;

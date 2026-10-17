@@ -1,10 +1,12 @@
 /**
  * Dossier.tsx — the current region at a glance, on strong glass beside the hero:
+ * a real photo of the region melting into the panel's top,
  * elevation, terrain and best time; a 12-month "when to go" chart (this month marked);
  * three signature experiences; and the places to start from. Re-animates on region change.
  */
 import { cn } from '@/lib/utils/cn';
 import type { Region } from '@/world/regions';
+import { RegionPhoto } from './RegionPhoto';
 
 /** Month names for the chart's accessible labels, January first. */
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -19,7 +21,9 @@ export function Dossier({ region, index, total }: { region: Region; index: numbe
   const counter = `${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
 
   return (
-    <aside aria-label="Region dossier" className="glass-strong grid gap-4 rounded-[28px] p-5 sm:p-6">
+    <aside aria-label="Region dossier" className="glass-strong grid gap-4 overflow-hidden rounded-[28px] p-5 sm:p-6 [@media(max-height:820px)]:gap-3">
+      {/* Postcard: edge to edge across the top of the panel; shorter on short screens */}
+      <RegionPhoto region={region} className="-mx-5 -mt-5 -mb-2 h-[clamp(80px,15svh,190px)] sm:-mx-6 sm:-mt-6" />
       <div className="flex items-center justify-between">
         <span className={LABEL}>Region dossier</span>
         <span className={LABEL}>{counter}</span>
@@ -46,7 +50,7 @@ export function Dossier({ region, index, total }: { region: Region; index: numbe
 
       <div>
         <span className={LABEL}>When to go</span>
-        <ol aria-label="When to go" className="mt-2 grid h-[74px] grid-cols-12 items-end gap-1.5">
+        <ol aria-label="When to go" className="mt-2 grid h-[74px] grid-cols-12 items-end gap-1.5 [@media(max-height:820px)]:h-[62px]">
           {region.months.map((score, m) => (
             <li
               key={MONTHS[m]}
@@ -57,7 +61,7 @@ export function Dossier({ region, index, total }: { region: Region; index: numbe
               <span
                 aria-hidden
                 className={cn('w-full rounded-t-md rounded-b-sm transition-[height,background-color] duration-700 ease-out-expo', score === 3 ? 'bg-accent' : 'bg-accent/35')}
-                style={{ height: score * 17 }}
+                style={{ height: `calc(${score} * min(17px, 2.1svh))` }}
               />
               <span aria-hidden className={cn('text-[10px] font-semibold', m === thisMonth ? 'text-ink underline decoration-accent-2 underline-offset-2' : 'text-soft')}>
                 {MONTHS[m][0]}
@@ -81,7 +85,8 @@ export function Dossier({ region, index, total }: { region: Region; index: numbe
         </ol>
       </div>
 
-      <ul aria-label="Places" className="flex flex-wrap gap-1.5">
+      {/* Places: hidden on short laptop screens so the hero fits above the fold */}
+      <ul aria-label="Places" className="flex flex-wrap gap-1.5 [@media(max-height:820px)]:hidden">
         {region.places.map((place) => (
           <li key={place} className="rounded-full border border-line px-3 py-1 text-[12.5px] font-semibold">
             {place}

@@ -1,6 +1,7 @@
 /**
- * Worlds.tsx — "One India. Seven worlds.": an intro card plus one card per region,
- * each showing its painted landscape. Choosing one turns the whole page into it and
+ * Worlds.tsx — "One India. Seven worlds.": an intro card plus one card per region.
+ * Each card blends two views of the place: a real photograph at the top that dissolves
+ * downwards into the region's painted landscape (the same art as the living world). Choosing one turns the whole page into it and
  * glides back to the top.
  */
 import { useReveal } from '@/components/signature/useReveal';
@@ -35,7 +36,15 @@ export function Worlds() {
             className="reveal-up group relative min-h-[220px] overflow-hidden rounded-[26px] bg-accent/20 text-left text-white"
             style={{ '--delay': `${0.05 * i}s` } as React.CSSProperties}
           >
-            {thumbs[i] && <img src={thumbs[i]} alt="" className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-105" />}
+            {thumbs[i] && <img src={thumbs[i]} alt="" className="absolute inset-0 size-full object-cover" />}
+            {/* The real place, melting into the painting below it; it comes forward on hover */}
+            <img
+              src={region.photo.src}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 size-full object-cover opacity-90 transition duration-700 ease-out-expo [mask-image:linear-gradient(to_bottom,black_35%,transparent_80%)] group-hover:scale-105 group-hover:opacity-100"
+            />
             <span aria-hidden className="absolute inset-0 bg-linear-to-b from-transparent from-35% to-black/55" />
             <span className="relative z-10 flex h-full min-h-[220px] flex-col justify-end p-5">
               <b className="font-display text-2xl font-semibold">{region.name}</b>

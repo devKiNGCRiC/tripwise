@@ -32,6 +32,13 @@ export function Footer() {
         <div className="text-soft">
           <p>Every landscape here is drawn live in your browser.</p>
           <p>
+            Region photos from{' '}
+            <a href="https://commons.wikimedia.org" target="_blank" rel="noreferrer" className="underline decoration-accent underline-offset-4">
+              Wikimedia Commons
+            </a>{' '}
+            (credited on each photo)
+          </p>
+          <p>
             © {new Date().getFullYear()} TripWise ·{' '}
             <span lang="hi" className="text-accent">
               शुभ यात्रा
