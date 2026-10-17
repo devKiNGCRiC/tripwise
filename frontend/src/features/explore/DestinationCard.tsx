@@ -21,6 +21,7 @@ interface DestinationCardProps {
   className?: string;
 }
 
+/** A cinematic destination card. */
 export function DestinationCard({ destination, className }: DestinationCardProps) {
   const vibe = destination.vibes[0];
   const price = formatMoney(destination.avgDailyCost);

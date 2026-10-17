@@ -18,6 +18,7 @@ interface HeroProps {
   onWhoChange: (who: string) => void;
 }
 
+/** The homepage's first screen over the living world. */
 export function Hero({ who, onWhoChange }: HeroProps) {
   const { region, index } = useWorld();
   const counter = `${String(index + 1).padStart(2, '0')} / ${String(REGIONS.length).padStart(2, '0')}`;

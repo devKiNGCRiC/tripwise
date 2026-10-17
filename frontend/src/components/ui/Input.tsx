@@ -15,6 +15,7 @@ export interface InputProps extends ComponentProps<'input'> {
   hint?: string;
 }
 
+/** A labelled text input with hint/error. */
 export function Input({ label, error, hint, id, className, ...rest }: InputProps) {
   // Generate a stable unique id if the caller didn't give one.
   const autoId = useId();

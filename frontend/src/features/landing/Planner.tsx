@@ -23,6 +23,7 @@ interface PlannerProps {
   onWhoChange: (who: string) => void;
 }
 
+/** The hero planning bar. */
 export function Planner({ places, who, onWhoChange }: PlannerProps) {
   const navigate = useNavigate();
   const [destination, setDestination] = useState('');

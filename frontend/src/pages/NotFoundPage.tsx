@@ -6,6 +6,7 @@ import { WorldStage } from '@/components/layout/WorldStage';
 import { buttonClasses } from '@/components/ui/Button';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 
+/** The 404 "Lost luggage" page. */
 export default function NotFoundPage() {
   return (
     <WorldStage>

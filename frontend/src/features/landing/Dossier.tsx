@@ -13,6 +13,7 @@ const SCORE = ['', 'Not ideal', 'Good', 'Best'];
 /** Small caps label used for each block. */
 const LABEL = 'text-[11px] font-bold tracking-[0.18em] text-soft uppercase';
 
+/** The current region's facts panel. */
 export function Dossier({ region, index, total }: { region: Region; index: number; total: number }) {
   const thisMonth = new Date().getMonth();
   const counter = `${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;

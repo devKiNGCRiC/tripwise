@@ -7,6 +7,7 @@ import { Moon, Sun } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { useTheme } from './ThemeProvider';
 
+/** The Day ↔ Night button. */
 export function ThemeToggle({ className }: { className?: string }) {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';

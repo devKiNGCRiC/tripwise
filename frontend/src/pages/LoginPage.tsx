@@ -9,6 +9,7 @@ import { GoogleButton } from '@/features/auth/GoogleButton';
 import { LoginForm } from '@/features/auth/LoginForm';
 import { USE_MOCKS } from '@/lib/api/config';
 
+/** Route "/login". */
 export default function LoginPage() {
   // Keep ?next= when switching to signup so the user still ends up where they were going.
   const [params] = useSearchParams();

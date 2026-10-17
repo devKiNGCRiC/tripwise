@@ -93,3 +93,26 @@ describe('WorldProvider', () => {
     expect(document.documentElement.style.getPropertyValue('--trip-accent')).toBe('#b8562a');
   });
 });
+
+describe('WorldProvider tour after a pick', () => {
+  afterEach(() => vi.useRealTimers());
+
+  it('never tours away from a region the traveller already chose (even on a later visit)', () => {
+    vi.useFakeTimers();
+    localStorage.setItem(REGION_STORAGE_KEY, 'thar');
+    renderWorld();
+    press('tour');
+    act(() => vi.advanceTimersByTime(30_000));
+    expect(screen.getByTestId('region')).toHaveTextContent('Thar');
+    expect(screen.getByTestId('touring')).toHaveTextContent('false');
+  });
+
+  it('does not restart the tour once the traveller has picked', () => {
+    vi.useFakeTimers();
+    renderWorld();
+    press('pick ganga');
+    press('tour');
+    act(() => vi.advanceTimersByTime(30_000));
+    expect(screen.getByTestId('region')).toHaveTextContent('Gangetic Plains');
+  });
+});

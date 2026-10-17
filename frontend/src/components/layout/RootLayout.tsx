@@ -9,6 +9,7 @@ import { MobileTabBar } from './MobileTabBar';
 import { Navbar } from './Navbar';
 import { ServerWakingBanner } from './ServerWakingBanner';
 
+/** The frame around every page. */
 export function RootLayout() {
   return (
     // overflow-x-clip: wide ornaments may poke past the screen edge; clip them so phones never
@@ -17,7 +18,7 @@ export function RootLayout() {
       {/* Skip link: lets keyboard users jump past the navigation. */}
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:font-semibold focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:font-semibold focus:text-on-ink"
       >
         Skip to content
       </a>

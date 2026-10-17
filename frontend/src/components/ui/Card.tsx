@@ -17,6 +17,7 @@ export interface CardProps extends ComponentProps<'div'> {
   variant?: CardVariant;
 }
 
+/** A glass content container. */
 export function Card({ variant = 'glass', className, ...rest }: CardProps) {
   return <div className={cn('rounded-card', VARIANTS[variant], className)} {...rest} />;
 }

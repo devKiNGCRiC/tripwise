@@ -15,6 +15,7 @@ import { Worlds } from '@/features/landing/Worlds';
 import { YourColours } from '@/features/landing/YourColours';
 import { useWorld } from '@/world/WorldProvider';
 
+/** Route "/": the Seven Worlds homepage. */
 export default function LandingPage() {
   const { startTour, stopTour } = useWorld();
   const [who, setWho] = useState(KINDS[0].who);

@@ -4,8 +4,14 @@
  * Works on raw RGBA data (the caller draws the photo into a small canvas on the device —
  * nothing is uploaded). Colours are grouped into coarse buckets; the most common becomes
  * the tint that recolours the living world, the most vivid become the interface accents.
- * Grey, tiny or odd photos still produce a complete, valid palette.
+ * Grey, tiny or odd photos still produce a complete, valid palette, and accents are
+ * always nudged to stay readable (4.5:1) on the light Day glass and the dark Night glass.
  */
+import { ensureContrast } from './contrast';
+
+/** What the glass looks like behind text by Day and by Night. */
+const DAY_GLASS = '#ffffff';
+const NIGHT_GLASS = '#0b1020';
 
 export interface Palette {
   /** Dominant colour, blended over the landscape */
@@ -71,8 +77,8 @@ export function paletteFromPixels(data: ArrayLike<number>): Palette {
     tint: toHex(dominant),
     swatches: [toHex(dominant), toHex(accent), toHex(accent2), toHex(dominant, 0, 0.3)],
     accents: {
-      day: [toHex(accent, 0, 0.8), toHex(accent2, 0, 0.85)],
-      night: [toHex(accent, 0.35), toHex(accent2, 0.35)],
+      day: [ensureContrast(toHex(accent, 0, 0.8), DAY_GLASS), ensureContrast(toHex(accent2, 0, 0.85), DAY_GLASS)],
+      night: [ensureContrast(toHex(accent, 0.35), NIGHT_GLASS), ensureContrast(toHex(accent2, 0.35), NIGHT_GLASS)],
     },
   };
 }

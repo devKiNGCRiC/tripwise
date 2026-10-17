@@ -25,6 +25,7 @@ interface StampProps {
   className?: string;
 }
 
+/** A tilted passport stamp. */
 export function Stamp({ label, localLabel, tone = 'gold', rotate = -8, className }: StampProps) {
   return (
     <span

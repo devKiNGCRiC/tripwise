@@ -4,7 +4,7 @@
  * whole living world and the interface. Or "Use my location" to show the region nearest
  * to you. "Reset colours" goes back to the region's own palette.
  */
-import { useRef, useState, type DragEvent } from 'react';
+import { useEffect, useRef, useState, type DragEvent } from 'react';
 import { useReveal } from '@/components/signature/useReveal';
 import { Button } from '@/components/ui/Button';
 import { nearestRegion } from '@/world/geo';
@@ -24,21 +24,34 @@ function readPalette(file: File) {
       const canvas = document.createElement('canvas');
       canvas.width = canvas.height = SAMPLE;
       const ctx = canvas.getContext('2d');
-      if (!ctx) return resolve(null);
+      if (!ctx) {
+        URL.revokeObjectURL(url);
+        return resolve(null);
+      }
       ctx.drawImage(img, 0, 0, SAMPLE, SAMPLE);
       resolve({ url, palette: paletteFromPixels(ctx.getImageData(0, 0, SAMPLE, SAMPLE).data) });
     };
-    img.onerror = () => resolve(null);
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(null);
+    };
     img.src = url;
   });
 }
 
+/** The "Your colours" personalisation section. */
 export function YourColours() {
   const reveal = useReveal<HTMLElement>();
   const { tint, setTint, setRegion } = useWorld();
   const fileRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [message, setMessage] = useState('');
+
+  // Release the previous photo's memory whenever it's replaced or cleared, and on leaving the page.
+  useEffect(() => {
+    if (!preview) return;
+    return () => URL.revokeObjectURL(preview);
+  }, [preview]);
 
   /** Theme the world from a chosen photo. */
   async function applyPhoto(file: File | undefined) {
@@ -115,7 +128,12 @@ export function YourColours() {
           onDrop={onDrop}
           className="relative grid aspect-4/3 cursor-pointer place-items-center overflow-hidden rounded-3xl border-[1.5px] border-dashed border-line text-center text-soft"
         >
-          <input ref={fileRef} type="file" accept="image/*" className="sr-only" onChange={(event) => void applyPhoto(event.target.files?.[0])} />
+          <input ref={fileRef} type="file" accept="image/*" className="sr-only" onChange={(event) => {
+              void applyPhoto(event.target.files?.[0]);
+              // Clear it so choosing the same photo again still works.
+              event.target.value = '';
+            }}
+          />
           {preview ? (
             <img src={preview} alt="Your trip photo" className="absolute inset-0 size-full object-cover" />
           ) : (

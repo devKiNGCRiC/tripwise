@@ -6,6 +6,7 @@ import { AuthLayout } from '@/features/auth/AuthLayout';
 import { GoogleButton } from '@/features/auth/GoogleButton';
 import { SignupForm } from '@/features/auth/SignupForm';
 
+/** Route "/signup". */
 export default function SignupPage() {
   // Keep ?next= when switching to login so the user still ends up where they were going.
   const [params] = useSearchParams();

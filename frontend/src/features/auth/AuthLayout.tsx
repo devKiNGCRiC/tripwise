@@ -22,6 +22,7 @@ interface AuthLayoutProps {
   footer: ReactNode;
 }
 
+/** Shared layout for login and signup. */
 export function AuthLayout({ eyebrow, eyebrowLocal, title, subtitle, children, footer }: AuthLayoutProps) {
   const { region } = useWorld();
 

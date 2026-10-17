@@ -14,6 +14,7 @@ export interface ChipProps extends ComponentProps<'button'> {
   onSelectedChange?: (next: boolean) => void;
 }
 
+/** A pill toggle. */
 export function Chip({ selected = false, icon, className, children, onClick, onSelectedChange, ...rest }: ChipProps) {
   return (
     <button

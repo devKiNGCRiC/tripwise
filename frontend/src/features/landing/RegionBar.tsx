@@ -8,6 +8,7 @@ import { REGIONS } from '@/world/regions';
 import { useThumbnails } from '@/world/useThumbnails';
 import { TOUR_SECONDS, useWorld } from '@/world/WorldProvider';
 
+/** The bar of seven region buttons with painted thumbnails. */
 export function RegionBar({ className }: { className?: string }) {
   const { index, setRegion, touring } = useWorld();
   const thumbs = useThumbnails();

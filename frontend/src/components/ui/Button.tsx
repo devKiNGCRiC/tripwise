@@ -54,6 +54,7 @@ export interface ButtonProps extends ComponentProps<'button'> {
   icon?: ReactNode;
 }
 
+/** The TripWise button. */
 export function Button({
   variant,
   size,

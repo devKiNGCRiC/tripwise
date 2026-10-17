@@ -7,6 +7,7 @@ import { WorldStage } from '@/components/layout/WorldStage';
 import { buttonClasses } from '@/components/ui/Button';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 
+/** Placeholder for pages built later. */
 export default function ComingSoonPage({ title }: { title: string }) {
   return (
     <WorldStage>

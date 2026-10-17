@@ -14,6 +14,7 @@ interface Tab {
   icon: LucideIcon;
 }
 
+/** Bottom navigation for phones. */
 export function MobileTabBar() {
   const { user } = useAuth();
 

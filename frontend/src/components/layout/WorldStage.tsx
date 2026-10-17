@@ -6,6 +6,7 @@
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/utils/cn';
 
+/** A centred stage for a short page over the living world. */
 export function WorldStage({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <section className={cn('flex min-h-svh items-center px-4 pt-28 pb-20', className)}>

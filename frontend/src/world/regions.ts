@@ -60,7 +60,7 @@ export interface Region {
   months: number[];
   sig: [string, string, string];
   places: string[];
-  /** Interface accents [accent, accent2] for Day and Night */
+  /** Interface accents [accent, accent2] for Day and Night — each ≥ 4.5:1 on its glass (contrast.test.ts) */
   ui: { day: [string, string]; night: [string, string] };
   /** Sky gradient [top, horizon] for Day and Night */
   sky: { day: [string, string]; night: [string, string] };
@@ -78,7 +78,7 @@ export const REGIONS: Region[] = [
     lede: 'Valleys of flowers, high passes and temple towns above the clouds — planned around altitude, weather and your pace.',
     elev: '1,800–5,600 m', terr: 'Peaks & valleys', best: 'May–Jun, Sep–Oct', months: [1, 1, 1, 2, 3, 3, 2, 2, 3, 3, 1, 1],
     sig: ['Char Dham — Badrinath & Mana', 'Valley of Flowers trek', 'Pangong Tso at first light'], places: ['Badrinath', 'Mana', 'Leh', 'Spiti', 'Rishikesh'],
-    ui: { day: ['#2f6f9f', '#c8553d'], night: ['#8fc1e3', '#e8b04b'] },
+    ui: { day: ['#2f6f9f', '#be513a'], night: ['#8fc1e3', '#e8b04b'] },
     sky: { day: ['#8fbfe2', '#e9f1f4'], night: ['#040a18', '#1c2b49'] }, sun: [0.74, 0.2], centre: [32, 78],
     layers: [
       { kind: 'land', shape: 'mountains', base: 0.56, amp: 0.36, freq: 1.6, seed: 11, day: '#c9d7e3', night: '#3c4f6e', depth: 0.06, snow: 0.55 },
@@ -95,7 +95,7 @@ export const REGIONS: Region[] = [
     lede: 'Golden forts, stepwells and desert camps under a sky full of stars — with the heat and the distances already worked out.',
     elev: '150–300 m', terr: 'Dunes & forts', best: 'Oct–Mar', months: [3, 3, 2, 1, 1, 1, 1, 1, 2, 3, 3, 3],
     sig: ['A night at a desert camp', 'Jaisalmer fort at golden hour', 'Camel trail at sunset'], places: ['Jaisalmer', 'Jodhpur', 'Bikaner', 'Pushkar', 'Barmer'],
-    ui: { day: ['#b8562a', '#c9922a'], night: ['#f08a5d', '#e9c060'] },
+    ui: { day: ['#b8562a', '#976e20'], night: ['#f08a5d', '#e9c060'] },
     sky: { day: ['#9cc4dc', '#f8e2c2'], night: ['#0a0920', '#33203f'] }, sun: [0.7, 0.26], centre: [26.8, 71.5],
     layers: [
       { kind: 'land', shape: 'dunes', base: 0.64, amp: 0.1, freq: 2.2, seed: 5, day: '#efcf9f', night: '#4b3756', depth: 0.05, deco: 'fort' },
@@ -111,7 +111,7 @@ export const REGIONS: Region[] = [
     lede: 'Ghats at dawn, aarti at dusk and three thousand years of stories — Varanasi, Rishikesh, Prayagraj and beyond.',
     elev: '70–400 m', terr: 'River & ghats', best: 'Oct–Mar', months: [3, 3, 3, 1, 1, 1, 1, 1, 2, 3, 3, 3],
     sig: ['Ganga aarti at Dashashwamedh', 'Dawn boat past 80 ghats', 'Old-city food trail'], places: ['Varanasi', 'Rishikesh', 'Prayagraj', 'Bodh Gaya', 'Ayodhya'],
-    ui: { day: ['#b4541c', '#c9971a'], night: ['#f0a24b', '#ffd36b'] },
+    ui: { day: ['#b4541c', '#8d6a12'], night: ['#f0a24b', '#ffd36b'] },
     sky: { day: ['#f1b98e', '#fbe6cd'], night: ['#0b0a1c', '#3d2440'] }, sun: [0.6, 0.44], centre: [25.5, 82],
     layers: [
       { kind: 'land', shape: 'flat', base: 0.69, amp: 0.03, freq: 2, seed: 3, day: '#cf9f80', night: '#2b1b2e', depth: 0.06, deco: 'temples' },
@@ -140,7 +140,7 @@ export const REGIONS: Region[] = [
     lede: 'Rainforest ridges, roaring waterfalls and tea-and-coffee hills — Munnar, Coorg and the Sahyadri treks, timed with the rains.',
     elev: '600–2,600 m', terr: 'Rainforest & falls', best: 'Jun–Jan', months: [2, 2, 1, 1, 1, 3, 3, 3, 3, 3, 2, 2],
     sig: ['Monsoon waterfall treks', 'Munnar tea-estate mornings', 'Coorg coffee trails'], places: ['Munnar', 'Coorg', 'Matheran', 'Wayanad', 'Agumbe'],
-    ui: { day: ['#2a7a4c', '#3f8fa0'], night: ['#6fcf97', '#7fd3e0'] },
+    ui: { day: ['#2a7a4c', '#367a88'], night: ['#6fcf97', '#7fd3e0'] },
     sky: { day: ['#aebfbd', '#e2ebe6'], night: ['#06110e', '#1a2b27'] }, sun: [0.62, 0.16], centre: [11.5, 76.2],
     layers: [
       { kind: 'land', shape: 'mountains', base: 0.58, amp: 0.22, freq: 1.3, seed: 13, day: '#a8bdb0', night: '#22382f', depth: 0.05, round: true },
@@ -157,7 +157,7 @@ export const REGIONS: Region[] = [
     lede: 'Beach mornings, sea forts, backwaters and fish thalis — the quiet coves and the best sunsets, sorted.',
     elev: 'Sea level', terr: 'Coast & backwaters', best: 'Nov–Mar', months: [3, 3, 3, 2, 1, 1, 1, 1, 2, 2, 3, 3],
     sig: ['A night on a backwater houseboat', 'Sunset from a sea fort', 'Fish-thali crawl along the coast'], places: ['Goa', 'Gokarna', 'Alleppey', 'Varkala', 'Malvan'],
-    ui: { day: ['#d9553a', '#1f7a8c'], night: ['#ff8a6b', '#4fc3d4'] },
+    ui: { day: ['#c34d34', '#1f7a8c'], night: ['#ff8a6b', '#4fc3d4'] },
     sky: { day: ['#7ec6dd', '#fde0c6'], night: ['#061325', '#22325a'] }, sun: [0.66, 0.34], centre: [15, 74.2],
     layers: [
       { kind: 'land', shape: 'hills', base: 0.6, amp: 0.08, freq: 1.4, seed: 2, day: '#7fa597', night: '#1d2c40', depth: 0.05 },

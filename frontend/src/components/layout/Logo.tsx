@@ -5,6 +5,7 @@
 import { Link } from 'react-router';
 import { cn } from '@/lib/utils/cn';
 
+/** The TripWise wordmark linking home. */
 export function Logo({ className }: { className?: string }) {
   return (
     <Link to="/" aria-label="TripWise home" className={cn('group flex items-center gap-2.5 rounded-full', className)}>

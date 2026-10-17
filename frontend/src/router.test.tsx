@@ -44,6 +44,13 @@ describe('routing', () => {
     expect(await screen.findByRole('heading', { name: 'Lost luggage' })).toBeInTheDocument();
   });
 
+  it('keeps the skip link readable in both themes (text colour follows the ink pill)', async () => {
+    renderApp('/');
+    const skip = await screen.findByRole('link', { name: 'Skip to content' });
+    expect(skip.className).toContain('focus:text-on-ink');
+    expect(skip.className).not.toContain('focus:text-white');
+  });
+
   it('logs out from the passport page', async () => {
     session.set('u_demo');
     const { user, router } = renderApp('/passport');

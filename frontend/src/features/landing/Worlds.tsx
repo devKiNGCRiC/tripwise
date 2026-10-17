@@ -8,6 +8,7 @@ import { REGIONS } from '@/world/regions';
 import { useThumbnails } from '@/world/useThumbnails';
 import { useWorld } from '@/world/WorldProvider';
 
+/** The "Seven worlds" cards section. */
 export function Worlds() {
   const reveal = useReveal<HTMLElement>();
   const { setRegion } = useWorld();

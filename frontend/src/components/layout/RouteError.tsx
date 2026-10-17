@@ -8,6 +8,7 @@ import { GlassPanel } from '@/components/ui/GlassPanel';
 import NotFoundPage from '@/pages/NotFoundPage';
 import { WorldStage } from './WorldStage';
 
+/** Shown when a page crashes or fails to load. */
 export function RouteError() {
   const error = useRouteError();
 

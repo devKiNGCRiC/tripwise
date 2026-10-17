@@ -30,6 +30,7 @@ function initials(name: string) {
     .toUpperCase();
 }
 
+/** The floating glass navigation bar. */
 export function Navbar() {
   const { user, status } = useAuth();
 

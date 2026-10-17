@@ -9,6 +9,7 @@ import { Logo } from './Logo';
 /** Footer link: quiet text that warms to ink on hover. */
 const LINK = 'w-fit text-soft transition-colors hover:text-ink';
 
+/** The glass site footer. */
 export function Footer() {
   return (
     <footer className="page-wrap mt-auto pt-10 pb-28 md:pb-8">

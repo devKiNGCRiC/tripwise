@@ -2,8 +2,8 @@
  * WorldProvider.tsx — owns the living world every page floats over.
  *
  * Holds which of the seven regions is showing (remembered in localStorage as `tw_region`;
- * first visit = Himalaya), the landing page's auto-tour (every 10 s, ended for good by any
- * pick the traveller makes), and an optional photo palette that tints everything. It also
+ * first visit = Himalaya), the landing page's auto-tour (every 10 s; it never runs once the
+ * traveller has picked a region — in this visit or an earlier one), and an optional photo palette that tints everything. It also
  * pushes the region's accent colours and sky onto <html> as CSS variables, so the whole
  * interface follows the region and Day/Night.
  */
@@ -34,13 +34,13 @@ interface WorldContextValue {
 
 const WorldContext = createContext<WorldContextValue | null>(null);
 
-/** The remembered region's position, or Himalaya (0). Never throws (storage can be blocked). */
-function readInitialIndex(): number {
+/** The remembered region's position, or -1 if none. Never throws (storage can be blocked). */
+function readSavedIndex(): number {
   try {
     const saved = regionByKey(window.localStorage.getItem(REGION_STORAGE_KEY) ?? '');
-    return saved ? REGIONS.indexOf(saved) : 0;
+    return saved ? REGIONS.indexOf(saved) : -1;
   } catch {
-    return 0;
+    return -1;
   }
 }
 
@@ -51,9 +51,13 @@ function textOn(hex: string): string {
   return luminance > 0.55 ? '#111318' : '#ffffff';
 }
 
+/** Provides the living world (region, tour, photo tint) to everything inside it. */
 export function WorldProvider({ children }: { children: ReactNode }) {
-  const [index, setIndex] = useState(readInitialIndex);
+  const [savedIndex] = useState(readSavedIndex);
+  const [index, setIndex] = useState(() => Math.max(0, savedIndex));
   const [touring, setTouring] = useState(false);
+  // Has the traveller ever chosen a region? Then the world stays where they put it.
+  const [picked, setPicked] = useState(savedIndex >= 0);
   const [tint, setTint] = useState<Palette | null>(null);
   const { theme } = useTheme();
   const reduceMotion = usePrefersReducedMotion();
@@ -66,6 +70,7 @@ export function WorldProvider({ children }: { children: ReactNode }) {
     setIndex(REGIONS.indexOf(next));
     if (opts.fromUser) {
       setTouring(false);
+      setPicked(true);
       try {
         window.localStorage.setItem(REGION_STORAGE_KEY, key);
       } catch {
@@ -73,7 +78,7 @@ export function WorldProvider({ children }: { children: ReactNode }) {
       }
     }
   }, []);
-  const startTour = useCallback(() => setTouring(true), []);
+  const startTour = useCallback(() => setTouring(!picked), [picked]);
   const stopTour = useCallback(() => setTouring(false), []);
 
   // The auto-tour: next region every TOUR_SECONDS (never for reduced / Calm motion).

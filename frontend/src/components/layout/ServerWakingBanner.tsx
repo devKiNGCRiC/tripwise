@@ -6,6 +6,7 @@
 import { useSyncExternalStore } from 'react';
 import { slowRequests } from '@/lib/api/slowRequests';
 
+/** Cold-start heads-up banner. */
 export function ServerWakingBanner() {
   const slowCount = useSyncExternalStore(slowRequests.subscribe, slowRequests.getSnapshot);
   if (slowCount === 0) return null;

@@ -13,6 +13,7 @@ import { useAuth } from '@/features/auth/AuthProvider';
 import { MotionChoice } from '@/features/passport/MotionChoice';
 import { ThemeToggle } from '@/theme/ThemeToggle';
 
+/** Route "/passport": the traveller's passport. */
 export default function PassportPage() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();

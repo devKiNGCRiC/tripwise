@@ -5,7 +5,8 @@
  * - Pointer and scroll parallax (layers move by their depth).
  * - Region changes cross-fade the old world into the new one over 1.4 s.
  * - Day ↔ Night eases (~1 s); a photo palette tints the scene with a `color` blend.
- * - Pauses while the tab is hidden; device pixel ratio capped at 1.5.
+ * - Pauses while the tab is hidden; device pixel ratio capped at 1.5; at most ~60 frames a
+ *   second (120 Hz screens don't draw twice as often — saves battery on laptops).
  * - Reduced / Calm motion: one still frame, redrawn only when something changes.
  * - No canvas support (old browsers, tests): renders nothing — the CSS sky shows instead.
  */
@@ -22,9 +23,12 @@ const FADE_MS = 1400;
 const MAX_DPR = 1.5;
 /** Strength of the photo tint over the scene. */
 const TINT_ALPHA = 0.38;
+/** Minimum time between drawn frames (~60 fps cap). */
+const MIN_FRAME_MS = 15;
 /** The fixed moment shown when motion is reduced. */
 const STILL_SECONDS = 30;
 
+/** The fixed, full-screen canvas the living landscape is drawn on. */
 export function LivingWorld() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { region, tint } = useWorld();
@@ -49,6 +53,7 @@ export function LivingWorld() {
     let previous: Scene | null = null;
     let fadeStart = 0;
     let night = live.current.night;
+    let lastDraw = -Infinity;
     const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
 
     /** Match the canvas to the window (sharp, but capped for speed). */
@@ -70,7 +75,7 @@ export function LivingWorld() {
     /** One animation frame. */
     function tick(ms: number) {
       frame = requestAnimationFrame(tick);
-      if (document.hidden) return;
+      if (document.hidden || ms - lastDraw < MIN_FRAME_MS) return;
       const state = live.current;
 
       // A new region: start cross-fading (instantly in still mode).
@@ -108,6 +113,7 @@ export function LivingWorld() {
         ctx!.restore();
       }
       state.dirty = false;
+      lastDraw = ms;
     }
 
     resize();

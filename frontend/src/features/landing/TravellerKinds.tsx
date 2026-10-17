@@ -17,6 +17,7 @@ const ICONS: Record<string, string> = {
   Couples: 'M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.7-7 10-7 10z',
 };
 
+/** The "However you travel" traveller cards. */
 export function TravellerKinds({ who, onWhoChange }: { who: string; onWhoChange: (who: string) => void }) {
   const reveal = useReveal<HTMLElement>();
   const columns = KINDS.map((kind) => (kind.who === who ? '1.6fr' : '1fr')).join(' ');
