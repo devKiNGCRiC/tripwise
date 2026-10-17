@@ -13,6 +13,7 @@ import { ToastProvider } from '@/components/ui/Toast';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { routes } from '@/router';
 import { ThemeProvider } from '@/theme/ThemeProvider';
+import { WorldProvider } from '@/world/WorldProvider';
 
 /** A fresh cache per test, with retries off so failures show up immediately. */
 export function createTestQueryClient() {
@@ -24,9 +25,11 @@ export function AppProviders({ children, queryClient }: { children: ReactNode; q
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <ToastProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </ToastProvider>
+        <WorldProvider>
+          <ToastProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </ToastProvider>
+        </WorldProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

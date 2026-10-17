@@ -1,9 +1,9 @@
 /**
  * RootLayout.tsx — the frame around every page: banner, floating navbar, page, footer,
- * mobile tab bar and the desktop cursor ring. <Outlet /> is where the current route's page renders.
+ * and mobile tab bar, all floating over the living world (mounted in App.tsx).
+ * <Outlet /> is where the current route's page renders.
  */
 import { Outlet, ScrollRestoration } from 'react-router';
-import { CursorRing } from '@/components/signature/CursorRing';
 import { Footer } from './Footer';
 import { MobileTabBar } from './MobileTabBar';
 import { Navbar } from './Navbar';
@@ -17,7 +17,7 @@ export function RootLayout() {
       {/* Skip link: lets keyboard users jump past the navigation. */}
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-cta focus:px-4 focus:py-2 focus:font-semibold focus:text-on-cta"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:font-semibold focus:text-white"
       >
         Skip to content
       </a>
@@ -28,7 +28,6 @@ export function RootLayout() {
       </main>
       <Footer />
       <MobileTabBar />
-      <CursorRing />
       {/* Scroll to top on new pages, restore position on back/forward. */}
       <ScrollRestoration />
     </div>
