@@ -178,7 +178,7 @@ export function ReviewStep({ values }: Pick<StepProps, 'values'>) {
     ['Pace', PACES.find(([k]) => k === values.pace)?.[1] ?? values.pace],
   ];
   return (
-    <dl className="grid gap-2 sm:grid-cols-2">
+    <dl aria-label="Your answers" className="grid gap-2 sm:grid-cols-2">
       {rows.map(([term, value]) => (
         <div key={term} className={cn('rounded-2xl bg-ink/5 px-4 py-3', term === 'When' && 'sm:col-span-2')}>
           <dt className="text-xs font-bold tracking-[0.12em] text-soft uppercase">{term}</dt>

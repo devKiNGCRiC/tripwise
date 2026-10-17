@@ -46,6 +46,19 @@ describe('PlannerWizard', () => {
     expect(await screen.findByLabelText('Destination')).toHaveValue('Goa');
   });
 
+  it('previews the trip as it takes shape', async () => {
+    const { user } = renderApp('/plan');
+    const where = await screen.findByLabelText('Destination');
+    await user.type(where, 'Jaipur');
+    const preview = screen.getByRole('complementary', { name: 'Your trip so far' });
+    expect(await within(preview).findByRole('img', { name: 'Jaipur' })).toBeInTheDocument();
+    expect(within(preview).getByText('Jaipur', { selector: 'dd' })).toBeInTheDocument();
+    await next(user);
+    setDate('Start date', inDays(10));
+    setDate('End date', inDays(12));
+    expect(within(preview).getByText(/3 days/)).toBeInTheDocument();
+  });
+
   it('asks for a destination before moving on', async () => {
     const { user } = renderApp('/plan');
     await screen.findByLabelText('Destination');
@@ -82,7 +95,7 @@ describe('PlannerWizard', () => {
   it('generates the trip and opens it', async () => {
     const { user, router } = renderApp('/plan');
     await fillAll(user);
-    expect(screen.getByText('Goa')).toBeInTheDocument();
+    expect(within(screen.getByLabelText('Your answers')).getByText('Goa')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Generate my trip' }));
     await waitFor(() => expect(router.state.location.pathname).toMatch(/^\/trips\/it_/));
   });
@@ -98,7 +111,7 @@ describe('PlannerWizard', () => {
     expect(dialog).toHaveTextContent(/resets/i);
     await user.click(within(dialog).getByRole('button', { name: 'OK' }));
     expect(screen.getByRole('heading', { name: 'Ready when you are' })).toBeInTheDocument();
-    expect(screen.getByText('Goa')).toBeInTheDocument();
+    expect(within(screen.getByLabelText('Your answers')).getByText('Goa')).toBeInTheDocument();
   });
 
   it('offers a retry when both AI planners are busy', async () => {
