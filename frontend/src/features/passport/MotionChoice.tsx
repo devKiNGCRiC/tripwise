@@ -21,14 +21,14 @@ export function MotionChoice() {
   return (
     <fieldset>
       <legend className="font-display text-2xl">Motion</legend>
-      <p className="mt-1 text-ink-soft">Choose Calm on slow phones or to save battery.</p>
+      <p className="mt-1 text-soft">Choose Calm on slow phones or to save battery.</p>
       <div className="mt-4 flex flex-wrap gap-3">
         {OPTIONS.map((option) => (
           <label
             key={option.value}
             className={cn(
               'flex cursor-pointer flex-col rounded-2xl border px-5 py-3 transition duration-300 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent',
-              current === option.value ? 'border-transparent bg-cta text-on-cta' : 'border-line hover:border-gold',
+              current === option.value ? 'border-transparent bg-ink text-on-ink' : 'border-line hover:border-accent-2',
             )}
           >
             <input

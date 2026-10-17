@@ -11,12 +11,12 @@ import { cn } from '@/lib/utils/cn';
 import { ThemeToggle } from '@/theme/ThemeToggle';
 import { Logo } from './Logo';
 
-/** Desktop nav link: a gold underline grows under the active/hovered link. */
+/** Desktop nav link: an underline in the region colour grows under the active/hovered link. */
 function navLinkClass({ isActive }: { isActive: boolean }) {
   return cn(
     'relative rounded-full px-3 py-1.5 font-medium transition-colors',
-    'after:absolute after:inset-x-3 after:bottom-0.5 after:h-px after:origin-left after:bg-gold after:transition-transform after:duration-500 after:ease-out-expo',
-    isActive ? 'text-ink after:scale-x-100' : 'text-ink-soft after:scale-x-0 hover:text-ink hover:after:scale-x-100',
+    'after:absolute after:inset-x-3 after:bottom-0.5 after:h-px after:origin-left after:bg-accent after:transition-transform after:duration-500 after:ease-out-expo',
+    isActive ? 'text-ink after:scale-x-100' : 'text-soft after:scale-x-0 hover:text-ink hover:after:scale-x-100',
   );
 }
 
@@ -34,57 +34,57 @@ export function Navbar() {
   const { user, status } = useAuth();
 
   return (
-    <header className="fixed inset-x-0 top-3 z-40 sm:top-4">
+    <header className="fixed inset-x-0 top-3 z-40 sm:top-3.5">
       <div className="page-wrap max-sm:px-3">
-      <nav aria-label="Main" className="glass flex h-16 items-center justify-between gap-3 rounded-full pr-2.5 pl-6">
-        <Logo />
+        <nav aria-label="Main" className="glass flex h-[62px] items-center justify-between gap-3 rounded-full pr-2.5 pl-5 sm:pl-6">
+          <Logo />
 
-        <div className="hidden items-center gap-1 md:flex">
-          <NavLink to="/explore" className={navLinkClass}>
-            Explore
-          </NavLink>
-          <NavLink to="/plan" className={navLinkClass}>
-            Plan a trip
-          </NavLink>
-          {user && (
-            <NavLink to="/trips" className={navLinkClass}>
-              My trips
+          <div className="hidden items-center gap-1 md:flex">
+            <NavLink to="/explore" className={navLinkClass}>
+              Explore
             </NavLink>
-          )}
-          {user?.role === 'admin' && (
-            <NavLink to="/admin" className={navLinkClass}>
-              Admin
+            <NavLink to="/plan" className={navLinkClass}>
+              Plan a trip
             </NavLink>
-          )}
-        </div>
-
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          {/* While auth is restoring, render nothing here to avoid a login-button flash. */}
-          {status === 'authenticated' && user && (
-            <NavLink
-              to="/passport"
-              aria-label="Your passport"
-              className="grid size-11 place-items-center rounded-full bg-cta font-display text-[15px] text-on-cta transition hover:-translate-y-0.5"
-            >
-              {initials(user.name)}
-            </NavLink>
-          )}
-          {status === 'guest' && (
-            <>
-              {/* Wrapper does the hiding: buttonClasses always sets inline-flex, which would fight a `hidden` class. */}
-              <span className="hidden sm:block">
-                <NavLink to="/login" className={buttonClasses({ variant: 'ghost', size: 'sm' })}>
-                  Log in
-                </NavLink>
-              </span>
-              <NavLink to="/signup" className={buttonClasses({ size: 'sm', className: 'h-11 px-5' })}>
-                Sign up
+            {user && (
+              <NavLink to="/trips" className={navLinkClass}>
+                My trips
               </NavLink>
-            </>
-          )}
-        </div>
-      </nav>
+            )}
+            {user?.role === 'admin' && (
+              <NavLink to="/admin" className={navLinkClass}>
+                Admin
+              </NavLink>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            {/* While auth is restoring, render nothing here to avoid a login-button flash. */}
+            {status === 'authenticated' && user && (
+              <NavLink
+                to="/passport"
+                aria-label="Your passport"
+                className="grid size-11 place-items-center rounded-full bg-ink font-semibold text-[14px] text-on-ink transition hover:-translate-y-0.5"
+              >
+                {initials(user.name)}
+              </NavLink>
+            )}
+            {status === 'guest' && (
+              <>
+                {/* Wrapper does the hiding: buttonClasses always sets inline-flex, which would fight a `hidden` class. */}
+                <span className="hidden sm:block">
+                  <NavLink to="/login" className={buttonClasses({ variant: 'ghost', size: 'sm' })}>
+                    Log in
+                  </NavLink>
+                </span>
+                <NavLink to="/signup" className={buttonClasses({ size: 'sm', className: 'h-11 px-5' })}>
+                  Sign up
+                </NavLink>
+              </>
+            )}
+          </div>
+        </nav>
       </div>
     </header>
   );

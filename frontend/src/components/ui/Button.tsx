@@ -1,9 +1,9 @@
 /**
  * Button.tsx — the TripWise button in four flavours:
- *   primary   → solid ink (Day) / gold (Night) pill — the main call to action
+ *   primary   → solid ink pill (dark by Day, light by Night) — the main call to action
  *   secondary → frosted glass pill with a hairline edge
  *   ghost     → text only, soft tint on hover (low-emphasis actions)
- *   glow      → gold-to-teal gradient with a halo — reserved for AI actions like "Generate"
+ *   glow      → filled with the region's accent colour, with a soft halo — "Plan", AI actions
  * `buttonClasses()` is exported so <Link>s can look exactly like buttons.
  */
 import { LoaderCircle } from 'lucide-react';
@@ -19,10 +19,10 @@ const BASE =
 
 /** Per-variant colours (all from design tokens). */
 const VARIANTS: Record<ButtonVariant, string> = {
-  primary: 'border-transparent bg-cta text-on-cta shadow-[0_14px_30px_-14px_rgb(0_0_0/.5)] hover:shadow-[0_18px_34px_-14px_rgb(0_0_0/.55)]',
+  primary: 'border-transparent bg-ink text-on-ink shadow-[0_14px_30px_-14px_rgb(0_0_0/.5)] hover:shadow-[0_18px_34px_-14px_rgb(0_0_0/.55)]',
   secondary: 'glass border-line text-ink',
   ghost: 'border-transparent bg-transparent text-ink hover:translate-y-0 hover:bg-ink/6',
-  glow: 'border-transparent bg-[linear-gradient(120deg,#e6b765,#f29e40_45%,#6fd3d0)] text-[#1c1814] shadow-[0_10px_40px_-8px_rgb(230_183_101/.7)] hover:brightness-105',
+  glow: 'border-transparent bg-accent text-on-accent shadow-[0_12px_34px_-10px_var(--trip-accent)] hover:brightness-105',
 };
 
 /** Heights are ≥ 36px so buttons stay comfortable touch targets on phones. */

@@ -1,7 +1,7 @@
 /**
  * Card.tsx — content container.
- *   glass → frosted translucent panel (default; floats over the liquid colour)
- *   solid → quiet sand/indigo surface with a hairline (dense content, lists)
+ *   glass → strong frosted panel (default; floats over the living world)
+ *   solid → lighter frosted panel with a hairline (secondary content, lists)
  */
 import type { ComponentProps } from 'react';
 import { cn } from '@/lib/utils/cn';
@@ -10,7 +10,7 @@ export type CardVariant = 'glass' | 'solid';
 
 const VARIANTS: Record<CardVariant, string> = {
   glass: 'glass-strong',
-  solid: 'border border-line bg-paper-2',
+  solid: 'glass',
 };
 
 export interface CardProps extends ComponentProps<'div'> {

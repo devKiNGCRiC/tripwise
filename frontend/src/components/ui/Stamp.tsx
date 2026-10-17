@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils/cn';
 export type StampTone = 'gold' | 'teal' | 'red';
 
 const TONES: Record<StampTone, string> = {
-  gold: 'border-gold text-gold',
+  gold: 'border-accent-2 text-accent-2',
   teal: 'border-accent text-accent',
   red: 'border-danger text-danger',
 };

@@ -9,8 +9,9 @@
 
 /* ── Day theme (default) ─────────────────────────────────────────────── */
 :root {
-  /* Text and hairlines */
+  /* Text and hairlines; on-ink = text on a solid ink pill */
   --trip-ink: #121417;
+  --trip-on-ink: #ffffff;
   --trip-soft: #4a4f57;
   --trip-line: rgb(18 20 23 / 0.12);
 
@@ -49,6 +50,7 @@
 /* ── Night theme ─────────────────────────────────────────────────────── */
 [data-theme='dark'] {
   --trip-ink: #f3efe7;
+  --trip-on-ink: #0b1020;
   --trip-soft: #b7b4ad;
   --trip-line: rgb(255 255 255 / 0.14);
 

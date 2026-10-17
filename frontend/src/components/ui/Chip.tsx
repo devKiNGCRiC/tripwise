@@ -1,7 +1,7 @@
 /**
  * Chip.tsx — two small pill components:
  *   Chip → a toggle (aria-pressed) used for filters and quick picks.
- *          Selected chips fill with ink (Day) / gold (Night).
+ *          Chips are frosted glass; selected ones fill with solid ink.
  *   Tag  → a static, non-interactive label (e.g. a destination's vibe).
  */
 import type { ComponentProps, ReactNode } from 'react';
@@ -25,7 +25,7 @@ export function Chip({ selected = false, icon, className, children, onClick, onS
       }}
       className={cn(
         'inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-[15px] font-medium transition duration-300',
-        selected ? 'border-transparent bg-cta text-on-cta' : 'border-line text-ink hover:border-gold hover:bg-glass',
+        selected ? 'border-transparent bg-ink text-on-ink' : 'border-line bg-glass text-ink backdrop-blur-md hover:border-accent',
         className,
       )}
       {...rest}
@@ -36,10 +36,10 @@ export function Chip({ selected = false, icon, className, children, onClick, onS
   );
 }
 
-/** Tag colours: quiet hairline, or gold for highlights like "Coming soon". */
+/** Tag colours: quiet hairline, or the region accent for highlights like "Coming soon". */
 const TAG_TONES = {
   default: 'border-line text-ink',
-  gold: 'border-gold/60 text-gold',
+  gold: 'border-accent/60 text-accent',
 };
 
 /** Static label pill — purely informational, not clickable. */

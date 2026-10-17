@@ -25,7 +25,7 @@ export function Input({ label, error, hint, id, className, ...rest }: InputProps
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={inputId} className="text-sm font-medium text-ink-soft">
+      <label htmlFor={inputId} className="text-sm font-semibold text-soft">
         {label}
       </label>
       <input
@@ -33,16 +33,16 @@ export function Input({ label, error, hint, id, className, ...rest }: InputProps
         aria-invalid={error ? true : undefined}
         aria-describedby={message ? messageId : undefined}
         className={cn(
-          // Soft field on glass; focus brings a teal edge and halo instead of the default outline.
-          'h-12 rounded-2xl border bg-paper/60 px-4 text-base text-ink transition duration-300 outline-none placeholder:text-ink-soft/70',
-          'focus:border-accent focus:bg-paper/90 focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--trip-accent)_18%,transparent)]',
+          // Soft field on glass; focus brings an edge and halo in the region colour instead of the default outline.
+          'h-12 rounded-2xl border bg-glass px-4 text-base text-ink transition duration-300 outline-none placeholder:text-soft/70',
+          'focus:border-accent focus:bg-glass-strong focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--trip-accent)_20%,transparent)]',
           error ? 'border-danger' : 'border-line',
           className,
         )}
         {...rest}
       />
       {message && (
-        <p id={messageId} className={cn('text-sm', error ? 'font-medium text-danger' : 'text-ink-soft')}>
+        <p id={messageId} className={cn('text-sm', error ? 'font-medium text-danger' : 'text-soft')}>
           {message}
         </p>
       )}

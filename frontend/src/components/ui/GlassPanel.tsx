@@ -1,5 +1,5 @@
 /**
- * GlassPanel.tsx — a roomy frosted pane for content floating over the liquid colour.
+ * GlassPanel.tsx — a roomy frosted pane for content floating over the living world.
  * Uses the `glass-strong` utility from index.css so text stays crisp over busy colour.
  */
 import type { ReactNode } from 'react';

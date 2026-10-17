@@ -20,6 +20,7 @@
  */
 @theme inline {
   --color-ink: var(--trip-ink);
+  --color-on-ink: var(--trip-on-ink);
   --color-soft: var(--trip-soft);
   --color-line: var(--trip-line);
   --color-glass: var(--trip-glass);

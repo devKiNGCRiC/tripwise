@@ -1,7 +1,7 @@
 /**
  * MobileTabBar.tsx — app-style bottom navigation on phones (hidden from md up):
  * a floating glass pill with five thumb-reachable tabs. The active tab gets a
- * solid ink (Day) / gold (Night) bubble. The account tab becomes "Log in" for guests.
+ * solid ink bubble. The account tab becomes "Log in" for guests.
  */
 import { Compass, House, LogIn, Sparkles, Ticket, UserRound, type LucideIcon } from 'lucide-react';
 import { NavLink } from 'react-router';
@@ -36,7 +36,7 @@ export function MobileTabBar() {
               className={({ isActive }) =>
                 cn(
                   'flex flex-col items-center gap-0.5 rounded-full py-1.5 text-[11px] font-medium transition-colors duration-300',
-                  isActive ? 'bg-cta text-on-cta' : 'text-ink-soft',
+                  isActive ? 'bg-ink text-on-ink' : 'text-soft',
                 )
               }
             >

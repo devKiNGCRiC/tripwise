@@ -38,7 +38,7 @@ const ToastContext = createContext<ToastContextValue | null>(null);
 const TONES: Record<ToastTone, { icon: typeof Info; accent: string }> = {
   success: { icon: CircleCheck, accent: 'text-accent' },
   error: { icon: CircleAlert, accent: 'text-danger' },
-  info: { icon: Info, accent: 'text-gold' },
+  info: { icon: Info, accent: 'text-accent-2' },
 };
 
 /** Ever-increasing id so React can track each toast. */
@@ -87,7 +87,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold">{toast.title}</p>
-                  {toast.description && <p className="text-sm text-ink-soft">{toast.description}</p>}
+                  {toast.description && <p className="text-sm text-soft">{toast.description}</p>}
                 </div>
                 <button
                   type="button"

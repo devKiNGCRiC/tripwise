@@ -1,17 +1,15 @@
 /**
- * Logo.tsx — the TripWise wordmark: the name in the editorial serif, with
- * "यात्री" (traveller) set small in gold beside it.
+ * Logo.tsx — the TripWise wordmark: a small gateway-arch mark in the region's colour
+ * (shape from WorldDefs' #archClip) beside the name in Fraunces.
  */
 import { Link } from 'react-router';
 import { cn } from '@/lib/utils/cn';
 
 export function Logo({ className }: { className?: string }) {
   return (
-    <Link to="/" aria-label="TripWise home" className={cn('group flex items-baseline gap-1.5 rounded-full', className)}>
-      <span className="font-display text-[26px] leading-none tracking-tight">TripWise</span>
-      <span lang="hi" aria-hidden className="text-[15px] text-gold transition-transform duration-500 ease-out-expo group-hover:-translate-y-0.5">
-        यात्री
-      </span>
+    <Link to="/" aria-label="TripWise home" className={cn('group flex items-center gap-2.5 rounded-full', className)}>
+      <span aria-hidden className="h-[30px] w-[26px] bg-accent transition-transform duration-500 [clip-path:url(#archClip)] group-hover:-translate-y-0.5" />
+      <span className="font-display text-[21px] font-semibold tracking-tight">TripWise</span>
     </Link>
   );
 }

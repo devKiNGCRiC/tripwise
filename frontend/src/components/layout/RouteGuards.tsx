@@ -38,9 +38,9 @@ export function AdminRoute() {
     return (
       <LiquidScene>
         <GlassPanel className="flex flex-col items-center gap-4 text-center">
-          <ShieldAlert className="size-10 text-gold" aria-hidden />
+          <ShieldAlert className="size-10 text-accent-2" aria-hidden />
           <h1 className="text-[clamp(44px,7vw,64px)]">Admins only</h1>
-          <p className="text-lg text-ink-soft">This area is for the TripWise crew. Your trips are safe in your passport.</p>
+          <p className="text-lg text-soft">This area is for the TripWise crew. Your trips are safe in your passport.</p>
           <Link to="/passport" className={buttonClasses({ className: 'mt-2' })}>
             Go to my passport
           </Link>
