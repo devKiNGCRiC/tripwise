@@ -67,4 +67,14 @@ describe('DestinationPage', () => {
     renderApp('/destinations/nowhere');
     expect(await screen.findByRole('heading', { name: 'Destination not found' })).toBeInTheDocument();
   });
+
+  it('clears the search when the address changes from outside (e.g. the navbar link)', async () => {
+    const { router } = renderApp('/explore?q=goa');
+    const box = await screen.findByRole('searchbox', { name: 'Search destinations' });
+    expect(box).toHaveValue('goa');
+    await router.navigate('/explore');
+    await waitFor(() => expect(box).toHaveValue(''));
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    expect(router.state.location.search).toBe('');
+  });
 });

@@ -4,7 +4,7 @@
  * turns the living landscape behind the page into that world (without overwriting the
  * traveller's own remembered pick).
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { Skeleton } from '@/components/ui/Skeleton';
@@ -24,11 +24,14 @@ export default function ExplorePage() {
   const filters = Object.fromEntries(KEYS.map((k) => [k, params.get(k) ?? ''])) as Record<keyof ExploreFilters, string>;
   // The search box updates instantly; the URL (and the request) follow a moment later.
   const [q, setQ] = useState(filters.q);
+  // The last search we wrote to the URL ourselves (anything else came from outside).
+  const written = useRef(filters.q);
   const { setRegion } = useWorld();
 
   /** Change some filters in the URL (empty values are dropped). */
   function writeUrl(next: Partial<ExploreFilters>) {
     const merged = { ...filters, ...next };
+    if (next.q !== undefined) written.current = next.q;
     setParams(Object.fromEntries(Object.entries(merged).filter(([, v]) => v)), { replace: true });
   }
   /** Change filters from the bar (search typing is debounced separately). */
@@ -38,6 +41,14 @@ export default function ExplorePage() {
     if (Object.keys(rest).length || next.q === '') writeUrl(next.q === '' ? next : rest);
   }
 
+  // The URL's search changed from outside (navbar link, Back/Forward): show it in the box.
+  const urlQ = params.get('q') ?? '';
+  useEffect(() => {
+    if (urlQ === written.current) return;
+    written.current = urlQ;
+    setQ(urlQ);
+  }, [urlQ]);
+
   // Debounced search → URL.
   useEffect(() => {
     if (q === (params.get('q') ?? '')) return;
@@ -45,6 +56,7 @@ export default function ExplorePage() {
       const next = new URLSearchParams(params);
       if (q) next.set('q', q);
       else next.delete('q');
+      written.current = q;
       setParams(next, { replace: true });
     }, 250);
     return () => window.clearTimeout(timer);

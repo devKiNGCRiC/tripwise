@@ -32,7 +32,19 @@ const PERSIST = import.meta.env.MODE !== 'test';
 export function loadSavedTrips(): Pick<MockDb, 'itineraries' | 'generations'> {
   try {
     const saved = JSON.parse(window.localStorage.getItem(TRIPS_KEY) ?? 'null');
-    if (saved && Array.isArray(saved.itineraries) && typeof saved.generations === 'object') return saved;
+    if (saved && typeof saved === 'object') {
+      // Keep only trips that look complete, and plan counts that look like counts.
+      const itineraries = Array.isArray(saved.itineraries)
+        ? saved.itineraries.filter((t: StoredItinerary | null) => t && typeof t === 'object' && typeof t.id === 'string' && Array.isArray(t.days) && t.request && typeof t.ownerId === 'string')
+        : [];
+      const generations: MockDb['generations'] = {};
+      if (saved.generations && typeof saved.generations === 'object') {
+        for (const [user, value] of Object.entries(saved.generations as Record<string, { day?: unknown; used?: unknown }>)) {
+          if (value && typeof value.day === 'string' && typeof value.used === 'number') generations[user] = { day: value.day, used: value.used };
+        }
+      }
+      return { itineraries, generations };
+    }
   } catch {
     // Corrupt or blocked storage: start fresh.
   }

@@ -5,10 +5,13 @@
  */
 import { screen, waitFor, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
+import { http, HttpResponse } from 'msw';
 import { api } from '@/lib/api/client';
+import { apiUrl } from '@/lib/api/config';
 import { itinerariesApi } from '@/lib/api/endpoints';
 import type { Itinerary } from '@/lib/api/types';
 import { session } from '@/mocks/db';
+import { server } from '@/mocks/node';
 import { renderApp } from '@/test/render';
 
 /** Plan a 3-day Goa trip for the demo user straight through the mock API. */
@@ -81,5 +84,21 @@ describe('TripsPage', () => {
     renderApp('/trips');
     const card = await screen.findByRole('link', { name: new RegExp(trip.title) });
     expect(card).toHaveAttribute('href', `/trips/${trip.id}`);
+  });
+
+  it('offers a retry when the trip fails to load (not a missing trip)', async () => {
+    server.use(http.get(apiUrl('/itineraries/:id'), () => HttpResponse.json({ error: { code: 'SERVER', message: 'Oops' } }, { status: 500 })));
+    renderApp('/trips/it_any');
+    expect(await screen.findByRole('heading', { name: "We couldn't load this trip" }, { timeout: 8000 })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Try again' })).toBeInTheDocument();
+  });
+
+  it('says so when deleting fails', async () => {
+    const trip = await planGoa();
+    server.use(http.delete(apiUrl('/itineraries/:id'), () => HttpResponse.json({ error: { code: 'SERVER', message: 'Oops' } }, { status: 500 })));
+    const { user } = renderApp(`/trips/${trip.id}`);
+    await user.click(await screen.findByRole('button', { name: 'Delete trip' }));
+    await user.click(within(screen.getByRole('dialog', { name: 'Delete this trip?' })).getByRole('button', { name: 'Delete' }));
+    expect(await screen.findByText("Couldn't delete the trip — try again.")).toBeInTheDocument();
   });
 });

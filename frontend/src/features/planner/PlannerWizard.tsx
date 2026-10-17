@@ -7,10 +7,9 @@
  * explains when they reset; if both AI planners are busy, an alert offers Try again —
  * either way the answers stay put. Success opens the new trip.
  */
-import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import { useForm, type Resolver } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { GlassPanel } from '@/components/ui/GlassPanel';
@@ -19,7 +18,7 @@ import { cn } from '@/lib/utils/cn';
 import { GeneratingScreen } from './GeneratingScreen';
 import { useGenerateItinerary } from './hooks';
 import { QuotaDialog } from './QuotaDialog';
-import { plannerSchema, type PlannerValues } from './schema';
+import { plannerResolver, type PlannerValues } from './schema';
 import { BudgetStep, DatesStep, DestinationStep, InterestsStep, PaceStep, ReviewStep } from './steps';
 
 /** The steps: title, a short prompt, and which fields must be valid to move on. */
@@ -39,7 +38,7 @@ export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) 
   const navigate = useNavigate();
   const generate = useGenerateItinerary();
   const form = useForm<PlannerValues>({
-    resolver: zodResolver(plannerSchema) as unknown as Resolver<PlannerValues>,
+    resolver: plannerResolver,
     defaultValues: { destination: '', startDate: '', endDate: '', budget: 3000, travellers: 'solo', interests: [], pace: 'balanced', ...initial },
   });
   const { register, formState, watch, setValue, trigger, getValues } = form;
@@ -51,8 +50,13 @@ export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) 
   async function goNext() {
     if (await trigger(current.fields, { shouldFocus: true })) setStep((s) => Math.min(last, s + 1));
   }
-  /** Ask the AI for the trip. */
-  function submit() {
+  /** Check every answer (sending the traveller back to the first step with a problem), then ask the AI. */
+  async function submit() {
+    if (!(await trigger())) {
+      const firstBad = STEPS.findIndex((s) => s.fields.some((f) => form.getFieldState(f).invalid));
+      if (firstBad >= 0) setStep(firstBad);
+      return;
+    }
     const v = getValues();
     generate.mutate(
       { destination: v.destination.trim(), startDate: v.startDate, endDate: v.endDate, budget: { amount: v.budget, currency: 'INR' }, travellers: v.travellers, interests: v.interests, pace: v.pace },
@@ -92,7 +96,7 @@ export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) 
         noValidate
         onSubmit={(event) => {
           event.preventDefault();
-          if (step === last) submit();
+          if (step === last) void submit();
           else void goNext();
         }}
       >
@@ -103,10 +107,10 @@ export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) 
         {step === 4 && <PaceStep register={register} errors={formState.errors} values={values} setValue={setValue} />}
         {step === last && <ReviewStep values={values} />}
 
-        {busy && (
+        {busy && step === last && (
           <div role="alert" className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-danger/40 bg-danger/10 px-4 py-3 font-medium text-danger">
             {busy instanceof ApiError ? busy.message : 'Something went wrong. Please try again.'}
-            <Button size="sm" variant="secondary" onClick={submit}>
+            <Button size="sm" variant="secondary" onClick={() => void submit()}>
               Try again
             </Button>
           </div>

@@ -108,4 +108,27 @@ describe('PlannerWizard', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent('Both AI planners are busy');
     expect(screen.getByRole('button', { name: 'Try again' })).toBeInTheDocument();
   });
+
+  it('still checks the dates when the budget box is empty', async () => {
+    const { user } = renderApp('/plan?destination=Goa');
+    await screen.findByLabelText('Destination');
+    await next(user);
+    setDate('Start date', inDays(10));
+    setDate('End date', inDays(11));
+    await next(user);
+    await user.clear(screen.getByLabelText('Budget per person per day (₹)'));
+    await user.click(screen.getByRole('button', { name: 'Back' }));
+    setDate('Start date', '2020-01-01');
+    await next(user);
+    expect(await screen.findByText("Start date can't be in the past")).toBeInTheDocument();
+  });
+
+  it('keeps the AI-busy retry on the review step only', async () => {
+    const { user } = renderApp('/plan');
+    await fillAll(user, 'fail-ai');
+    await user.click(screen.getByRole('button', { name: 'Generate my trip' }));
+    await screen.findByRole('alert');
+    await user.click(screen.getByRole('button', { name: 'Back' }));
+    expect(screen.queryByRole('button', { name: 'Try again' })).not.toBeInTheDocument();
+  });
 });

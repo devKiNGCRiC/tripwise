@@ -112,4 +112,9 @@ describe('mock trip storage', () => {
     expect(saved.itineraries.map((t: { id: string }) => t.id)).toEqual([itinerary.id]);
     expect(saved.generations.u_demo.used).toBe(1);
   });
+
+  it('ignores corrupt saved trips instead of crashing', () => {
+    localStorage.setItem('tw_mock_trips', JSON.stringify({ itineraries: [null, { id: 'x' }, 5], generations: null }));
+    expect(loadSavedTrips()).toEqual({ itineraries: [], generations: {} });
+  });
 });

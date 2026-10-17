@@ -6,17 +6,19 @@
 import { Sparkles } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 import { WorldStage } from '@/components/layout/WorldStage';
+import { LoadError } from '@/components/layout/LoadError';
 import { buttonClasses } from '@/components/ui/Button';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useSharedTrip } from '@/features/trips/hooks';
 import { ItineraryView } from '@/features/trips/ItineraryView';
 import { useTripWorld } from '@/features/trips/useTripWorld';
+import { ApiError } from '@/lib/api/errors';
 
 /** Route "/t/:shareId". */
 export default function SharedTripPage() {
   const { shareId = '' } = useParams();
-  const { data: itinerary, isPending, isError } = useSharedTrip(shareId);
+  const { data: itinerary, isPending, isError, error, refetch } = useSharedTrip(shareId);
   useTripWorld(itinerary?.request.destination);
 
   if (isPending) {
@@ -27,6 +29,9 @@ export default function SharedTripPage() {
         <Skeleton className="h-96" />
       </div>
     );
+  }
+  if (isError && !(error instanceof ApiError && error.code === 'NOT_FOUND')) {
+    return <LoadError what="this shared trip" onRetry={() => void refetch()} />;
   }
   if (isError || !itinerary) {
     return (

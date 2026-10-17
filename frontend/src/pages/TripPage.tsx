@@ -8,6 +8,7 @@ import { ArrowLeft, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { WorldStage } from '@/components/layout/WorldStage';
+import { LoadError } from '@/components/layout/LoadError';
 import { Button, buttonClasses } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { GlassPanel } from '@/components/ui/GlassPanel';
@@ -17,11 +18,12 @@ import { useDeleteTrip, useRegenerateDay, useTrip } from '@/features/trips/hooks
 import { ItineraryView } from '@/features/trips/ItineraryView';
 import { TripActions } from '@/features/trips/TripActions';
 import { useTripWorld } from '@/features/trips/useTripWorld';
+import { ApiError } from '@/lib/api/errors';
 
 /** Route "/trips/:id". */
 export default function TripPage() {
   const { id = '' } = useParams();
-  const { data: itinerary, isPending, isError } = useTrip(id);
+  const { data: itinerary, isPending, isError, error, refetch } = useTrip(id);
   const regenerate = useRegenerateDay(id);
   const remove = useDeleteTrip(id);
   const [confirming, setConfirming] = useState(false);
@@ -37,6 +39,9 @@ export default function TripPage() {
         <Skeleton className="h-96" />
       </div>
     );
+  }
+  if (isError && !(error instanceof ApiError && error.code === 'NOT_FOUND')) {
+    return <LoadError what="this trip" onRetry={() => void refetch()} />;
   }
   if (isError || !itinerary) {
     return (
@@ -83,6 +88,10 @@ export default function TripPage() {
               onSuccess: () => {
                 toast.show({ title: 'Trip deleted', tone: 'info' });
                 navigate('/trips', { replace: true });
+              },
+              onError: () => {
+                setConfirming(false);
+                toast.show({ title: "Couldn't delete the trip — try again.", tone: 'error' });
               },
             })
           }

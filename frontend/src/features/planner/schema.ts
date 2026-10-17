@@ -4,6 +4,8 @@
  * a daily budget of at least ₹500, who's travelling, 1–5 interests, and a pace.
  * Also maps the landing page's "who's going" wording onto the API's traveller types.
  */
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { FieldErrors, Resolver } from 'react-hook-form';
 import { z } from 'zod';
 import type { Interest, Pace, Travellers } from '@/lib/api/types';
 
@@ -30,15 +32,32 @@ export const plannerSchema = z
     travellers: z.enum(['solo', 'couple', 'friends', 'family']),
     interests: z.array(z.string()).min(1, { error: 'Pick at least one interest' }).max(5, { error: 'Pick up to 5 interests' }),
     pace: z.enum(['chill', 'balanced', 'packed']),
-  })
-  .superRefine((v, ctx) => {
-    if (v.startDate && v.startDate < todayIso()) ctx.addIssue({ code: 'custom', path: ['startDate'], message: "Start date can't be in the past" });
-    if (v.startDate && v.endDate) {
-      const days = tripLength(v.startDate, v.endDate);
-      if (days < 1) ctx.addIssue({ code: 'custom', path: ['endDate'], message: 'End date must be on or after the start date' });
-      else if (days > MAX_DAYS) ctx.addIssue({ code: 'custom', path: ['endDate'], message: `Trips can be up to ${MAX_DAYS} days` });
-    }
   });
+
+/**
+ * The date rules, checked on their own: Zod skips object-level refinements whenever any
+ * other field is invalid (an empty budget box), which would let bad dates slip through.
+ */
+export function dateErrors(v: { startDate?: string; endDate?: string }): Partial<Record<'startDate' | 'endDate', string>> {
+  const errors: Partial<Record<'startDate' | 'endDate', string>> = {};
+  if (v.startDate && v.startDate < todayIso()) errors.startDate = "Start date can't be in the past";
+  if (v.startDate && v.endDate) {
+    const days = tripLength(v.startDate, v.endDate);
+    if (days < 1) errors.endDate = 'End date must be on or after the start date';
+    else if (days > MAX_DAYS) errors.endDate = `Trips can be up to ${MAX_DAYS} days`;
+  }
+  return errors;
+}
+
+/** Form resolver: the field rules (Zod) plus the date rules, always both. */
+export const plannerResolver: Resolver<PlannerValues> = async (values, context, options) => {
+  const result = await (zodResolver(plannerSchema) as unknown as Resolver<PlannerValues>)(values, context, options);
+  const dates = dateErrors(values);
+  if (!Object.keys(dates).length) return result;
+  const errors: FieldErrors<PlannerValues> = { ...result.errors };
+  for (const [name, message] of Object.entries(dates)) errors[name as 'startDate' | 'endDate'] ??= { type: 'custom', message };
+  return { values: {}, errors };
+};
 
 /** Form values (the API's TripRequest is built from these on submit). */
 export interface PlannerValues {
