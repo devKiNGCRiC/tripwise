@@ -1,30 +1,37 @@
 /**
- * LandingPage.tsx — route "/": the Monsoon Editorial homepage.
+ * LandingPage.tsx — route "/": the Seven Worlds homepage.
  *
- * Hero over living liquid colour → cinematic journeys gallery → three steps on a
- * gold thread → a sample itinerary over a liquid band → crew preview → closing
- * invitation. Each section reveals itself as it scrolls into view, and the journey
- * rail (large screens) marks every section as a stop on the route.
+ * Hero (headline, planner, dossier, region bar) → "However you travel" traveller cards →
+ * "One India. Seven worlds." → "Your trip. Your palette." — all glass over the living
+ * landscape. While this page is open, the world tours the seven regions every 10 s
+ * until the traveller picks one. "Who's travelling" is shared by the hero chips, the
+ * planner and the traveller cards.
  */
-import { CallToAction } from '@/features/landing/CallToAction';
-import { CrewTeaser } from '@/features/landing/CrewTeaser';
+import { useEffect, useState } from 'react';
 import { Hero } from '@/features/landing/Hero';
-import { HowItWorks } from '@/features/landing/HowItWorks';
-import { JourneyRail } from '@/features/landing/JourneyRail';
-import { Journeys } from '@/features/landing/Journeys';
-import { SampleTrip } from '@/features/landing/SampleTrip';
+import { KINDS } from '@/features/landing/kinds';
+import { TravellerKinds } from '@/features/landing/TravellerKinds';
+import { Worlds } from '@/features/landing/Worlds';
+import { YourColours } from '@/features/landing/YourColours';
+import { useWorld } from '@/world/WorldProvider';
 
 export default function LandingPage() {
+  const { startTour, stopTour } = useWorld();
+  const [who, setWho] = useState(KINDS[0].who);
+
+  // Tour the regions only while the homepage is open.
+  useEffect(() => {
+    startTour();
+    return stopTour;
+  }, [startTour, stopTour]);
+
   return (
     <>
-      <title>TripWise — unhurried, day-by-day trip plans</title>
-      <JourneyRail />
-      <Hero />
-      <Journeys />
-      <HowItWorks />
-      <SampleTrip />
-      <CrewTeaser />
-      <CallToAction />
+      <title>TripWise — trips across India's seven worlds</title>
+      <Hero who={who} onWhoChange={setWho} />
+      <TravellerKinds who={who} onWhoChange={setWho} />
+      <Worlds />
+      <YourColours />
     </>
   );
 }

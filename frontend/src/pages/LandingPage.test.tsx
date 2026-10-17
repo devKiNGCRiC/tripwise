@@ -1,76 +1,64 @@
 /**
- * LandingPage.test.tsx — the Monsoon Editorial homepage: the editorial hero over the
- * liquid photographs (with its slide index), destination cards from the API with their Hindi names, the three
- * steps in order, the sample itinerary and crew sections, and the quick-plan hand-off
- * to the planner (with quick-pick chips).
+ * LandingPage.test.tsx — the Seven Worlds homepage: opens on the Himalaya, the region
+ * bar and the world cards switch the whole page, the dossier shows the region's facts
+ * and a 12-month chart, the planner hands off to the planner page (through login for
+ * guests), traveller cards stay in sync with the hero chips and the planner, and the
+ * personalisation controls are there.
  */
 import { screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { renderApp } from '@/test/render';
 
 describe('LandingPage', () => {
-  it('shows the editorial hero over the liquid photographs', async () => {
-    const { container } = renderApp('/');
-    expect(await screen.findByRole('heading', { level: 1, name: /India, unhurried\./ })).toBeInTheDocument();
-    expect(screen.getByText('यात्रा, बिना झंझट')).toHaveAttribute('lang', 'hi');
-    // jsdom has no WebGL, so the plain photo stand-ins carry the hero.
-    expect(container.querySelectorAll('section img[src*="images.unsplash.com"]').length).toBeGreaterThanOrEqual(4);
+  it('opens on the Himalaya', async () => {
+    renderApp('/');
+    expect(await screen.findByRole('heading', { level: 1, name: /Where the mountains keep time\./ })).toBeInTheDocument();
   });
 
-  it('flies between places from the "Now arriving" panel', async () => {
+  it('switches the whole page from the region bar', async () => {
     const { user } = renderApp('/');
-    const panel = await screen.findByRole('complementary', { name: 'Now arriving' });
-    const places = within(panel).getByRole('group', { name: 'Choose a place' });
-    expect(within(places).getByRole('button', { name: 'Show Varanasi' })).toHaveAttribute('aria-pressed', 'true');
-    expect(within(panel).getByText('वाराणसी')).toHaveAttribute('lang', 'hi');
-    expect(within(panel).getByText('25.32° N · 82.97° E')).toBeInTheDocument();
-
-    await user.click(within(places).getByRole('button', { name: 'Show Ladakh' }));
-    expect(within(places).getByRole('button', { name: 'Show Ladakh' })).toHaveAttribute('aria-pressed', 'true');
-    expect(within(panel).getByText('लद्दाख')).toBeInTheDocument();
-    expect(within(panel).getByText('Jun – Sep')).toBeInTheDocument();
-    expect(within(panel).getByText('Now showing Ladakh')).toBeInTheDocument();
+    const bar = await screen.findByRole('navigation', { name: 'Regions' });
+    await user.click(within(bar).getByRole('button', { name: /^Thar/ }));
+    expect(screen.getByRole('heading', { level: 1, name: /Where the sand remembers kings\./ })).toBeInTheDocument();
+    expect(within(screen.getByRole('complementary', { name: 'Region dossier' })).getByText('150–300 m')).toBeInTheDocument();
+    expect(within(bar).getByRole('button', { name: /^Thar/ })).toHaveAttribute('aria-pressed', 'true');
   });
 
-  it('shows destination cards from the API with their local names', async () => {
+  it('charts all twelve months in the dossier and marks this one', async () => {
     renderApp('/');
-    const goa = await screen.findByRole('link', { name: /^goa/i });
-    expect(within(goa).getByText('गोवा')).toBeInTheDocument();
+    const dossier = await screen.findByRole('complementary', { name: 'Region dossier' });
+    const months = within(within(dossier).getByRole('list', { name: 'When to go' })).getAllByRole('listitem');
+    expect(months).toHaveLength(12);
+    expect(months.filter((m) => m.getAttribute('aria-current') === 'date')).toHaveLength(1);
   });
 
-  it('lists the three planning steps in order', async () => {
-    renderApp('/');
-    const steps = await screen.findByRole('list', { name: 'How TripWise works' });
-    expect(within(steps).getAllByRole('listitem').map((li) => within(li).getByRole('heading').textContent)).toEqual([
-      'Choose your pace',
-      'Watch it take shape',
-      'Share and set off',
-    ]);
-  });
-
-  it('shows a sample itinerary and the crew preview', async () => {
-    renderApp('/');
-    const sample = await screen.findByRole('article', { name: 'Sample itinerary for Udaipur' });
-    expect(within(sample).getByText(/DEL/)).toBeInTheDocument();
-    expect(within(sample).getAllByText(/^Day \d$/)).toHaveLength(3);
-    expect(within(sample).getByText('12 min by auto')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Better with your crew' })).toBeInTheDocument();
-  });
-
-  it('sends the quick-plan destination to the planner (through login for guests)', async () => {
+  it('sends the planned destination to the planner (through login for guests)', async () => {
     const { user, router } = renderApp('/');
     await user.type(await screen.findByLabelText('Where do you want to go?'), 'Goa');
-    await user.click(screen.getByRole('button', { name: 'Plan my journey' }));
-
+    await user.click(screen.getByRole('button', { name: 'Plan' }));
     await waitFor(() => expect(router.state.location.pathname).toBe('/login'));
     expect(router.state.location.search).toBe(`?next=${encodeURIComponent('/plan?destination=Goa')}`);
   });
 
-  it('fills the destination from a quick-pick chip', async () => {
+  it('keeps traveller cards, hero chips and the planner in step', async () => {
     const { user } = renderApp('/');
-    const picks = await screen.findByRole('group', { name: 'Popular picks' });
-    await user.click(within(picks).getByRole('button', { name: 'Ladakh' }));
-    expect(screen.getByLabelText('Where do you want to go?')).toHaveValue('Ladakh');
-    expect(within(picks).getByRole('button', { name: 'Ladakh' })).toHaveAttribute('aria-pressed', 'true');
+    const kinds = await screen.findByRole('region', { name: /However you travel/ });
+    await user.click(within(kinds).getByRole('button', { name: /^Family/ }));
+    expect(within(kinds).getByRole('button', { name: /^Family/ })).toHaveAttribute('aria-pressed', 'true');
+    expect(within(screen.getByRole('group', { name: "Who's travelling" })).getByRole('button', { name: 'Family' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByLabelText("Who's going")).toHaveValue('Family');
+  });
+
+  it('switches the world from the "Seven worlds" cards', async () => {
+    const { user } = renderApp('/');
+    const worlds = await screen.findByRole('region', { name: /Seven worlds/ });
+    await user.click(within(worlds).getByRole('button', { name: /^Konkan & Malabar/ }));
+    expect(screen.getByRole('heading', { level: 1, name: /Where the sun clocks out late\./ })).toBeInTheDocument();
+  });
+
+  it('offers photo colours and location', async () => {
+    renderApp('/');
+    expect(await screen.findByRole('button', { name: 'Choose a photo' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Use my location' })).toBeInTheDocument();
   });
 });
