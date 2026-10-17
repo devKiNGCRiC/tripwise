@@ -16,6 +16,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_goa',
     slug: 'goa',
+    region: 'konkan',
     localName: 'गोवा',
     name: 'Goa',
     country: 'India',
@@ -30,6 +31,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_manali',
     slug: 'manali',
+    region: 'himalaya',
     localName: 'मनाली',
     name: 'Manali',
     country: 'India',
@@ -44,6 +46,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_jaipur',
     slug: 'jaipur',
+    region: 'thar',
     localName: 'जयपुर',
     name: 'Jaipur',
     country: 'India',
@@ -58,6 +61,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_kerala',
     slug: 'kerala',
+    region: 'konkan',
     localName: 'केरल',
     name: 'Kerala Backwaters',
     country: 'India',
@@ -72,6 +76,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_ladakh',
     slug: 'ladakh',
+    region: 'himalaya',
     localName: 'लद्दाख',
     name: 'Ladakh',
     country: 'India',
@@ -86,6 +91,7 @@ export const seedDestinations: Destination[] = [
   {
     id: 'd_varanasi',
     slug: 'varanasi',
+    region: 'ganga',
     localName: 'वाराणसी',
     name: 'Varanasi',
     country: 'India',

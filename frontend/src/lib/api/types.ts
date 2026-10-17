@@ -55,8 +55,10 @@ export interface Destination {
   /** URL-friendly name used in /destinations/:slug, e.g. "goa" */
   slug: string;
   name: string;
-  /** The name in Hindi (Devanagari), shown on station-board signs, e.g. "गोवा". */
+  /** The name in Hindi (Devanagari), e.g. "गोवा". */
   localName?: string;
+  /** Which of India's seven worlds it belongs to (pages show that living landscape). Absent abroad. */
+  region?: 'himalaya' | 'thar' | 'ganga' | 'deccan' | 'ghats' | 'konkan' | 'sisters';
   country: string;
   vibes: Vibe[];
   budgetTier: BudgetTier;
@@ -96,12 +98,19 @@ export interface TripRequest {
   pace: Pace;
 }
 
+/** How you get from one activity to the next. */
+export type TransferMode = 'walk' | 'auto' | 'cab' | 'bus' | 'train' | 'boat';
+
 export interface Activity {
   time: 'morning' | 'afternoon' | 'evening';
+  /** Planned start, 24-hour "HH:MM" */
+  startTime?: string;
   title: string;
   description: string;
   location?: string;
   estCost?: number;
+  /** Getting to the NEXT activity (absent on the day's last one) */
+  transfer?: { mode: TransferMode; minutes: number };
 }
 
 export interface Day {
@@ -137,6 +146,12 @@ export interface Quota {
   limit: number;
   /** ISO time when `used` resets to 0 */
   resetsAt: string;
+}
+
+/** Response of POST /itineraries/generate. */
+export interface GenerateResponse {
+  itinerary: Itinerary;
+  quota: Quota;
 }
 
 /* ── Errors ───────────────────────────────────────────────────────────── */

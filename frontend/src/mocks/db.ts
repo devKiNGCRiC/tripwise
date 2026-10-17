@@ -5,13 +5,22 @@
  * one thing we persist — in localStorage — to imitate the real backend's
  * httpOnly refresh cookie, so a page refresh keeps you logged in during demos.
  */
-import type { Destination, User } from '@/lib/api/types';
+import type { Destination, Itinerary, User } from '@/lib/api/types';
 import { seedDestinations } from './data/destinations';
 import { seedUsers, type MockUser } from './data/users';
+
+/** A saved trip as the fake database keeps it: plus its owner and how often days were regenerated. */
+export interface StoredItinerary extends Itinerary {
+  ownerId: string;
+  variants?: number;
+}
 
 interface MockDb {
   users: MockUser[];
   destinations: Destination[];
+  itineraries: StoredItinerary[];
+  /** AI plans used per user today */
+  generations: Record<string, { day: string; used: number }>;
 }
 
 /** Fresh deep copies of the seed data, so tests can mutate freely. */
@@ -19,6 +28,8 @@ function createDb(): MockDb {
   return {
     users: structuredClone(seedUsers),
     destinations: structuredClone(seedDestinations),
+    itineraries: [],
+    generations: {},
   };
 }
 

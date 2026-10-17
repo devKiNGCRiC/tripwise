@@ -1,8 +1,9 @@
 /**
  * index.ts — every mock API handler in one list.
- * Plans 2 and 3 append itinerary, quota, share and admin handlers here.
+ * Plan 3 appends the admin handlers here.
  */
 import { authHandlers } from './auth';
 import { destinationHandlers } from './destinations';
+import { itineraryHandlers } from './itineraries';
 
-export const handlers = [...authHandlers, ...destinationHandlers];
+export const handlers = [...authHandlers, ...destinationHandlers, ...itineraryHandlers];
