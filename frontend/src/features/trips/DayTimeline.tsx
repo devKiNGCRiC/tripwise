@@ -25,7 +25,7 @@ export function DayTimeline({ day, onRegenerate, regenerating = false }: DayTime
   const dayCost = day.activities.reduce((sum, a) => sum + (a.estCost ?? 0), 0);
 
   return (
-    <section aria-label={label} className="glass-strong rounded-card p-5 sm:p-7">
+    <section id={`day-${day.dayNumber}`} aria-label={label} className="glass-strong scroll-mt-40 rounded-card p-5 sm:p-7">
       <header className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="flex flex-wrap items-baseline gap-3">
@@ -37,7 +37,7 @@ export function DayTimeline({ day, onRegenerate, regenerating = false }: DayTime
           </h3>
         </div>
         <div className="flex items-center gap-3">
-          {dayCost > 0 && <span className="text-sm font-semibold text-soft">~{formatMoney({ amount: dayCost, currency: 'INR' })} activities</span>}
+          {dayCost > 0 && <span className="text-sm font-semibold text-soft">≈ {formatMoney({ amount: dayCost, currency: 'INR' })} on activities</span>}
           {onRegenerate && (
             <Button
               variant="secondary"

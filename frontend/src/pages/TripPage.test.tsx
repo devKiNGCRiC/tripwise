@@ -46,6 +46,17 @@ describe('TripPage', () => {
     expect(screen.getByRole('list', { name: 'Packing list' })).toBeInTheDocument();
   });
 
+  it('opens with a photo of the place and a day strip to jump between days', async () => {
+    const trip = await planGoa();
+    renderApp(`/trips/${trip.id}`);
+    expect(await screen.findByRole('img', { name: 'Goa' })).toBeInTheDocument();
+    const strip = screen.getByRole('navigation', { name: 'Days' });
+    const links = within(strip).getAllByRole('link');
+    expect(links.map((l) => l.getAttribute('href'))).toEqual(['#day-1', '#day-2', '#day-3']);
+    expect(document.getElementById('day-2')).toHaveAccessibleName(/^Day 2/);
+    expect(screen.getAllByText(/on activities/)).toHaveLength(3);
+  });
+
   it('regenerates a single day', async () => {
     const trip = await planGoa();
     const { user } = renderApp(`/trips/${trip.id}`);

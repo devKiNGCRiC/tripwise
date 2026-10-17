@@ -19,7 +19,7 @@ import { ApiError } from '@/lib/api/errors';
 export default function SharedTripPage() {
   const { shareId = '' } = useParams();
   const { data: itinerary, isPending, isError, error, refetch } = useSharedTrip(shareId);
-  useTripWorld(itinerary?.request.destination);
+  const place = useTripWorld(itinerary?.request.destination);
 
   if (isPending) {
     return (
@@ -53,6 +53,7 @@ export default function SharedTripPage() {
       <title>{`${itinerary.title} (shared) · TripWise`}</title>
       <ItineraryView
         itinerary={itinerary}
+        place={place}
         actions={
           <>
             <p className="self-center text-soft">Shared with you — read-only.</p>

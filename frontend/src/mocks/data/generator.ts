@@ -14,8 +14,22 @@ const PER_DAY: Record<Pace, number> = { chill: 2, balanced: 3, packed: 4 };
 const FIRST_START: Record<Pace, number> = { chill: 10 * 60, balanced: 9 * 60 + 30, packed: 8 * 60 };
 /** Rough group cost multiplier over one person's daily cost. */
 const TRAVELLER_FACTOR: Record<TripRequest['travellers'], number> = { solo: 1, couple: 1.8, friends: 3.2, family: 3.5 };
-/** Day themes, picked per day. */
-const THEMES = ['Arrive and settle in', 'Old town and local flavours', 'Into the landscape', 'Markets, craft and stories', 'Slow morning, golden evening', 'Hidden corners', 'One last look'];
+/** What a day is about: one of the traveller's interests, or the destination's big sights. */
+type Focus = Interest | 'sights';
+/** A day's title for each focus, so the title always matches what's in the day. */
+const THEMES: Record<Focus, string> = {
+  sights: 'The big sights',
+  food: 'Old town and local flavours',
+  culture: 'Stories, music and old lanes',
+  adventure: 'Into the wild',
+  nightlife: 'After dark',
+  nature: 'Into the landscape',
+  shopping: 'Markets, craft and makers',
+  history: 'Forts, palaces and pasts',
+  relaxation: 'Slow and easy',
+  photography: 'Chasing the light',
+  spiritual: 'Temples and quiet rituals',
+};
 
 /** When an idea works: "am" = before 11:00, "pm" = from 16:00 (sunset, nightlife), "any" = whenever. */
 type When = 'am' | 'pm' | 'any';
@@ -83,14 +97,19 @@ export function buildDay(req: TripRequest, destination: Destination | undefined,
   const random = seeded(`${req.destination}|${date}|${dayNumber}|${variant}|${req.interests.join(',')}`);
   const place = destination?.name ?? req.destination;
   const count = PER_DAY[req.pace];
-  // Ideas: the destination's own highlights, the traveller's interests, then gentle fillers.
-  const highlights: Idea[] = (destination?.highlights ?? []).map((h) => [h, `One of ${place}'s best-loved sights.`, 'any']);
-  const pool = [...highlights, ...req.interests.flatMap((i) => IDEAS[i])];
+  // Ideas, each tagged with its focus: the destination's highlights, then the traveller's interests.
+  const highlights: [Focus, Idea][] = (destination?.highlights ?? []).map((h) => ['sights', [h, `One of ${place}'s best-loved sights.`, 'any']]);
+  const pool: [Focus, Idea][] = [...highlights, ...req.interests.flatMap((i) => IDEAS[i].map((idea): [Focus, Idea] => [i, idea]))];
+  // Each day has a focus (rotating through sights and interests); its ideas come first that day.
+  const foci: Focus[] = [...(highlights.length ? (['sights'] as Focus[]) : []), ...req.interests];
+  const focus = foci[(dayNumber - 1 + variant) % foci.length] ?? 'sights';
   const used = new Set<string>();
-  /** A not-yet-used idea that suits this time of day (random among those that fit). */
+  /** A not-yet-used idea that suits this time of day — the day's focus first, then anything that fits. */
   const pick = (minutes: number): Idea => {
-    const fitting = pool.filter(([title, , when]) => !used.has(title) && fits(when, minutes));
-    const choice = fitting[Math.floor(random() * fitting.length)] ?? FILLERS.find(([title, , when]) => !used.has(title) && fits(when, minutes)) ?? FILLERS[0];
+    const fitting = pool.filter(([, [title, , when]]) => !used.has(title) && fits(when, minutes));
+    const onFocus = fitting.filter(([f]) => f === focus);
+    const from = onFocus.length ? onFocus : fitting;
+    const choice = from[Math.floor(random() * from.length)]?.[1] ?? FILLERS.find(([title, , when]) => !used.has(title) && fits(when, minutes)) ?? FILLERS[0];
     used.add(choice[0]);
     return choice;
   };
@@ -114,7 +133,7 @@ export function buildDay(req: TripRequest, destination: Destination | undefined,
     minutes += 90 + Math.floor(random() * 90) + (isLast ? 0 : (activities[k].transfer?.minutes ?? 0));
     minutes = Math.ceil(minutes / 15) * 15;
   }
-  return { dayNumber, date, theme: THEMES[Math.floor(random() * THEMES.length)], activities };
+  return { dayNumber, date, theme: THEMES[focus], activities };
 }
 
 /** Packing list: basics plus what the region and season call for. */
@@ -138,6 +157,13 @@ function tipsFor(req: TripRequest, place: string): string[] {
   return tips;
 }
 
+/** "food and culture", "nature, photography, culture and more" — interests as a natural phrase. */
+function listInterests(interests: Interest[]) {
+  if (interests.length <= 1) return interests[0] ?? 'what you love';
+  if (interests.length <= 3) return `${interests.slice(0, -1).join(', ')} and ${interests.at(-1)}`;
+  return `${interests.slice(0, 3).join(', ')} and more`;
+}
+
 /** Generate a whole itinerary (without id/createdAt, which the store assigns). */
 export function generateItinerary(req: TripRequest, destination?: Destination, variant = 0): Omit<Itinerary, 'id' | 'createdAt'> {
   const place = destination?.name ?? req.destination;
@@ -149,7 +175,7 @@ export function generateItinerary(req: TripRequest, destination?: Destination, v
   return {
     request: req,
     title: `${dates.length} ${dates.length === 1 ? 'day' : 'days'} in ${place}`,
-    summary: `A ${req.pace} trip through ${place}, shaped around ${req.interests.join(', ')}.`,
+    summary: `A ${req.pace} trip through ${place}, shaped around ${listInterests(req.interests)}.`,
     days,
     estimatedCost: {
       total,

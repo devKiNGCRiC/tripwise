@@ -29,7 +29,7 @@ export default function TripPage() {
   const [confirming, setConfirming] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
-  useTripWorld(itinerary?.request.destination);
+  const place = useTripWorld(itinerary?.request.destination);
 
   if (isPending) {
     return (
@@ -66,6 +66,7 @@ export default function TripPage() {
       </Link>
       <ItineraryView
         itinerary={itinerary}
+        place={place}
         onRegenerateDay={(day) => regenerate.mutate(day, { onError: () => toast.show({ title: "Couldn't refresh that day — try again.", tone: 'error' }) })}
         regeneratingDay={regenerate.isPending ? regenerate.variables : null}
         actions={

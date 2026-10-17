@@ -8,7 +8,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { api } from '@/lib/api/client';
 import { itinerariesApi, meApi, shareApi } from '@/lib/api/endpoints';
 import type { TripRequest } from '@/lib/api/types';
-import { buildDay } from './data/generator';
+import { buildDay, generateItinerary } from './data/generator';
 import { db, loadSavedTrips, saveTrips, session } from './db';
 
 /** A 3-day Goa trip for two. */
@@ -116,5 +116,21 @@ describe('mock trip storage', () => {
   it('ignores corrupt saved trips instead of crashing', () => {
     localStorage.setItem('tw_mock_trips', JSON.stringify({ itineraries: [null, { id: 'x' }, 5], generations: null }));
     expect(loadSavedTrips()).toEqual({ itineraries: [], generations: {} });
+  });
+
+  it('gives each day a theme that matches what is in it', () => {
+    const req = { ...goaTrip, destination: 'Somewhere new', interests: ['spiritual', 'food'] as TripRequest['interests'] };
+    const day = buildDay(req, undefined, '2026-12-12', 1, 0);
+    expect(day.theme).toBe('Temples and quiet rituals');
+    expect(day.activities.some((a) => ['Temple at dawn', 'Evening aarti'].includes(a.title))).toBe(true);
+    const next = buildDay(req, undefined, '2026-12-13', 2, 0);
+    expect(next.theme).toBe('Old town and local flavours');
+  });
+
+  it('writes a natural summary of the interests', () => {
+    expect(generateItinerary({ ...goaTrip, interests: ['food', 'culture'] }).summary).toBe('A balanced trip through Goa, shaped around food and culture.');
+    expect(generateItinerary({ ...goaTrip, interests: ['nature', 'photography', 'culture', 'history', 'adventure'] }).summary).toBe(
+      'A balanced trip through Goa, shaped around nature, photography, culture and more.',
+    );
   });
 });
