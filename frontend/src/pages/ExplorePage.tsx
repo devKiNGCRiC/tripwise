@@ -6,6 +6,7 @@
  */
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { DestinationCard } from '@/features/explore/DestinationCard';
@@ -80,16 +81,17 @@ export default function ExplorePage() {
   return (
     <div className="page-wrap pt-28 pb-16">
       <title>Explore destinations · TripWise</title>
-      <header className="glass mb-6 inline-block rounded-[28px] px-7 py-5">
-        <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">Seven worlds and beyond</p>
-        <h1 className="mt-1 text-[clamp(40px,5vw,68px)]">
-          Explore <em>where to go.</em>
-        </h1>
-      </header>
+      <PageHeader
+        eyebrow="Seven worlds and beyond"
+        title="Explore"
+        accent="where to go."
+        lede={results ? `${results.length} ${results.length === 1 ? 'place' : 'places'} to start from` : undefined}
+        className="mb-4"
+      />
 
       <Filters value={{ ...filters, q }} onChange={update} />
 
-      <div className="mt-8">
+      <div className="mt-6">
         {isPending && (
           <div role="status" className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <span className="sr-only">Loading destinations…</span>
@@ -119,7 +121,7 @@ export default function ExplorePage() {
           <ul aria-label="Destinations" className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {results.map((destination) => (
               <li key={destination.id}>
-                <DestinationCard destination={destination} className="h-[440px]" />
+                <DestinationCard destination={destination} className="h-[400px]" />
               </li>
             ))}
           </ul>

@@ -12,7 +12,7 @@ export function RegionBar({ className }: { className?: string }) {
   const { index, setRegion, touring } = useWorld();
 
   return (
-    <nav aria-label="Regions" className={cn('glass grid grid-flow-col auto-cols-[minmax(190px,1fr)] gap-1.5 overflow-x-auto rounded-[28px] p-2 [scrollbar-width:none]', className)}>
+    <nav aria-label="Regions" className={cn('glass grid grid-flow-col auto-cols-[minmax(190px,1fr)] gap-1.5 overflow-x-auto rounded-[28px] p-2 scrollbar-none', className)}>
       {REGIONS.map((region, i) => (
         <button
           key={region.key}

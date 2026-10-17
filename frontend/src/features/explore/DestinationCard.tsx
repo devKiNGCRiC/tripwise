@@ -45,12 +45,12 @@ export function DestinationCard({ destination, className }: DestinationCardProps
         className="absolute inset-0 size-full scale-[1.02] object-cover transition-transform duration-[1600ms] ease-out-expo group-hover:scale-[1.07]"
       />
       {/* Darken the bottom so the caption always reads */}
-      <span aria-hidden className="absolute inset-0 bg-linear-to-b from-transparent from-40% to-[rgb(10_8_6/.8)]" />
+      <span aria-hidden className="absolute inset-0 bg-linear-to-b from-transparent from-30% via-[rgb(10_8_6/.35)] via-55% to-[rgb(10_8_6/.88)]" />
 
       <span className={cn(GLASS_TAG, 'left-4')}>from {price}/day</span>
       {vibe && <span className={cn(GLASS_TAG, 'right-4 capitalize')}>{vibe}</span>}
 
-      <div className="absolute inset-x-6 bottom-6">
+      <div className="absolute inset-x-6 bottom-6 [text-shadow:0_2px_12px_rgb(0_0_0/.45)]">
         <p lang={destination.localName ? 'hi' : undefined} className="text-xl text-[#e6b765]">
           {destination.localName ?? destination.country}
         </p>

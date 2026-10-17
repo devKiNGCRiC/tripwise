@@ -23,7 +23,7 @@ describe('ExplorePage', () => {
   it('narrows by vibe and keeps the filter in the address', async () => {
     const { user, router } = renderApp('/explore');
     await waitFor(async () => expect(await results()).toHaveLength(12));
-    await user.click(within(screen.getByRole('group', { name: 'Vibe' })).getByRole('button', { name: 'Beach' }));
+    await user.selectOptions(screen.getByRole('combobox', { name: 'Vibe' }), 'beach');
     await waitFor(() => expect(router.state.location.search).toContain('vibe=beach'));
     await waitFor(async () => {
       const names = (await results()).map((a) => a.getAttribute('aria-label'));
@@ -31,6 +31,13 @@ describe('ExplorePage', () => {
       expect(names.length).toBeLessThan(12);
       expect(names.some((n) => n?.startsWith('Goa'))).toBe(true);
     });
+  });
+
+  it('keeps every filter in one compact bar above the results', async () => {
+    renderApp('/explore');
+    const bar = await screen.findByRole('search', { name: 'Filter destinations' });
+    for (const name of ['Vibe', 'Budget', 'Best month']) expect(within(bar).getByRole('combobox', { name })).toBeInTheDocument();
+    expect(within(bar).getByRole('group', { name: 'World' })).toBeInTheDocument();
   });
 
   it('filters by world (one of the seven regions)', async () => {

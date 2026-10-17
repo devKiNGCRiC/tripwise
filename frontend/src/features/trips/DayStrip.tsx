@@ -28,7 +28,7 @@ export function DayStrip({ days }: { days: Day[] }) {
   }, [days]);
 
   return (
-    <nav aria-label="Days" className="glass sticky top-[84px] z-30 -mx-1 overflow-x-auto rounded-full p-1.5 [scrollbar-width:none]">
+    <nav aria-label="Days" className="glass sticky top-[84px] z-30 -mx-1 overflow-x-auto rounded-full p-1.5 scrollbar-none">
       <ol className="flex w-max gap-1">
         {days.map((day) => {
           const on = day.dayNumber === current;
