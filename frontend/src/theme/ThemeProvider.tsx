@@ -1,5 +1,5 @@
 /**
- * ThemeProvider.tsx — owns the Day (light) / Night Flight (dark) theme.
+ * ThemeProvider.tsx — owns the Day (light, dawn) / Night (dark, monsoon) theme.
  *
  * The theme is applied as <html data-theme="…">; every token in tokens.css
  * switches automatically. The choice is remembered in localStorage, falling
@@ -14,7 +14,7 @@ export type Theme = 'light' | 'dark';
 export const THEME_STORAGE_KEY = 'tw_theme';
 
 /** Browser UI colour (mobile address bar) for each theme — mirrors --trip-paper. */
-const THEME_COLOR: Record<Theme, string> = { light: '#FFF8EE', dark: '#0B1026' };
+const THEME_COLOR: Record<Theme, string> = { light: '#f6efe3', dark: '#0a1230' };
 
 interface ThemeContextValue {
   theme: Theme;

@@ -1,11 +1,13 @@
 /**
- * ThemeToggle.tsx — round sun/moon button that flips Day ↔ Night Flight.
+ * ThemeToggle.tsx — the Day ↔ Night switch: a small glass pill with a sun and a moon,
+ * and a knob that glides under whichever theme is on.
  * The accessible label describes what the button WILL do, not the current state.
  */
 import { Moon, Sun } from 'lucide-react';
+import { cn } from '@/lib/utils/cn';
 import { useTheme } from './ThemeProvider';
 
-export function ThemeToggle() {
+export function ThemeToggle({ className }: { className?: string }) {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
 
@@ -13,10 +15,19 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
-      aria-label={isDark ? 'Switch to day theme' : 'Switch to night flight theme'}
-      className="grid size-10 place-items-center rounded-full border-2 border-line bg-surface text-ink shadow-pop-sm transition hover:-rotate-12 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-deep"
+      aria-label={isDark ? 'Switch to day theme' : 'Switch to night theme'}
+      className={cn('relative grid h-10 w-[76px] shrink-0 grid-cols-2 items-center rounded-full border border-line p-1 text-ink', className)}
     >
-      {isDark ? <Sun className="size-5" aria-hidden /> : <Moon className="size-5" aria-hidden />}
+      {/* The knob: slides right for Night */}
+      <span
+        aria-hidden
+        className={cn(
+          'absolute top-1 left-1 size-8 rounded-full bg-ink transition-transform duration-500 ease-out-expo',
+          isDark && 'translate-x-[34px]',
+        )}
+      />
+      <Sun aria-hidden className={cn('relative mx-auto size-4 transition-colors duration-500', !isDark && 'text-paper')} />
+      <Moon aria-hidden className={cn('relative mx-auto size-4 transition-colors duration-500', isDark && 'text-paper')} />
     </button>
   );
 }

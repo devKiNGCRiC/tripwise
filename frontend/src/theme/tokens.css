@@ -1,88 +1,70 @@
 /**
- * tokens.css — THE single source of truth for TripWise's look ("Yatra Mela").
+ * tokens.css — THE single source of truth for TripWise's look ("Monsoon Editorial").
  *
- * Inspired by Indian journeys: railway departure boards, truck-art colour,
- * the Uttarayan kite sky by day and sky lanterns by night.
- * Every colour has ONE job (see the table in docs/superpowers/specs/2026-10-07-yatra-mela-redesign.md).
+ * Day = dawn (ivory, peach, soft teal, saffron light). Night = monsoon (indigo, rain teal, marigold).
+ * Every colour has ONE job (see docs/superpowers/specs/2026-10-17-monsoon-editorial.md §2).
  * Want a different look later? Edit this file only — Tailwind utilities
- * (bg-saffron, text-ink, shadow-pop…) are mapped to these variables in index.css.
+ * (bg-paper, text-gold, bg-cta…) are mapped to these variables in index.css.
+ * The liquid shader's two palettes live in components/signature/liquidShader.ts.
  */
 
 /* ── Day theme (default) ─────────────────────────────────────────────── */
 :root {
-  /* Page surfaces: clean white page, warm alternate sections, white card faces */
-  --trip-paper: #ffffff;
-  --trip-paper-2: #fff4e0;
-  --trip-surface: #ffffff;
+  /* Page surfaces: warm ivory page, a slightly deeper sand for alternate areas */
+  --trip-paper: #f6efe3;
+  --trip-paper-2: #efe4d2;
 
-  /* Text and outlines: true black ink */
-  --trip-ink: #000000;
-  --trip-ink-soft: #3d3d45;
-  --trip-line: #000000;
+  /* Text and hairlines */
+  --trip-ink: #1c1814;
+  --trip-ink-soft: #5b5148;
+  --trip-line: rgb(28 24 20 / 0.14);
 
-  /* Kesari (brand) — saffron fading into truck-art orange */
-  --trip-saffron: #ff9933;
-  --trip-orange: #ff7a00;
-  /* Peela — railway-board yellow: signs, highlights, selected things */
-  --trip-yellow: #ffc72c;
-  /* Aasmani — sky blue for the sky and AI; the deep shade for focus rings and links */
-  --trip-sky: #5bc8f5;
-  --trip-sky-deep: #1b8fd1;
-  /* Hara — success, saved, budget-friendly */
-  --trip-green: #9be08a;
-  --trip-green-deep: #2f9e55;
-  /* Laal — alerts and hot deals (fills); `danger` is the darker shade for readable error text */
-  --trip-red: #e63946;
-  --trip-danger: #c81e2d;
-  /* Text that sits ON saffron / yellow / green / sky fills */
-  --trip-on-accent: #000000;
+  /* Gold — the one accent metal: Hindi accents, ornaments, numbers. Deep enough for AA text on ivory. */
+  --trip-gold: #8f5d14;
+  /* Teal — links, focus rings, success */
+  --trip-accent: #0e6b70;
+  /* Primary button fill and the text on it */
+  --trip-cta: #1c1814;
+  --trip-on-cta: #f6efe3;
+  /* Errors */
+  --trip-danger: #b42318;
+
+  /* Frosted glass: translucent fill, bright edge, soft warm shadow */
+  --trip-glass: rgb(255 252 246 / 0.5);
+  --trip-glass-strong: rgb(255 252 246 / 0.78);
+  --trip-glass-line: rgb(255 255 255 / 0.75);
+  --trip-glass-shadow: 0 30px 70px -30px rgb(80 50 20 / 0.35);
 
   /* Shape */
-  --trip-radius-card: 1.25rem;
-
-  /* Hard, blur-free "sticker" shadows */
-  --trip-shadow-pop-sm: 3px 3px 0 0 var(--trip-line);
-  --trip-shadow-pop: 5px 5px 0 0 var(--trip-line);
-  --trip-shadow-pop-lg: 8px 8px 0 0 var(--trip-line);
-  --trip-shadow-glow: 0 12px 34px -10px rgb(91 200 245 / 0.75);
-
-  /* Gradients */
-  --trip-brand: linear-gradient(115deg, #ff9933, #ff7a00);
-  --trip-aurora: linear-gradient(115deg, #5bc8f5 0%, #9b8cff 55%, #ff9933 100%);
-
-
-  /* Rangoli dot grid behind content sections */
-  --trip-dots: radial-gradient(circle, rgb(0 0 0 / 0.09) 1.4px, transparent 1.6px);
+  --trip-radius-card: 1.75rem;
 
   /* Fonts (self-hosted via Fontsource, imported in main.tsx) */
-  --trip-font-display: 'Anybody Variable', 'Arial Black', system-ui, sans-serif;
-  --trip-font-body: 'Mukta', system-ui, sans-serif;
+  --trip-font-display: 'Gloock', Georgia, serif;
+  --trip-font-body: 'Hind', system-ui, sans-serif;
+  --trip-font-hindi: 'Tiro Devanagari Hindi', Georgia, serif;
 
   color-scheme: light;
 }
 
-/* ── Night Flight theme (dark) ───────────────────────────────────────── */
+/* ── Night theme (monsoon) ───────────────────────────────────────────── */
 [data-theme='dark'] {
-  --trip-paper: #0a0f24;
-  --trip-paper-2: #121a3a;
-  --trip-surface: #161f3f;
+  --trip-paper: #0a1230;
+  --trip-paper-2: #0f1a40;
 
-  --trip-ink: #fff8ec;
-  --trip-ink-soft: #c9c5d8;
-  --trip-line: #fff8ec;
+  --trip-ink: #f6efe3;
+  --trip-ink-soft: #b9b4c9;
+  --trip-line: rgb(246 239 227 / 0.14);
 
-  /* Accents keep their hue; red and sky-deep brighten so they read on navy */
-  --trip-sky-deep: #6cc8ff;
-  --trip-green-deep: #6fd38f;
+  --trip-gold: #e6b765;
+  --trip-accent: #6fd3d0;
+  --trip-cta: #e6b765;
+  --trip-on-cta: #0a1230;
   --trip-danger: #ff8a80;
 
-  --trip-shadow-pop-sm: 3px 3px 0 0 rgb(255 248 236 / 0.85);
-  --trip-shadow-pop: 5px 5px 0 0 rgb(255 248 236 / 0.85);
-  --trip-shadow-pop-lg: 8px 8px 0 0 rgb(255 248 236 / 0.85);
-  --trip-shadow-glow: 0 0 34px -6px rgb(255 153 51 / 0.55);
-
-
-  --trip-dots: radial-gradient(circle, rgb(255 255 255 / 0.07) 1.4px, transparent 1.6px);
+  --trip-glass: rgb(16 26 64 / 0.45);
+  --trip-glass-strong: rgb(16 26 64 / 0.78);
+  --trip-glass-line: rgb(255 255 255 / 0.16);
+  --trip-glass-shadow: 0 30px 70px -30px rgb(0 0 0 / 0.6);
 
   color-scheme: dark;
 }

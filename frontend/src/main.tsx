@@ -6,12 +6,15 @@
  * 3. Mounts <App /> into #root.
  */
 // Self-hosted fonts (Fontsource): no Google Fonts request, faster first paint.
-// Anybody — variable weight AND width, for stretched signboard headings.
-import '@fontsource-variable/anybody/wdth.css';
-// Mukta (by Ek Type, India) — body text + Devanagari, in the three weights we use.
-import '@fontsource/mukta/400.css';
-import '@fontsource/mukta/600.css';
-import '@fontsource/mukta/800.css';
+// Gloock — the editorial serif for headlines and numbers (one weight).
+import '@fontsource/gloock/400.css';
+// Hind (by Indian Type Foundry) — body text, Latin + Devanagari, in the three weights we use.
+import '@fontsource/hind/400.css';
+import '@fontsource/hind/500.css';
+import '@fontsource/hind/600.css';
+// Tiro Devanagari Hindi — Hindi accents, plus its italic for the hero's italic word.
+import '@fontsource/tiro-devanagari-hindi/400.css';
+import '@fontsource/tiro-devanagari-hindi/400-italic.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';

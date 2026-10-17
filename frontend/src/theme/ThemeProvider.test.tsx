@@ -28,7 +28,7 @@ describe('ThemeProvider', () => {
   it('defaults to the light theme when nothing is saved and the OS is light', () => {
     renderToggle();
     expect(document.documentElement.dataset.theme).toBe('light');
-    expect(screen.getByRole('button', { name: /night flight/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /night theme/i })).toBeInTheDocument();
   });
 
   it('restores a saved dark theme', () => {
@@ -39,7 +39,7 @@ describe('ThemeProvider', () => {
 
   it('toggles and remembers the choice', async () => {
     renderToggle();
-    await userEvent.click(screen.getByRole('button', { name: /night flight/i }));
+    await userEvent.click(screen.getByRole('button', { name: /night theme/i }));
     expect(document.documentElement.dataset.theme).toBe('dark');
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe('dark');
     expect(screen.getByRole('button', { name: /day theme/i })).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe('ThemeProvider', () => {
       throw new Error('blocked');
     });
     renderToggle();
-    await userEvent.click(screen.getByRole('button', { name: /night flight/i }));
+    await userEvent.click(screen.getByRole('button', { name: /night theme/i }));
     expect(document.documentElement.dataset.theme).toBe('dark');
   });
 });

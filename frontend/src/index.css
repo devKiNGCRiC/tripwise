@@ -3,8 +3,8 @@
  *
  * 1. Loads Tailwind CSS and our design tokens.
  * 2. Maps tokens to Tailwind utilities (so `bg-paper` = var(--trip-paper)).
- * 3. Sets base page styles (background, fonts).
- * 4. Defines a few custom "Yatra Mela" utilities (press effect, aurora, ticket notches, glass).
+ * 3. Sets base page styles (background, fonts, smooth theme cross-fade).
+ * 4. Defines the Monsoon Editorial utilities: glass, line/block reveals, wipe, rangoli drawing.
  * 5. Honours reduced-motion for everyone who asks for it.
  */
 @import 'tailwindcss';
@@ -20,49 +20,45 @@
 @theme inline {
   --color-paper: var(--trip-paper);
   --color-paper-2: var(--trip-paper-2);
-  --color-surface: var(--trip-surface);
   --color-ink: var(--trip-ink);
   --color-ink-soft: var(--trip-ink-soft);
   --color-line: var(--trip-line);
-  --color-saffron: var(--trip-saffron);
-  --color-orange: var(--trip-orange);
-  --color-yellow: var(--trip-yellow);
-  --color-sky: var(--trip-sky);
-  --color-sky-deep: var(--trip-sky-deep);
-  --color-green: var(--trip-green);
-  --color-green-deep: var(--trip-green-deep);
-  --color-red: var(--trip-red);
+  --color-gold: var(--trip-gold);
+  --color-accent: var(--trip-accent);
+  --color-cta: var(--trip-cta);
+  --color-on-cta: var(--trip-on-cta);
   --color-danger: var(--trip-danger);
-  --color-on-accent: var(--trip-on-accent);
+  --color-glass: var(--trip-glass);
+  --color-glass-strong: var(--trip-glass-strong);
 
   --font-display: var(--trip-font-display);
   --font-body: var(--trip-font-body);
+  --font-hindi: var(--trip-font-hindi);
 
   --radius-card: var(--trip-radius-card);
 
-  --shadow-pop-sm: var(--trip-shadow-pop-sm);
-  --shadow-pop: var(--trip-shadow-pop);
-  --shadow-pop-lg: var(--trip-shadow-pop-lg);
-  --shadow-glow: var(--trip-shadow-glow);
-  /* drop-shadow follows masked shapes (used by ticket notches, where box-shadow would be clipped) */
-  --drop-shadow-pop: 5px 5px 0 var(--trip-line);
+  --ease-out-expo: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-wipe: cubic-bezier(0.77, 0, 0.18, 1);
 }
 
-/* Base page look: clean paper, Mukta body text, stretched Anybody headings. */
+/* Base page look: ivory/indigo page, Hind body text, Gloock headlines. */
 @layer base {
   html {
     font-family: var(--trip-font-body);
+    background-color: var(--trip-paper);
     -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.9s ease;
   }
   body {
     min-height: 100dvh;
     background-color: var(--trip-paper);
     color: var(--trip-ink);
     font-size: 1.0625rem;
-    line-height: 1.55;
+    line-height: 1.6;
+    /* The theme switch cross-fades the page instead of snapping. */
     transition:
-      background-color 0.4s,
-      color 0.4s;
+      background-color 0.9s ease,
+      color 0.9s ease;
     -webkit-font-smoothing: antialiased;
   }
   h1,
@@ -70,93 +66,121 @@
   h3,
   h4 {
     font-family: var(--trip-font-display);
-    font-weight: 850;
-    font-stretch: 120%;
-    letter-spacing: -0.02em;
-    line-height: 0.98;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    text-wrap: balance;
+  }
+  /* Hindi text always uses the Devanagari face (set lang="hi" on it). */
+  [lang='hi'] {
+    font-family: var(--trip-font-hindi);
   }
   ::selection {
-    background: var(--trip-yellow);
-    color: #000;
+    background: var(--trip-gold);
+    color: var(--trip-paper);
   }
-}
-
-/* Neo-brutalist press: lifts on hover, then "slams" into its own shadow on press. */
-@utility pop-press {
-  transition:
-    transform 120ms ease,
-    box-shadow 120ms ease,
-    font-stretch 250ms ease;
-  &:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: var(--trip-shadow-pop-lg);
+  :focus-visible {
+    outline: 2px solid var(--trip-accent);
+    outline-offset: 3px;
   }
-  &:active {
-    transform: translate(4px, 4px);
-    box-shadow: none;
-  }
-}
-
-/* Slowly shifting aurora gradient — reserved for AI actions and AI moments. */
-@utility aurora-fill {
-  background-image: var(--trip-aurora);
-  background-size: 200% 200%;
-  animation: aurora-shift 8s ease infinite;
 }
 
 /*
- * Boarding-pass notches: cuts a half-circle out of the left and right edges,
- * 72px above the bottom (where the ticket "stub" starts). Uses a CSS mask, so
- * wrap the element in `drop-shadow-pop` (not shadow-pop) to keep its shadow.
- */
-@utility ticket-notch {
-  --notch-y: calc(100% - 72px);
-  mask:
-    radial-gradient(circle 14px at 0 var(--notch-y), transparent 13px, #000 14px) left / 51% 100% no-repeat,
-    radial-gradient(circle 14px at 100% var(--notch-y), transparent 13px, #000 14px) right / 51% 100%
-      no-repeat;
-}
-
-/*
- * Frosted glass for content floating over the scenery: a translucent page-coloured
- * pane that blurs whatever is behind it, so text stays readable over sky, snow or water.
+ * Frosted glass — the one material reused everywhere: translucent fill that blurs
+ * whatever is behind it, a bright top edge, and a soft shadow.
  */
 @utility glass {
-  background-color: color-mix(in srgb, var(--trip-paper) 78%, transparent);
-  border: 1px solid color-mix(in srgb, var(--trip-surface) 60%, transparent);
-  backdrop-filter: blur(18px) saturate(1.4);
-  box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.45);
+  background-color: var(--trip-glass);
+  border: 1px solid var(--trip-glass-line);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    var(--trip-glass-shadow);
+  transition:
+    background-color 0.9s ease,
+    border-color 0.9s ease;
 }
 
-/* Kesari brand gradient (saffron → orange) for main buttons and the logo tile. */
-@utility brand-fill {
-  background-image: var(--trip-brand);
+/* A stronger glass for forms and dense content, so text stays crisp over busy colour. */
+@utility glass-strong {
+  background-color: var(--trip-glass-strong);
+  border: 1px solid var(--trip-glass-line);
+  backdrop-filter: blur(26px) saturate(1.4);
+  -webkit-backdrop-filter: blur(26px) saturate(1.4);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    var(--trip-glass-shadow);
+  transition: background-color 0.9s ease;
 }
 
 /*
- * Named animations (usable as animate-flap).
- * flap  → a departure-board letter flipping into place
+ * Reveals (toggled by components/signature/Reveal.tsx adding `.is-in`):
+ *   reveal-line → a headline line rises out of a mask
+ *   reveal-up   → a block fades up
+ * Each element can set --delay for staggering.
  */
+@utility reveal-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  & > span {
+    display: block;
+    transform: translateY(105%);
+    transition: transform 1.1s var(--ease-out-expo) var(--delay, 0s);
+  }
+  &.is-in > span {
+    transform: none;
+  }
+}
+@utility reveal-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 1s ease var(--delay, 0s),
+    transform 1s var(--ease-out-expo) var(--delay, 0s);
+  &.is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Cinematic wipe: an element opens from left to right (add `.is-in`). */
+@utility wipe {
+  clip-path: inset(0 100% 0 0 round var(--trip-radius-card));
+  transition: clip-path 1.3s var(--ease-wipe);
+  &.is-in {
+    clip-path: inset(0 0 0 0 round var(--trip-radius-card));
+  }
+}
+
+/* Self-drawing line art: each stroke sets --len (its length) and --delay. */
+@utility draw-stroke {
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  animation: draw 3.4s cubic-bezier(0.6, 0, 0.2, 1) var(--delay, 0s) forwards;
+}
+
 @theme {
-  --animate-flap: flap 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  --animate-spin-slow: spin 120s linear infinite;
+  --animate-fade-in: fade-in 0.5s ease var(--delay, 0s) forwards;
+}
 
-  @keyframes flap {
-    from { transform: rotateX(90deg); }
-    to { transform: rotateX(0); }
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
-@keyframes aurora-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* Respect users who ask the OS for less motion: effectively disable CSS animations/transitions. */
+/* Respect users who ask the OS for less motion: show everything, animate nothing. */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
