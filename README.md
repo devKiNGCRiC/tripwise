@@ -15,8 +15,8 @@ You can then save it, download it as a PDF, or share it with your friends.
 |---|---|---|
 | 🔐 | Sign up / log in (email + Google), secure JWT sessions | ✅ Frontend done (mock API) |
 | 🏠 | Landing page with trending destinations | ✅ Done |
-| 🏔️ | "The Descent": scroll-driven 3D world from sky to fields, with a photo fallback | ✅ Done |
-| 🌗 | Day and "Night Flight" (stars, northern lights, diyas on the river) | ✅ Done |
+| 🌊 | "Monsoon Editorial" design: living liquid colour, glass, serif + Hindi type, self-drawing rangoli | ✅ Done |
+| 🌗 | Day (dawn) and Night (monsoon) themes, plus a Calm motion setting | ✅ Done |
 | 📱 | Mobile-first layout with an app-style bottom tab bar | ✅ Done |
 | 🧭 | Explore destinations by vibe, budget and best season | 🛠️ Next |
 | 🪄 | Trip planner wizard + AI itinerary generation | 🛠️ Next |
@@ -25,30 +25,28 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 📊 | Admin dashboard: analytics, destinations, users, moderation | 📅 Planned |
 | 📲 | React Native mobile app | 📅 Phase 2 |
 
-## 🎨 Design: "The Descent"
+## 🎨 Design: "Monsoon Editorial"
 
-The home page is one continuous journey. As you scroll, a camera flies down through a **3D world**:
-**sky → glacier → mountains → waterfall → river → fields**. It all shares one sun, one atmosphere and one haze,
-so the scenes connect naturally.
+Calm, editorial and Indian without being a costume. The look combines two ideas:
 
-- **Day and Night Flight:** switching to night really sets the sun. Stars, a moon, **northern lights**,
-  moonlit snow, diyas floating on the river and fireflies appear.
-- **Realistic detail, all free:** Poly Haven photo textures (CC0) on the terrain, a reflective river, a waterfall
-  with mist, a swaying pine forest, sun shadows, and a cinematic finish (bloom, film tone mapping, grade, grain).
-- **Fast on every device:** a real-photo version of the journey appears instantly. The 3D world builds in a
-  background worker and fades in once ready. Weaker phones, Data Saver and "reduce motion" users keep the photo
-  version, and anyone can choose on their Passport page.
-- **Indian touches:** a railway departure board flips through *GOA → MANALI → JAIPUR…* with Hindi names,
-  and the login and signup cards are bilingual station boards (Arrivals/आगमन, Departures/प्रस्थान).
-- **Fonts:** Anybody (variable width) and Mukta (designed in India, with Devanagari). Colours: saffron, board
-  yellow, sky blue, green, red, black and white, each with one job (`frontend/src/theme/tokens.css`).
-- **Smooth motion:** smooth scrolling (Lenis) and scroll-choreographed reveals (GSAP ScrollTrigger).
+- **Living liquid colour:** a soft, marbled colour field drifts behind the hero and key sections and ripples
+  where you move or tap (a tiny WebGL shader, no 3D library). Frosted-glass panels float on top.
+- **Editorial voice:** big serif headlines (Gloock) with Hindi accents (Tiro Devanagari Hindi), body text in
+  Hind (Indian Type Foundry), a gold **rangoli** that draws itself, and a **kolam** ornament as a divider.
+- **Day and Night:** Day is dawn (ivory, peach, soft teal, saffron light); Night is the monsoon (indigo, rain
+  teal, marigold). Switching makes the liquid's colours flow from one palette into the other.
+- **Cinematic journeys:** destination photos slide sideways while you scroll down, each wiping open as it
+  arrives. Steps are strung on a gold thread that draws itself.
+- **Gentle and fast:** smooth scrolling (Lenis), line-by-line headline reveals, and a cursor ring on desktop.
+  "Reduce motion" users, and anyone who picks **Calm** on their Passport page, get a still version.
+
+Design spec: `docs/superpowers/specs/2026-10-17-monsoon-editorial.md` · preview: `docs/design/`.
 
 ## 🧰 Tech stack (100% free tiers)
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 19, TypeScript, Vite, Tailwind CSS 4, React Router, TanStack Query, React Hook Form + Zod, Three.js, postprocessing, GSAP + Lenis |
+| Frontend | React 19, TypeScript, Vite, Tailwind CSS 4, React Router, TanStack Query, React Hook Form + Zod, WebGL shader, Lenis |
 | Backend | Node.js, Express, MongoDB (Mongoose) |
 | AI | Google Gemini Flash-Lite (primary) with Groq (`gpt-oss-120b`) as automatic fallback |
 | Database | MongoDB Atlas (free M0 cluster) |

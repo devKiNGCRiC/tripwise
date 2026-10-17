@@ -1,10 +1,10 @@
 # TripWise — Frontend
 
 React + TypeScript web app for **TripWise**, the AI travel itinerary planner.
-Design: **"The Descent"**. The home page is a scroll-driven 3D world (Three.js), flying from the sky down to
-the fields, with an instant photo fallback. The Indian touches include a railway departure-board headline,
-truck-art colours and bilingual station signs.
-Fonts: Anybody (stretched display) and Mukta (body text and Hindi). Design references: `docs/design/`.
+Design: **"Monsoon Editorial"**: living liquid colour (a small WebGL shader) under frosted glass, serif
+headlines with Hindi accents, a self-drawing gold rangoli and cinematic destination photography.
+Day = dawn palette, Night = monsoon palette.
+Fonts: Gloock (headlines), Hind (body), Tiro Devanagari Hindi (Hindi accents). Design references: `docs/design/`.
 
 ## Quick start
 
@@ -43,10 +43,10 @@ Demo accounts (mock mode):
 
 ```
 src/
-  scene/        The Descent: quality choice, photo pack, 3D world (worker-built terrain, sky, water, effects)
-  theme/        tokens.css (ALL colours/shadows/fonts) + ThemeProvider
-  components/   ui/ (Button, Chip, Input, Card, Ticket, Stamp, Toast…) · layout/ (navbar, guards…)
-  features/     auth/ · explore/ · landing/   (Plan 2 adds planner/, trips/, passport/)
+  theme/        tokens.css (ALL colours/glass/fonts) + ThemeProvider + Day/Night switch
+  components/   ui/ (Button, Chip, Input, Card, Stamp, Toast…) · layout/ (navbar, guards…)
+                signature/ (liquid colour shader, Rangoli, Kolam, cursor ring, scroll reveals, smooth scroll)
+  features/     auth/ · explore/ · landing/ · passport/   (Plan 2 adds planner/, trips/)
   pages/        one thin file per route
   lib/api/      types (the API contract), fetch client, endpoint helpers
   mocks/        MSW mock backend: seed data + handlers
