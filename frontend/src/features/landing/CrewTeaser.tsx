@@ -6,6 +6,7 @@
 import { useReveal } from '@/components/signature/useReveal';
 import { Tag } from '@/components/ui/Chip';
 import { delay } from './delay';
+import { SectionStop } from './SectionStop';
 
 /** Crew members in the illustration: initial + avatar tint. */
 const CREW = [
@@ -27,12 +28,13 @@ export function CrewTeaser() {
   const reveal = useReveal<HTMLElement>();
 
   return (
-    <section ref={reveal} aria-labelledby="crew-title" className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-28 md:py-36 lg:grid-cols-2">
+    <section ref={reveal} aria-labelledby="crew-title" data-stop="Crew" className="page-wrap grid items-center gap-12 py-28 md:py-36 lg:grid-cols-2">
       <div>
-        <Tag tone="gold" className="reveal-up">
-          Coming soon
-        </Tag>
-        <h2 id="crew-title" className="reveal-up mt-5 text-[clamp(44px,6vw,84px)]" style={delay(0.1)}>
+        <div className="reveal-up flex flex-wrap items-center gap-4">
+          <SectionStop n="05" label="Crew" />
+          <Tag tone="gold">Coming soon</Tag>
+        </div>
+        <h2 id="crew-title" className="reveal-up mt-5 text-[clamp(40px,min(6vw,10svh),84px)]" style={delay(0.1)}>
           Better with your crew
         </h2>
         <p className="reveal-up mt-5 max-w-[42ch] text-lg text-ink-soft" style={delay(0.2)}>

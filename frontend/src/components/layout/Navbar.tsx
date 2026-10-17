@@ -34,8 +34,9 @@ export function Navbar() {
   const { user, status } = useAuth();
 
   return (
-    <header className="fixed inset-x-0 top-3 z-40 px-3 sm:top-4">
-      <nav aria-label="Main" className="glass mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 rounded-full pr-2.5 pl-6">
+    <header className="fixed inset-x-0 top-3 z-40 sm:top-4">
+      <div className="page-wrap max-sm:px-3">
+      <nav aria-label="Main" className="glass flex h-16 items-center justify-between gap-3 rounded-full pr-2.5 pl-6">
         <Logo />
 
         <div className="hidden items-center gap-1 md:flex">
@@ -84,6 +85,7 @@ export function Navbar() {
           )}
         </div>
       </nav>
+      </div>
     </header>
   );
 }

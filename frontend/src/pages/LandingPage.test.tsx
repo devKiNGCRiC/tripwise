@@ -17,15 +17,19 @@ describe('LandingPage', () => {
     expect(container.querySelectorAll('section img[src*="images.unsplash.com"]').length).toBeGreaterThanOrEqual(4);
   });
 
-  it('visits each place from the slide index', async () => {
+  it('flies between places from the "Now arriving" panel', async () => {
     const { user } = renderApp('/');
-    const places = await screen.findByRole('group', { name: 'Choose a place' });
+    const panel = await screen.findByRole('complementary', { name: 'Now arriving' });
+    const places = within(panel).getByRole('group', { name: 'Choose a place' });
     expect(within(places).getByRole('button', { name: 'Show Varanasi' })).toHaveAttribute('aria-pressed', 'true');
-    expect(screen.getByText('वाराणसी', { selector: '[aria-live]' })).toBeInTheDocument();
+    expect(within(panel).getByText('वाराणसी')).toHaveAttribute('lang', 'hi');
+    expect(within(panel).getByText('25.32° N · 82.97° E')).toBeInTheDocument();
 
     await user.click(within(places).getByRole('button', { name: 'Show Ladakh' }));
     expect(within(places).getByRole('button', { name: 'Show Ladakh' })).toHaveAttribute('aria-pressed', 'true');
-    expect(screen.getByText('लद्दाख', { selector: '[aria-live]' })).toBeInTheDocument();
+    expect(within(panel).getByText('लद्दाख')).toBeInTheDocument();
+    expect(within(panel).getByText('Jun – Sep')).toBeInTheDocument();
+    expect(within(panel).getByText('Now showing Ladakh')).toBeInTheDocument();
   });
 
   it('shows destination cards from the API with their local names', async () => {
@@ -47,7 +51,9 @@ describe('LandingPage', () => {
   it('shows a sample itinerary and the crew preview', async () => {
     renderApp('/');
     const sample = await screen.findByRole('article', { name: 'Sample itinerary for Udaipur' });
-    expect(within(sample).getAllByRole('listitem')).toHaveLength(3);
+    expect(within(sample).getByText(/DEL/)).toBeInTheDocument();
+    expect(within(sample).getAllByText(/^Day \d$/)).toHaveLength(3);
+    expect(within(sample).getByText('12 min by auto')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Better with your crew' })).toBeInTheDocument();
   });
 

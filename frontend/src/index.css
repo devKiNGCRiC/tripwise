@@ -85,6 +85,14 @@
   }
 }
 
+/* The page container: centred, up to --trip-page-max wide, with responsive side padding. */
+@utility page-wrap {
+  width: 100%;
+  max-width: var(--trip-page-max);
+  margin-inline: auto;
+  padding-inline: var(--trip-page-pad);
+}
+
 /*
  * Frosted glass — the one material reused everywhere: translucent fill that blurs
  * whatever is behind it, a bright top edge, and a soft shadow.
@@ -205,6 +213,15 @@
     background-position:
       -50px 180px,
       -45px 260px;
+  }
+}
+/* The hero's flight arc draws from start to end (paired with pathLength=100). */
+@keyframes route-draw {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
   }
 }
 /* The hero's slide index: a thin line fills while a place is on screen. */

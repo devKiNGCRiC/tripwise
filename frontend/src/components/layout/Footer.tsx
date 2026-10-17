@@ -13,7 +13,7 @@ export function Footer() {
   return (
     <footer className="mt-auto pb-28 md:pb-0">
       <Kolam className="mx-auto w-[min(560px,80%)] opacity-70" />
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 md:grid-cols-[1.4fr_1fr_1fr] md:items-start">
+      <div className="page-wrap grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr] md:items-start">
         <div>
           <Logo />
           <p className="mt-3 max-w-xs text-ink-soft">Unhurried, day-by-day trip plans for every kind of traveller. Free, always.</p>

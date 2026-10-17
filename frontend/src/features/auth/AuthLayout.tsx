@@ -29,7 +29,7 @@ export function AuthLayout({ eyebrow, eyebrowLocal, title, subtitle, children, f
       <LiquidCanvas />
       <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-paper" />
 
-      <div className="relative mx-auto grid min-h-svh w-full max-w-6xl items-center gap-12 px-4 pt-28 pb-20 lg:grid-cols-[1fr_minmax(0,460px)]">
+      <div className="page-wrap relative grid min-h-svh items-center gap-12 pt-28 pb-20 lg:grid-cols-[1fr_minmax(0,460px)]">
         {/* The promise, beside the form (desktop only) */}
         <div aria-hidden className="relative hidden lg:block">
           <Rangoli className="absolute -top-24 -left-24 -z-10 w-[520px] opacity-40" />

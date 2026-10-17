@@ -14,6 +14,7 @@ import { DestinationCard } from '@/features/explore/DestinationCard';
 import { useDestinations } from '@/features/explore/hooks';
 import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 import { delay } from './delay';
+import { SectionStop } from './SectionStop';
 
 /** Width from which the gallery pins and scrolls sideways. */
 const PIN_QUERY = '(min-width: 768px)';
@@ -26,7 +27,7 @@ function subscribeWide(onChange: () => void) {
 const getWide = () => window.matchMedia?.(PIN_QUERY).matches ?? false;
 
 /** Card size: tall portrait on phones, wide cinematic frame on desktop. */
-const CARD = 'h-[min(64vh,560px)] w-[min(82vw,520px)] shrink-0 snap-start';
+const CARD = 'h-[min(62svh,560px)] w-[min(82vw,520px)] shrink-0 snap-start';
 
 export function Journeys() {
   const { data: destinations, isPending, isError } = useDestinations();
@@ -102,12 +103,15 @@ export function Journeys() {
   }, [count, reduceMotion, wide]);
 
   return (
-    <section ref={sectionRef} aria-labelledby="journeys-title" className="group relative">
-      <div className="flex flex-col justify-center py-24 group-data-[pinned=true]:sticky group-data-[pinned=true]:top-0 group-data-[pinned=true]:h-svh group-data-[pinned=true]:overflow-hidden group-data-[pinned=true]:py-0 group-data-[pinned=true]:pt-16">
-        <div ref={revealHead} className="mx-auto mb-10 flex w-full max-w-6xl flex-wrap items-end justify-between gap-6 px-5">
-          <h2 id="journeys-title" className="reveal-up max-w-[16ch] text-[clamp(40px,4.6vw,68px)]">
-            Journeys worth slowing down for
-          </h2>
+    <section ref={sectionRef} aria-labelledby="journeys-title" data-stop="Journeys" className="group relative">
+      <div className="flex flex-col justify-center py-24 group-data-[pinned=true]:sticky group-data-[pinned=true]:top-0 group-data-[pinned=true]:h-svh group-data-[pinned=true]:overflow-hidden group-data-[pinned=true]:py-0 group-data-[pinned=true]:pt-24">
+        <div ref={revealHead} className="page-wrap mb-8 flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <SectionStop n="02" label="Journeys" className="reveal-up mb-4" />
+            <h2 id="journeys-title" className="reveal-up max-w-[16ch] text-[clamp(36px,min(4.6vw,7svh),68px)]">
+              Journeys worth slowing down for
+            </h2>
+          </div>
           <p className="reveal-up max-w-[38ch] text-ink-soft" style={delay(0.15)}>
             Hand-picked starting points. Every one opens a plan you can reshape in seconds.
           </p>
@@ -115,7 +119,7 @@ export function Journeys() {
 
         <div
           ref={trackRef}
-          className="flex snap-x snap-mandatory scroll-px-5 gap-6 overflow-x-auto px-5 pb-4 scrollbar-none group-data-[pinned=true]:snap-none group-data-[pinned=true]:overflow-visible group-data-[pinned=true]:pb-0 md:px-[max(20px,calc((100vw-72rem)/2+20px))]"
+          className="flex snap-x snap-mandatory scroll-px-5 gap-6 overflow-x-auto px-5 pb-4 scrollbar-none group-data-[pinned=true]:snap-none group-data-[pinned=true]:overflow-visible group-data-[pinned=true]:pb-0 md:px-(--trip-gutter)"
         >
           {isPending &&
             Array.from({ length: 3 }, (_, i) => (
@@ -129,7 +133,7 @@ export function Journeys() {
             <DestinationCard key={destination.id} destination={destination} className={`wipe ${CARD}`} />
           ))}
           {/* Breathing room after the last card */}
-          <span aria-hidden className="w-px shrink-0 md:w-[max(20px,calc((100vw-72rem)/2))]" />
+          <span aria-hidden className="w-px shrink-0 md:w-(--trip-gutter)" />
         </div>
       </div>
     </section>

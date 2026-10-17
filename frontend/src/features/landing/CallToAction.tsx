@@ -13,10 +13,10 @@ export function CallToAction() {
   const reveal = useReveal<HTMLElement>();
 
   return (
-    <section ref={reveal} aria-labelledby="cta-title" className="relative isolate overflow-hidden px-5 py-28 text-center md:py-40">
+    <section ref={reveal} aria-labelledby="cta-title" data-stop="Arrival" className="relative isolate overflow-hidden px-5 py-28 text-center md:py-40">
       <Rangoli className="absolute top-1/2 left-1/2 -z-10 w-[min(900px,140vw)] -translate-x-1/2 -translate-y-1/2 opacity-[0.12]" />
       <Kolam className="reveal-up mx-auto mb-10 w-[min(520px,90%)]" />
-      <h2 id="cta-title" className="text-[clamp(56px,8vw,128px)]">
+      <h2 id="cta-title" className="text-[clamp(52px,min(8vw,13svh),128px)]">
         <span className="reveal-line">
           <span>Where to,</span>
         </span>{' '}

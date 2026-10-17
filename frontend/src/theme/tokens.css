@@ -38,6 +38,12 @@
   /* Shape */
   --trip-radius-card: 1.75rem;
 
+  /* Page width: content grows up to 1360px; side padding grows with the screen (20px phones → 56px desktops) */
+  --trip-page-max: 1360px;
+  --trip-page-pad: clamp(20px, 4vw, 56px);
+  /* Distance from the screen edge to where content starts (for full-bleed rows that align with it) */
+  --trip-gutter: max(var(--trip-page-pad), calc((100vw - var(--trip-page-max)) / 2 + var(--trip-page-pad)));
+
   /* Fonts (self-hosted via Fontsource, imported in main.tsx) */
   --trip-font-display: 'Gloock', Georgia, serif;
   --trip-font-body: 'Hind', system-ui, sans-serif;

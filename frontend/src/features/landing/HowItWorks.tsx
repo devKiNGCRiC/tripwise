@@ -5,6 +5,7 @@
  */
 import { useReveal } from '@/components/signature/useReveal';
 import { delay } from './delay';
+import { SectionStop } from './SectionStop';
 
 const STEPS = [
   { title: 'Choose your pace', body: "Where, when, budget, who's coming, and how slow or packed you like your days." },
@@ -16,11 +17,14 @@ export function HowItWorks() {
   const reveal = useReveal<HTMLElement>();
 
   return (
-    <section ref={reveal} aria-labelledby="how-title" className="mx-auto max-w-6xl px-5 py-28 md:py-36">
+    <section ref={reveal} aria-labelledby="how-title" data-stop="How it works" className="page-wrap py-28 md:py-36">
       <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
-        <h2 id="how-title" className="reveal-up max-w-[12ch] text-[clamp(44px,6vw,88px)]">
-          Three steps, one calm plan
-        </h2>
+        <div>
+          <SectionStop n="03" label="How it works" className="reveal-up mb-4" />
+          <h2 id="how-title" className="reveal-up max-w-[12ch] text-[clamp(40px,min(6vw,10svh),88px)]">
+            Three steps, one calm plan
+          </h2>
+        </div>
         <p className="reveal-up max-w-[38ch] text-ink-soft" style={delay(0.15)}>
           No forms that feel like paperwork. Answer a few questions and let the plan take shape.
         </p>

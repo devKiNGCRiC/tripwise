@@ -1,19 +1,23 @@
 /**
  * DestinationCard.tsx — a cinematic destination card: a full-bleed photo, a price
- * tag and a vibe tag on frosted glass, and the place name in the editorial serif
- * with its Hindi name in gold above it. The whole card links to the destination page.
+ * tag and a vibe tag on frosted glass, the place name in the editorial serif with its
+ * Hindi name in gold above it, and the travel facts that matter when choosing —
+ * best season and budget level. The whole card links to the destination page.
  *
  * Add the `wipe` class (index.css) to have it open left-to-right when revealed;
  * the photo then settles from a slight zoom as it opens.
  */
 import { Link } from 'react-router';
-import type { Destination } from '@/lib/api/types';
+import type { BudgetTier, Destination } from '@/lib/api/types';
 import { cn } from '@/lib/utils/cn';
-import { formatMoney } from '@/lib/utils/format';
+import { formatMoney, formatSeason } from '@/lib/utils/format';
 import { sizedImage } from '@/lib/utils/images';
 
 /** Small frosted label sitting on the photo. */
 const GLASS_TAG = 'absolute top-4 rounded-full border border-white/30 bg-black/30 px-3 py-1 text-sm font-medium backdrop-blur-md';
+
+/** How each budget tier reads to travellers. */
+const BUDGET_LABEL: Record<BudgetTier, string> = { budget: 'Budget', mid: 'Mid-range', luxury: 'Luxury' };
 
 interface DestinationCardProps {
   destination: Destination;
@@ -54,6 +58,14 @@ export function DestinationCard({ destination, className }: DestinationCardProps
         </p>
         <h3 className="mt-1 text-[clamp(38px,4vw,58px)] leading-none">{destination.name}</h3>
         <p className="mt-2 line-clamp-2 max-w-[34ch] text-base opacity-90">{destination.summary}</p>
+        {/* Travel facts: when to go, and how much it asks of your wallet */}
+        <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-white/25 pt-3 text-[13px] tracking-[0.12em] uppercase opacity-90">
+          <span>
+            Best <span className="tracking-normal normal-case">{formatSeason(destination.bestMonths)}</span>
+          </span>
+          <span aria-hidden className="size-1 rounded-full bg-[#e6b765]" />
+          <span>{BUDGET_LABEL[destination.budgetTier]}</span>
+        </p>
       </div>
     </Link>
   );

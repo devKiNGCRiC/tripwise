@@ -113,3 +113,22 @@ It read as "Liquid Monsoon with a serif", so the hero now fuses them.
 - **Navigation.** A slide index (01–04, with a gold progress line) and the place name in Hindi let visitors jump between places. Slides auto-advance every 7 s, but not with reduced or Calm motion.
 - **Fallback.** Without WebGL, plain `<img>` stand-ins cross-fade instead. They are also what shows before the first water frame.
 - **Shared code.** The WebGL helpers in `webgl.ts` are shared with the liquid colour field.
+
+## 9. Revision: the travel layer and laptop-first sizing
+
+Photography alone said "pretty place", not "journey". The page now speaks the language travellers read:
+
+- **"Now arriving" panel (hero).** A flight-tracker card with:
+  - an abstract route map: a lat/long grid with real-coordinate pins and a dashed flight arc that draws from the last place to this one;
+  - the place in Hindi and English, its coordinates and local time (IST);
+  - the best season and a suggested stay;
+  - the 01–04 stops.
+
+  On screens narrower than xl it collapses to a compact caption. No country outline is drawn, on purpose: simplified borders can be politically sensitive.
+- **Journey rail (xl+).** A dotted route down the left margin with a stop per section (`data-stop`) and a plane that flies down as you scroll. It fades out while the pinned gallery fills the screen. Section headings carry matching "02 —— Journeys" stop labels.
+- **Destination cards** show the best season (`formatSeason`) and the budget level.
+- **Sample trip** is a real itinerary: a DEL → UDR route header, dates, timed stops per day, the transfer between stops (walk, auto, boat) and the cost per day.
+- **Sizing.**
+  - Content width: one `page-wrap` container, up to 1360px, with side padding that grows from 20px to 56px.
+  - Display type: clamped by both viewport width and height (for example `min(8vw, 12.5svh)`), so 1280×720 and 1366×768 laptops fit the hero above the fold.
+  - Large monitors: these use the full container width.
