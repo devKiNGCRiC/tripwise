@@ -34,12 +34,18 @@ describe('LandingPage', () => {
     expect(within(dossier).getByRole('img', { name: /Hampi/ })).toHaveAttribute('src', '/regions/deccan.jpg');
   });
 
-  it('charts all twelve months in the dossier and marks this one', async () => {
+  it('keeps the first screen light: the month chart and experiences live in the region guide below', async () => {
     renderApp('/');
     const dossier = await screen.findByRole('complementary', { name: 'Region dossier' });
-    const months = within(within(dossier).getByRole('list', { name: 'When to go' })).getAllByRole('listitem');
+    expect(within(dossier).queryByRole('list', { name: 'When to go' })).not.toBeInTheDocument();
+    expect(within(dossier).getByRole('link', { name: /When to go & what to do/ })).toHaveAttribute('href', '#region-guide');
+
+    const guide = screen.getByRole('region', { name: /Himalaya guide/ });
+    const months = within(within(guide).getByRole('list', { name: 'When to go' })).getAllByRole('listitem');
     expect(months).toHaveLength(12);
+    expect(months.map((m) => m.textContent)).toEqual(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']);
     expect(months.filter((m) => m.getAttribute('aria-current') === 'date')).toHaveLength(1);
+    expect(within(guide).getByText('Valley of Flowers trek')).toBeInTheDocument();
   });
 
   it('sends the planned destination to the planner (through login for guests)', async () => {

@@ -12,7 +12,7 @@ import { formatMoney } from '@/lib/utils/format';
 import { KINDS } from './kinds';
 
 /** Shared look of each field's small caps label. */
-const FIELD_LABEL = 'text-[10.5px] font-bold tracking-[0.14em] text-soft uppercase';
+const FIELD_LABEL = 'text-[11.5px] font-bold tracking-[0.12em] text-soft uppercase';
 /** One field cell; dividers run between fields in a 2×2 grid, then in a single row on wide screens. */
 const FIELD = 'grid min-w-0 content-center gap-0.5 border-line px-4 py-2 max-sm:border-b sm:max-2xl:[&:nth-child(-n+2)]:border-b sm:max-2xl:[&:nth-child(odd)]:border-r 2xl:border-r';
 
@@ -47,7 +47,7 @@ export function Planner({ places, who, onWhoChange }: PlannerProps) {
           value={destination}
           onChange={(event) => setDestination(event.target.value)}
           placeholder={`${places.slice(0, 3).join(', ')}…`}
-          className="min-w-0 bg-transparent py-0.5 font-semibold text-ink outline-none placeholder:font-medium placeholder:text-soft"
+          className="min-w-0 bg-transparent py-0.5 font-semibold text-ink outline-none placeholder:font-normal placeholder:text-soft/80"
         />
       </label>
       <label className={FIELD}>

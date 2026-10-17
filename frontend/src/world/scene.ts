@@ -3,13 +3,15 @@
  *
  * Far-to-near terrain layers (mountains, dunes, plateaus, hills, water, mist) with details
  * (pines, ghat temples, a desert fort, camels, ruins, waterfalls, tea terraces, palms),
+ * signature landmarks (a Himalayan shrine, prayer flags, a chhatri, a gopuram, a monastery,
+ * a lighthouse), light-and-shade on every slope, and haze that fades distant ridges,
  * a sky with sun or moon, and weather & life (birds, kites, stars, snow, rain, fireflies,
  * diyas, boats, glitter). Everything is procedural — no images — and seeded, so a region
  * always looks the same. Layers shift with the pointer and the scroll (parallax).
  * Framework-free: LivingWorld.tsx owns the canvas and calls draw().
  */
 import { clamp, fbm1, lerp, mixHex, rng, smoothstep } from './noise';
-import type { Fx, Layer, Region } from './regions';
+import type { Fx, LandmarkKind, Layer, Region } from './regions';
 
 /** A land layer, narrowed from the Layer union. */
 type Land = Extract<Layer, { kind: 'land' }>;
@@ -104,6 +106,7 @@ export class Scene {
       if (layer.kind === 'water') return this.water(ctx, w, h, seconds, layer, night, dx, dy);
       if (layer.kind === 'sand') return night < 0.9 && this.blowingSand(ctx, w, h, seconds, 1 - night);
       this.land(ctx, w, h, seconds, layer, this.shapes[i]!, night, dx, dy);
+      this.haze(ctx, w, h, layer, night, dy);
     });
 
     // Weather and life in front: day effects fade out as night fades in, and vice versa
@@ -176,6 +179,7 @@ export class Scene {
     fill.addColorStop(1, mixHex(layer.day, layer.night, Math.min(1, night + 0.25)));
     ctx.fillStyle = fill;
     ctx.fill();
+    if (layer.shape !== 'flat') this.shade(ctx, w, h, layer, height, night, base, amp, dx);
 
     if (layer.snow) {
       // White fading down from the highest peaks, clipped to the silhouette
@@ -189,7 +193,195 @@ export class Scene {
       ctx.restore();
     }
     if (layer.deco) this.details(ctx, w, h, t, layer, ridge, night, base, amp, dx);
+    for (const { kind, at } of layer.landmarks ?? []) {
+      const [x, y] = ridge[clamp(Math.round(at * (ridge.length - 1)), 0, ridge.length - 1)];
+      this.landmark(ctx, kind, x, y, h, t, night, mixHex(layer.day, layer.night, Math.min(1, night + 0.45)));
+    }
   }
+
+  /**
+   * Light and shade: slopes facing the sun keep their colour, slopes facing away darken.
+   * Trick: inside the silhouette, paint a copy of it shifted away from the sun — every
+   * point it covers is in shade, and the thin rims it leaves uncovered are the lit faces.
+   */
+  private shade(ctx: CanvasRenderingContext2D, w: number, h: number, layer: Land, height: (x: number) => number, night: number, base: number, amp: number, dx: number) {
+    const away = this.region.sun[0] > 0.5 ? -1 : 1; // shift left when the sun is on the right
+    const shift = Math.max(6, amp * 0.07) * away;
+    ctx.save();
+    ctx.clip();
+    ctx.beginPath();
+    ctx.moveTo(-PAD + dx + shift, h + 400);
+    for (let x = -PAD; x <= w + PAD; x += 6) ctx.lineTo(x + dx + shift, base - height((x - dx) / w + layer.seed) * amp + amp * 0.05);
+    ctx.lineTo(w + PAD + dx + shift, h + 400);
+    ctx.closePath();
+    ctx.fillStyle = `rgba(10,14,28,${0.16 + night * 0.08})`;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  /** Aerial perspective: veil everything up to this ridge in the horizon colour, so far ridges fade. */
+  private haze(ctx: CanvasRenderingContext2D, w: number, h: number, layer: Layer, night: number, dy: number) {
+    if (layer.kind !== 'land') return;
+    const alpha = Math.max(0, 0.26 - layer.depth * 0.62) * (1 - night * 0.4);
+    if (alpha <= 0) return;
+    const top = (layer.base - layer.amp) * h + dy;
+    const { sky } = this.region;
+    // Fade in from nothing above the ridge, so the veil never shows an edge in the sky
+    const g = ctx.createLinearGradient(0, top, 0, h);
+    g.addColorStop(0, mixHex(sky.day[1], sky.night[1], night, 0));
+    g.addColorStop(Math.min(0.5, (layer.amp * h) / Math.max(1, h - top)), mixHex(sky.day[1], sky.night[1], night, alpha));
+    g.addColorStop(1, mixHex(sky.day[1], sky.night[1], night, alpha * 0.6));
+    ctx.fillStyle = g;
+    ctx.fillRect(0, top, w, h - top);
+  }
+
+  /** Signature landmarks, standing on the ridge at (x, y). Sizes follow the screen height. */
+  private landmark(ctx: CanvasRenderingContext2D, kind: LandmarkKind, x: number, y: number, h: number, t: number, night: number, dark: string) {
+    const u = h / 900; // one "unit" ≈ 1px on a 900px-tall screen
+    const lit = `rgba(255,196,110,${0.35 + night * 0.6})`;
+    ctx.save();
+    ctx.fillStyle = dark;
+    switch (kind) {
+      case 'shrine': {
+        // Badrinath-style temple: painted facade, stepped roofs, golden finial, saffron flag
+        const W = 46 * u;
+        const H = 30 * u;
+        ctx.fillStyle = mixHex('#c4453c', '#3a1620', night);
+        ctx.fillRect(x - W / 2, y - H, W, H + 6 * u);
+        ctx.fillStyle = mixHex('#e8b04b', '#6b4a1c', night);
+        for (let k = 0; k < 4; k++) ctx.fillRect(x - W / 2 + 4 * u + k * 11 * u, y - H + 5 * u, 6 * u, 12 * u);
+        ctx.fillStyle = mixHex('#2f5e8f', '#16243d', night);
+        for (const [rw, ry] of [[1.25, 0], [0.9, 9], [0.55, 17]]) {
+          ctx.beginPath();
+          ctx.moveTo(x - (W / 2) * rw, y - H - ry * u);
+          ctx.lineTo(x, y - H - (ry + 10) * u);
+          ctx.lineTo(x + (W / 2) * rw, y - H - ry * u);
+          ctx.fill();
+        }
+        ctx.fillStyle = '#e8b04b';
+        ctx.fillRect(x - 1.5 * u, y - H - 36 * u, 3 * u, 10 * u);
+        ctx.fillStyle = '#e8742a';
+        ctx.beginPath();
+        ctx.moveTo(x + 1.5 * u, y - H - 36 * u);
+        ctx.lineTo(x + (13 + Math.sin(t * 3) * 2) * u, y - H - 32 * u);
+        ctx.lineTo(x + 1.5 * u, y - H - 28 * u);
+        ctx.fill();
+        if (night > 0.2) {
+          ctx.fillStyle = lit;
+          ctx.fillRect(x - 4 * u, y - 12 * u, 8 * u, 12 * u);
+        }
+        break;
+      }
+      case 'flags': {
+        // Prayer flags strung between two poles, fluttering
+        const span = 150 * u;
+        ctx.fillRect(x - span / 2, y - 46 * u, 2 * u, 46 * u);
+        ctx.fillRect(x + span / 2, y - 40 * u, 2 * u, 40 * u);
+        const colours = ['#2f6fb3', '#f2f0e8', '#c63a32', '#3f8f4a', '#e8b93b'];
+        /** Point on the sagging string, f = 0…1 along it. */
+        const along = (f: number): [number, number] => [x - span / 2 + f * span, y - 46 * u + f * 6 * u + Math.sin(f * Math.PI) * 18 * u];
+        ctx.strokeStyle = dark;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        for (let k = 0; k <= 20; k++) {
+          const [px, py] = along(k / 20);
+          if (k) ctx.lineTo(px, py);
+          else ctx.moveTo(px, py);
+        }
+        ctx.stroke();
+        ctx.globalAlpha *= 0.9 - night * 0.45;
+        for (let k = 1; k < 20; k++) {
+          const [px, py] = along(k / 20);
+          ctx.fillStyle = colours[k % 5];
+          ctx.save();
+          ctx.translate(px, py);
+          ctx.rotate(Math.sin(t * 4 + k) * 0.18);
+          ctx.fillRect(-3 * u, 0, 6 * u, 8 * u);
+          ctx.restore();
+        }
+        break;
+      }
+      case 'chhatri': {
+        // Rajput cenotaph: plinth, four pillars, a dome with a finial
+        const W = 40 * u;
+        ctx.fillRect(x - W / 2 - 4 * u, y - 6 * u, W + 8 * u, 8 * u);
+        for (const p of [-0.45, -0.15, 0.15, 0.45]) ctx.fillRect(x + p * W - 2 * u, y - 30 * u, 4 * u, 24 * u);
+        ctx.fillRect(x - W / 2 - 3 * u, y - 34 * u, W + 6 * u, 5 * u);
+        ctx.beginPath();
+        ctx.ellipse(x, y - 34 * u, W * 0.42, 18 * u, 0, Math.PI, 0);
+        ctx.fill();
+        ctx.fillRect(x - 1 * u, y - 60 * u, 2 * u, 9 * u);
+        break;
+      }
+      case 'gopuram': {
+        // Hampi-style temple tower: tiers narrowing upward, a barrel-vault crown
+        const W = 54 * u;
+        for (let k = 0; k < 7; k++) {
+          const tw = W * (1 - k * 0.11);
+          ctx.fillStyle = dark;
+          ctx.fillRect(x - tw / 2, y - (k + 1) * 11 * u, tw, 12 * u);
+          ctx.fillStyle = `rgba(255,255,255,${0.12 - night * 0.08})`;
+          ctx.fillRect(x - tw / 2, y - (k + 1) * 11 * u, tw, 2 * u);
+        }
+        ctx.fillStyle = dark;
+        ctx.beginPath();
+        ctx.ellipse(x, y - 78 * u, W * 0.2, 7 * u, 0, Math.PI, 0);
+        ctx.fill();
+        if (night > 0.2) {
+          ctx.fillStyle = lit;
+          ctx.fillRect(x - 4 * u, y - 14 * u, 8 * u, 14 * u);
+        }
+        break;
+      }
+      case 'monastery': {
+        // Hill monastery: whitewashed walls, a maroon band, sweeping roofs, a golden spire
+        const W = 60 * u;
+        ctx.fillStyle = mixHex('#efe9dc', '#2a2f3a', night);
+        ctx.fillRect(x - W / 2, y - 22 * u, W, 24 * u);
+        ctx.fillStyle = mixHex('#8e2f2f', '#2a1418', night);
+        ctx.fillRect(x - W / 2, y - 26 * u, W, 5 * u);
+        for (const [rw, ry] of [[1.2, 26], [0.8, 38]]) {
+          ctx.beginPath();
+          ctx.moveTo(x - (W / 2) * rw, y - ry * u);
+          ctx.quadraticCurveTo(x, y - (ry + 18) * u, x + (W / 2) * rw, y - ry * u);
+          ctx.fill();
+        }
+        ctx.fillStyle = '#e8b04b';
+        ctx.fillRect(x - 1.5 * u, y - 66 * u, 3 * u, 14 * u);
+        ctx.fillStyle = night > 0.2 ? lit : mixHex('#5a3a2a', '#141a22', night);
+        for (let k = 0; k < 5; k++) ctx.fillRect(x - W / 2 + 6 * u + k * 11 * u, y - 16 * u, 5 * u, 8 * u);
+        break;
+      }
+      case 'lighthouse': {
+        // A coastal lighthouse; at night its beam sweeps across the sea
+        ctx.fillStyle = mixHex('#f4efe6', '#3a4256', night);
+        ctx.beginPath();
+        ctx.moveTo(x - 7 * u, y);
+        ctx.lineTo(x - 4 * u, y - 52 * u);
+        ctx.lineTo(x + 4 * u, y - 52 * u);
+        ctx.lineTo(x + 7 * u, y);
+        ctx.fill();
+        ctx.fillStyle = mixHex('#c4453c', '#4a1a1e', night);
+        ctx.fillRect(x - 5.5 * u, y - 22 * u, 11 * u, 6 * u);
+        ctx.fillRect(x - 5 * u, y - 60 * u, 10 * u, 8 * u);
+        if (night > 0.2) {
+          const reach = Math.sin(t * 0.8) * 600 * u;
+          const beam = ctx.createLinearGradient(x, 0, x + reach, 0);
+          beam.addColorStop(0, `rgba(255,235,180,${0.4 * night})`);
+          beam.addColorStop(1, 'rgba(255,235,180,0)');
+          ctx.fillStyle = beam;
+          ctx.beginPath();
+          ctx.moveTo(x, y - 56 * u);
+          ctx.lineTo(x + reach, y - 86 * u);
+          ctx.lineTo(x + reach, y - 26 * u);
+          ctx.fill();
+        }
+        break;
+      }
+    }
+    ctx.restore();
+  }
+
 
   /** Drifting bands of mist: soft ellipses sliding sideways. */
   private mist(ctx: CanvasRenderingContext2D, w: number, h: number, t: number, layer: Extract<Layer, { kind: 'mist' }>, night: number, dx: number, dy: number) {
@@ -279,19 +471,37 @@ export class Scene {
       case 'pines':
       case 'canopy': {
         // Little pine triangles or round tree crowns all along the ridge
+        // Varied trees: sizes and shades differ, with natural gaps (seeded, so they never shuffle)
+        const lighter = mixHex(layer.day, layer.night, Math.min(1, night + 0.15));
         for (let i = 0; i < ridge.length; i += 2) {
+          const r = Math.abs(Math.sin(i * 12.9898 + layer.seed * 78.233)) % 1;
+          if (r < 0.18) continue;
           const [x, y] = ridge[i];
-          const size = (layer.deco === 'pines' ? 14 : 10) * (1 + layer.depth * 2) * (0.6 + ((i * 37) % 10) / 14);
-          ctx.beginPath();
+          const size = (layer.deco === 'pines' ? 16 : 11) * (1 + layer.depth * 2) * (0.55 + r * 0.75);
+          ctx.fillStyle = r > 0.6 ? lighter : dark;
           if (layer.deco === 'pines') {
-            ctx.moveTo(x - size * 0.32, y + 2);
-            ctx.lineTo(x, y - size);
-            ctx.lineTo(x + size * 0.32, y + 2);
+            // A pine in three tiers on a short trunk
+            ctx.fillRect(x - 0.6, y - size * 0.15, 1.2, size * 0.2);
+            for (let k = 0; k < 3; k++) {
+              const tierW = size * (0.4 - k * 0.09);
+              const tierY = y - size * 0.12 - k * size * 0.26;
+              ctx.beginPath();
+              ctx.moveTo(x - tierW, tierY);
+              ctx.lineTo(x, tierY - size * 0.42);
+              ctx.lineTo(x + tierW, tierY);
+              ctx.fill();
+            }
           } else {
-            ctx.arc(x, y, size * 0.55, Math.PI, 0);
+            // A rounded crown made of three overlapping circles
+            for (const [ox, oy, rr] of [[-0.35, 0, 0.42], [0.35, 0, 0.4], [0, -0.32, 0.48]]) {
+              ctx.beginPath();
+              ctx.arc(x + ox * size, y + oy * size, rr * size, 0, Math.PI * 2);
+              ctx.fill();
+            }
           }
-          ctx.fill();
         }
+        ctx.fillStyle = dark;
+
         break;
       }
       case 'temples': {
@@ -575,7 +785,29 @@ export class Scene {
           ctx.fillRect(x - 2, y - 26 * s, 2, 26 * s);
         }
         break;
+      case 'houseboat': {
+        // A Kerala houseboat drifting slowly across the water, windows glowing
+        const u = h / 900;
+        const x = (((0.3 + t * 0.003) % 1.3) - 0.15) * w;
+        const y = h * 0.74 + Math.sin(t * 0.9) * 1.5;
+        ctx.fillStyle = 'rgba(58,36,24,.92)';
+        ctx.beginPath();
+        ctx.moveTo(x - 70 * u, y - 6 * u);
+        ctx.quadraticCurveTo(x, y + 14 * u, x + 70 * u, y - 10 * u);
+        ctx.lineTo(x - 70 * u, y - 6 * u);
+        ctx.fill();
+        ctx.fillStyle = 'rgba(196,160,104,.95)';
+        ctx.beginPath();
+        ctx.moveTo(x - 58 * u, y - 6 * u);
+        ctx.quadraticCurveTo(x - 50 * u, y - 34 * u, x, y - 36 * u);
+        ctx.quadraticCurveTo(x + 50 * u, y - 34 * u, x + 58 * u, y - 8 * u);
+        ctx.fill();
+        ctx.fillStyle = 'rgba(255,200,110,.85)';
+        for (let k = 0; k < 5; k++) ctx.fillRect(x - 36 * u + k * 16 * u, y - 20 * u, 8 * u, 7 * u);
+        break;
+      }
       case 'glitter':
+
         // Sparkles on the sea, blinking in and out
         for (let i = 0; i < 60; i++) {
           const x = ((i * 0.618 + Math.floor(t * 2 + i) * 0.37) % 1) * w;

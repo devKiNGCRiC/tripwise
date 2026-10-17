@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils/cn';
 import type { Region } from '@/world/regions';
 
 /** Fade the photo out towards the bottom so it dissolves into the glass panel. */
-const MELT = '[mask-image:linear-gradient(to_bottom,black_55%,transparent)]';
+const MELT = '[mask-image:linear-gradient(to_bottom,black_62%,transparent)]';
 
 /** The region's photo with a cross-fade from the previous region's photo. */
 export function RegionPhoto({ region, className }: { region: Region; className?: string }) {
@@ -37,7 +37,7 @@ export function RegionPhoto({ region, className }: { region: Region; className?:
         decoding="async"
         className={cn('absolute inset-0 size-full animate-[photo-in_0.9s_ease_both] object-cover', MELT)}
       />
-      <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 px-5 pb-1 text-[11px] sm:px-6">
+      <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 px-5 pb-1.5 text-[12.5px] sm:px-6">
         <span className="truncate font-semibold text-ink">{photo.place}</span>
         {/* Short visible credit; the full credit is the link's accessible name and tooltip */}
         <a

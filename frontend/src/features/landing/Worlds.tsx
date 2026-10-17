@@ -16,7 +16,7 @@ export function Worlds() {
   const thumbs = useThumbnails();
 
   return (
-    <section ref={reveal} aria-labelledby="worlds-title" className="page-wrap pb-[clamp(60px,10vh,120px)]">
+    <section ref={reveal} id="worlds" aria-labelledby="worlds-title" className="page-wrap scroll-mt-24 pb-[clamp(60px,10vh,120px)]">
       <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
         <div className="reveal-up glass-strong flex min-h-[220px] flex-col justify-between gap-4 rounded-[26px] p-6">
           <span className="text-[11px] font-bold tracking-[0.18em] text-soft uppercase">Seven worlds</span>

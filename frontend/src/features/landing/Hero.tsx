@@ -28,13 +28,14 @@ export function Hero({ who, onWhoChange }: HeroProps) {
       {/* Readability wash: from the left on desktop, from the top on phones */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-(--trip-scrim) via-(--trip-scrim) to-transparent lg:bg-linear-to-r lg:via-transparent lg:via-55%" />
 
+      {/* Content sits low over the land (sky and landmark stay visible above), close to the region bar */}
       <div className="page-wrap grid min-h-svh grid-rows-[1fr_auto] gap-6 pt-24 pb-5">
-        <div className="grid items-center gap-[clamp(24px,4vw,64px)] lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
+        <div className="grid items-end gap-[clamp(24px,4vw,64px)] pb-[clamp(0px,3vh,32px)] lg:grid-cols-[minmax(0,1.2fr)_minmax(340px,0.8fr)]">
           <div>
             <p className="flex flex-wrap items-center gap-3.5">
               <span className="rounded-full bg-accent px-3 py-1 text-[13px] font-semibold text-on-accent">{counter}</span>
-              <span className="text-[11px] font-bold tracking-[0.18em] text-soft uppercase">{region.name}</span>
-              <span lang="hi" className="text-[22px] text-accent-2">
+              <span className="text-xs font-bold tracking-[0.18em] text-soft uppercase">{region.name}</span>
+              <span lang="hi" className="text-[22px] text-accent">
                 {region.hi}
               </span>
             </p>
@@ -55,7 +56,7 @@ export function Hero({ who, onWhoChange }: HeroProps) {
                   aria-pressed={who === kind.who}
                   onClick={() => onWhoChange(kind.who)}
                   className={cn(
-                    'rounded-full border px-3.5 py-1.5 text-[13.5px] font-medium backdrop-blur-md transition',
+                    'rounded-full border px-4 py-1.5 text-sm font-medium backdrop-blur-md transition',
                     who === kind.who ? 'border-transparent bg-ink text-on-ink' : 'border-line bg-glass hover:border-accent',
                   )}
                 >

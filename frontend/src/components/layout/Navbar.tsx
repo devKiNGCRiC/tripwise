@@ -47,6 +47,10 @@ export function Navbar() {
             <NavLink to="/plan" className={navLinkClass}>
               Plan a trip
             </NavLink>
+            {/* A section of the homepage (plain link: it's never "the current page") */}
+            <a href="/#worlds" className={navLinkClass({ isActive: false })}>
+              Seven worlds
+            </a>
             {user && (
               <NavLink to="/trips" className={navLinkClass}>
                 My trips

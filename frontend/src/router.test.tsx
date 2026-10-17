@@ -1,7 +1,7 @@
 /**
  * router.test.tsx — route guards and fallbacks, tested through the real app routes.
  */
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { session } from '@/mocks/db';
 import { renderApp } from '@/test/render';
@@ -42,6 +42,12 @@ describe('routing', () => {
   it('shows the lost-luggage page for unknown URLs', async () => {
     renderApp('/this/does/not/exist');
     expect(await screen.findByRole('heading', { name: 'Lost luggage' })).toBeInTheDocument();
+  });
+
+  it('lets visitors jump to the seven worlds from the navbar', async () => {
+    renderApp('/');
+    const nav = await screen.findByRole('navigation', { name: 'Main' });
+    expect(within(nav).getByRole('link', { name: 'Seven worlds' })).toHaveAttribute('href', '/#worlds');
   });
 
   it('keeps the skip link readable in both themes (text colour follows the ink pill)', async () => {

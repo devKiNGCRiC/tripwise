@@ -12,7 +12,7 @@
   /* Text and hairlines; on-ink = text on a solid ink pill */
   --trip-ink: #121417;
   --trip-on-ink: #ffffff;
-  --trip-soft: #4a4f57;
+  --trip-soft: #3c4149;
   --trip-line: rgb(18 20 23 / 0.12);
 
   /* Frosted glass: normal and strong (forms, dense panels), with a bright edge */
@@ -51,7 +51,7 @@
 [data-theme='dark'] {
   --trip-ink: #f3efe7;
   --trip-on-ink: #0b1020;
-  --trip-soft: #b7b4ad;
+  --trip-soft: #c9c6bf;
   --trip-line: rgb(255 255 255 / 0.14);
 
   --trip-glass: rgb(10 16 30 / 0.42);
