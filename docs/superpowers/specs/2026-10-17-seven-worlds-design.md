@@ -4,7 +4,7 @@
 -->
 # Seven Worlds: living-landscape UI rewrite
 
-**Status:** approved (from prototype `docs/design/tripwise-living.html`)
+**Status:** implemented 2026-10-18 (approved from prototype `docs/design/tripwise-living.html`)
 **Replaces:** the Monsoon Editorial look (`2026-10-17-monsoon-editorial.md`)
 
 ## 1. Intent

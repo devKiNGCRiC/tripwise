@@ -2,7 +2,7 @@
  * useReveal.ts — scroll reveals without re-renders.
  *
  * Attach the returned ref to a section. When it first scrolls into view, it and every
- * descendant with a reveal class (`reveal-line`, `reveal-up`, `wipe`) get `.is-in`,
+ * descendant with the `reveal-up` class get `.is-in`,
  * which starts their CSS transitions (see index.css). One shared IntersectionObserver
  * serves the whole app. Without IntersectionObserver (old browsers, tests) or with
  * reduced/calm motion, content is revealed immediately.
@@ -11,7 +11,7 @@ import { useCallback } from 'react';
 import { prefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
 /** Elements inside a revealed section that animate in. */
-const TARGETS = '.reveal-line, .reveal-up, .wipe';
+const TARGETS = '.reveal-up';
 
 /** Mark an element (and its animated descendants) as revealed. */
 function reveal(el: Element) {

@@ -59,6 +59,6 @@ window.scrollTo = () => {};
 
 /**
  * jsdom has no canvas drawing and logs a noisy "not implemented" error when asked.
- * Report "no context" instead — the same path a browser without WebGL takes (CSS gradient fallback).
+ * Report "no context" instead — the same path a browser without canvas takes (the CSS sky stays behind the page).
  */
 HTMLCanvasElement.prototype.getContext = (() => null) as typeof HTMLCanvasElement.prototype.getContext;

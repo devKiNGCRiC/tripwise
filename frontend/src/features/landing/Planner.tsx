@@ -51,7 +51,7 @@ export function Planner({ places, who, onWhoChange }: PlannerProps) {
       </label>
       <label className={FIELD}>
         <span className={FIELD_LABEL}>When</span>
-        <select className="bg-transparent py-0.5 font-semibold text-ink outline-none">
+        <select className="w-full min-w-0 bg-transparent py-0.5 pr-1 font-semibold text-ink outline-none">
           <option>Any month</option>
           <option>This month</option>
           <option>Next 3 months</option>
@@ -60,7 +60,7 @@ export function Planner({ places, who, onWhoChange }: PlannerProps) {
       </label>
       <label className={FIELD}>
         <span className={FIELD_LABEL}>Who's going</span>
-        <select value={who} onChange={(event) => onWhoChange(event.target.value)} className="bg-transparent py-0.5 font-semibold text-ink outline-none">
+        <select value={who} onChange={(event) => onWhoChange(event.target.value)} className="w-full min-w-0 bg-transparent py-0.5 pr-1 font-semibold text-ink outline-none">
           {KINDS.map((kind) => (
             <option key={kind.who} value={kind.who}>
               {kind.who}

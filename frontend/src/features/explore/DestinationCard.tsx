@@ -3,9 +3,6 @@
  * tag and a vibe tag on frosted glass, the place name in the editorial serif with its
  * Hindi name in gold above it, and the travel facts that matter when choosing —
  * best season and budget level. The whole card links to the destination page.
- *
- * Add the `wipe` class (index.css) to have it open left-to-right when revealed;
- * the photo then settles from a slight zoom as it opens.
  */
 import { Link } from 'react-router';
 import type { BudgetTier, Destination } from '@/lib/api/types';
@@ -44,7 +41,7 @@ export function DestinationCard({ destination, className }: DestinationCardProps
         height={1100}
         loading="lazy"
         decoding="async"
-        className="absolute inset-0 size-full scale-[1.02] object-cover transition-transform duration-[1600ms] ease-out-expo group-hover:scale-[1.07] [.wipe:not(.is-in)_&]:scale-[1.15]"
+        className="absolute inset-0 size-full scale-[1.02] object-cover transition-transform duration-[1600ms] ease-out-expo group-hover:scale-[1.07]"
       />
       {/* Darken the bottom so the caption always reads */}
       <span aria-hidden className="absolute inset-0 bg-linear-to-b from-transparent from-40% to-[rgb(10_8_6/.8)]" />

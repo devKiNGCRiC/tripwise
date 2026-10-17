@@ -15,8 +15,8 @@ You can then save it, download it as a PDF, or share it with your friends.
 |---|---|---|
 | 🔐 | Sign up / log in (email + Google), secure JWT sessions | ✅ Frontend done (mock API) |
 | 🏠 | Landing page with trending destinations | ✅ Done |
-| 🌊 | "Monsoon Editorial" design: living liquid colour, glass, serif + Hindi type, self-drawing rangoli | ✅ Done |
-| 🌗 | Day (dawn) and Night (monsoon) themes, plus a Calm motion setting | ✅ Done |
+| 🏞️ | "Seven Worlds": a living, hand-drawn landscape of seven Indian regions behind every page | ✅ Done |
+| 🌗 | Day and Night for every world, region colours, photo-tinted personalisation, Calm motion | ✅ Done |
 | 📱 | Mobile-first layout with an app-style bottom tab bar | ✅ Done |
 | 🧭 | Explore destinations by vibe, budget and best season | 🛠️ Next |
 | 🪄 | Trip planner wizard + AI itinerary generation | 🛠️ Next |
@@ -25,28 +25,38 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 📊 | Admin dashboard: analytics, destinations, users, moderation | 📅 Planned |
 | 📲 | React Native mobile app | 📅 Phase 2 |
 
-## 🎨 Design: "Monsoon Editorial"
+## 🎨 Design: "Seven Worlds"
 
-Calm, editorial and Indian without being a costume. The look combines two ideas:
+India is not one place, so TripWise isn't one look. The whole site floats as frosted glass over a
+**living landscape drawn live in your browser**: seven regions divided by landscape, not state lines.
 
-- **Living liquid colour:** a soft, marbled colour field drifts behind the hero and key sections and ripples
-  where you move or tap (a tiny WebGL shader, no 3D library). Frosted-glass panels float on top.
-- **Editorial voice:** big serif headlines (Gloock) with Hindi accents (Tiro Devanagari Hindi), body text in
-  Hind (Indian Type Foundry), a gold **rangoli** that draws itself, and a **kolam** ornament as a divider.
-- **Day and Night:** Day is dawn (ivory, peach, soft teal, saffron light); Night is the monsoon (indigo, rain
-  teal, marigold). Switching makes the liquid's colours flow from one palette into the other.
-- **Cinematic journeys:** destination photos slide sideways while you scroll down, each wiping open as it
-  arrives. Steps are strung on a gold thread that draws itself.
-- **Gentle and fast:** smooth scrolling (Lenis), line-by-line headline reveals, and a cursor ring on desktop.
-  "Reduce motion" users, and anyone who picks **Calm** on their Passport page, get a still version.
+| World | You'll see |
+|---|---|
+| Himalaya | snow peaks, pine ridges, drifting mist; stars and falling snow at night |
+| Thar | dunes, a golden fort, a camel caravan, blowing sand; a sky full of stars |
+| Gangetic Plains | the ghats' temple skyline, boats and kites over the river; floating diyas at night |
+| Deccan Plateau | mesas, Hampi-style boulders and ruins; fireflies at night |
+| Western Ghats | monsoon rain, rolling cloud, waterfalls on green ridges |
+| Konkan & Malabar | sea, breaking waves, sun glitter, swaying palms |
+| Seven Sisters | tea terraces disappearing into mist; fireflies at night |
 
-Design spec: `docs/superpowers/specs/2026-10-17-monsoon-editorial.md` · preview: `docs/design/`.
+- **Always moving:** the layers shift with your mouse and as you scroll, and the homepage tours the seven
+  worlds until you pick one. TripWise remembers your pick.
+- **Day and Night** for every world; the interface takes on each world's colours.
+- **Region dossier:** elevation, terrain, a 12-month "when to go" chart, signature experiences and places.
+- **For every traveller:** Solo, Friends, Backpackers, Family and Couples each change what the plan offers.
+- **Your colours:** pick a photo from a trip you loved and its colours tint the whole world
+  (read on your device, never uploaded), or use your location to see the world nearest you.
+- **Fonts:** Fraunces (headlines), Plus Jakarta Sans (interface), Tiro Devanagari Hindi (Hindi).
+- **Calm mode** (Passport page) and the OS "reduce motion" setting hold the world still.
+
+Design spec: `docs/superpowers/specs/2026-10-17-seven-worlds-design.md` · prototype: `docs/design/tripwise-living.html`.
 
 ## 🧰 Tech stack (100% free tiers)
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 19, TypeScript, Vite, Tailwind CSS 4, React Router, TanStack Query, React Hook Form + Zod, WebGL shader, Lenis |
+| Frontend | React 19, TypeScript, Vite, Tailwind CSS 4, React Router, TanStack Query, React Hook Form + Zod, Canvas 2D (procedural landscapes), Lenis |
 | Backend | Node.js, Express, MongoDB (Mongoose) |
 | AI | Google Gemini Flash-Lite (primary) with Groq (`gpt-oss-120b`) as automatic fallback |
 | Database | MongoDB Atlas (free M0 cluster) |

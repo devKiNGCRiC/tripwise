@@ -1,10 +1,10 @@
 # TripWise — Frontend
 
 React + TypeScript web app for **TripWise**, the AI travel itinerary planner.
-Design: **"Monsoon Editorial"**: living liquid colour (a small WebGL shader) under frosted glass, serif
-headlines with Hindi accents, a self-drawing gold rangoli and cinematic destination photography.
-Day = dawn palette, Night = monsoon palette.
-Fonts: Gloock (headlines), Hind (body), Tiro Devanagari Hindi (Hindi accents). Design references: `docs/design/`.
+Design: **"Seven Worlds"**. Every page floats as frosted glass over a living landscape of seven Indian
+regions (Himalaya, Thar, Gangetic Plains, Deccan Plateau, Western Ghats, Konkan & Malabar, Seven Sisters),
+drawn live on a canvas with Day and Night versions.
+Fonts: Fraunces (headlines), Plus Jakarta Sans (interface), Tiro Devanagari Hindi. Design references: `docs/design/`.
 
 ## Quick start
 
@@ -44,8 +44,9 @@ Demo accounts (mock mode):
 ```
 src/
   theme/        tokens.css (ALL colours/glass/fonts) + ThemeProvider + Day/Night switch
+  world/        the living landscape: regions data, procedural scene, WorldProvider, LivingWorld canvas
   components/   ui/ (Button, Chip, Input, Card, Stamp, Toast…) · layout/ (navbar, guards…)
-                signature/ (liquid colour shader, Rangoli, Kolam, cursor ring, scroll reveals, smooth scroll)
+                signature/ (scroll reveals, smooth scroll)
   features/     auth/ · explore/ · landing/ · passport/   (Plan 2 adds planner/, trips/)
   pages/        one thin file per route
   lib/api/      types (the API contract), fetch client, endpoint helpers
