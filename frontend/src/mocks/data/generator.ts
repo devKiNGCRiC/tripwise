@@ -17,19 +17,38 @@ const TRAVELLER_FACTOR: Record<TripRequest['travellers'], number> = { solo: 1, c
 /** Day themes, picked per day. */
 const THEMES = ['Arrive and settle in', 'Old town and local flavours', 'Into the landscape', 'Markets, craft and stories', 'Slow morning, golden evening', 'Hidden corners', 'One last look'];
 
-/** Activity ideas for each interest: [title, description]. `{place}` is the destination. */
-const IDEAS: Record<Interest, [string, string][]> = {
-  food: [['Street-food walk', 'Taste the local favourites with a guide who knows every stall.'], ['Thali lunch at a family kitchen', 'A home-style meal, the way locals eat it.']],
-  culture: [['Heritage walk', 'Lanes, courtyards and the stories behind them.'], ['Evening performance', 'Music or dance in a traditional setting.']],
-  adventure: [['Morning trek', 'A guided trail with big views at the top.'], ['River or ridge adventure', 'Rafting, zip-line or a ridge walk, by season.']],
-  nightlife: [['Sunset drinks', 'A rooftop or beach spot as the sky turns gold.'], ['Live music night', 'Where the locals actually go after dark.']],
-  nature: [['Viewpoint at first light', 'Get there early, before the crowds and the haze.'], ['Lakeside or forest walk', 'An easy loop with birdsong and shade.']],
-  shopping: [['Craft market', 'Handmade textiles, metalwork and spices.'], ['Artisan workshop visit', 'Meet the makers; buy straight from them.']],
-  history: [['Fort or palace tour', 'With a guide, so the walls start talking.'], ['Museum hour', 'The small museum most visitors skip.']],
-  relaxation: [['Slow café morning', 'A long breakfast with a view.'], ['Spa or ayurveda session', 'An hour to do absolutely nothing.']],
-  photography: [['Golden-hour photo walk', 'The best light, the best angles.'], ['Blue-hour viewpoint', 'City lights against a deep sky.']],
-  spiritual: [['Temple at dawn', 'Bells, incense and the first prayers of the day.'], ['Evening aarti', 'Lamps, chants and a moment of stillness.']],
+/** When an idea works: "am" = before 11:00, "pm" = from 16:00 (sunset, nightlife), "any" = whenever. */
+type When = 'am' | 'pm' | 'any';
+/** One activity idea: [title, description, when it works]. */
+type Idea = [string, string, When];
+
+/** Activity ideas for each interest. */
+const IDEAS: Record<Interest, Idea[]> = {
+  food: [['Street-food walk', 'Taste the local favourites with a guide who knows every stall.', 'any'], ['Thali at a family kitchen', 'A home-style meal, the way locals eat it.', 'any']],
+  culture: [['Heritage walk', 'Lanes, courtyards and the stories behind them.', 'any'], ['Evening performance', 'Music or dance in a traditional setting.', 'pm']],
+  adventure: [['Morning trek', 'A guided trail with big views at the top.', 'am'], ['River or ridge adventure', 'Rafting, zip-line or a ridge walk, by season.', 'any']],
+  nightlife: [['Sunset drinks', 'A rooftop or beach spot as the sky turns gold.', 'pm'], ['Live music night', 'Where the locals actually go after dark.', 'pm']],
+  nature: [['Viewpoint at first light', 'Get there early, before the crowds and the haze.', 'am'], ['Lakeside or forest walk', 'An easy loop with birdsong and shade.', 'any']],
+  shopping: [['Craft market', 'Handmade textiles, metalwork and spices.', 'any'], ['Artisan workshop visit', 'Meet the makers; buy straight from them.', 'any']],
+  history: [['Fort or palace tour', 'With a guide, so the walls start talking.', 'any'], ['Museum hour', 'The small museum most visitors skip.', 'any']],
+  relaxation: [['Slow café morning', 'A long breakfast with a view.', 'am'], ['Spa or ayurveda session', 'An hour to do absolutely nothing.', 'any']],
+  photography: [['Golden-hour photo walk', 'The best light, the best angles.', 'pm'], ['Blue-hour viewpoint', 'City lights against a deep sky.', 'pm']],
+  spiritual: [['Temple at dawn', 'Bells, incense and the first prayers of the day.', 'am'], ['Evening aarti', 'Lamps, chants and a moment of stillness.', 'pm']],
 };
+/** Fallbacks when nothing else fits a slot (still never repeated within a day). */
+const FILLERS: Idea[] = [
+  ['Free time to wander', 'No plan — follow whatever catches your eye.', 'any'],
+  ['Long lunch somewhere local', 'Ask your host for their favourite.', 'any'],
+  ['Neighbourhood stroll', 'Side streets, small shops and chai stops.', 'any'],
+  ['Dinner with a view', 'End the day somewhere beautiful.', 'pm'],
+];
+
+/** Does an idea suit a start time (minutes after midnight)? */
+function fits(when: When, minutes: number) {
+  if (when === 'am') return minutes < 11 * 60;
+  if (when === 'pm') return minutes >= 16 * 60;
+  return true;
+}
 
 /** Transfer modes and minute ranges, varied by step. */
 const TRANSFERS: [TransferMode, number][] = [['walk', 8], ['auto', 12], ['cab', 20], ['walk', 15], ['boat', 25], ['bus', 30]];
@@ -64,14 +83,22 @@ export function buildDay(req: TripRequest, destination: Destination | undefined,
   const random = seeded(`${req.destination}|${date}|${dayNumber}|${variant}|${req.interests.join(',')}`);
   const place = destination?.name ?? req.destination;
   const count = PER_DAY[req.pace];
-  // Ideas: the destination's own highlights first, then the traveller's interests.
-  const highlights: [string, string][] = (destination?.highlights ?? []).map((h) => [h, `One of ${place}'s best-loved sights.`]);
+  // Ideas: the destination's own highlights, the traveller's interests, then gentle fillers.
+  const highlights: Idea[] = (destination?.highlights ?? []).map((h) => [h, `One of ${place}'s best-loved sights.`, 'any']);
   const pool = [...highlights, ...req.interests.flatMap((i) => IDEAS[i])];
+  const used = new Set<string>();
+  /** A not-yet-used idea that suits this time of day (random among those that fit). */
+  const pick = (minutes: number): Idea => {
+    const fitting = pool.filter(([title, , when]) => !used.has(title) && fits(when, minutes));
+    const choice = fitting[Math.floor(random() * fitting.length)] ?? FILLERS.find(([title, , when]) => !used.has(title) && fits(when, minutes)) ?? FILLERS[0];
+    used.add(choice[0]);
+    return choice;
+  };
   const daily = destination ? destination.avgDailyCost.amount : req.budget.amount;
   let minutes = FIRST_START[req.pace];
   const activities: Activity[] = [];
   for (let k = 0; k < count; k++) {
-    const [title, description] = pool[Math.floor(random() * pool.length)] ?? ['Free time', 'Wander at your own pace.'];
+    const [title, description] = pick(minutes);
     const [mode, base] = TRANSFERS[Math.floor(random() * TRANSFERS.length)];
     const isLast = k === count - 1;
     activities.push({

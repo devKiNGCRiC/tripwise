@@ -1,10 +1,12 @@
 /**
  * GeneratingScreen.tsx — what the traveller sees while the AI plans: the destination in
  * large type, a status line that changes every 1.5 s ("Reading the season…") and an
- * indeterminate progress bar. Announced politely to screen readers.
+ * indeterminate progress bar. The living landscape turns into the destination's world
+ * (for India's seven worlds). Announced politely to screen readers.
  */
 import { useEffect, useState } from 'react';
 import { GlassPanel } from '@/components/ui/GlassPanel';
+import { useTripWorld } from '@/features/trips/useTripWorld';
 
 /** The steps a planner (human or AI) goes through, shown in turn. */
 const MESSAGES = ['Reading the season…', 'Routing day 1…', 'Finding food the locals love…', 'Pricing stays…', 'Timing the sunsets…', 'Packing your list…'];
@@ -12,6 +14,7 @@ const MESSAGES = ['Reading the season…', 'Routing day 1…', 'Finding food the
 /** The planning-in-progress card. */
 export function GeneratingScreen({ destination }: { destination: string }) {
   const [step, setStep] = useState(0);
+  useTripWorld(destination);
 
   // Rotate the status line.
   useEffect(() => {

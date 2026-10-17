@@ -1,9 +1,9 @@
 /**
  * db.ts — the mock backend's in-memory "database".
  *
- * Data lives in plain arrays (reset on page reload). The login SESSION is the
- * one thing we persist — in localStorage — to imitate the real backend's
- * httpOnly refresh cookie, so a page refresh keeps you logged in during demos.
+ * Data lives in plain arrays. Two things survive a page reload (localStorage), so demos
+ * feel real: the login SESSION (standing in for the real backend's httpOnly refresh
+ * cookie) and the planned TRIPS with today's AI-plan counts. Tests never persist.
  */
 import type { Destination, Itinerary, User } from '@/lib/api/types';
 import { seedDestinations } from './data/destinations';
@@ -23,13 +23,37 @@ interface MockDb {
   generations: Record<string, { day: string; used: number }>;
 }
 
-/** Fresh deep copies of the seed data, so tests can mutate freely. */
+/** localStorage key for saved trips and AI-plan counts. */
+const TRIPS_KEY = 'tw_mock_trips';
+/** Persist only in the real browser app, never in tests (each test starts clean). */
+const PERSIST = import.meta.env.MODE !== 'test';
+
+/** Trips and plan counts saved by an earlier visit (empty if none, unreadable or blocked). */
+export function loadSavedTrips(): Pick<MockDb, 'itineraries' | 'generations'> {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(TRIPS_KEY) ?? 'null');
+    if (saved && Array.isArray(saved.itineraries) && typeof saved.generations === 'object') return saved;
+  } catch {
+    // Corrupt or blocked storage: start fresh.
+  }
+  return { itineraries: [], generations: {} };
+}
+
+/** Save the trips and plan counts (handlers call this after every change). */
+export function saveTrips() {
+  try {
+    window.localStorage.setItem(TRIPS_KEY, JSON.stringify({ itineraries: db.itineraries, generations: db.generations }));
+  } catch {
+    // Storage full or blocked: trips just won't survive a reload.
+  }
+}
+
+/** Fresh deep copies of the seed data (plus saved trips in the browser app). */
 function createDb(): MockDb {
   return {
     users: structuredClone(seedUsers),
     destinations: structuredClone(seedDestinations),
-    itineraries: [],
-    generations: {},
+    ...(PERSIST ? loadSavedTrips() : { itineraries: [], generations: {} }),
   };
 }
 

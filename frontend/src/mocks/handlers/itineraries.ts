@@ -14,7 +14,7 @@ import { http, HttpResponse } from 'msw';
 import { apiUrl } from '@/lib/api/config';
 import type { Itinerary, Quota, TripRequest } from '@/lib/api/types';
 import { buildDay, generateItinerary } from '../data/generator';
-import { db, type StoredItinerary } from '../db';
+import { db, saveTrips, type StoredItinerary } from '../db';
 import { currentUser, errorResponse, latency } from './shared';
 
 /** AI plans allowed per user per day. */
@@ -64,6 +64,7 @@ export const itineraryHandlers = [
     const stored: StoredItinerary = { ...generateItinerary(req, destination), id: newId('it'), createdAt: new Date().toISOString(), ownerId: user.id };
     db.itineraries.unshift(stored);
     db.generations[user.id] = { day: today(), used: quota.used + 1 };
+    saveTrips();
     return HttpResponse.json({ itinerary: publicTrip(stored), quota: quotaFor(user.id) });
   }),
 
@@ -93,6 +94,7 @@ export const itineraryHandlers = [
     const trip = ownTrip(user.id, params.id);
     if (!trip) return errorResponse(404, 'NOT_FOUND', "We couldn't find that trip.");
     db.itineraries = db.itineraries.filter((t) => t !== trip);
+    saveTrips();
     return new HttpResponse(null, { status: 204 });
   }),
 
@@ -107,6 +109,7 @@ export const itineraryHandlers = [
     const destination = db.destinations.find((d) => d.name.toLowerCase() === trip.request.destination.trim().toLowerCase());
     trip.variants = (trip.variants ?? 0) + 1;
     trip.days[n - 1] = buildDay(trip.request, destination, trip.days[n - 1].date, n, trip.variants);
+    saveTrips();
     return HttpResponse.json({ itinerary: publicTrip(trip) });
   }),
 
@@ -118,6 +121,7 @@ export const itineraryHandlers = [
     const trip = ownTrip(user.id, params.id);
     if (!trip) return errorResponse(404, 'NOT_FOUND', "We couldn't find that trip.");
     trip.shareId ??= newId('sh');
+    saveTrips();
     return HttpResponse.json({ shareId: trip.shareId });
   }),
 

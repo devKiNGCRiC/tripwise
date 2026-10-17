@@ -18,10 +18,10 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 🏞️ | "Seven Worlds": a living, hand-drawn landscape of seven Indian regions behind every page | ✅ Done |
 | 🌗 | Day and Night for every world, region colours, photo-tinted personalisation, Calm motion | ✅ Done |
 | 📱 | Mobile-first layout with an app-style bottom tab bar | ✅ Done |
-| 🧭 | Explore destinations by vibe, budget and best season | 🛠️ Next |
-| 🪄 | Trip planner wizard + AI itinerary generation | 🛠️ Next |
-| 🎟️ | Boarding-pass itinerary view, PDF download, share link | 🛠️ Next |
-| 🛂 | "Passport" profile that collects a stamp for every trip | 🛠️ Next |
+| 🧭 | Explore destinations by world, vibe, budget and best month; destination guides | ✅ Done (mock API) |
+| 🪄 | Trip planner wizard + itinerary generation (5 free plans a day) | ✅ Done (mock AI) |
+| 🎟️ | Day-by-day itinerary (timed stops, transfers, costs), regenerate a day, PDF, share link | ✅ Done (mock AI) |
+| 🛂 | "Passport" profile that collects a stamp for every trip | ✅ Done |
 | 📊 | Admin dashboard: analytics, destinations, users, moderation | 📅 Planned |
 | 📲 | React Native mobile app | 📅 Phase 2 |
 

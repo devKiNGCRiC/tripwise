@@ -2,15 +2,18 @@
  * PassportPage.tsx — route /passport (profile), styled like a real passport:
  * a navy cover with a gold gateway-arch emblem and your details (always navy, in both
  * themes, like the real document), then a stamp page that fills up as you save
- * trips (stamps arrive with Plan 2), then settings: motion, theme, log out.
+ * trips (each stamp opens its trip), then today's AI plan allowance and settings:
+ * motion, theme, log out.
  */
 import { LogOut } from 'lucide-react';
-import { Link, useNavigate } from 'react-router';
-import { Button, buttonClasses } from '@/components/ui/Button';
+import { useNavigate } from 'react-router';
+import { Button } from '@/components/ui/Button';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { MotionChoice } from '@/features/passport/MotionChoice';
+import { QuotaMeter } from '@/features/passport/QuotaMeter';
+import { StampGrid } from '@/features/passport/StampGrid';
 import { ThemeToggle } from '@/theme/ThemeToggle';
 
 /** Route "/passport": the traveller's passport. */
@@ -75,21 +78,15 @@ export default function PassportPage() {
 
         {/* Stamp page: empty until the first saved trip */}
         <section className="flex min-h-80 flex-col items-center justify-center gap-4 glass-strong bg-[radial-gradient(circle,var(--trip-line)_1.2px,transparent_1.4px)] bg-size-[20px_20px] p-8 text-center">
-          <div aria-hidden className="grid size-24 place-items-center rounded-full border-2 border-dashed border-accent-2/60 font-display text-sm tracking-widest text-accent-2 uppercase">
-            Your
-            <br />
-            stamp
-          </div>
-          <h2 className="text-3xl">No stamps yet</h2>
-          <p className="max-w-[32ch] text-soft">Every trip you save lands here as a stamp. Where's the first one going to be?</p>
-          <Link to="/plan" className={buttonClasses()}>
-            Plan your first trip
-          </Link>
+          <StampGrid />
         </section>
       </div>
 
       <GlassPanel className="mt-8 flex flex-col gap-8">
-        <MotionChoice />
+        <QuotaMeter />
+        <div className="border-t border-line pt-6">
+          <MotionChoice />
+        </div>
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
           <div className="flex items-center gap-3">
             <ThemeToggle />

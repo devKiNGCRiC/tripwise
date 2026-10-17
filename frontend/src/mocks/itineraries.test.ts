@@ -8,7 +8,8 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { api } from '@/lib/api/client';
 import { itinerariesApi, meApi, shareApi } from '@/lib/api/endpoints';
 import type { TripRequest } from '@/lib/api/types';
-import { session } from './db';
+import { buildDay } from './data/generator';
+import { db, loadSavedTrips, saveTrips, session } from './db';
 
 /** A 3-day Goa trip for two. */
 const goaTrip: TripRequest = {
@@ -84,5 +85,31 @@ describe('mock itinerary API', () => {
 
   it('reports a busy AI with AI_UNAVAILABLE', async () => {
     await expect(itinerariesApi.generate({ ...goaTrip, destination: 'fail-ai' })).rejects.toMatchObject({ code: 'AI_UNAVAILABLE' });
+  });
+
+  it('never repeats a stop within a day, and keeps dawn and evening ideas at the right time', () => {
+    const goa = db.destinations.find((d) => d.slug === 'goa');
+    const req = { ...goaTrip, pace: 'packed' as const, interests: ['food', 'spiritual', 'nightlife', 'nature', 'photography'] as TripRequest['interests'] };
+    for (let n = 1; n <= 10; n++) {
+      const day = buildDay(req, goa, '2026-12-12', n, n);
+      const titles = day.activities.map((a) => a.title);
+      expect(new Set(titles).size).toBe(titles.length);
+      for (const a of day.activities) {
+        const hour = Number(a.startTime!.slice(0, 2));
+        if (/dawn|first light/i.test(a.title)) expect(hour).toBeLessThan(11);
+        if (/evening|sunset|night|aarti|blue-hour/i.test(a.title)) expect(hour).toBeGreaterThanOrEqual(16);
+      }
+    }
+  });
+});
+
+describe('mock trip storage', () => {
+  it('keeps planned trips across page reloads (saved in the browser)', async () => {
+    await loginAs('u_demo');
+    const { itinerary } = await itinerariesApi.generate(goaTrip);
+    saveTrips();
+    const saved = loadSavedTrips();
+    expect(saved.itineraries.map((t: { id: string }) => t.id)).toEqual([itinerary.id]);
+    expect(saved.generations.u_demo.used).toBe(1);
   });
 });

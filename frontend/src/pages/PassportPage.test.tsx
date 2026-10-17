@@ -1,10 +1,12 @@
 /**
- * PassportPage.test.tsx — the passport shows the traveller's details, and the
- * Motion setting: travellers can choose Calm (everything holds still) or Full;
+ * PassportPage.test.tsx — the passport shows the traveller's details, a stamp for every
+ * planned trip, today's AI plan allowance, and the Motion setting: travellers can choose Calm (everything holds still) or Full;
  * the choice is remembered and applied to the page.
  */
 import { screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+import { api } from '@/lib/api/client';
+import { itinerariesApi } from '@/lib/api/endpoints';
 import { session } from '@/mocks/db';
 import { MOTION_STORAGE_KEY } from '@/lib/motionPreference';
 import { renderApp } from '@/test/render';
@@ -15,7 +17,27 @@ describe('PassportPage', () => {
     renderApp('/passport');
     const cover = await screen.findByRole('region', { name: 'Passport cover' });
     expect(within(cover).getByText('demo@tripwise.app')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'No stamps yet' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'No stamps yet' })).toBeInTheDocument();
+  });
+
+  it('collects a stamp for each trip and shows the plans left today', async () => {
+    session.set('u_demo');
+    await api.refreshSession();
+    const { itinerary } = await itinerariesApi.generate({
+      destination: 'Goa',
+      startDate: '2026-12-12',
+      endDate: '2026-12-13',
+      budget: { amount: 3000, currency: 'INR' },
+      travellers: 'solo',
+      interests: ['food'],
+      pace: 'chill',
+    });
+    renderApp('/passport');
+    const stamps = await screen.findByRole('list', { name: 'Stamps' });
+    const stamp = within(stamps).getByRole('link', { name: /Goa/ });
+    expect(stamp).toHaveAttribute('href', `/trips/${itinerary.id}`);
+    expect(within(stamp).getByText('गोवा')).toBeInTheDocument();
+    expect(await screen.findByText('4 of 5 AI plans left today')).toBeInTheDocument();
   });
 
   it('starts on Full motion and remembers Calm', async () => {
