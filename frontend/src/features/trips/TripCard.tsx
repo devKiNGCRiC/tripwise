@@ -8,6 +8,7 @@ import type { Destination, Itinerary } from '@/lib/api/types';
 import { cn } from '@/lib/utils/cn';
 import { sizedImage } from '@/lib/utils/images';
 import { rangeLabel, TRAVELLER_LABEL } from './format';
+import { PlaceCard } from './PlaceCard';
 import { tripStatus } from './status';
 
 /** One saved trip. */
@@ -16,7 +17,11 @@ export function TripCard({ trip, destination }: { trip: Itinerary; destination?:
   return (
     <Link to={`/trips/${trip.id}`} className={cn('group glass-strong block overflow-hidden rounded-card transition hover:-translate-y-1', status.phase === 'past' && 'opacity-85')}>
       <div className="relative h-48 overflow-hidden bg-accent/20">
-        {destination && <img src={sizedImage(destination.image.url, 700)} alt="" loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-105" />}
+        {destination ? (
+          <img src={sizedImage(destination.image.url, 700)} alt="" loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        ) : (
+          <PlaceCard name={trip.request.destination} className="[&>span:last-child]:text-4xl" />
+        )}
         <span aria-hidden className="absolute inset-0 bg-linear-to-b from-transparent from-50% to-black/45" />
         <span className={cn('absolute top-3 left-3 rounded-full px-3 py-1 text-sm font-semibold backdrop-blur-md', status.phase === 'past' ? 'bg-black/40 text-white' : 'bg-accent text-on-accent')}>
           {status.label}

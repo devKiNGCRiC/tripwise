@@ -13,6 +13,7 @@ import { useDestinations } from '@/features/explore/hooks';
 import { rangeLabel, TRAVELLER_LABEL } from '@/features/trips/format';
 import { useTrips } from '@/features/trips/hooks';
 import { tripStatus } from '@/features/trips/status';
+import { PlaceCard } from '@/features/trips/PlaceCard';
 import { TripCard } from '@/features/trips/TripCard';
 import type { Destination, Itinerary } from '@/lib/api/types';
 import { sizedImage } from '@/lib/utils/images';
@@ -23,7 +24,7 @@ function NextTrip({ trip, destination }: { trip: Itinerary; destination?: Destin
   return (
     <section aria-label="Next trip" className="glass-strong mb-10 grid overflow-hidden rounded-4xl md:grid-cols-[1.1fr_1fr]">
       <div className="relative min-h-60 bg-accent/20">
-        {destination && <img src={sizedImage(destination.image.url, 1200)} alt="" className="absolute inset-0 size-full object-cover" />}
+        {destination ? <img src={sizedImage(destination.image.url, 1200)} alt="" className="absolute inset-0 size-full object-cover" /> : <PlaceCard name={trip.request.destination} />}
         <span className="absolute top-4 left-4 rounded-full bg-accent px-3.5 py-1.5 font-semibold text-on-accent">{status.label}</span>
       </div>
       <div className="flex flex-col justify-center gap-3 p-7 sm:p-9">

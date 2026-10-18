@@ -53,6 +53,23 @@ describe('TripPage', () => {
     expect(screen.getByRole('list', { name: 'Packing list' })).toBeInTheDocument();
   });
 
+  it('shows a name card instead of an empty photo for places without one', async () => {
+    session.set('u_demo');
+    await api.refreshSession();
+    const { itinerary } = await itinerariesApi.generate({
+      destination: 'Udaipur',
+      startDate: inDays(20),
+      endDate: inDays(21),
+      budget: { amount: 3000, currency: 'INR' },
+      travellers: 'couple',
+      interests: ['history'],
+      pace: 'balanced',
+    });
+    renderApp(`/trips/${itinerary.id}`);
+    const card = await screen.findByRole('img', { name: 'Udaipur' });
+    expect(card).toHaveTextContent('Udaipur');
+  });
+
   it('opens with a photo of the place and a day strip to jump between days', async () => {
     const trip = await planGoa();
     renderApp(`/trips/${trip.id}`);

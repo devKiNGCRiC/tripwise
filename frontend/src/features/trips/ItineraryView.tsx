@@ -14,6 +14,7 @@ import { CostBreakdown } from './CostBreakdown';
 import { DayStrip } from './DayStrip';
 import { DayTimeline } from './DayTimeline';
 import { PACE_LABEL, rangeLabel, TRAVELLER_LABEL } from './format';
+import { PlaceCard } from './PlaceCard';
 
 interface ItineraryViewProps {
   itinerary: Itinerary;
@@ -50,6 +51,12 @@ export function ItineraryView({ itinerary, actions, onRegenerateDay, regeneratin
           </ul>
           {actions && <div className="mt-6 flex flex-wrap gap-2.5 border-t border-line pt-5">{actions}</div>}
         </div>
+        {/* No photo for this place: its name card instead of an empty space */}
+        {!place && (
+          <figure className="relative order-first min-h-56 overflow-hidden rounded-3xl lg:order-none lg:min-h-full">
+            <PlaceCard name={request.destination} label={request.destination} />
+          </figure>
+        )}
         {/* The place itself: its photo fills the right side (on top on phones), melting into the glass */}
         {place && (
           <figure className="relative order-first min-h-56 lg:order-none lg:min-h-full">
