@@ -14,6 +14,7 @@ import helmet from 'helmet';
 import { errorHandler, notFoundHandler } from './middleware/errors.js';
 import { globalLimiter } from './middleware/rateLimit.js';
 import { authRoutes } from './routes/auth.js';
+import { destinationRoutes } from './routes/destinations.js';
 import { healthRoutes } from './routes/health.js';
 import type { AiChain } from './services/ai/chain.js';
 
@@ -51,6 +52,7 @@ export function createApp(deps: AppDeps, extra?: (router: Router) => void): expr
   const now = deps.now ?? (() => new Date());
   api.use(healthRoutes());
   api.use(authRoutes(now));
+  api.use(destinationRoutes());
   extra?.(api);
   app.use('/api', api);
 

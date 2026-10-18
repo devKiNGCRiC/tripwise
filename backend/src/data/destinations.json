@@ -1,0 +1,447 @@
+[
+  {
+    "id": "d_goa",
+    "slug": "goa",
+    "region": "konkan",
+    "localName": "गोवा",
+    "name": "Goa",
+    "country": "India",
+    "vibes": [
+      "beach",
+      "party",
+      "food"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Sun-soaked beaches, Portuguese lanes and sunsets that turn into beach parties.",
+    "highlights": [
+      "Fontainhas Latin Quarter",
+      "Palolem Beach",
+      "Dudhsagar Falls",
+      "Anjuna flea market"
+    ],
+    "avgDailyCost": {
+      "amount": 3500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  },
+  {
+    "id": "d_manali",
+    "slug": "manali",
+    "region": "himalaya",
+    "localName": "मनाली",
+    "name": "Manali",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "adventure",
+      "nature"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      10
+    ],
+    "summary": "Pine forests, snow peaks and café-hopping in Old Manali.",
+    "highlights": [
+      "Solang Valley",
+      "Hidimba Temple",
+      "Atal Tunnel",
+      "Old Manali cafés"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  },
+  {
+    "id": "d_jaipur",
+    "slug": "jaipur",
+    "region": "thar",
+    "localName": "जयपुर",
+    "name": "Jaipur",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "food",
+      "city"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "The Pink City: palaces, forts and bazaars bursting with colour.",
+    "highlights": [
+      "Hawa Mahal",
+      "Amber Fort",
+      "City Palace",
+      "Johari Bazaar"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1477587458883-47145ed94245",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  },
+  {
+    "id": "d_kerala",
+    "slug": "kerala",
+    "region": "konkan",
+    "localName": "केरल",
+    "name": "Kerala Backwaters",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "romantic",
+      "food"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      9,
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Drift through palm-lined backwaters on a houseboat in God’s Own Country.",
+    "highlights": [
+      "Alleppey houseboats",
+      "Munnar tea gardens",
+      "Fort Kochi",
+      "Kathakali show"
+    ],
+    "avgDailyCost": {
+      "amount": 4000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  },
+  {
+    "id": "d_ladakh",
+    "slug": "ladakh",
+    "region": "himalaya",
+    "localName": "लद्दाख",
+    "name": "Ladakh",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "adventure",
+      "spiritual"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "summary": "High-altitude deserts, turquoise lakes and monasteries on the roof of the world.",
+    "highlights": [
+      "Pangong Lake",
+      "Khardung La",
+      "Nubra Valley",
+      "Thiksey Monastery"
+    ],
+    "avgDailyCost": {
+      "amount": 4500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  },
+  {
+    "id": "d_varanasi",
+    "slug": "varanasi",
+    "region": "ganga",
+    "localName": "वाराणसी",
+    "name": "Varanasi",
+    "country": "India",
+    "vibes": [
+      "spiritual",
+      "culture",
+      "food"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "The world’s oldest living city — ghats, ganga aarti and legendary street food.",
+    "highlights": [
+      "Dashashwamedh Ghat aarti",
+      "Sunrise boat ride",
+      "Sarnath",
+      "Kachori Gali"
+    ],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1571536802807-30451e3955d8",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  },
+  {
+    "id": "d_bali",
+    "slug": "bali",
+    "localName": "बाली",
+    "name": "Bali",
+    "country": "Indonesia",
+    "vibes": [
+      "beach",
+      "spiritual",
+      "nature",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "summary": "Rice terraces, temple gates and surf breaks with sunset beach clubs.",
+    "highlights": [
+      "Ubud rice terraces",
+      "Uluwatu Temple",
+      "Nusa Penida",
+      "Seminyak beach clubs"
+    ],
+    "avgDailyCost": {
+      "amount": 6000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1537996194471-e657df975ab4",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  },
+  {
+    "id": "d_paris",
+    "slug": "paris",
+    "localName": "पेरिस",
+    "name": "Paris",
+    "country": "France",
+    "vibes": [
+      "romantic",
+      "culture",
+      "food",
+      "city"
+    ],
+    "budgetTier": "luxury",
+    "bestMonths": [
+      4,
+      5,
+      6,
+      9,
+      10
+    ],
+    "summary": "Cafés, galleries and golden-hour walks along the Seine.",
+    "highlights": [
+      "Eiffel Tower at night",
+      "Louvre",
+      "Montmartre",
+      "Seine river cruise"
+    ],
+    "avgDailyCost": {
+      "amount": 15000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  },
+  {
+    "id": "d_tokyo",
+    "slug": "tokyo",
+    "localName": "टोक्यो",
+    "name": "Tokyo",
+    "country": "Japan",
+    "vibes": [
+      "city",
+      "food",
+      "culture",
+      "party"
+    ],
+    "budgetTier": "luxury",
+    "bestMonths": [
+      3,
+      4,
+      10,
+      11
+    ],
+    "summary": "Neon nights, quiet shrines and the best food crawl of your life.",
+    "highlights": [
+      "Shibuya Crossing",
+      "Senso-ji",
+      "Tsukiji Outer Market",
+      "teamLab Planets"
+    ],
+    "avgDailyCost": {
+      "amount": 12000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  },
+  {
+    "id": "d_santorini",
+    "slug": "santorini",
+    "localName": "सैंटोरिनी",
+    "name": "Santorini",
+    "country": "Greece",
+    "vibes": [
+      "beach",
+      "romantic"
+    ],
+    "budgetTier": "luxury",
+    "bestMonths": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "summary": "Whitewashed cliffs, blue domes and the most famous sunset in Europe.",
+    "highlights": [
+      "Oia sunset",
+      "Red Beach",
+      "Caldera boat tour",
+      "Fira to Oia hike"
+    ],
+    "avgDailyCost": {
+      "amount": 14000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  },
+  {
+    "id": "d_dubai",
+    "slug": "dubai",
+    "localName": "दुबई",
+    "name": "Dubai",
+    "country": "United Arab Emirates",
+    "vibes": [
+      "city",
+      "adventure",
+      "party"
+    ],
+    "budgetTier": "luxury",
+    "bestMonths": [
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Sky-high towers, desert dunes and malls with their own ski slopes.",
+    "highlights": [
+      "Burj Khalifa",
+      "Desert safari",
+      "Dubai Marina",
+      "Old Dubai souks"
+    ],
+    "avgDailyCost": {
+      "amount": 13000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  },
+  {
+    "id": "d_interlaken",
+    "slug": "interlaken",
+    "localName": "इंटरलाकेन",
+    "name": "Interlaken",
+    "country": "Switzerland",
+    "vibes": [
+      "mountains",
+      "adventure",
+      "nature"
+    ],
+    "budgetTier": "luxury",
+    "bestMonths": [
+      6,
+      7,
+      8,
+      9,
+      12,
+      1
+    ],
+    "summary": "Alpine lakes, paragliding and train rides straight out of a postcard.",
+    "highlights": [
+      "Jungfraujoch",
+      "Paragliding over Interlaken",
+      "Lake Brienz",
+      "Grindelwald First"
+    ],
+    "avgDailyCost": {
+      "amount": 16000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99",
+      "credit": "Unsplash",
+      "creditUrl": "https://unsplash.com"
+    }
+  }
+]

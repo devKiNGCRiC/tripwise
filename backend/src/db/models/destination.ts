@@ -21,6 +21,8 @@ const destinationSchema = new Schema(
     highlights: { type: [String], default: [] },
     avgDailyCost: { amount: { type: Number, required: true }, currency: { type: String, required: true } },
     image: { url: { type: String, required: true }, credit: String, creditUrl: String },
+    /** Position in the catalogue (Explore lists places in this order). */
+    order: { type: Number, default: 0 },
   },
   { versionKey: false },
 );
