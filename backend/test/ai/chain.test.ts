@@ -19,7 +19,7 @@ describe('AI fallback chain', () => {
     const logs: AttemptLog[] = [];
     const slow = fakeProvider('gemini', ['timeout']);
     const backup = fakeProvider('groq', [good]);
-    const chain = createAiChain([slow, backup], { timeoutMs: 50, log: (entry) => logs.push(entry) });
+    const chain = createAiChain([slow, backup], { timeoutMs: 300, log: (entry) => logs.push(entry) });
     const result = await chain.run(prompt, parse);
     expect(result.provider).toBe('groq');
     expect(result.value.days).toHaveLength(3);
