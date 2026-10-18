@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import { createApp } from './app.js';
 import { loadEnv } from './config/env.js';
 import { buildChain } from './services/ai/index.js';
+import { createMailer } from './services/mailer.js';
 
 /** Start everything; exit with a clear message if it can't. */
 async function main() {
@@ -19,7 +20,10 @@ async function main() {
   // The AI fallback chain (Gemini first, Groq as backup), built from the keys in .env.
   const ai = buildChain(env);
 
-  const app = createApp({ ai, clientOrigin: env.CLIENT_ORIGIN });
+  // Emails go through Brevo once its key is set; until then they're printed in the log.
+  const mailer = createMailer({ brevoApiKey: env.BREVO_API_KEY, from: env.MAIL_FROM });
+
+  const app = createApp({ ai, clientOrigin: env.CLIENT_ORIGIN, appUrl: env.APP_URL, mailer });
   app.listen(env.PORT, () => console.log(`[api] TripWise API on :${env.PORT}`));
 }
 

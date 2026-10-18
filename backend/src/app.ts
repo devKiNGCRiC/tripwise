@@ -13,6 +13,7 @@ import express, { Router } from 'express';
 import helmet from 'helmet';
 import { errorHandler, notFoundHandler } from './middleware/errors.js';
 import { globalLimiter } from './middleware/rateLimit.js';
+import { accountRoutes } from './routes/account.js';
 import { authRoutes } from './routes/auth.js';
 import { avatarRoutes } from './routes/avatars.js';
 import { destinationRoutes } from './routes/destinations.js';
@@ -22,6 +23,7 @@ import { meRoutes } from './routes/me.js';
 import { profileRoutes } from './routes/profile.js';
 import { shareRoutes } from './routes/share.js';
 import type { AiChain } from './services/ai/chain.js';
+import { createMailer, type Mailer } from './services/mailer.js';
 
 /** The swappable parts of the app (real ones in server.ts, fakes in tests). */
 export interface AppDeps {
@@ -31,6 +33,10 @@ export interface AppDeps {
   now?: () => Date;
   /** Where the website runs, for CORS. */
   clientOrigin?: string;
+  /** The website's address, used in emails and invite links. */
+  appUrl?: string;
+  /** Sends emails (tests collect them instead). */
+  mailer?: Mailer;
 }
 
 /** Build the Express app. `extra` lets tests mount throw-away routes under /api. */
@@ -61,6 +67,7 @@ export function createApp(deps: AppDeps, extra?: (router: Router) => void): expr
   api.use(meRoutes(now));
   api.use(profileRoutes(now));
   api.use(avatarRoutes(now));
+  api.use(accountRoutes({ now, mailer: deps.mailer ?? createMailer({}), appUrl: deps.appUrl ?? 'http://localhost:5173' }));
   api.use(itineraryRoutes({ ai: deps.ai, now }));
   api.use(shareRoutes());
   extra?.(api);

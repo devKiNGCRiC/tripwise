@@ -30,6 +30,14 @@ const envSchema = z.object({
   GROQ_API_KEY: z.string().optional(),
   GEMINI_MODELS: commaList('gemini-flash-latest,gemini-flash-lite-latest'),
   GROQ_MODELS: commaList('openai/gpt-oss-120b,qwen/qwen3.8-27b'),
+  // Where the website lives (used in emails and invite links).
+  APP_URL: z.string().default('http://localhost:5173'),
+  // Email (Brevo) and photo storage (Cloudinary): optional until those accounts are set up.
+  BREVO_API_KEY: z.string().optional(),
+  MAIL_FROM: z.string().optional(),
+  CLOUDINARY_CLOUD_NAME: z.string().optional(),
+  CLOUDINARY_API_KEY: z.string().optional(),
+  CLOUDINARY_API_SECRET: z.string().optional(),
 });
 
 /** The checked settings the rest of the API uses. */

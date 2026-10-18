@@ -58,3 +58,8 @@ export async function revokeSession(token: string, now: Date): Promise<void> {
   const session = await Session.findOne({ tokenHash: hashToken(token) });
   if (session) await Session.updateMany({ familyId: session.familyId }, { revokedAt: now });
 }
+
+/** Cancel every login a traveller has (password changed or reset, "sign out everywhere"). */
+export async function revokeAllSessions(userId: string, now: Date): Promise<void> {
+  await Session.updateMany({ userId, revokedAt: { $exists: false } }, { revokedAt: now });
+}

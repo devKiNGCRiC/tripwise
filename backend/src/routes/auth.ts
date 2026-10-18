@@ -26,7 +26,7 @@ import { ensureUsername, makeUsername, newInviteCode } from '../services/usernam
 export const REFRESH_COOKIE = 'tw_refresh';
 
 /** How hard bcrypt works per password (lighter in tests so they stay fast). */
-const BCRYPT_COST = process.env.NODE_ENV === 'test' ? 4 : 12;
+export const BCRYPT_COST = process.env.NODE_ENV === 'test' ? 4 : 12;
 
 /** What signup needs (the same rule as the website's form). */
 const SIGNUP_MESSAGE = 'Please give a name, an email and a password of at least 8 characters.';
@@ -43,7 +43,7 @@ const loginSchema = z.object({ email: z.string().trim().toLowerCase(), password:
 const DUMMY_HASH = bcrypt.hashSync('not-a-real-password', 4);
 
 /** Set the refresh cookie (httpOnly, only sent to /api/auth, 30 days). */
-function setRefreshCookie(res: Response, token: string) {
+export function setRefreshCookie(res: Response, token: string) {
   res.cookie(REFRESH_COOKIE, token, {
     httpOnly: true,
     sameSite: 'lax',
@@ -54,7 +54,7 @@ function setRefreshCookie(res: Response, token: string) {
 }
 
 /** Remove the refresh cookie. */
-function clearRefreshCookie(res: Response) {
+export function clearRefreshCookie(res: Response) {
   res.clearCookie(REFRESH_COOKIE, { path: '/api/auth' });
 }
 
