@@ -20,6 +20,7 @@ import { destinationRoutes } from './routes/destinations.js';
 import { healthRoutes } from './routes/health.js';
 import { itineraryRoutes } from './routes/itineraries.js';
 import { meRoutes } from './routes/me.js';
+import { passportRoutes } from './routes/passport.js';
 import { profileRoutes } from './routes/profile.js';
 import { shareRoutes } from './routes/share.js';
 import type { AiChain } from './services/ai/chain.js';
@@ -67,6 +68,7 @@ export function createApp(deps: AppDeps, extra?: (router: Router) => void): expr
   api.use(meRoutes(now));
   api.use(profileRoutes(now));
   api.use(avatarRoutes(now));
+  api.use(passportRoutes(now));
   api.use(accountRoutes({ now, mailer: deps.mailer ?? createMailer({}), appUrl: deps.appUrl ?? 'http://localhost:5173' }));
   api.use(itineraryRoutes({ ai: deps.ai, now }));
   api.use(shareRoutes());
