@@ -96,6 +96,7 @@ It also lays the groundwork for what comes later:
   - If an old, already-rotated token is used again, that whole session is revoked. This catches token theft.
 - **Same-site cookie:** the frontend (Cloudflare Pages) and backend (Render) are on different domains, and browsers increasingly block cross-site cookies. So in production the frontend calls `/api` **on its own domain**, and a tiny Cloudflare Pages Function forwards it to Render. That's free and is set up in the deploy step. Locally, Vite's dev-server proxy does the same: `/api` goes to `http://localhost:4000`. Either way the cookie is first-party and `SameSite=Lax` works.
 - **Blocked users:** answered 403 FORBIDDEN on login and refresh (same as the mock).
+- **Future mobile apps** (Capacitor or React Native) can't rely on browser cookies. The refresh logic is written as a service that doesn't care where the token arrives from. Later, a mobile client can send the refresh token in the request body and keep it in secure device storage, without changing the session model. That isn't built in this step.
 
 ### Plans and limits (config in one file)
 | Limit | free | premium (not sold yet) |
