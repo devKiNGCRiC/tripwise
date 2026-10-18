@@ -71,6 +71,8 @@ export interface Itinerary {
   provider: 'gemini' | 'groq';
   /** 'ai' = written for this trip; 'cache' = re-used from a similar trip. */
   source?: 'ai' | 'cache';
+  /** Which of India's seven worlds the trip is in ('abroad' outside India; null if unknown). */
+  region?: 'himalaya' | 'thar' | 'ganga' | 'deccan' | 'ghats' | 'konkan' | 'sisters' | 'abroad' | null;
   createdAt: string;
 }
 

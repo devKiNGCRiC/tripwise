@@ -36,6 +36,9 @@ export const aiDaySchema = z.object({
 /** The whole AI answer for a trip. */
 export const aiTripSchema = z.object({
   title: z.string().min(1).describe('Short title, e.g. "3 days in Goa"'),
+  region: z
+    .enum(['himalaya', 'thar', 'ganga', 'deccan', 'ghats', 'konkan', 'sisters', 'abroad', 'none'])
+    .describe("Which of India's seven worlds the destination is in, 'abroad' outside India, or 'none' if unsure"),
   summary: z.string().min(1).describe('One natural sentence describing the trip'),
   days: z.array(aiDaySchema).min(1),
   breakdown: z

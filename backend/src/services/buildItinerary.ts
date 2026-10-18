@@ -13,6 +13,8 @@ export interface BuildMeta {
   provider: 'gemini' | 'groq';
   source: 'ai' | 'cache';
   cacheVariantId?: string;
+  /** The trip's world (services/region.ts). */
+  region?: string | null;
 }
 
 /** The fields to save for a new trip. */
@@ -34,6 +36,7 @@ export function buildItinerary(ai: AiTrip, req: TripRequest, meta: BuildMeta) {
     packingList: ai.packingList,
     provider: meta.provider,
     source: meta.source,
+    region: meta.region ?? null,
     ...(meta.cacheVariantId ? { cacheVariantId: meta.cacheVariantId } : {}),
   };
 }

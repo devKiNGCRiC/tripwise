@@ -8,7 +8,8 @@ import type { Express } from 'express';
 import { createApp } from '../src/app.js';
 import type { AiChain } from '../src/services/ai/chain.js';
 import { clearTestDb, startTestDb, stopTestDb } from './helpers/db.js';
-import { failingChain, plannerChain, tripRequest } from './helpers/fakeAi.js';
+import { aiTripFixture, fakeAiChain, fakeProvider, failingChain, plannerChain, tripRequest } from './helpers/fakeAi.js';
+import { seedDestinations } from '../scripts/seed-destinations.js';
 import { signUp } from './helpers/auth.js';
 
 beforeAll(startTestDb);
@@ -184,5 +185,32 @@ describe('sharing', () => {
     const res = await request(createApp({ ai: plannerChain() })).get('/api/share/nope');
     expect(res.status).toBe(404);
     expect(res.body.error.message).toBe("This shared trip isn't available.");
+  });
+});
+
+describe('which world a trip belongs to', () => {
+  /** An app whose AI names a given world for every trip. */
+  async function withAiRegion(region: string, destination: string) {
+    await seedDestinations();
+    const req = tripRequest({ destination });
+    const ai = fakeAiChain(fakeProvider('gemini', [{ text: JSON.stringify({ ...aiTripFixture(req), region }) }]));
+    const { app, asha } = await setup(ai);
+    return (await generate(app, asha.token, req)).body.itinerary;
+  }
+
+  it("uses the AI's world for places outside the catalogue", async () => {
+    expect((await withAiRegion('thar', 'Udaipur')).region).toBe('thar');
+  });
+
+  it("trusts the catalogue over the AI for places it knows", async () => {
+    expect((await withAiRegion('himalaya', 'Goa')).region).toBe('konkan');
+  });
+
+  it('marks catalogue places outside India as abroad', async () => {
+    expect((await withAiRegion('none', 'Paris')).region).toBe('abroad');
+  });
+
+  it('stores no world when the AI says none', async () => {
+    expect((await withAiRegion('none', 'Atlantis')).region).toBeNull();
   });
 });

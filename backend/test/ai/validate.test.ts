@@ -56,6 +56,11 @@ describe('parseTrip', () => {
     expect(() => parseTrip(text.slice(0, text.length / 2), req)).toThrow(InvalidAiOutput);
   });
 
+  it("needs the trip's world (one of the seven, abroad or none)", () => {
+    expect(parseWith((t) => delete (t as Partial<typeof t>).region)).toThrow(InvalidAiOutput);
+    expect(parseWith((t) => ((t as { region: string }).region = 'atlantis'))).toThrow(InvalidAiOutput);
+  });
+
   it('accepts JSON wrapped in a ```json fence (some models add one)', () => {
     expect(parseTrip('```json\n' + JSON.stringify(aiTripFixture(req)) + '\n```', req).title).toContain('Goa');
   });

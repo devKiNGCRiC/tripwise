@@ -146,6 +146,7 @@ export function aiTripFixture(req: TripRequest, tag = 'A'): AiTrip {
   const days = tripDates(req.startDate, req.endDate).map((_, i) => aiDayFixture(req.pace, `${tag}${i + 1}`));
   return {
     title: `${days.length} days in ${req.destination}`,
+    region: 'none',
     summary: `A ${req.pace} trip through ${req.destination}.`,
     days,
     breakdown: { stay: 6000, food: 3000, transport: 1500, activities: 1200 },

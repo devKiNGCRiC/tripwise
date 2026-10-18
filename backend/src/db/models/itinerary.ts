@@ -4,6 +4,7 @@
  *   - source: 'ai' (written now) or 'cache' (re-used from a similar trip)
  *   - cacheVariantId: which cached plan it is, so one traveller never gets the same twice
  *   - shareId: set once a public share link is created
+ *   - region: which of India's seven worlds it's in ('abroad' outside India)
  */
 import { model, Schema, type InferSchemaType, type HydratedDocument } from 'mongoose';
 
@@ -66,6 +67,8 @@ const itinerarySchema = new Schema(
     packingList: { type: [String], default: [] },
     provider: { type: String, enum: ['gemini', 'groq'], required: true },
     source: { type: String, enum: ['ai', 'cache'], default: 'ai' },
+    /** Which of the seven worlds (or 'abroad'); null when unknown. Lights worlds on the passport. */
+    region: { type: String, default: null },
     cacheVariantId: String,
   },
   { timestamps: { createdAt: true, updatedAt: false } },

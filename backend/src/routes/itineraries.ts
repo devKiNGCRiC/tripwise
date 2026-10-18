@@ -31,6 +31,7 @@ import { parseDay, parseTrip } from '../services/ai/validate.js';
 import { buildItinerary } from '../services/buildItinerary.js';
 import { addToCache, cacheKey, pickCached } from '../services/cache.js';
 import { getQuota, nextIstMidnight, refund, reserve } from '../services/quota.js';
+import { regionFor } from '../services/region.js';
 import { parseTripRequest } from '../services/tripRequest.js';
 import type { Pace, Quota, TripRequest } from '../types/api.js';
 
@@ -74,7 +75,7 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
     const cached = await pickCached(key, user.id);
     if (cached) {
       const trip = await Itinerary.create(
-        buildItinerary(cached.trip, tripRequest, { ownerId: user.id, provider: cached.provider, source: 'cache', cacheVariantId: cached.variantId }),
+        buildItinerary(cached.trip, tripRequest, { region: await regionFor(tripRequest.destination, cached.trip.region), ownerId: user.id, provider: cached.provider, source: 'cache', cacheVariantId: cached.variantId }),
       );
       res.json({ itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
       return;
@@ -89,7 +90,7 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
       const { value, provider } = await deps.ai.run(tripPrompt(tripRequest), (text) => parseTrip(text, tripRequest));
       // Keep the new plan for similar trips later (while the pool has room).
       const cacheVariantId = (await addToCache(key, value, provider)) ?? undefined;
-      trip = await Itinerary.create(buildItinerary(value, tripRequest, { ownerId: user.id, provider, source: 'ai', cacheVariantId }));
+      trip = await Itinerary.create(buildItinerary(value, tripRequest, { region: await regionFor(tripRequest.destination, value.region), ownerId: user.id, provider, source: 'ai', cacheVariantId }));
     } catch (error) {
       // Nothing was saved: give today's plan back.
       await refund(user.id, 'plans', now);
@@ -133,7 +134,7 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
     const cached = await pickCached(key, user.id);
     if (cached) {
       const trip = await Itinerary.create(
-        buildItinerary(cached.trip, tripRequest, { ownerId: user.id, provider: cached.provider, source: 'cache', cacheVariantId: cached.variantId }),
+        buildItinerary(cached.trip, tripRequest, { region: await regionFor(tripRequest.destination, cached.trip.region), ownerId: user.id, provider: cached.provider, source: 'cache', cacheVariantId: cached.variantId }),
       );
       open();
       send({ type: 'meta', title: cached.trip.title, summary: cached.trip.summary });
@@ -174,7 +175,7 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
         },
       });
       const cacheVariantId = (await addToCache(key, value, provider)) ?? undefined;
-      const trip = await Itinerary.create(buildItinerary(value, tripRequest, { ownerId: user.id, provider, source: 'ai', cacheVariantId }));
+      const trip = await Itinerary.create(buildItinerary(value, tripRequest, { region: await regionFor(tripRequest.destination, value.region), ownerId: user.id, provider, source: 'ai', cacheVariantId }));
       saved = true;
       send({ type: 'done', itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
     } catch (error) {
