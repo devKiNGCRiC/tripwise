@@ -14,6 +14,7 @@ import helmet from 'helmet';
 import { errorHandler, notFoundHandler } from './middleware/errors.js';
 import { globalLimiter } from './middleware/rateLimit.js';
 import { authRoutes } from './routes/auth.js';
+import { avatarRoutes } from './routes/avatars.js';
 import { destinationRoutes } from './routes/destinations.js';
 import { healthRoutes } from './routes/health.js';
 import { itineraryRoutes } from './routes/itineraries.js';
@@ -59,6 +60,7 @@ export function createApp(deps: AppDeps, extra?: (router: Router) => void): expr
   api.use(destinationRoutes());
   api.use(meRoutes(now));
   api.use(profileRoutes(now));
+  api.use(avatarRoutes(now));
   api.use(itineraryRoutes({ ai: deps.ai, now }));
   api.use(shareRoutes());
   extra?.(api);
