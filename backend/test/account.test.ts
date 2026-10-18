@@ -145,10 +145,12 @@ describe('delete account', () => {
     const photo = (
       await request(app).post(`/api/itineraries/${trip}/journal/photos?width=1&height=1`).set('Authorization', `Bearer ${asha.token}`).set('Content-Type', 'image/png').send(TINY_PNG)
     ).body.journal.photos[0];
-    expect((await request(app).get(photo.url).set('Authorization', `Bearer ${ravi.token}`)).status).toBe(200);
+    const bare = (photo.url as string).split('?')[0];
+    expect((await request(app).get(bare).set('Authorization', `Bearer ${ravi.token}`)).status).toBe(200);
 
     expect((await request(app).delete('/api/me').set('Authorization', `Bearer ${asha.token}`).send({ password: 'password123' })).status).toBe(204);
     expect((await friendsAs(app, ravi.token).list()).body.friends).toEqual([]);
-    expect((await request(app).get(photo.url).set('Authorization', `Bearer ${ravi.token}`)).status).toBe(404);
+    expect((await request(app).get(bare).set('Authorization', `Bearer ${ravi.token}`)).status).toBe(404);
+    expect((await request(app).get(photo.url)).status).toBe(404);
   });
 });

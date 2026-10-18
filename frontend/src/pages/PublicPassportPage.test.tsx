@@ -4,7 +4,10 @@
  */
 import { screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+import { http, HttpResponse } from 'msw';
+import { apiUrl } from '@/lib/api/config';
 import { session } from '@/mocks/db';
+import { server } from '@/mocks/node';
 import { renderApp } from '@/test/render';
 
 describe('public passports', () => {
@@ -26,6 +29,19 @@ describe('public passports', () => {
     renderApp('/u/kabir');
     const cover = await screen.findByRole('region', { name: 'Passport cover' });
     expect(within(cover).getByText('Friends ✓')).toBeInTheDocument();
+  });
+
+  it('waits for a slow login restore before deciding (a friend is not shown "private")', async () => {
+    session.set('u_demo');
+    // On a real network the login comes back after the page has started loading.
+    server.use(
+      http.post(apiUrl('/auth/refresh'), async () => {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        return HttpResponse.json({ accessToken: 'mock-access.u_demo' });
+      }),
+    );
+    renderApp('/u/kabir');
+    expect(await screen.findByRole('region', { name: 'Passport cover' })).toBeInTheDocument();
   });
 });
 

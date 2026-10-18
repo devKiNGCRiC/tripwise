@@ -6,10 +6,11 @@
 import { Destination, Itinerary, Journal, type UserDoc } from '../db/models/index.js';
 import { publicUser } from '../db/toPublic.js';
 import { buildPassport, type JournalLike, type TripLike } from './passport.js';
+import { signedPhotoUrl } from './photoLinks.js';
 import { istDay } from './quota.js';
 
-/** Load everything and build the passport of `user`. */
-export async function passportFor(user: UserDoc, now: Date, opts: { includeUpcoming: boolean; includeJournal: boolean }) {
+/** Load everything and build the passport of `user`, as seen by `viewerId`. */
+export async function passportFor(user: UserDoc, now: Date, opts: { includeUpcoming: boolean; includeJournal: boolean; viewerId: string | null }) {
   const [trips, destinations] = await Promise.all([
     Itinerary.find({ ownerId: user._id }, { request: 1, region: 1 }).lean(),
     Destination.find({}, { name: 1, country: 1, vibes: 1, region: 1, localName: 1 }).lean(),
@@ -47,7 +48,10 @@ export async function passportFor(user: UserDoc, now: Date, opts: { includeUpcom
     journals,
     destinations: destinations.map((d) => ({ name: d.name, country: d.country, vibes: d.vibes ?? [], region: d.region ?? null, localName: d.localName ?? null })),
     today: istDay(now),
-    ...opts,
+    includeUpcoming: opts.includeUpcoming,
+    includeJournal: opts.includeJournal,
+    // Photo links signed for whoever is looking, so they work inside <img>.
+    photoUrl: (id) => signedPhotoUrl(id, opts.viewerId, now),
   });
 }
 

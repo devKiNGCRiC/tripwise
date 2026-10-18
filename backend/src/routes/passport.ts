@@ -18,7 +18,7 @@ export function passportRoutes(now: () => Date): Router {
   router.get('/me/passport', requireAuth(now), async (req, res) => {
     const user = await User.findById(currentUser(req).id);
     if (!user) throw unauthorized();
-    res.json({ passport: await passportFor(user, now(), { includeUpcoming: true, includeJournal: true }) });
+    res.json({ passport: await passportFor(user, now(), { includeUpcoming: true, includeJournal: true, viewerId: user._id.toString() }) });
   });
 
   return router;

@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ImagePlus, Palette as PaletteIcon, Trash2, X } from 'lucide-react';
 import { Link } from 'react-router';
 import { Button, buttonClasses } from '@/components/ui/Button';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { useToast } from '@/components/ui/Toast';
 import { useUpdateProfile } from '@/features/account/hooks';
 import { ApiError } from '@/lib/api/errors';
@@ -106,6 +107,15 @@ export function JournalSheet({ stamp, onClose }: { stamp: Stamp; onClose: () => 
           </button>
         </div>
 
+        {/* Until the saved journal arrives, a placeholder (so nothing typed early gets replaced). */}
+        {!loaded && (
+          <div role="status" className="mt-6 grid gap-4">
+            <span className="sr-only">Opening your journal…</span>
+            <Skeleton className="h-12 w-60 rounded-2xl" />
+            <Skeleton className="h-32 rounded-2xl" />
+          </div>
+        )}
+        {loaded && (
         <div className="mt-6 grid gap-6">
           <DiyaRating value={rating} onChange={setRating} label="Your rating" />
 
@@ -176,6 +186,7 @@ export function JournalSheet({ stamp, onClose }: { stamp: Stamp; onClose: () => 
             </Link>
           </div>
         </div>
+        )}
       </div>
     </div>
   );

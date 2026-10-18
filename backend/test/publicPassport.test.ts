@@ -33,7 +33,8 @@ async function scene() {
   const auth = { Authorization: `Bearer ${asha.token}` };
   await request(app).put(`/api/itineraries/${trip}/journal`).set(auth).send({ rating: 5, memory: 'Bliss.' });
   const photo = (await request(app).post(`/api/itineraries/${trip}/journal/photos?width=1&height=1`).set(auth).set('Content-Type', 'image/png').send(TINY_PNG)).body.journal.photos[0];
-  return { asha, ravi, zoya, photoUrl: photo.url as string };
+  // The plain photo address: who may see it then depends only on the login sent with it.
+  return { asha, ravi, zoya, photoUrl: (photo.url as string).split('?')[0] };
 }
 
 /** GET someone's passport, as someone or logged out. */
@@ -90,6 +91,25 @@ describe('public passports', () => {
     await friendsAs(app, asha.token).block(ravi.id);
     expect((await passportOf(asha.username, ravi.token)).status).toBe(404);
     expect((await request(app).get(photoUrl).set('Authorization', `Bearer ${ravi.token}`)).status).toBe(404);
+  });
+
+  it('gives friends photo links that work in an <img> (no login header), until access ends', async () => {
+    const { asha, ravi } = await scene();
+    const res = await passportOf(asha.username, ravi.token);
+    const cover = res.body.passport.stamps[0].journal.coverPhotoUrl as string;
+    expect(cover).toMatch(/^\/api\/photos\/[a-f0-9]{24}\?/);
+    // Like a browser loading an <img>: no Authorization header.
+    expect((await request(app).get(cover)).status).toBe(200);
+    await friendsAs(app, asha.token).setPrivacy({ passport: 'private' });
+    expect((await request(app).get(cover)).status).toBe(404);
+  });
+
+  it('refuses tampered or expired photo links', async () => {
+    const { asha, ravi } = await scene();
+    const cover = (await passportOf(asha.username, ravi.token)).body.passport.stamps[0].journal.coverPhotoUrl as string;
+    expect((await request(app).get(cover.replace(/sig=[^&]+/, 'sig=forged'))).status).toBe(404);
+    const later = createApp({ ai: fakeChain(), now: () => new Date('2026-10-19T14:00:00Z') });
+    expect((await request(later).get(cover)).status).toBe(404);
   });
 
   it('answers the same for usernames that do not exist', async () => {

@@ -91,8 +91,8 @@ function cardOf(user: MockUser): Card {
   return { id: user.id, name: user.name, username: user.username, ...(shown.avatarUrl ? { avatarUrl: shown.avatarUrl } : {}), travellerType: user.travellerType, trips };
 }
 
-/** Build someone's passport. */
-function passportOf(owner: MockUser, opts: { includeUpcoming: boolean; includeJournal: boolean }) {
+/** Build someone's passport, as seen by `viewerId`. */
+function passportOf(owner: MockUser, opts: { includeUpcoming: boolean; includeJournal: boolean; viewerId: string | null }) {
   const shown = publicUser(owner);
   return buildPassport({
     cover: {
@@ -111,17 +111,25 @@ function passportOf(owner: MockUser, opts: { includeUpcoming: boolean; includeJo
     journals: db.journals.filter((j) => j.ownerId === owner.id),
     destinations: db.destinations,
     today: today(),
-    ...opts,
+    includeUpcoming: opts.includeUpcoming,
+    includeJournal: opts.includeJournal,
+    photoUrl: (id) => photoUrl(id, opts.viewerId),
   });
 }
 
+/**
+ * A photo link for a viewer. The real API signs these (so they work inside <img>, which
+ * sends no login); the demo just names the viewer.
+ */
+const photoUrl = (photoId: string, viewerId: string | null) => `/api/photos/${photoId}?v=${viewerId ?? 'anon'}`;
+
 /** A journal as the website sees it. */
-function publicJournal(itineraryId: string, journal?: MockJournal): Journal {
+function publicJournal(itineraryId: string, journal: MockJournal | undefined, viewerId: string): Journal {
   return {
     itineraryId,
     rating: journal?.rating ?? null,
     memory: journal?.memory ?? '',
-    photos: (journal?.photos ?? []).map((p) => ({ ...p, url: `/api/photos/${p.id}` })),
+    photos: (journal?.photos ?? []).map((p) => ({ ...p, url: photoUrl(p.id, viewerId) })),
     updatedAt: journal?.updatedAt ?? null,
   };
 }
@@ -279,7 +287,7 @@ export const socialHandlers = [
     await latency();
     const user = currentUser(request);
     if (!user) return needLogin();
-    return HttpResponse.json({ passport: passportOf(user, { includeUpcoming: true, includeJournal: true }) });
+    return HttpResponse.json({ passport: passportOf(user, { includeUpcoming: true, includeJournal: true, viewerId: user.id }) });
   }),
 
   http.get(apiUrl('/users/:username/passport'), async ({ request, params }) => {
@@ -287,7 +295,7 @@ export const socialHandlers = [
     const owner = db.users.find((u) => u.username === String(params.username).toLowerCase());
     const viewer = viewerOf(request);
     if (!owner || owner.blocked || !canSeePassport(viewer, owner)) return errorResponse(404, 'NOT_FOUND', 'This passport is private');
-    return HttpResponse.json({ passport: passportOf(owner, { includeUpcoming: false, includeJournal: canSeeJournalOf(viewer, owner) }), relation: relation(viewer, owner.id) });
+    return HttpResponse.json({ passport: passportOf(owner, { includeUpcoming: false, includeJournal: canSeeJournalOf(viewer, owner), viewerId: viewer }), relation: relation(viewer, owner.id) });
   }),
 
   // ── Journals ──
@@ -297,7 +305,7 @@ export const socialHandlers = [
     if (!user) return needLogin();
     const trip = db.itineraries.find((t) => t.id === params.id && t.ownerId === user.id);
     if (!trip) return errorResponse(404, 'NOT_FOUND', "We couldn't find that trip.");
-    return HttpResponse.json({ journal: publicJournal(trip.id, db.journals.find((j) => j.itineraryId === trip.id)) });
+    return HttpResponse.json({ journal: publicJournal(trip.id, db.journals.find((j) => j.itineraryId === trip.id), user.id) });
   }),
 
   http.put(apiUrl('/itineraries/:id/journal'), async ({ request, params }) => {
@@ -315,7 +323,7 @@ export const socialHandlers = [
     journal.rating = body.rating ?? null;
     journal.memory = (body.memory ?? '').trim();
     journal.updatedAt = new Date().toISOString();
-    return HttpResponse.json({ journal: publicJournal(trip.id, journal) });
+    return HttpResponse.json({ journal: publicJournal(trip.id, journal, user.id) });
   }),
 
   http.post(apiUrl('/itineraries/:id/journal/photos'), async ({ request, params }) => {
@@ -334,7 +342,7 @@ export const socialHandlers = [
     db.photos[id] = { ownerId: user.id, itineraryId: trip.id, blob: image };
     journal.photos.push({ id, width: Number(url.searchParams.get('width')) || 1, height: Number(url.searchParams.get('height')) || 1, alt: url.searchParams.get('alt') ?? '' });
     journal.updatedAt = new Date().toISOString();
-    return HttpResponse.json({ journal: publicJournal(trip.id, journal) });
+    return HttpResponse.json({ journal: publicJournal(trip.id, journal, user.id) });
   }),
 
   http.delete(apiUrl('/itineraries/:id/journal/photos/:photoId'), async ({ request, params }) => {
@@ -345,16 +353,19 @@ export const socialHandlers = [
     const journal = db.journals.find((j) => j.itineraryId === trip.id);
     if (journal) journal.photos = journal.photos.filter((p) => p.id !== params.photoId);
     delete db.photos[String(params.photoId)];
-    return HttpResponse.json({ journal: publicJournal(trip.id, journal) });
+    return HttpResponse.json({ journal: publicJournal(trip.id, journal, user.id) });
   }),
 
   http.get(apiUrl('/photos/:photoId'), ({ request, params }) => {
     const photo = db.photos[String(params.photoId)];
     const owner = photo ? db.users.find((u) => u.id === photo.ownerId) : undefined;
-    if (!photo || !owner || !canSeeJournalOf(viewerOf(request), owner)) return errorResponse(404, 'NOT_FOUND', "We couldn't find that.");
+    // The viewer named in the link (as <img> sends no login), else the login sent with it.
+    const named = new URL(request.url).searchParams.get('v');
+    const viewer = named ? (named === 'anon' ? null : named) : viewerOf(request);
+    if (!photo || !owner || !canSeeJournalOf(viewer, owner)) return errorResponse(404, 'NOT_FOUND', "We couldn't find that.");
     // Seeded photos are links to the destination pictures.
     if (photo.href) return Response.redirect(photo.href, 302);
-    return new HttpResponse(photo.blob, { headers: { 'Content-Type': photo.blob!.type, 'Cache-Control': 'private, max-age=300' } });
+    return new HttpResponse(photo.blob, { headers: { 'Content-Type': photo.blob!.type, 'Cache-Control': 'private, no-cache' } });
   }),
 
   // ── Friends ──

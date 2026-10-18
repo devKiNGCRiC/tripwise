@@ -26,7 +26,7 @@ export function userRoutes(now: () => Date): Router {
     const viewer = await optionalViewer(req, now());
     if (!owner || owner.blocked || !(await canSeePassport(viewer, owner))) throw notFound('This passport is private');
     const ownerId = owner._id.toString();
-    const passport = await passportFor(owner, now(), { includeUpcoming: false, includeJournal: await canSeeJournalOf(viewer, ownerId) });
+    const passport = await passportFor(owner, now(), { includeUpcoming: false, includeJournal: await canSeeJournalOf(viewer, ownerId), viewerId: viewer });
     res.json({ passport, relation: await relation(viewer, ownerId) });
   });
 

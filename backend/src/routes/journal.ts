@@ -17,6 +17,7 @@ import { badRequest, notFound } from '../lib/errors.js';
 import { currentUser, optionalViewer, requireAuth, type AuthUser } from '../middleware/auth.js';
 import { imageType, rawImageBody } from '../services/images.js';
 import type { PhotoStore } from '../services/photos.js';
+import { signedPhotoUrl, viewerFromLink } from '../services/photoLinks.js';
 import { istDay } from '../services/quota.js';
 
 /** Largest journal photo accepted (the website resizes to 1600 px first). */
@@ -26,13 +27,17 @@ const MAX_PHOTOS = 6;
 /** The message for anything we can't accept as a photo. */
 const BAD_IMAGE = 'Please choose a JPG, PNG or WebP image under 1.5 MB';
 
-/** What a journal looks like to the website. */
-export function publicJournal(itineraryId: string, journal: { rating?: number | null; memory?: string; photos?: { id: string; width: number; height: number; alt?: string | null }[]; updatedAt?: Date } | null) {
+/** What a journal looks like to the website; `urlFor` makes each photo's (signed) link. */
+export function publicJournal(
+  itineraryId: string,
+  journal: { rating?: number | null; memory?: string; photos?: { id: string; width: number; height: number; alt?: string | null }[]; updatedAt?: Date } | null,
+  urlFor: (photoId: string) => string,
+) {
   return {
     itineraryId,
     rating: journal?.rating ?? null,
     memory: journal?.memory ?? '',
-    photos: (journal?.photos ?? []).map((p) => ({ id: p.id, url: `/api/photos/${p.id}`, width: p.width, height: p.height, alt: p.alt ?? '' })),
+    photos: (journal?.photos ?? []).map((p) => ({ id: p.id, url: urlFor(p.id), width: p.width, height: p.height, alt: p.alt ?? '' })),
     updatedAt: (journal?.updatedAt ?? null)?.toISOString?.() ?? null,
   };
 }
@@ -64,7 +69,7 @@ export function journalRoutes(deps: {
   router.get('/itineraries/:id/journal', auth, async (req, res) => {
     const trip = await ownTrip(req, currentUser(req));
     const journal = await Journal.findOne({ itineraryId: trip._id }).lean();
-    res.json({ journal: publicJournal(trip._id.toString(), journal) });
+    res.json({ journal: publicJournal(trip._id.toString(), journal, (id) => signedPhotoUrl(id, currentUser(req).id, now())) });
   });
 
   // PUT — save the rating and memory.
@@ -84,7 +89,7 @@ export function journalRoutes(deps: {
       { $set: { ...body.data, updatedAt: now() }, $setOnInsert: { ownerId: user.id } },
       { upsert: true, new: true },
     ).lean();
-    res.json({ journal: publicJournal(trip._id.toString(), journal) });
+    res.json({ journal: publicJournal(trip._id.toString(), journal, (id) => signedPhotoUrl(id, currentUser(req).id, now())) });
   });
 
   // POST photos — add one photo (raw bytes; the website resized it first).
@@ -106,7 +111,7 @@ export function journalRoutes(deps: {
       { $push: { photos: entry }, $set: { updatedAt: now() }, $setOnInsert: { ownerId: user.id } },
       { upsert: true, new: true },
     ).lean();
-    res.json({ journal: publicJournal(trip._id.toString(), journal) });
+    res.json({ journal: publicJournal(trip._id.toString(), journal, (id) => signedPhotoUrl(id, currentUser(req).id, now())) });
   });
 
   // DELETE a photo — removed from the journal and from storage.
@@ -115,7 +120,7 @@ export function journalRoutes(deps: {
     const photoId = String(req.params.photoId);
     const journal = await Journal.findOneAndUpdate({ itineraryId: trip._id }, { $pull: { photos: { id: photoId } }, $set: { updatedAt: now() } }, { new: true }).lean();
     if (isValidObjectId(photoId)) await photos.remove(photoId);
-    res.json({ journal: publicJournal(trip._id.toString(), journal) });
+    res.json({ journal: publicJournal(trip._id.toString(), journal, (id) => signedPhotoUrl(id, currentUser(req).id, now())) });
   });
 
   // GET /photos/:photoId — the photo itself, for its owner or those allowed to see their journals.
@@ -124,11 +129,14 @@ export function journalRoutes(deps: {
     if (!isValidObjectId(id)) throw notFound();
     const photo = await photos.get(id);
     if (!photo) throw notFound();
-    const viewer = await optionalViewer(req, now());
+    // Who is looking: from a signed link (as used in <img>), else from a login token.
+    const linked = viewerFromLink(id, req.query, now());
+    const viewer = linked !== undefined ? linked : await optionalViewer(req, now());
     if (viewer !== photo.ownerId && !(await deps.canSeeJournalOf(viewer, photo.ownerId))) throw notFound();
     res.setHeader('Content-Type', photo.contentType);
-    // Private: browsers may keep it briefly, shared caches never.
-    res.setHeader('Cache-Control', 'private, max-age=300');
+    // Private, and checked with us every time (an unchanged photo comes back as a cheap
+    // "not modified"), so hiding journals or blocking someone takes effect at once.
+    res.setHeader('Cache-Control', 'private, no-cache');
     res.send(photo.body);
   });
 

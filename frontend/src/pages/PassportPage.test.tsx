@@ -5,7 +5,10 @@
  */
 import { screen, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
+import { http } from 'msw';
+import { apiUrl } from '@/lib/api/config';
 import { session } from '@/mocks/db';
+import { server } from '@/mocks/node';
 import { renderApp } from '@/test/render';
 
 describe('PassportPage', () => {
@@ -58,6 +61,27 @@ describe('PassportPage', () => {
     await user.click(within(sheet).getByRole('button', { name: 'Save memory' }));
     expect(await screen.findByText('Memory saved')).toBeInTheDocument();
     expect(await within(stamps).findByRole('button', { name: /Jaipur journal, 4 diyas/ })).toBeInTheDocument();
+  });
+
+  it('only shows the journal form once the saved journal has loaded (nothing typed gets wiped)', async () => {
+    // A slow network: the journal arrives a moment after the sheet opens.
+    server.use(
+      http.get(apiUrl('/itineraries/:id/journal'), async () => {
+        // Wait, then let the normal demo handler answer (returning nothing falls through).
+        await new Promise((resolve) => setTimeout(resolve, 300));
+      }),
+    );
+    const { user } = renderApp('/passport');
+    const stamps = await screen.findByRole('list', { name: 'Stamps' });
+    await user.click(within(stamps).getByRole('button', { name: /Goa journal/ }));
+    const sheet = await screen.findByRole('dialog', { name: 'Goa journal' });
+    expect(within(sheet).queryByLabelText('Your memory')).toBeNull();
+    expect(await within(sheet).findByLabelText('Your memory')).toHaveValue(
+      'Sunsets at Palolem, bebinca at every café and an evening in Fontainhas we will never forget.',
+    );
+    expect(within(sheet).getByRole('radio', { name: '5 diyas' })).toBeChecked();
+    // Its photos load in an <img> (signed for the viewer).
+    expect(within(sheet).getAllByRole('img')[0].getAttribute('src')).toMatch(/^\/api\/photos\/ph_seed_goa_1\?v=u_demo/);
   });
 
   it("still shows today's AI plan allowance", async () => {

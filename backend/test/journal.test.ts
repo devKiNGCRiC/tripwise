@@ -70,21 +70,26 @@ describe('journals', () => {
     const photos = last!.body.journal.photos;
     expect(photos).toHaveLength(6);
     expect(photos[0]).toMatchObject({ width: 1, height: 1, alt: 'Sunset' });
-    expect(photos[0].url).toMatch(/^\/api\/photos\/[a-f0-9]{24}$/);
+    expect(photos[0].url).toMatch(/^\/api\/photos\/[a-f0-9]{24}\?v=[a-f0-9]{24}&exp=\d+&sig=[\w-]+$/);
 
     const seventh = await me.addPhoto(trip);
     expect(seventh.status).toBe(400);
     expect(seventh.body.error.message).toBe('A trip can have up to 6 photos');
 
+    // The owner's own links work in an <img> too (no login header).
+    expect((await request(app).get(photos[0].url)).status).toBe(200);
     const mine = await me.photo(photos[0].url);
     expect(mine.status).toBe(200);
     expect(mine.headers['cache-control']).toContain('private');
+    // Browsers must check back every time, so hiding a journal or blocking someone works at once.
+    expect(mine.headers['cache-control']).toContain('no-cache');
     expect(Buffer.compare(mine.body as Buffer, TINY_PNG)).toBe(0);
 
-    // Someone else, and nobody at all, get nothing.
+    // Without a link signed for them, someone else and nobody at all get nothing.
+    const bare = photos[0].url.split('?')[0];
     const ravi = await signUp(app, 'ravi@example.com', 'Ravi');
-    expect((await as(ravi.token).photo(photos[0].url)).status).toBe(404);
-    expect((await request(app).get(photos[0].url)).status).toBe(404);
+    expect((await as(ravi.token).photo(bare)).status).toBe(404);
+    expect((await request(app).get(bare)).status).toBe(404);
   });
 
   it('refuses non-images', async () => {

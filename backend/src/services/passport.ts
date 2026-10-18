@@ -61,6 +61,8 @@ export interface PassportInput {
   includeUpcoming: boolean;
   /** Show journal ratings, memories and photos on stamps. */
   includeJournal: boolean;
+  /** Makes a photo's link (signed for the viewer by the caller); plain path by default. */
+  photoUrl?: (photoId: string) => string;
 }
 
 /** One stamp on the visa pages. */
@@ -157,7 +159,7 @@ export function buildPassport(input: PassportInput) {
                 rating: journal?.rating ?? null,
                 hasMemory: !!journal?.memory.trim(),
                 photoCount: journal?.photos.length ?? 0,
-                ...(journal?.photos[0] ? { coverPhotoUrl: `/api/photos/${journal.photos[0].id}` } : {}),
+                ...(journal?.photos[0] ? { coverPhotoUrl: (input.photoUrl ?? ((id: string) => `/api/photos/${id}`))(journal.photos[0].id) } : {}),
               },
             }
           : {}),
