@@ -7,6 +7,7 @@
 import { Link, NavLink } from 'react-router';
 import { buttonClasses } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { useFriends } from '@/features/friends/hooks';
 import { cn } from '@/lib/utils/cn';
 import { ThemeToggle } from '@/theme/ThemeToggle';
 import { Logo } from './Logo';
@@ -33,6 +34,8 @@ function initials(name: string) {
 /** The floating glass navigation bar. */
 export function Navbar() {
   const { user, status } = useAuth();
+  // Friend requests waiting for an answer (a dot on your passport bubble).
+  const waiting = useFriends().data?.incoming.length ?? 0;
 
   return (
     <header className="fixed inset-x-0 top-3 z-40 sm:top-3.5">
@@ -67,13 +70,17 @@ export function Navbar() {
             <ThemeToggle />
             {/* While auth is restoring, render nothing here to avoid a login-button flash. */}
             {status === 'authenticated' && user && (
+              <span className="relative">
               <NavLink
                 to="/passport"
-                aria-label="Your passport"
-                className="grid size-11 place-items-center rounded-full bg-ink font-semibold text-[14px] text-on-ink transition hover:-translate-y-0.5"
+                aria-label={waiting > 0 ? `Your passport (${waiting} friend ${waiting === 1 ? 'request' : 'requests'})` : 'Your passport'}
+                className="relative grid size-11 place-items-center overflow-hidden rounded-full bg-ink font-semibold text-[14px] text-on-ink transition hover:-translate-y-0.5"
               >
-                {initials(user.name)}
+                {user.avatarUrl ? <img src={user.avatarUrl} alt="" className="size-full object-cover" /> : initials(user.name)}
               </NavLink>
+              {/* A small dot when friend requests are waiting */}
+              {waiting > 0 && <span aria-hidden className="absolute -top-0.5 -right-0.5 size-3.5 rounded-full border-2 border-white bg-danger" />}
+              </span>
             )}
             {status === 'guest' && (
               <>

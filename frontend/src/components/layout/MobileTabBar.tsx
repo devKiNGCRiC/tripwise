@@ -6,6 +6,7 @@
 import { Compass, House, LogIn, Sparkles, Ticket, UserRound, type LucideIcon } from 'lucide-react';
 import { NavLink } from 'react-router';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { useFriends } from '@/features/friends/hooks';
 import { cn } from '@/lib/utils/cn';
 
 interface Tab {
@@ -17,6 +18,8 @@ interface Tab {
 /** Bottom navigation for phones. */
 export function MobileTabBar() {
   const { user } = useAuth();
+  // Friend requests waiting (a dot on the Passport tab).
+  const waiting = useFriends().data?.incoming.length ?? 0;
 
   const tabs: Tab[] = [
     { to: '/', label: 'Home', icon: House },
@@ -41,7 +44,10 @@ export function MobileTabBar() {
                 )
               }
             >
-              <Icon className="size-5" aria-hidden />
+              <span className="relative">
+                <Icon className="size-5" aria-hidden />
+                {to === '/passport' && waiting > 0 && <span aria-hidden className="absolute -top-1 -right-1.5 size-2.5 rounded-full bg-danger" />}
+              </span>
               {label}
             </NavLink>
           </li>

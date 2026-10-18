@@ -31,6 +31,7 @@ export const routes: RouteObject[] = [
       { path: 'destinations/:slug', lazy: lazyPage(() => import('@/pages/DestinationPage')) },
       { path: 't/:shareId', lazy: lazyPage(() => import('@/pages/SharedTripPage')) },
       { path: 'reset-password/:token', lazy: lazyPage(() => import('@/pages/ResetPasswordPage')) },
+      { path: 'u/:username', lazy: lazyPage(() => import('@/pages/PublicPassportPage')) },
 
       // Only for logged-out visitors
       {
@@ -51,6 +52,8 @@ export const routes: RouteObject[] = [
           { path: 'trips/:id', lazy: lazyPage(() => import('@/pages/TripPage')) },
           { path: 'passport', lazy: lazyPage(() => import('@/pages/PassportPage')) },
           { path: 'passport/account', lazy: lazyPage(() => import('@/pages/AccountPage')) },
+          { path: 'passport/friends', lazy: lazyPage(() => import('@/pages/FriendsPage')) },
+          { path: 'join/:code', lazy: lazyPage(() => import('@/pages/JoinPage')) },
         ],
       },
 
