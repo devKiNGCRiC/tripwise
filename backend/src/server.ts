@@ -6,7 +6,7 @@ import 'dotenv/config';
 import mongoose from 'mongoose';
 import { createApp } from './app.js';
 import { loadEnv } from './config/env.js';
-import { aiUnavailable } from './lib/errors.js';
+import { buildChain } from './services/ai/index.js';
 
 /** Start everything; exit with a clear message if it can't. */
 async function main() {
@@ -16,12 +16,8 @@ async function main() {
   await mongoose.connect(env.MONGO_URI, { serverSelectionTimeoutMS: 10_000 });
   console.log(`[api] MongoDB connected (database "${mongoose.connection.name}")`);
 
-  // The AI chain is wired in Task 6; until then generation reports "unavailable".
-  const ai = {
-    async run(): Promise<never> {
-      throw aiUnavailable();
-    },
-  };
+  // The AI fallback chain (Gemini first, Groq as backup), built from the keys in .env.
+  const ai = buildChain(env);
 
   const app = createApp({ ai, clientOrigin: env.CLIENT_ORIGIN });
   app.listen(env.PORT, () => console.log(`[api] TripWise API on :${env.PORT}`));
