@@ -17,7 +17,7 @@ import { randomBytes } from 'node:crypto';
 import { Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 import { PLANS } from '../config/plans.js';
-import { Itinerary } from '../db/models/index.js';
+import { Itinerary, Journal } from '../db/models/index.js';
 import { publicItinerary } from '../db/toPublic.js';
 import { AppError, notFound, quotaExceeded } from '../lib/errors.js';
 import { tripDates } from '../lib/dates.js';
@@ -30,6 +30,7 @@ import { dayPrompt, tripPrompt } from '../services/ai/prompt.js';
 import { parseDay, parseTrip } from '../services/ai/validate.js';
 import { buildItinerary } from '../services/buildItinerary.js';
 import { addToCache, cacheKey, pickCached } from '../services/cache.js';
+import type { PhotoStore } from '../services/photos.js';
 import { getQuota, nextIstMidnight, refund, reserve } from '../services/quota.js';
 import { regionFor } from '../services/region.js';
 import { parseTripRequest } from '../services/tripRequest.js';
@@ -59,7 +60,7 @@ async function quotaAfterSave(user: AuthUser, now: Date): Promise<Quota> {
 }
 
 /** The itinerary routes. */
-export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router {
+export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: PhotoStore }): Router {
   const router = Router();
   const auth = requireAuth(deps.now);
   const limiter = generateLimiter();
@@ -212,6 +213,9 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
   router.delete('/itineraries/:id', auth, async (req, res) => {
     const trip = await findOwned(String(req.params.id), currentUser(req));
     if (!trip) throw notFound(TRIP_NOT_FOUND);
+    // Its journal and photos go with it.
+    const journal = await Journal.findOneAndDelete({ itineraryId: trip._id }).lean();
+    await Promise.all((journal?.photos ?? []).map((p) => deps.photos.remove(p.id)));
     await trip.deleteOne();
     res.status(204).end();
   });

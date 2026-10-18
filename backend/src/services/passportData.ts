@@ -3,7 +3,7 @@
  * database and hands them to buildPassport (passport.ts), which does the actual work.
  * Used for your own passport and, with fewer details, for someone else's.
  */
-import { Destination, Itinerary, type UserDoc } from '../db/models/index.js';
+import { Destination, Itinerary, Journal, type UserDoc } from '../db/models/index.js';
 import { publicUser } from '../db/toPublic.js';
 import { buildPassport, type JournalLike, type TripLike } from './passport.js';
 import { istDay } from './quota.js';
@@ -51,7 +51,14 @@ export async function passportFor(user: UserDoc, now: Date, opts: { includeUpcom
   });
 }
 
-/** A traveller's journals in the passport's shape. (Journals arrive with the journal feature.) */
-async function loadJournals(_ownerId: string): Promise<JournalLike[]> {
-  return [];
+/** A traveller's journals in the passport's shape. */
+async function loadJournals(ownerId: string): Promise<JournalLike[]> {
+  const journals = await Journal.find({ ownerId }).lean();
+  return journals.map((j) => ({
+    itineraryId: j.itineraryId.toString(),
+    rating: j.rating ?? null,
+    memory: j.memory ?? '',
+    photos: j.photos.map((p) => ({ id: p.id })),
+    updatedAt: (j.updatedAt ?? new Date(0)).toISOString(),
+  }));
 }

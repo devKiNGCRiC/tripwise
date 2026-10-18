@@ -19,12 +19,14 @@ import { avatarRoutes } from './routes/avatars.js';
 import { destinationRoutes } from './routes/destinations.js';
 import { healthRoutes } from './routes/health.js';
 import { itineraryRoutes } from './routes/itineraries.js';
+import { journalRoutes } from './routes/journal.js';
 import { meRoutes } from './routes/me.js';
 import { passportRoutes } from './routes/passport.js';
 import { profileRoutes } from './routes/profile.js';
 import { shareRoutes } from './routes/share.js';
 import type { AiChain } from './services/ai/chain.js';
 import { createMailer, type Mailer } from './services/mailer.js';
+import { createPhotoStore, type PhotoStore } from './services/photos.js';
 
 /** The swappable parts of the app (real ones in server.ts, fakes in tests). */
 export interface AppDeps {
@@ -38,6 +40,8 @@ export interface AppDeps {
   appUrl?: string;
   /** Sends emails (tests collect them instead). */
   mailer?: Mailer;
+  /** Where journal photos are kept (MongoDB unless Cloudinary is set up). */
+  photos?: PhotoStore;
 }
 
 /** Build the Express app. `extra` lets tests mount throw-away routes under /api. */
@@ -62,6 +66,9 @@ export function createApp(deps: AppDeps, extra?: (router: Router) => void): expr
 
   // Routes.
   const now = deps.now ?? (() => new Date());
+  const photos = deps.photos ?? createPhotoStore();
+  // Who may see someone's journal photos besides the owner (friends arrive later): nobody yet.
+  const canSeeJournalOf = async () => false;
   api.use(healthRoutes());
   api.use(authRoutes(now));
   api.use(destinationRoutes());
@@ -69,8 +76,9 @@ export function createApp(deps: AppDeps, extra?: (router: Router) => void): expr
   api.use(profileRoutes(now));
   api.use(avatarRoutes(now));
   api.use(passportRoutes(now));
-  api.use(accountRoutes({ now, mailer: deps.mailer ?? createMailer({}), appUrl: deps.appUrl ?? 'http://localhost:5173' }));
-  api.use(itineraryRoutes({ ai: deps.ai, now }));
+  api.use(accountRoutes({ now, mailer: deps.mailer ?? createMailer({}), appUrl: deps.appUrl ?? 'http://localhost:5173', photos }));
+  api.use(journalRoutes({ now, photos, canSeeJournalOf }));
+  api.use(itineraryRoutes({ ai: deps.ai, now, photos }));
   api.use(shareRoutes());
   extra?.(api);
   app.use('/api', api);

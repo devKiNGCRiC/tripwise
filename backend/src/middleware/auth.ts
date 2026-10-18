@@ -54,6 +54,22 @@ export function requireAuth(now: () => Date) {
   };
 }
 
+/**
+ * Who is asking, on routes anyone may call (public passports, photos): the user id from a
+ * valid Bearer token, or null for visitors and expired or blocked logins.
+ */
+export async function optionalViewer(req: Request, now: Date): Promise<string | null> {
+  const header = req.get('authorization') ?? '';
+  if (!header.startsWith('Bearer ')) return null;
+  try {
+    const claims = verifyAccess(header.slice(7), now);
+    const user = await User.findById(claims.sub, { blocked: 1 }).lean();
+    return user && !user.blocked ? claims.sub : null;
+  } catch {
+    return null;
+  }
+}
+
 /** The signed-in user of a request that went through requireAuth. */
 export function currentUser(req: Request): AuthUser {
   if (!req.user) throw unauthorized();

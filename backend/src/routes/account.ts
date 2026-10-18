@@ -20,6 +20,7 @@ import { badRequest, unauthorized } from '../lib/errors.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
 import { deleteAccountData } from '../services/accountDeletion.js';
 import type { Mailer } from '../services/mailer.js';
+import type { PhotoStore } from '../services/photos.js';
 import { createSession, revokeAllSessions } from '../services/sessions.js';
 import { hashToken } from '../services/tokens.js';
 import { BCRYPT_COST, clearRefreshCookie, setRefreshCookie } from './auth.js';
@@ -34,7 +35,7 @@ const EXPIRED_LINK = 'This reset link has expired. Ask for a new one.';
 const newPassword = z.string({ error: 'Passwords need at least 8 characters' }).min(8, 'Passwords need at least 8 characters').max(200, 'Please use a shorter password');
 
 /** The account routes. */
-export function accountRoutes(deps: { now: () => Date; mailer: Mailer; appUrl: string }): Router {
+export function accountRoutes(deps: { now: () => Date; mailer: Mailer; appUrl: string; photos: PhotoStore }): Router {
   const router = Router();
   const { now } = deps;
   const auth = requireAuth(now);
@@ -79,7 +80,7 @@ export function accountRoutes(deps: { now: () => Date; mailer: Mailer; appUrl: s
     const user = await User.findById(currentUser(req).id);
     if (!user) throw unauthorized();
     if (!(await bcrypt.compare(password, user.passwordHash))) throw badRequest("That password isn't right");
-    await deleteAccountData(user._id.toString());
+    await deleteAccountData(user._id.toString(), deps.photos);
     clearRefreshCookie(res);
     res.status(204).end();
   });
