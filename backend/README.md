@@ -59,6 +59,13 @@ Vite forwards `/api` to port 4000.
 | `npm run seed` | Load the destinations into MongoDB |
 | `npm run smoke:ai` | Ask each real AI model for one small trip and report ok / invalid / error |
 
+## Privacy in short
+
+- Passports are visible to **Friends** (default), **Everyone** or **Only me**. Blocking hides both people from each other completely.
+- Other people never see upcoming trips.
+- Journal photos are private. Each photo link is signed for the person it was given to and expires within 2 hours, and the server checks every time that this person is still allowed. That means hiding your journal or blocking someone takes effect immediately.
+- `npx tsx scripts/e2e-seed.ts <email>` gives a test account one finished trip (for trying journals). It refuses to run in production.
+
 ## Daily limits
 
 Limits are set in `src/config/plans.ts`. A new day starts at midnight India time.
@@ -84,5 +91,13 @@ Limits are set in `src/config/plans.ts`. A new day starts at midnight India time
 | `POST /itineraries/:id/days/:n/regenerate` | ✓ | A fresh idea for one day |
 | `POST /itineraries/:id/share`, `GET /share/:shareId` | ✓ / | Share link / open a shared trip |
 | `GET /me/quota` | ✓ | Today's AI plans used, limit and reset time |
+| `GET`/`PATCH /me/profile`, `PUT`/`DELETE /me/avatar` | ✓ | Profile, preferences, privacy, theme; profile photo |
+| `POST /me/password`, `POST /auth/logout-all`, `DELETE /me` | ✓ | Change password, sign out everywhere, delete account and all data |
+| `POST /auth/forgot`, `POST /auth/reset` | | Email a reset link (always answers the same) / set a new password |
+| `GET /me/passport`, `GET /users/:username/passport` | ✓ / opt. | My passport / someone's, as their privacy allows |
+| `GET`/`PUT /itineraries/:id/journal`, `POST`/`DELETE …/journal/photos` | ✓ | Trip journal: diyas, memory, up to 6 photos |
+| `GET /photos/:id`, `GET /avatars/:userId` | | Journal photo (signed per viewer, re-checked every time) / profile photo |
+| `GET /friends`, `POST /friends/requests`, `…/accept`, `…/decline`, `DELETE …` | ✓ | Friends and requests |
+| `POST`/`DELETE /blocks`, `GET /users/:username/card`, `GET`/`POST /invites/:code…`, `POST /me/invite-code` | ✓ | Blocking, finding by @username, invite links |
 
 Errors always look like `{ "error": { "code": "…", "message": "…" } }`.

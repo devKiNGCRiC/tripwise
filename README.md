@@ -22,7 +22,9 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 🪄 | Trip planner wizard + real AI itineraries that appear day by day (5 free plans a day) | ✅ Done |
 | 🎟️ | Day-by-day itinerary (timed stops, transfers, costs), regenerate a day, PDF, share link | ✅ Done |
 | ⚡ | Similar trips served instantly from a plan cache (free, doesn't use the daily allowance) | ✅ Done |
-| 🛂 | "Passport" profile that collects a stamp for every trip | ✅ Done |
+| 🛂 | Passport: photo, bio and traveller type; India's seven worlds lighting up; 12 Yatra marks; visa-page stamps with trip journals (diya ratings, memories, photos) | ✅ Done |
+| 👥 | Friends by @username or invite link, public passports with privacy (Friends / Everyone / Only me), blocking | ✅ Done |
+| 🔑 | Account: preferences that pre-fill the planner, change password, forgot password, sign out everywhere, delete my data | ✅ Done |
 | 📊 | Admin dashboard: analytics, destinations, users, moderation | 📅 Planned |
 | 📲 | React Native mobile app | 📅 Phase 2 |
 
@@ -126,6 +128,15 @@ npm run lint        # ESLint
 npm run build       # production build → dist/
 ```
 
+### Still to set up (free accounts, before launch)
+
+| Service | Used for | Until it's set up |
+|---|---|---|
+| **Cloudinary** (free plan) | Storing trip journal photos | Photos are kept in MongoDB (fine for testing; Atlas free has 512 MB) |
+| **Brevo** (free, 300 emails/day) | Sending "forgot password" emails | The reset link is printed in the API log |
+
+Add their keys to `backend/.env` (names in `backend/.env.example`); TripWise switches over by itself.
+
 ## 🗺️ Roadmap
 
 - [x] **Frontend foundation:** theme, UI kit, auth pages, routing and guards, mock API, landing page
@@ -134,7 +145,8 @@ npm run build       # production build → dist/
 - [x] **Backend:** Express API, MongoDB models, JWT auth, Gemini + Groq integration, streaming, caching and quotas
 - [ ] **Own planner:** places database (OpenStreetMap / Wikidata) + RAG, unlimited quick plans
 - [ ] **"Ask TripWise" agent:** chat on each trip with weather, routes and places as tools
-- [ ] **Crew mode:** invites, shared expenses, notes and photos
+- [x] **Profile, Passport & Friends:** account, journals, Yatra marks, friends and public passports
+- [ ] **Crew mode:** plan trips together, shared expenses, notes and photos
 - [ ] **Launch:** deploy to Cloudflare Pages + Render, installable PWA with offline trips
 - [ ] **Premium:** paid plan with Razorpay
 - [ ] **Phase 2:** React Native app, social sharing, AI chat assistant
