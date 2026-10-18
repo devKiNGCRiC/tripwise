@@ -59,6 +59,16 @@ describe('PlannerWizard', () => {
     expect(within(preview).getByText(/3 days/)).toBeInTheDocument();
   });
 
+  it("starts from the traveller's usual budget and pace", async () => {
+    const { user } = renderApp('/plan?destination=Goa');
+    await screen.findByLabelText('Destination');
+    await next(user);
+    setDate('Start date', inDays(10));
+    setDate('End date', inDays(12));
+    await next(user);
+    expect(screen.getByLabelText('Budget per person per day (₹)')).toHaveValue(4000);
+  });
+
   it('asks for a destination before moving on', async () => {
     const { user } = renderApp('/plan');
     await screen.findByLabelText('Destination');
@@ -80,6 +90,8 @@ describe('PlannerWizard', () => {
   });
 
   it('needs at least one interest', async () => {
+    // A traveller without saved favourite interests (the demo account has some).
+    session.set('u_dev');
     const { user } = renderApp('/plan?destination=Goa');
     await screen.findByLabelText('Destination');
     await next(user);

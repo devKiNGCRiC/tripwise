@@ -30,6 +30,7 @@ export const routes: RouteObject[] = [
       { path: 'explore', lazy: lazyPage(() => import('@/pages/ExplorePage')) },
       { path: 'destinations/:slug', lazy: lazyPage(() => import('@/pages/DestinationPage')) },
       { path: 't/:shareId', lazy: lazyPage(() => import('@/pages/SharedTripPage')) },
+      { path: 'reset-password/:token', lazy: lazyPage(() => import('@/pages/ResetPasswordPage')) },
 
       // Only for logged-out visitors
       {
@@ -37,6 +38,7 @@ export const routes: RouteObject[] = [
         children: [
           { path: 'login', lazy: lazyPage(() => import('@/pages/LoginPage')) },
           { path: 'signup', lazy: lazyPage(() => import('@/pages/SignupPage')) },
+          { path: 'forgot-password', lazy: lazyPage(() => import('@/pages/ForgotPasswordPage')) },
         ],
       },
 
@@ -48,6 +50,7 @@ export const routes: RouteObject[] = [
           { path: 'trips', lazy: lazyPage(() => import('@/pages/TripsPage')) },
           { path: 'trips/:id', lazy: lazyPage(() => import('@/pages/TripPage')) },
           { path: 'passport', lazy: lazyPage(() => import('@/pages/PassportPage')) },
+          { path: 'passport/account', lazy: lazyPage(() => import('@/pages/AccountPage')) },
         ],
       },
 

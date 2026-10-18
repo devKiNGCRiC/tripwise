@@ -22,6 +22,10 @@ export interface AuthContextValue {
   signup: (input: SignupInput) => Promise<User>;
   loginWithGoogle: (credential: string) => Promise<User>;
   logout: () => Promise<void>;
+  /** Replace the signed-in user's details (after editing the profile). */
+  updateUser: (user: User) => void;
+  /** Drop the local session without calling the server (it already ended it). */
+  forgetSession: () => void;
 }
 
 interface AuthState {
@@ -92,9 +96,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [queryClient]);
 
+  /** Refresh the signed-in user's details after a profile change (name, username, photo). */
+  const updateUser = useCallback((user: User) => {
+    setState((current) => (current.status === 'authenticated' ? { ...current, user } : current));
+  }, []);
+
+  /** After "sign out everywhere" or deleting the account: forget everything locally (the server already ended the session). */
+  const forgetSession = useCallback(() => {
+    api.setAccessToken(null);
+    setState(GUEST);
+    queryClient.clear();
+  }, [queryClient]);
+
   const value = useMemo<AuthContextValue>(
-    () => ({ ...state, login, signup, loginWithGoogle, logout }),
-    [state, login, signup, loginWithGoogle, logout],
+    () => ({ ...state, login, signup, loginWithGoogle, logout, updateUser, forgetSession }),
+    [state, login, signup, loginWithGoogle, logout, updateUser, forgetSession],
   );
 
   return <AuthContext value={value}>{children}</AuthContext>;

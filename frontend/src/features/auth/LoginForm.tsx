@@ -6,6 +6,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { ApiError } from '@/lib/api/errors';
@@ -44,6 +45,9 @@ export function LoginForm() {
         error={errors.password?.message}
         {...register('password')}
       />
+      <Link to="/forgot-password" className="-mt-1 self-end text-sm font-semibold text-soft underline decoration-accent/60 underline-offset-4 hover:text-ink">
+        Forgot password?
+      </Link>
       <Button type="submit" size="lg" fullWidth loading={isSubmitting}>
         Log in
       </Button>
