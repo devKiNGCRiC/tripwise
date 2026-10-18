@@ -8,13 +8,13 @@
 import { useEffect, useRef, useState, type DragEvent } from 'react';
 import { useReveal } from '@/components/signature/useReveal';
 import { Button } from '@/components/ui/Button';
+import { useUpdateProfile } from '@/features/account/hooks';
+import { useAuth } from '@/features/auth/AuthProvider';
+import type { Palette } from '@/world/palette';
 import { nearestRegion } from '@/world/geo';
-import { paletteFromPixels, type Palette } from '@/world/palette';
+import { readPalette } from '@/world/readPalette';
 import { regionByKey } from '@/world/regions';
 import { useWorld } from '@/world/WorldProvider';
-
-/** Size the photo is shrunk to before reading its colours (small = fast). */
-const SAMPLE = 48;
 
 /** A photo in the frame: its address, and whether it's a temporary in-memory copy to release later. */
 interface Shown {
@@ -22,27 +22,17 @@ interface Shown {
   temporary: boolean;
 }
 
-/** Read the palette of the image at `src` (same-origin or an object URL). Resolves null if unreadable. */
-function readPalette(src: string) {
-  return new Promise<Palette | null>((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = canvas.height = SAMPLE;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return resolve(null);
-      ctx.drawImage(img, 0, 0, SAMPLE, SAMPLE);
-      resolve(paletteFromPixels(ctx.getImageData(0, 0, SAMPLE, SAMPLE).data));
-    };
-    img.onerror = () => resolve(null);
-    img.src = src;
-  });
-}
-
 /** The "Your colours" personalisation section. */
 export function YourColours() {
   const reveal = useReveal<HTMLElement>();
-  const { region, tint, setTint, setRegion } = useWorld();
+  const { region, tint, setTint: tintWorld, setRegion } = useWorld();
+  const { status } = useAuth();
+  const updateProfile = useUpdateProfile();
+  /** Tint the world, and remember it on the account while signed in (so it follows you). */
+  const setTint = (palette: Palette | null) => {
+    tintWorld(palette);
+    if (status === 'authenticated') updateProfile.mutate({ theme: palette });
+  };
   const fileRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<Shown | null>(null);
   const [message, setMessage] = useState('');

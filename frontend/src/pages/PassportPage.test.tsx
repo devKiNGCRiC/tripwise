@@ -1,60 +1,67 @@
 /**
- * PassportPage.test.tsx — the passport shows the traveller's details, a stamp for every
- * planned trip, today's AI plan allowance, and the Motion setting: travellers can choose Calm (everything holds still) or Full;
- * the choice is remembered and applied to the page.
+ * PassportPage.test.tsx — the new passport: the cover (photo, @username, bio, type and
+ * numbers), the seven worlds with the next one to unlock, Yatra marks, and the visa pages
+ * whose stamps open trip journals ("How was Jaipur?" → diyas and a memory).
  */
 import { screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
-import { api } from '@/lib/api/client';
-import { itinerariesApi } from '@/lib/api/endpoints';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { session } from '@/mocks/db';
-import { MOTION_STORAGE_KEY } from '@/lib/motionPreference';
 import { renderApp } from '@/test/render';
 
 describe('PassportPage', () => {
-  it("shows the traveller's details on the cover", async () => {
-    session.set('u_dev');
+  beforeEach(() => session.set('u_demo'));
+
+  it('shows the cover with @username, bio, type and numbers', async () => {
     renderApp('/passport');
     const cover = await screen.findByRole('region', { name: 'Passport cover' });
-    expect(within(cover).getByText('dev@tripwise.app')).toBeInTheDocument();
-    expect(await screen.findByRole('heading', { name: 'No stamps yet' })).toBeInTheDocument();
+    expect(within(cover).getByText('Demo Traveller')).toBeInTheDocument();
+    expect(within(cover).getByText('@demotraveller')).toBeInTheDocument();
+    expect(within(cover).getByText(/Always hunting the best thali/)).toBeInTheDocument();
+    expect(within(cover).getByText('Foodie')).toBeInTheDocument();
+    expect(within(cover).getByText('Pune')).toBeInTheDocument();
+    const stats = within(cover).getByRole('list', { name: 'Travel stats' });
+    expect(within(stats).getByText('Trips').previousSibling).toHaveTextContent('2');
+    expect(within(stats).getByText('Worlds').previousSibling).toHaveTextContent('2/7');
+    expect(within(cover).getByRole('link', { name: 'Edit profile' })).toHaveAttribute('href', '/passport/account');
+    expect(within(cover).getByRole('link', { name: /Friends/ })).toHaveAttribute('href', '/passport/friends');
   });
 
-  it('collects a stamp for each trip and shows the plans left today', async () => {
-    session.set('u_dev');
-    await api.refreshSession();
-    const { itinerary } = await itinerariesApi.generate({
-      destination: 'Goa',
-      startDate: '2026-12-12',
-      endDate: '2026-12-13',
-      budget: { amount: 3000, currency: 'INR' },
-      travellers: 'solo',
-      interests: ['food'],
-      pace: 'chill',
-    });
+  it('lights the worlds visited and suggests the next one', async () => {
     renderApp('/passport');
-    const stamps = await screen.findByRole('list', { name: 'Stamps' });
-    const stamp = within(stamps).getByRole('link', { name: /Goa/ });
-    expect(stamp).toHaveAttribute('href', `/trips/${itinerary.id}`);
-    expect(within(stamp).getByText('गोवा')).toBeInTheDocument();
-    expect(await screen.findByText('4 of 5 AI plans left today')).toBeInTheDocument();
-    const stats = screen.getByRole('list', { name: 'Travel stats' });
-    expect(within(stats).getByText('Trips planned').previousSibling).toHaveTextContent('1');
-    expect(within(stats).getByText('Worlds explored').previousSibling).toHaveTextContent('1');
-    expect(within(stats).getByText('Days on the road').previousSibling).toHaveTextContent('2');
+    const worlds = await screen.findByRole('region', { name: 'Your seven worlds' });
+    const items = within(worlds).getAllByRole('listitem');
+    expect(items).toHaveLength(7);
+    expect(within(worlds).getByRole('listitem', { name: 'Konkan & Malabar: visited' })).toBeInTheDocument();
+    expect(within(worlds).getByRole('listitem', { name: 'Thar: visited' })).toBeInTheDocument();
+    expect(within(worlds).getByRole('listitem', { name: 'Himalaya: not yet' })).toBeInTheDocument();
+    expect(within(worlds).getByText(/^Next to unlock: /)).toBeInTheDocument();
   });
 
-  it('starts on Full motion and remembers Calm', async () => {
-    session.set('u_dev');
+  it('shows earned and waiting Yatra marks', async () => {
+    renderApp('/passport');
+    const marks = await screen.findByRole('region', { name: 'Yatra marks' });
+    expect(within(marks).getByRole('listitem', { name: /First steps, earned/ })).toBeInTheDocument();
+    expect(within(marks).getByRole('listitem', { name: /Storyteller, not yet: Write 3 trip memories/ })).toBeInTheDocument();
+  });
+
+  it('stamps finished trips, shows the upcoming one, and opens a journal from the prompt', async () => {
     const { user } = renderApp('/passport');
-    expect(await screen.findByRole('radio', { name: /full/i })).toBeChecked();
+    const pages = await screen.findByRole('region', { name: 'Visa pages' });
+    const stamps = within(pages).getByRole('list', { name: 'Stamps' });
+    expect(within(stamps).getByRole('button', { name: /Goa journal/ })).toBeInTheDocument();
+    expect(within(stamps).getByRole('link', { name: /Kerala Backwaters, in \d+ days/ })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('radio', { name: /calm/i }));
-    expect(screen.getByRole('radio', { name: /calm/i })).toBeChecked();
-    expect(localStorage.getItem(MOTION_STORAGE_KEY)).toBe('calm');
-    expect(document.documentElement.dataset.motion).toBe('calm');
+    await user.click(within(pages).getByRole('button', { name: 'How was Jaipur?' }));
+    const sheet = await screen.findByRole('dialog', { name: 'Jaipur journal' });
+    await user.click(within(sheet).getByRole('radio', { name: '4 diyas' }));
+    await user.type(within(sheet).getByLabelText('Your memory'), 'Lassi at Lassiwala, sunset at Nahargarh.');
+    await user.click(within(sheet).getByRole('button', { name: 'Save memory' }));
+    expect(await screen.findByText('Memory saved')).toBeInTheDocument();
+    expect(await within(stamps).findByRole('button', { name: /Jaipur journal, 4 diyas/ })).toBeInTheDocument();
+  });
 
-    await user.click(screen.getByRole('radio', { name: /full/i }));
-    expect(localStorage.getItem(MOTION_STORAGE_KEY)).toBeNull();
+  it("still shows today's AI plan allowance", async () => {
+    renderApp('/passport');
+    expect(await screen.findByText(/of 5 AI plans left today/)).toBeInTheDocument();
   });
 });

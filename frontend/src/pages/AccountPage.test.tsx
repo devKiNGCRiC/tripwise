@@ -5,6 +5,7 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { profileApi } from '@/lib/api/endpoints';
+import { MOTION_STORAGE_KEY } from '@/lib/motionPreference';
 import { session } from '@/mocks/db';
 import { renderApp } from '@/test/render';
 
@@ -42,6 +43,16 @@ describe('AccountPage', () => {
     await user.click(within(privacy).getByRole('button', { name: 'Save privacy' }));
     expect(await screen.findByText('Privacy saved')).toBeInTheDocument();
     expect((await profileApi.get()).profile.privacy.passport).toBe('private');
+  });
+
+  it('starts on Full motion and remembers Calm', async () => {
+    const { user } = renderApp('/passport/account');
+    expect(await screen.findByRole('radio', { name: /full/i })).toBeChecked();
+    await user.click(screen.getByRole('radio', { name: /calm/i }));
+    expect(localStorage.getItem(MOTION_STORAGE_KEY)).toBe('calm');
+    expect(document.documentElement.dataset.motion).toBe('calm');
+    await user.click(screen.getByRole('radio', { name: /full/i }));
+    expect(localStorage.getItem(MOTION_STORAGE_KEY)).toBeNull();
   });
 
   it('deletes the account only with the right password', async () => {

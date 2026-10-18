@@ -8,6 +8,7 @@ import { Footer } from './Footer';
 import { MobileTabBar } from './MobileTabBar';
 import { Navbar } from './Navbar';
 import { ServerWakingBanner } from './ServerWakingBanner';
+import { AccountThemeSync } from '@/world/AccountThemeSync';
 
 /** The frame around every page. */
 export function RootLayout() {
@@ -25,6 +26,7 @@ export function RootLayout() {
       <ServerWakingBanner />
       <Navbar />
       <main id="main" className="flex-1">
+        <AccountThemeSync />
         <Outlet />
       </main>
       <Footer />

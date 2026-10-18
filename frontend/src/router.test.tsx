@@ -36,7 +36,7 @@ describe('routing', () => {
     session.set('u_demo');
     const { router } = renderApp('/login');
     await waitFor(() => expect(router.state.location.pathname).toBe('/passport'));
-    expect(await screen.findByRole('heading', { name: 'Your passport' })).toBeInTheDocument();
+    expect(await screen.findByRole('region', { name: 'Passport cover' })).toBeInTheDocument();
   });
 
   it('shows the lost-luggage page for unknown URLs', async () => {
@@ -57,9 +57,9 @@ describe('routing', () => {
     expect(skip.className).not.toContain('focus:text-white');
   });
 
-  it('logs out from the passport page', async () => {
+  it('logs out from the Account tab', async () => {
     session.set('u_demo');
-    const { user, router } = renderApp('/passport');
+    const { user, router } = renderApp('/passport/account');
     await user.click(await screen.findByRole('button', { name: 'Log out' }));
     await waitFor(() => expect(router.state.location.pathname).toBe('/login'));
   });

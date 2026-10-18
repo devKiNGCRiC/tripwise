@@ -1,99 +1,69 @@
 /**
- * PassportPage.tsx — route /passport (profile), styled like a real passport:
- * a navy cover with a gold gateway-arch emblem and your details (always navy, in both
- * themes, like the real document), then a stamp page that fills up as you save
- * trips (each stamp opens its trip), then today's AI plan allowance and settings:
- * motion, theme, log out.
+ * PassportPage.tsx — route /passport: your passport, in three parts — who you are (the navy
+ * cover with your photo, bio and numbers), where you've been (India's seven worlds and your
+ * Yatra marks), and what you remember (visa pages whose stamps open trip journals). Today's
+ * AI plan allowance sits at the end; settings live on the Account tab.
  */
-import { LogOut } from 'lucide-react';
-import { useNavigate } from 'react-router';
-import { PageHeader } from '@/components/layout/PageHeader';
-import { Button } from '@/components/ui/Button';
-import { GlassPanel } from '@/components/ui/GlassPanel';
-import { useToast } from '@/components/ui/Toast';
-import { useAuth } from '@/features/auth/AuthProvider';
-import { MotionChoice } from '@/features/passport/MotionChoice';
-import { TravelStats } from '@/features/passport/TravelStats';
+import { useState } from 'react';
+import { Settings, Users } from 'lucide-react';
+import { Link } from 'react-router';
+import { LoadError } from '@/components/layout/LoadError';
+import { Skeleton } from '@/components/ui/Skeleton';
+import { useFriends } from '@/features/friends/hooks';
+import { usePassport } from '@/features/passport/hooks';
+import { JournalSheet } from '@/features/passport/JournalSheet';
+import { PassportView } from '@/features/passport/PassportView';
 import { QuotaMeter } from '@/features/passport/QuotaMeter';
-import { StampGrid } from '@/features/passport/StampGrid';
-import { ThemeToggle } from '@/theme/ThemeToggle';
+import type { Stamp } from '@/lib/api/types';
 
-/** Route "/passport": the traveller's passport. */
+/** The two buttons on your own cover. */
+function CoverActions() {
+  const friends = useFriends();
+  const waiting = friends.data?.incoming.length ?? 0;
+  const count = friends.data?.friends.length;
+  return (
+    <>
+      <Link to="/passport/account" className="inline-flex items-center gap-1.5 rounded-full bg-[#e6b765] px-4 py-2 text-sm font-semibold text-[#0f1a40] hover:brightness-105">
+        <Settings aria-hidden className="size-4" />
+        Edit profile
+      </Link>
+      <Link to="/passport/friends" className="relative inline-flex items-center gap-1.5 rounded-full bg-white/12 px-4 py-2 text-sm font-semibold text-white hover:bg-white/20">
+        <Users aria-hidden className="size-4" />
+        Friends{count !== undefined && ` · ${count}`}
+        {waiting > 0 && (
+          <span className="absolute -top-1 -right-1 grid size-5 place-items-center rounded-full bg-danger text-[11px] text-white" aria-label={`${waiting} friend ${waiting === 1 ? 'request' : 'requests'}`}>
+            {waiting}
+          </span>
+        )}
+      </Link>
+    </>
+  );
+}
+
+/** Route "/passport". */
 export default function PassportPage() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const toast = useToast();
-
-  // ProtectedRoute guarantees a user; this guard only satisfies TypeScript.
-  if (!user) return null;
-
-  /** Log out, say goodbye, and land on the login page. */
-  async function handleLogout() {
-    await logout();
-    toast.show({ title: 'Logged out. Safe travels!', tone: 'info' });
-    navigate('/login', { replace: true });
-  }
-
-  const memberSince = new Date(user.createdAt).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+  const passport = usePassport();
+  const [open, setOpen] = useState<Stamp | null>(null);
 
   return (
     <div className="mx-auto max-w-6xl px-4 pt-28 pb-20">
       <title>Your passport · TripWise</title>
-      <PageHeader eyebrow="पासपोर्ट · Traveller profile" title="Your passport" actions={<TravelStats />} />
-
-      <div className="grid overflow-hidden rounded-card border border-line shadow-[0_40px_80px_-40px_rgb(0_0_0/.45)] md:grid-cols-[0.9fr_1.1fr]">
-        {/* Cover: navy with gold foil, like the real document */}
-        <section aria-label="Passport cover" className="relative isolate overflow-hidden bg-[#0f1a40] p-8 text-[#f6efe3]">
-          {/* Gold-foil emblem: nested gateway arches, like the crest on a real passport */}
-          <svg aria-hidden viewBox="0 0 100 120" className="absolute -right-10 -bottom-12 -z-10 w-64 text-[#e6b765] opacity-50" fill="none" stroke="currentColor" strokeWidth="1">
-            {[0, 8, 16, 24].map((i) => (
-              <path key={i} d={`M${i} 120 V${45 + i * 0.6} C${i} ${25 + i} ${22 + i * 0.3} ${12 + i * 0.4} 50 ${4 + i} C${78 - i * 0.3} ${12 + i * 0.4} ${100 - i} ${25 + i} ${100 - i} ${45 + i * 0.6} V120`} />
-            ))}
-          </svg>
-          <p className="font-display text-2xl text-[#e6b765]">TripWise passport</p>
-          <p lang="hi" className="text-[#e6b765]/80">
-            यात्री पासपोर्ट
-          </p>
-          <div aria-hidden className="mt-7 grid size-20 place-items-center rounded-full border border-[#e6b765] font-display text-4xl text-[#e6b765]">
-            {user.name.charAt(0).toUpperCase()}
-          </div>
-          <dl className="mt-7 grid gap-4">
-            <div>
-              <dt className="text-xs tracking-[0.2em] uppercase opacity-70">Name</dt>
-              <dd className="text-xl font-medium">{user.name}</dd>
-            </div>
-            <div>
-              <dt className="text-xs tracking-[0.2em] uppercase opacity-70">Email</dt>
-              <dd className="font-medium break-all">{user.email}</dd>
-            </div>
-            <div>
-              <dt className="text-xs tracking-[0.2em] uppercase opacity-70">Traveller since</dt>
-              <dd className="font-medium">{memberSince}</dd>
-            </div>
-          </dl>
-        </section>
-
-        {/* Stamp page: empty until the first saved trip */}
-        <section className="flex min-h-80 flex-col items-center justify-center gap-4 glass-strong bg-[radial-gradient(circle,var(--trip-line)_1.2px,transparent_1.4px)] bg-size-[20px_20px] p-8 text-center">
-          <StampGrid />
-        </section>
-      </div>
-
-      <GlassPanel className="mt-8 flex flex-col gap-8">
-        <QuotaMeter />
-        <div className="border-t border-line pt-6">
-          <MotionChoice />
+      {passport.isPending && (
+        <div role="status" className="grid gap-6">
+          <span className="sr-only">Opening your passport…</span>
+          <Skeleton className="h-80 rounded-card" />
+          <Skeleton className="h-64 rounded-card" />
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <span className="font-medium">Day or Night theme</span>
-          </div>
-          <Button variant="secondary" icon={<LogOut className="size-4" aria-hidden />} onClick={handleLogout}>
-            Log out
-          </Button>
-        </div>
-      </GlassPanel>
+      )}
+      {passport.isError && <LoadError what="your passport" onRetry={() => void passport.refetch()} />}
+      {passport.data && (
+        <PassportView passport={passport.data} mine coverActions={<CoverActions />} onOpenStamp={setOpen}>
+          <section aria-label="AI plans today" className="glass-strong rounded-card p-6 sm:p-8">
+            <QuotaMeter />
+          </section>
+        </PassportView>
+      )}
+      {open && <JournalSheet key={open.id} stamp={open} onClose={() => setOpen(null)} />}
     </div>
   );
 }
