@@ -6,6 +6,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from
 import request from 'supertest';
 import type { Express } from 'express';
 import { createApp } from '../src/app.js';
+import { createPhotoStore } from '../src/services/photos.js';
 import { clearTestDb, startTestDb, stopTestDb } from './helpers/db.js';
 import { fakeChain } from './helpers/fakeAi.js';
 import { signUp } from './helpers/auth.js';
@@ -117,6 +118,33 @@ describe('journals', () => {
     const photo = (await me.addPhoto(trip)).body.journal.photos[0];
     expect((await request(app).delete(`/api/itineraries/${trip}`).set('Authorization', `Bearer ${asha.token}`)).status).toBe(204);
     expect((await me.photo(photo.url)).status).toBe(404);
+  });
+
+  it("can't delete someone else's photo through your own trip", async () => {
+    const asha = await signUp(app);
+    const ashaTrip = await saveTrip(asha.id);
+    const photo = (await as(asha.token).addPhoto(ashaTrip)).body.journal.photos[0];
+    const ravi = await signUp(app, 'ravi@example.com', 'Ravi');
+    const raviTrip = await saveTrip(ravi.id);
+    await as(ravi.token).removePhoto(raviTrip, photo.id);
+    // Asha's photo is untouched.
+    expect((await as(asha.token).photo(photo.url)).status).toBe(200);
+    expect((await as(asha.token).get(ashaTrip)).body.journal.photos).toHaveLength(1);
+  });
+
+  it('checks who is asking before fetching any photo bytes', async () => {
+    const asha = await signUp(app);
+    const trip = await saveTrip(asha.id);
+    const photo = (await as(asha.token).addPhoto(trip)).body.journal.photos[0];
+    // A store that counts byte fetches, around the real one.
+    const real = createPhotoStore();
+    let fetched = 0;
+    const counting = { ...real, get: async (id: string) => (fetched++, real.get(id)) };
+    const watched = createApp({ ai: fakeChain(), now: () => new Date('2026-10-19T10:00:00Z'), photos: counting });
+    expect((await request(watched).get(photo.url.split('?')[0])).status).toBe(404);
+    expect(fetched).toBe(0);
+    expect((await request(watched).get(photo.url)).status).toBe(200);
+    expect(fetched).toBe(1);
   });
 
   it("hides other people's journals (404)", async () => {

@@ -351,8 +351,11 @@ export const socialHandlers = [
     const trip = db.itineraries.find((t) => t.id === params.id && t.ownerId === user.id);
     if (!trip) return errorResponse(404, 'NOT_FOUND', "We couldn't find that trip.");
     const journal = db.journals.find((j) => j.itineraryId === trip.id);
-    if (journal) journal.photos = journal.photos.filter((p) => p.id !== params.photoId);
-    delete db.photos[String(params.photoId)];
+    // Only a photo that is really in this journal is removed — never anyone else's.
+    if (journal?.photos.some((p) => p.id === params.photoId)) {
+      journal.photos = journal.photos.filter((p) => p.id !== params.photoId);
+      delete db.photos[String(params.photoId)];
+    }
     return HttpResponse.json({ journal: publicJournal(trip.id, journal, user.id) });
   }),
 

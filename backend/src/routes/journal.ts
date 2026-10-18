@@ -118,8 +118,14 @@ export function journalRoutes(deps: {
   router.delete('/itineraries/:id/journal/photos/:photoId', auth, async (req, res) => {
     const trip = await ownTrip(req, currentUser(req));
     const photoId = String(req.params.photoId);
-    const journal = await Journal.findOneAndUpdate({ itineraryId: trip._id }, { $pull: { photos: { id: photoId } }, $set: { updatedAt: now() } }, { new: true }).lean();
-    if (isValidObjectId(photoId)) await photos.remove(photoId);
+    // Only a photo that is really in this (my) journal is removed — never anyone else's.
+    const removed = await Journal.findOneAndUpdate(
+      { itineraryId: trip._id, 'photos.id': photoId },
+      { $pull: { photos: { id: photoId } }, $set: { updatedAt: now() } },
+      { new: true },
+    ).lean();
+    if (removed && isValidObjectId(photoId)) await photos.remove(photoId);
+    const journal = removed ?? (await Journal.findOne({ itineraryId: trip._id }).lean());
     res.json({ journal: publicJournal(trip._id.toString(), journal, (id) => signedPhotoUrl(id, currentUser(req).id, now())) });
   });
 
@@ -127,12 +133,15 @@ export function journalRoutes(deps: {
   router.get('/photos/:photoId', async (req, res) => {
     const id = String(req.params.photoId);
     if (!isValidObjectId(id)) throw notFound();
-    const photo = await photos.get(id);
-    if (!photo) throw notFound();
+    // Whose photo is it? (Only the small record — no bytes are fetched before access is checked.)
+    const ownerId = await photos.ownerOf(id);
+    if (!ownerId) throw notFound();
     // Who is looking: from a signed link (as used in <img>), else from a login token.
     const linked = viewerFromLink(id, req.query, now());
     const viewer = linked !== undefined ? linked : await optionalViewer(req, now());
-    if (viewer !== photo.ownerId && !(await deps.canSeeJournalOf(viewer, photo.ownerId))) throw notFound();
+    if (viewer !== ownerId && !(await deps.canSeeJournalOf(viewer, ownerId))) throw notFound();
+    const photo = await photos.get(id);
+    if (!photo) throw notFound();
     res.setHeader('Content-Type', photo.contentType);
     // Private, and checked with us every time (an unchanged photo comes back as a cheap
     // "not modified"), so hiding journals or blocking someone takes effect at once.

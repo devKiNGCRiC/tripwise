@@ -19,6 +19,8 @@ export interface StoredPhoto {
 /** Save, read and delete journal photos. */
 export interface PhotoStore {
   put(input: { ownerId: string; itineraryId: string; bytes: Buffer; contentType: string }): Promise<{ id: string }>;
+  /** Whose photo this is (a quick lookup, no bytes), or null if there's no such photo. */
+  ownerOf(id: string): Promise<string | null>;
   get(id: string): Promise<(StoredPhoto & { ownerId: string }) | null>;
   remove(id: string): Promise<void>;
   removeAllOf(ownerId: string): Promise<void>;
@@ -29,6 +31,12 @@ interface CloudinaryKeys {
   cloudName: string;
   apiKey: string;
   apiSecret: string;
+}
+
+/** The owner of a photo record (both stores keep one in MongoDB). */
+async function ownerOf(id: string): Promise<string | null> {
+  const photo = await Photo.findById(id, { ownerId: 1 }).lean();
+  return photo ? photo.ownerId.toString() : null;
 }
 
 /** Pick the store: Cloudinary when all three keys exist, otherwise MongoDB. */
@@ -42,6 +50,7 @@ export function createPhotoStore(keys: { cloudName?: string; apiKey?: string; ap
 /** Photos kept inside MongoDB (fine for testing and early days; Atlas free has 512 MB). */
 function mongoStore(): PhotoStore {
   return {
+    ownerOf,
     async put({ ownerId, itineraryId, bytes, contentType }) {
       const photo = await Photo.create({ ownerId, itineraryId, contentType, data: bytes });
       return { id: photo._id.toString() };
@@ -83,6 +92,7 @@ function cloudinaryStore(keys: CloudinaryKeys): PhotoStore {
   };
 
   return {
+    ownerOf,
     async put({ ownerId, itineraryId, bytes, contentType }) {
       // Upload as a private image (it can't be opened by a public URL).
       const params = { timestamp: timestamp(), type: 'private' };
