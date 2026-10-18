@@ -3,10 +3,11 @@
  * writes it (one JSON event per line), starts over cleanly if a model fails mid-way, and
  * stops the AI and gives the plan back if the traveller leaves.
  */
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import request from 'supertest';
 import type { AddressInfo } from 'node:net';
 import { createApp } from '../src/app.js';
+import { Usage } from '../src/db/models/index.js';
 import { clearTestDb, startTestDb, stopTestDb } from './helpers/db.js';
 import { aiTripFixture, fakeAiChain, fakeProvider, plannerChain, tripRequest } from './helpers/fakeAi.js';
 import { signUp } from './helpers/auth.js';
@@ -61,6 +62,23 @@ describe('streaming generate', () => {
     const res = await request(app).post('/api/itineraries/generate/stream').set('Authorization', `Bearer ${token}`).send(tripRequest());
     const types = events(res.text).map((e) => e.type);
     expect(types).toEqual(['meta', 'reset', 'meta', 'day', 'day', 'day', 'done']);
+  });
+
+  it('still reports success (and keeps the plan used) if reading the quota fails after saving', async () => {
+    const app = createApp({ ai: plannerChain(), now: () => NOW });
+    const { token } = await signUp(app);
+    const spy = vi.spyOn(Usage, 'findOne').mockImplementation(() => {
+      throw new Error('database hiccup');
+    });
+    const res = await request(app).post('/api/itineraries/generate/stream').set('Authorization', `Bearer ${token}`).send(tripRequest());
+    const plain = await request(app).post('/api/itineraries/generate').set('Authorization', `Bearer ${token}`).send(tripRequest({ destination: 'Hampi' }));
+    spy.mockRestore();
+    expect(events(res.text).at(-1)!.type).toBe('done');
+    expect(plain.status).toBe(200);
+    const quota = await request(app).get('/api/me/quota').set('Authorization', `Bearer ${token}`);
+    expect(quota.body.quota.used).toBe(2);
+    const list = await request(app).get('/api/itineraries').set('Authorization', `Bearer ${token}`);
+    expect(list.body.itineraries).toHaveLength(2);
   });
 
   it('ends with an error event when every model fails, and gives the plan back', async () => {

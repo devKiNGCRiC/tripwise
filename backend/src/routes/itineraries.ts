@@ -30,9 +30,9 @@ import { dayPrompt, tripPrompt } from '../services/ai/prompt.js';
 import { parseDay, parseTrip } from '../services/ai/validate.js';
 import { buildItinerary } from '../services/buildItinerary.js';
 import { addToCache, cacheKey, pickCached } from '../services/cache.js';
-import { getQuota, refund, reserve } from '../services/quota.js';
+import { getQuota, nextIstMidnight, refund, reserve } from '../services/quota.js';
 import { parseTripRequest } from '../services/tripRequest.js';
-import type { Pace, TripRequest } from '../types/api.js';
+import type { Pace, Quota, TripRequest } from '../types/api.js';
 
 /** "We couldn't find that trip." — also for other people's trips. */
 const TRIP_NOT_FOUND = "We couldn't find that trip.";
@@ -41,6 +41,20 @@ const TRIP_NOT_FOUND = "We couldn't find that trip.";
 async function findOwned(id: string, user: AuthUser) {
   if (!isValidObjectId(id)) return null;
   return Itinerary.findOne({ _id: id, ownerId: user.id });
+}
+
+/**
+ * Today's allowance, for answers sent *after* a trip is saved. Reading it is best-effort: a
+ * database hiccup here must not turn a saved trip into an error (the traveller would retry
+ * and spend a second plan). The website re-reads the quota afterwards anyway.
+ */
+async function quotaAfterSave(user: AuthUser, now: Date): Promise<Quota> {
+  try {
+    return await getQuota(user.id, user.plan, now);
+  } catch (error) {
+    console.error('[api] could not read the quota after saving a trip:', error);
+    return { used: 0, limit: PLANS[user.plan].plansPerDay, resetsAt: nextIstMidnight(now).toISOString() };
+  }
 }
 
 /** The itinerary routes. */
@@ -62,7 +76,7 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
       const trip = await Itinerary.create(
         buildItinerary(cached.trip, tripRequest, { ownerId: user.id, provider: cached.provider, source: 'cache', cacheVariantId: cached.variantId }),
       );
-      res.json({ itinerary: publicItinerary(trip), quota: await getQuota(user.id, user.plan, now) });
+      res.json({ itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
       return;
     }
 
@@ -70,16 +84,18 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
     if (!(await reserve(user.id, user.plan, 'plans', now))) {
       throw quotaExceeded(`You've used all ${PLANS[user.plan].plansPerDay} AI plans for today.`);
     }
+    let trip;
     try {
       const { value, provider } = await deps.ai.run(tripPrompt(tripRequest), (text) => parseTrip(text, tripRequest));
       // Keep the new plan for similar trips later (while the pool has room).
       const cacheVariantId = (await addToCache(key, value, provider)) ?? undefined;
-      const trip = await Itinerary.create(buildItinerary(value, tripRequest, { ownerId: user.id, provider, source: 'ai', cacheVariantId }));
-      res.json({ itinerary: publicItinerary(trip), quota: await getQuota(user.id, user.plan, now) });
+      trip = await Itinerary.create(buildItinerary(value, tripRequest, { ownerId: user.id, provider, source: 'ai', cacheVariantId }));
     } catch (error) {
+      // Nothing was saved: give today's plan back.
       await refund(user.id, 'plans', now);
       throw error;
     }
+    res.json({ itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
   });
 
   // POST /itineraries/generate/stream — the same as /generate, but sent day by day as the
@@ -122,7 +138,7 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
       open();
       send({ type: 'meta', title: cached.trip.title, summary: cached.trip.summary });
       cached.trip.days.forEach((day, index) => send(dayEvent(day, index)));
-      send({ type: 'done', itinerary: publicItinerary(trip), quota: await getQuota(user.id, user.plan, now) });
+      send({ type: 'done', itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
       res.end();
       return;
     }
@@ -160,7 +176,7 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
       const cacheVariantId = (await addToCache(key, value, provider)) ?? undefined;
       const trip = await Itinerary.create(buildItinerary(value, tripRequest, { ownerId: user.id, provider, source: 'ai', cacheVariantId }));
       saved = true;
-      send({ type: 'done', itinerary: publicItinerary(trip), quota: await getQuota(user.id, user.plan, now) });
+      send({ type: 'done', itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
     } catch (error) {
       if (error instanceof ClientGone) return;
       const known = error instanceof AppError;

@@ -42,7 +42,9 @@ export function useGenerateItinerary() {
     onSuccess: ({ itinerary, quota }) => {
       queryClient.setQueryData(['trip', itinerary.id], { itinerary });
       queryClient.setQueryData(['quota'], { quota });
+      // Re-read both from the server (the quota in the answer is best-effort).
       void queryClient.invalidateQueries({ queryKey: ['trips'] });
+      void queryClient.invalidateQueries({ queryKey: ['quota'] });
     },
   });
   return { ...mutation, preview };
