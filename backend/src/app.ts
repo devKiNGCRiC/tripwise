@@ -16,6 +16,7 @@ import { globalLimiter } from './middleware/rateLimit.js';
 import { authRoutes } from './routes/auth.js';
 import { destinationRoutes } from './routes/destinations.js';
 import { healthRoutes } from './routes/health.js';
+import { meRoutes } from './routes/me.js';
 import type { AiChain } from './services/ai/chain.js';
 
 /** The swappable parts of the app (real ones in server.ts, fakes in tests). */
@@ -53,6 +54,7 @@ export function createApp(deps: AppDeps, extra?: (router: Router) => void): expr
   api.use(healthRoutes());
   api.use(authRoutes(now));
   api.use(destinationRoutes());
+  api.use(meRoutes(now));
   extra?.(api);
   app.use('/api', api);
 
