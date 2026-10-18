@@ -9,7 +9,8 @@
  *   POST   /:id/share                make (or reuse) a share link → { shareId }
  *
  * Someone else's trip always answers 404, so we never reveal that it exists.
- * AI calls reserve today's allowance first and give it back if the AI fails.
+ * AI calls reserve today's allowance first and give it back if the AI fails. Similar trips
+ * are served from the plan cache (services/cache.ts) without using the allowance.
  */
 import { randomBytes } from 'node:crypto';
 import { Router } from 'express';
@@ -24,6 +25,7 @@ import type { AiChain } from '../services/ai/chain.js';
 import { dayPrompt, tripPrompt } from '../services/ai/prompt.js';
 import { parseDay, parseTrip } from '../services/ai/validate.js';
 import { buildItinerary } from '../services/buildItinerary.js';
+import { addToCache, cacheKey, pickCached } from '../services/cache.js';
 import { getQuota, refund, reserve } from '../services/quota.js';
 import { parseTripRequest } from '../services/tripRequest.js';
 import type { Pace, TripRequest } from '../types/api.js';
@@ -48,6 +50,17 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
     const user = currentUser(req);
     const now = deps.now();
     const tripRequest = parseTripRequest(req.body, now, PLANS[user.plan].maxDays);
+    const key = cacheKey(tripRequest);
+
+    // A similar trip was planned before: re-use one of those plans (instant and free).
+    const cached = await pickCached(key, user.id);
+    if (cached) {
+      const trip = await Itinerary.create(
+        buildItinerary(cached.trip, tripRequest, { ownerId: user.id, provider: cached.provider, source: 'cache', cacheVariantId: cached.variantId }),
+      );
+      res.json({ itinerary: publicItinerary(trip), quota: await getQuota(user.id, user.plan, now) });
+      return;
+    }
 
     // Take one plan from today's allowance (given back below if anything fails).
     if (!(await reserve(user.id, user.plan, 'plans', now))) {
@@ -55,7 +68,9 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
     }
     try {
       const { value, provider } = await deps.ai.run(tripPrompt(tripRequest), (text) => parseTrip(text, tripRequest));
-      const trip = await Itinerary.create(buildItinerary(value, tripRequest, { ownerId: user.id, provider, source: 'ai' }));
+      // Keep the new plan for similar trips later (while the pool has room).
+      const cacheVariantId = (await addToCache(key, value, provider)) ?? undefined;
+      const trip = await Itinerary.create(buildItinerary(value, tripRequest, { ownerId: user.id, provider, source: 'ai', cacheVariantId }));
       res.json({ itinerary: publicItinerary(trip), quota: await getQuota(user.id, user.plan, now) });
     } catch (error) {
       await refund(user.id, 'plans', now);
