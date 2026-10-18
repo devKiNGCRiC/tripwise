@@ -1,0 +1,19 @@
+// tsconfig.json — TypeScript settings for the TripWise API (editor, typecheck and tests).
+// Strict mode catches mistakes early; NodeNext makes imports work the way Node runs them.
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist",
+    "types": ["node"]
+  },
+  "include": ["src", "scripts", "test", "vitest.config.ts"]
+}

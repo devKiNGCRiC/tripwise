@@ -1,0 +1,5 @@
+// tsconfig.build.json — what `npm run build` compiles for production: the app and its scripts, not the tests.
+{
+  "extends": "./tsconfig.json",
+  "include": ["src", "scripts"]
+}
