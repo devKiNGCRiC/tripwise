@@ -4,9 +4,11 @@
  * Data lives in plain arrays. Two things survive a page reload (localStorage), so demos
  * feel real: the login SESSION (standing in for the real backend's httpOnly refresh
  * cookie) and the planned TRIPS with today's AI-plan counts. Tests never persist.
+ * Profiles, journals, photos and friendships start from the seeds on every load.
  */
 import type { Destination, Itinerary, User } from '@/lib/api/types';
 import { seedDestinations } from './data/destinations';
+import { seedFriendships, seedJournals, seedPhotos, seedTrips, type MockFriendship, type MockJournal, type MockPhoto } from './data/social';
 import { seedUsers, type MockUser } from './data/users';
 
 /** A saved trip as the fake database keeps it: plus its owner and how often days were regenerated. */
@@ -21,6 +23,16 @@ interface MockDb {
   itineraries: StoredItinerary[];
   /** AI plans used per user today */
   generations: Record<string, { day: string; used: number }>;
+  /** Trip journals (rating, memory, photo list). */
+  journals: MockJournal[];
+  /** Journal photos by id. */
+  photos: Record<string, MockPhoto>;
+  /** Profile photos by user id. */
+  avatars: Record<string, Blob>;
+  /** Friend requests and friendships. */
+  friendships: MockFriendship[];
+  /** Who has blocked whom. */
+  blocks: { blocker: string; blocked: string }[];
 }
 
 /** localStorage key for saved trips and AI-plan counts. */
@@ -62,10 +74,19 @@ export function saveTrips() {
 
 /** Fresh deep copies of the seed data (plus saved trips in the browser app). */
 function createDb(): MockDb {
+  const saved = PERSIST ? loadSavedTrips() : { itineraries: [], generations: {} };
+  // The seeded demo trips are always there (added if an earlier visit's saved list lacks them).
+  const seeded = seedTrips().filter((t) => !saved.itineraries.some((s) => s.id === t.id));
   return {
     users: structuredClone(seedUsers),
     destinations: structuredClone(seedDestinations),
-    ...(PERSIST ? loadSavedTrips() : { itineraries: [], generations: {} }),
+    itineraries: [...saved.itineraries, ...seeded],
+    generations: saved.generations,
+    journals: seedJournals(),
+    photos: seedPhotos(),
+    avatars: {},
+    friendships: seedFriendships(),
+    blocks: [],
   };
 }
 
@@ -110,8 +131,33 @@ export function issueAccessToken(userId: string): string {
   return `mock-access.${userId}`;
 }
 
-/** Strip the password before sending a user to the client. */
+/** The public part of a user (no password, no private settings), as the real API sends it. */
 export function publicUser(user: MockUser): User {
-  const { password: _password, ...rest } = user;
-  return { plan: 'free', ...rest };
+  return {
+    id: user.id,
+    name: user.name,
+    username: user.username,
+    ...(user.avatarVersion ? { avatarUrl: `/api/avatars/${user.id}?v=${user.avatarVersion}` } : {}),
+    email: user.email,
+    role: user.role,
+    plan: user.plan ?? 'free',
+    createdAt: user.createdAt,
+    blocked: user.blocked,
+  };
+}
+
+/** A free username made from a name ("Asha Rao" → "asharao", or "asharao42"). */
+export function mockUsername(name: string): string {
+  let base = name.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 14);
+  if (!/^[a-z]/.test(base)) base = `t${base}`;
+  if (base.length < 3) base = `${base}traveller`.slice(0, 14);
+  let candidate = base;
+  while (db.users.some((u) => u.username === candidate)) candidate = `${base}${Math.floor(10 + Math.random() * 9000)}`;
+  return candidate;
+}
+
+/** A random 10-character invite code. */
+export function mockInviteCode(): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  return Array.from({ length: 10 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
 }

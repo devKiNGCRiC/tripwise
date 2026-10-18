@@ -13,6 +13,8 @@ export type Role = 'user' | 'admin';
 export interface User {
   id: string;
   name: string;
+  /** "@" handle without the @, e.g. "asharao" (unique, lower-case). */
+  username: string;
   email: string;
   avatarUrl?: string;
   role: Role;
@@ -141,6 +143,8 @@ export interface Itinerary {
   provider: 'gemini' | 'groq';
   /** 'ai' = written for this trip; 'cache' = re-used from a similar trip (instant, free). */
   source?: 'ai' | 'cache';
+  /** Which of India's seven worlds the trip is in ('abroad' outside India; null if unknown). */
+  region?: RegionKey | 'abroad' | null;
   createdAt: string;
 }
 
@@ -168,6 +172,160 @@ export type GenerateEvent =
   | { type: 'reset' }
   | { type: 'done'; itinerary: Itinerary; quota: Quota }
   | { type: 'error'; error: { code: ApiErrorCode; message: string } };
+
+/* ── Profile, passport, journals & friends ────────────────────────────── */
+
+/** India's seven worlds. */
+export type RegionKey = 'himalaya' | 'thar' | 'ganga' | 'deccan' | 'ghats' | 'konkan' | 'sisters';
+
+/** The kind of traveller someone says they are. */
+export type TravellerType =
+  | 'solo-explorer'
+  | 'backpacker'
+  | 'couple'
+  | 'family-planner'
+  | 'group-organiser'
+  | 'luxury'
+  | 'foodie'
+  | 'culture-seeker'
+  | 'adventure'
+  | 'slow-traveller';
+
+/** Who can see a passport. */
+export type PassportVisibility = 'friends' | 'everyone' | 'private';
+
+/** Planner defaults (any may be missing). */
+export interface Preferences {
+  budget?: number;
+  interests?: Interest[];
+  pace?: Pace;
+  travellers?: Travellers;
+}
+
+/** Privacy choices. */
+export interface Privacy {
+  passport: PassportVisibility;
+  showJournal: boolean;
+}
+
+/** Colours read from photos that tint the app (same shape as world/palette.ts's Palette). */
+export interface ThemePalette {
+  tint: string;
+  swatches: [string, string, string, string];
+  accents: { day: [string, string]; night: [string, string] };
+}
+
+/** The signed-in traveller's own profile (Account tab). */
+export interface Profile extends User {
+  bio: string;
+  travellerType: TravellerType | null;
+  homeCity: string;
+  preferences: Preferences;
+  privacy: Privacy;
+  theme: ThemePalette | null;
+  inviteCode: string;
+}
+
+/** What PATCH /me/profile accepts (any subset). */
+export type ProfilePatch = Partial<Pick<Profile, 'name' | 'username' | 'bio' | 'travellerType' | 'homeCity' | 'theme'>> & {
+  preferences?: Preferences;
+  privacy?: Partial<Privacy>;
+};
+
+/** One of the seven worlds on a passport. */
+export interface PassportWorld {
+  key: RegionKey;
+  name: string;
+  visited: boolean;
+}
+
+/** One Yatra mark (badge). */
+export interface Mark {
+  id: string;
+  emoji: string;
+  name: string;
+  how: string;
+  /** "YYYY-MM-DD" when earned, null if not yet. */
+  earnedAt: string | null;
+}
+
+/** A stamp on the visa pages. */
+export interface Stamp {
+  id: string;
+  destination: string;
+  localName?: string;
+  region: RegionKey | 'abroad' | null;
+  startDate: string;
+  endDate: string;
+  status: 'completed' | 'upcoming';
+  daysUntil?: number;
+  journal?: { rating: number | null; hasMemory: boolean; photoCount: number; coverPhotoUrl?: string };
+}
+
+/** A whole passport (yours or someone else's). */
+export interface Passport {
+  cover: {
+    name: string;
+    username: string;
+    avatarUrl?: string;
+    bio: string;
+    travellerType: TravellerType | null;
+    homeCity: string;
+    joined: string;
+    theme: ThemePalette | null;
+  };
+  stats: { trips: number; worlds: number; daysAway: number; marks: number };
+  worlds: PassportWorld[];
+  abroadCount: number;
+  nextWorld: { key: RegionKey; name: string; bestMonths: number[]; suggest: string; line: string } | null;
+  marks: Mark[];
+  stamps: Stamp[];
+}
+
+/** One photo in a journal. */
+export interface JournalPhoto {
+  id: string;
+  url: string;
+  width: number;
+  height: number;
+  alt: string;
+}
+
+/** A trip's journal. */
+export interface Journal {
+  itineraryId: string;
+  rating: number | null;
+  memory: string;
+  photos: JournalPhoto[];
+  updatedAt: string | null;
+}
+
+/** How you're connected to someone. */
+export type Relation = 'self' | 'friend' | 'pending-out' | 'pending-in' | 'none' | 'blocked';
+
+/** A traveller's small card. */
+export interface Card {
+  id: string;
+  name: string;
+  username: string;
+  avatarUrl?: string;
+  travellerType: TravellerType | null;
+  trips: number;
+}
+
+/** A friend request (incoming or sent). */
+export interface FriendRequest {
+  id: string;
+  user: Card;
+  createdAt: string;
+}
+
+/** GET /friends. */
+export interface FriendsList {
+  friends: Card[];
+  incoming: FriendRequest[];
+  sent: FriendRequest[];
+}
 
 /* ── Errors ───────────────────────────────────────────────────────────── */
 

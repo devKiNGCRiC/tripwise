@@ -5,7 +5,7 @@
  */
 import { api } from './client';
 import { ApiError, friendlyMessage } from './errors';
-import type { AuthResponse, Destination, DestinationFilters, GenerateEvent, GenerateResponse, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
+import type { AuthResponse, Card, Destination, DestinationFilters, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
 
 /** Turn a filters object into "?a=1&b=2", skipping empty values. */
 function toQuery(params: Record<string, string | number | undefined>): string {
@@ -70,4 +70,63 @@ export const shareApi = {
 /** The signed-in traveller's own account data. */
 export const meApi = {
   quota: () => api.request<{ quota: Quota }>('/me/quota'),
+};
+
+/** The signed-in traveller's profile, photo and settings. */
+export const profileApi = {
+  get: () => api.request<{ profile: Profile }>('/me/profile'),
+  update: (patch: ProfilePatch) => api.request<{ profile: Profile }>('/me/profile', { method: 'PATCH', body: patch }),
+  /** A square photo, already cropped and shrunk in the browser. */
+  uploadAvatar: (photo: Blob) => api.request<{ profile: Profile }>('/me/avatar', { method: 'PUT', body: photo }),
+  removeAvatar: () => api.request<{ profile: Profile }>('/me/avatar', { method: 'DELETE' }),
+};
+
+/** Password, sessions and deleting the account. */
+export const accountApi = {
+  changePassword: (currentPassword: string, newPassword: string) => api.request<void>('/me/password', { method: 'POST', body: { currentPassword, newPassword } }),
+  logoutAll: () => api.request<void>('/auth/logout-all', { method: 'POST' }),
+  deleteAccount: (password: string) => api.request<void>('/me', { method: 'DELETE', body: { password } }),
+  /** Always succeeds (it never says whether the email has an account). */
+  forgot: (email: string) => api.request<{ ok: true }>('/auth/forgot', { method: 'POST', body: { email }, skipRefresh: true }),
+  reset: (token: string, password: string) => api.request<{ ok: true }>('/auth/reset', { method: 'POST', body: { token, password }, skipRefresh: true }),
+};
+
+/** Passports: mine, or someone else's by @username. */
+export const passportApi = {
+  mine: () => api.request<{ passport: Passport }>('/me/passport'),
+  of: (username: string) => api.request<{ passport: Passport; relation: Relation }>(`/users/${encodeURIComponent(username)}/passport`),
+};
+
+/** Journals of finished trips. */
+export const journalApi = {
+  get: (tripId: string) => api.request<{ journal: Journal }>(`/itineraries/${encodeURIComponent(tripId)}/journal`),
+  save: (tripId: string, entry: { rating: number | null; memory: string }) =>
+    api.request<{ journal: Journal }>(`/itineraries/${encodeURIComponent(tripId)}/journal`, { method: 'PUT', body: entry }),
+  addPhoto: (tripId: string, photo: Blob, info: { width: number; height: number; alt: string }) =>
+    api.request<{ journal: Journal }>(`/itineraries/${encodeURIComponent(tripId)}/journal/photos${toQuery({ width: info.width, height: info.height, alt: info.alt })}`, {
+      method: 'POST',
+      body: photo,
+    }),
+  removePhoto: (tripId: string, photoId: string) =>
+    api.request<{ journal: Journal }>(`/itineraries/${encodeURIComponent(tripId)}/journal/photos/${encodeURIComponent(photoId)}`, { method: 'DELETE' }),
+};
+
+/** Friends, requests, blocks and invite links. */
+export const friendsApi = {
+  list: () => api.request<FriendsList>('/friends'),
+  request: (username: string) => api.request<{ relation: Relation }>('/friends/requests', { method: 'POST', body: { username } }),
+  accept: (requestId: string) => api.request<{ friend: Card }>(`/friends/requests/${encodeURIComponent(requestId)}/accept`, { method: 'POST' }),
+  decline: (requestId: string) => api.request<void>(`/friends/requests/${encodeURIComponent(requestId)}/decline`, { method: 'POST' }),
+  cancel: (requestId: string) => api.request<void>(`/friends/requests/${encodeURIComponent(requestId)}`, { method: 'DELETE' }),
+  remove: (userId: string) => api.request<void>(`/friends/${encodeURIComponent(userId)}`, { method: 'DELETE' }),
+  block: (userId: string) => api.request<void>('/blocks', { method: 'POST', body: { userId } }),
+  unblock: (userId: string) => api.request<void>(`/blocks/${encodeURIComponent(userId)}`, { method: 'DELETE' }),
+  newInviteCode: () => api.request<{ inviteCode: string }>('/me/invite-code', { method: 'POST' }),
+};
+
+/** Finding people (exact @username or invite link only). */
+export const usersApi = {
+  card: (username: string) => api.request<{ card: Card; relation: Relation }>(`/users/${encodeURIComponent(username)}/card`),
+  invite: (code: string) => api.request<{ card: Card }>(`/invites/${encodeURIComponent(code)}`),
+  acceptInvite: (code: string) => api.request<{ friend: Card }>(`/invites/${encodeURIComponent(code)}/accept`, { method: 'POST' }),
 };

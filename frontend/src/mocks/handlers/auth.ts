@@ -5,8 +5,8 @@
 import { http, HttpResponse } from 'msw';
 import { apiUrl } from '@/lib/api/config';
 import type { AuthResponse, LoginInput, SignupInput } from '@/lib/api/types';
-import type { MockUser } from '../data/users';
-import { db, issueAccessToken, publicUser, session } from '../db';
+import { person, type MockUser } from '../data/users';
+import { db, issueAccessToken, mockInviteCode, mockUsername, publicUser, session } from '../db';
 import { currentUser, errorResponse, latency } from './shared';
 
 /** Successful login/signup: start the "cookie" session and return user + token. */
@@ -31,15 +31,15 @@ export const authHandlers = [
     if (findByEmail(body.email)) {
       return errorResponse(409, 'VALIDATION', 'An account with this email already exists. Try logging in.');
     }
-    const user: MockUser = {
+    const user: MockUser = person({
       id: `u_${crypto.randomUUID().slice(0, 8)}`,
       name: body.name.trim(),
+      username: mockUsername(body.name),
       email: body.email.trim().toLowerCase(),
       password: body.password,
-      role: 'user',
       createdAt: new Date().toISOString(),
-      blocked: false,
-    };
+      inviteCode: mockInviteCode(),
+    });
     db.users.push(user);
     return startSession(user);
   }),
@@ -65,15 +65,15 @@ export const authHandlers = [
     if (!body.credential) return errorResponse(400, 'VALIDATION', 'Missing Google credential.');
     let user = findByEmail('google.explorer@tripwise.app');
     if (!user) {
-      user = {
+      user = person({
         id: 'u_google',
         name: 'Google Explorer',
+        username: mockUsername('Google Explorer'),
         email: 'google.explorer@tripwise.app',
         password: crypto.randomUUID(),
-        role: 'user',
         createdAt: new Date().toISOString(),
-        blocked: false,
-      };
+        inviteCode: mockInviteCode(),
+      });
       db.users.push(user);
     }
     return startSession(user);

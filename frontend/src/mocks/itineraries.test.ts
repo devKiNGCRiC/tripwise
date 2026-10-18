@@ -28,6 +28,9 @@ async function loginAs(userId: string) {
   await api.refreshSession();
 }
 
+/** Ids of trips planned in the test (the demo account also has seeded trips, ids "it_seed_…"). */
+const planned = (trips: { id: string }[]) => trips.map((t) => t.id).filter((id) => !id.startsWith('it_seed_'));
+
 describe('mock itinerary API', () => {
   beforeEach(() => loginAs('u_demo'));
 
@@ -53,7 +56,7 @@ describe('mock itinerary API', () => {
 
   it('keeps trips private to their owner', async () => {
     const { itinerary } = await itinerariesApi.generate(goaTrip);
-    expect((await itinerariesApi.list()).itineraries.map((t) => t.id)).toEqual([itinerary.id]);
+    expect(planned((await itinerariesApi.list()).itineraries)).toEqual([itinerary.id]);
 
     await loginAs('u_admin');
     expect((await itinerariesApi.list()).itineraries).toEqual([]);
@@ -80,7 +83,7 @@ describe('mock itinerary API', () => {
   it('deletes a trip', async () => {
     const { itinerary } = await itinerariesApi.generate(goaTrip);
     await itinerariesApi.remove(itinerary.id);
-    expect((await itinerariesApi.list()).itineraries).toEqual([]);
+    expect(planned((await itinerariesApi.list()).itineraries)).toEqual([]);
   });
 
   it('reports a busy AI with AI_UNAVAILABLE', async () => {
@@ -109,7 +112,7 @@ describe('mock trip storage', () => {
     const { itinerary } = await itinerariesApi.generate(goaTrip);
     saveTrips();
     const saved = loadSavedTrips();
-    expect(saved.itineraries.map((t: { id: string }) => t.id)).toEqual([itinerary.id]);
+    expect(planned(saved.itineraries)).toEqual([itinerary.id]);
     expect(saved.generations.u_demo.used).toBe(1);
   });
 

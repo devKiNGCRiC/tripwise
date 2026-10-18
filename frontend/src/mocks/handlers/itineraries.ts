@@ -13,7 +13,7 @@
  */
 import { http, HttpResponse } from 'msw';
 import { apiUrl } from '@/lib/api/config';
-import type { Itinerary, Quota, TripRequest } from '@/lib/api/types';
+import type { Destination, Itinerary, Quota, TripRequest } from '@/lib/api/types';
 import { buildDay, generateItinerary } from '../data/generator';
 import { db, saveTrips, type StoredItinerary } from '../db';
 import { currentUser, errorResponse, latency } from './shared';
@@ -46,6 +46,12 @@ function ownTrip(userId: string, id: unknown) {
   return db.itineraries.find((t) => t.id === id && t.ownerId === userId) ?? null;
 }
 
+/** A catalogue place's world ('abroad' outside India); unknown places have none. */
+function regionOf(destination: Destination | undefined): Itinerary['region'] {
+  if (!destination) return null;
+  return destination.country === 'India' ? (destination.region ?? null) : 'abroad';
+}
+
 /** Small unique ids for the mock store. */
 let counter = 0;
 const newId = (prefix: string) => `${prefix}_${Date.now().toString(36)}${(counter++).toString(36)}`;
@@ -62,7 +68,7 @@ export const itineraryHandlers = [
     if (import.meta.env.MODE !== 'test') await new Promise((resolve) => setTimeout(resolve, 1200));
 
     const destination = db.destinations.find((d) => d.name.toLowerCase() === req.destination.trim().toLowerCase());
-    const stored: StoredItinerary = { ...generateItinerary(req, destination), id: newId('it'), createdAt: new Date().toISOString(), ownerId: user.id };
+    const stored: StoredItinerary = { ...generateItinerary(req, destination), region: regionOf(destination), id: newId('it'), createdAt: new Date().toISOString(), ownerId: user.id };
     db.itineraries.unshift(stored);
     db.generations[user.id] = { day: today(), used: quota.used + 1 };
     saveTrips();
@@ -80,7 +86,7 @@ export const itineraryHandlers = [
     if (quota.used >= quota.limit) return errorResponse(429, 'QUOTA_EXCEEDED', `You've used all ${DAILY_LIMIT} AI plans for today.`);
 
     const destination = db.destinations.find((d) => d.name.toLowerCase() === req.destination.trim().toLowerCase());
-    const stored: StoredItinerary = { ...generateItinerary(req, destination), id: newId('it'), createdAt: new Date().toISOString(), ownerId: user.id };
+    const stored: StoredItinerary = { ...generateItinerary(req, destination), region: regionOf(destination), id: newId('it'), createdAt: new Date().toISOString(), ownerId: user.id };
     // Short pauses in tests, a believable pace in the browser.
     const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, import.meta.env.MODE === 'test' ? 40 : ms));
     const encoder = new TextEncoder();
@@ -131,6 +137,10 @@ export const itineraryHandlers = [
     const trip = ownTrip(user.id, params.id);
     if (!trip) return errorResponse(404, 'NOT_FOUND', "We couldn't find that trip.");
     db.itineraries = db.itineraries.filter((t) => t !== trip);
+    // Its journal and photos go with it.
+    const journal = db.journals.find((j) => j.itineraryId === trip.id);
+    for (const photo of journal?.photos ?? []) delete db.photos[photo.id];
+    db.journals = db.journals.filter((j) => j !== journal);
     saveTrips();
     return new HttpResponse(null, { status: 204 });
   }),

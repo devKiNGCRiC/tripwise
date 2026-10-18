@@ -23,7 +23,7 @@ export interface ApiClientOptions {
 
 export interface RequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-  /** Any JSON-serialisable value. */
+  /** Any JSON-serialisable value, or a Blob (photo) sent as raw bytes. */
   body?: unknown;
   /** Don't try the refresh-and-retry dance (login/signup/refresh themselves use this). */
   skipRefresh?: boolean;
@@ -41,7 +41,9 @@ export function createApiClient({ fetchImpl = (input, init) => fetch(input, init
   /** Low-level send: headers, body, cookies, slow-detection, network-error mapping. */
   async function send(path: string, options: RequestOptions): Promise<Response> {
     const headers: Record<string, string> = { Accept: 'application/json' };
-    if (options.body !== undefined) headers['Content-Type'] = 'application/json';
+    // Files (photos) go as raw bytes with their own type; everything else as JSON.
+    const isFile = typeof Blob !== 'undefined' && options.body instanceof Blob;
+    if (options.body !== undefined) headers['Content-Type'] = isFile ? (options.body as Blob).type || 'application/octet-stream' : 'application/json';
     if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
 
     // If the server hasn't answered within slowMs, tell the UI (and undo it when done).
@@ -55,7 +57,7 @@ export function createApiClient({ fetchImpl = (input, init) => fetch(input, init
       return await fetchImpl(apiUrl(path), {
         method: options.method ?? 'GET',
         headers,
-        body: options.body === undefined ? undefined : JSON.stringify(options.body),
+        body: options.body === undefined ? undefined : isFile ? (options.body as Blob) : JSON.stringify(options.body),
         credentials: 'include',
         signal: options.signal,
       });

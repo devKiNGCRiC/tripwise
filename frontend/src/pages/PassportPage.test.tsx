@@ -13,15 +13,15 @@ import { renderApp } from '@/test/render';
 
 describe('PassportPage', () => {
   it("shows the traveller's details on the cover", async () => {
-    session.set('u_demo');
+    session.set('u_dev');
     renderApp('/passport');
     const cover = await screen.findByRole('region', { name: 'Passport cover' });
-    expect(within(cover).getByText('demo@tripwise.app')).toBeInTheDocument();
+    expect(within(cover).getByText('dev@tripwise.app')).toBeInTheDocument();
     expect(await screen.findByRole('heading', { name: 'No stamps yet' })).toBeInTheDocument();
   });
 
   it('collects a stamp for each trip and shows the plans left today', async () => {
-    session.set('u_demo');
+    session.set('u_dev');
     await api.refreshSession();
     const { itinerary } = await itinerariesApi.generate({
       destination: 'Goa',
@@ -45,7 +45,7 @@ describe('PassportPage', () => {
   });
 
   it('starts on Full motion and remembers Calm', async () => {
-    session.set('u_demo');
+    session.set('u_dev');
     const { user } = renderApp('/passport');
     expect(await screen.findByRole('radio', { name: /full/i })).toBeChecked();
 

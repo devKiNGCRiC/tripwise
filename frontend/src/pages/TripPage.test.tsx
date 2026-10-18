@@ -14,6 +14,9 @@ import { session } from '@/mocks/db';
 import { server } from '@/mocks/node';
 import { renderApp } from '@/test/render';
 
+/** A seeded traveller with no trips of their own (the demo account has seeded trips). */
+const TRAVELLER = 'u_dev';
+
 /** "YYYY-MM-DD" n days from today (local). */
 function inDays(n: number) {
   const d = new Date();
@@ -23,7 +26,7 @@ function inDays(n: number) {
 
 /** Plan a 3-day Goa trip (starting in ~3 weeks) for the demo user straight through the mock API. */
 async function planGoa(): Promise<Itinerary> {
-  session.set('u_demo');
+  session.set(TRAVELLER);
   await api.refreshSession();
   const { itinerary } = await itinerariesApi.generate({
     destination: 'Goa',
@@ -38,7 +41,7 @@ async function planGoa(): Promise<Itinerary> {
 }
 
 describe('TripPage', () => {
-  beforeEach(() => session.set('u_demo'));
+  beforeEach(() => session.set(TRAVELLER));
 
   it('shows each day as a timed plan with transfers and costs', async () => {
     const trip = await planGoa();
@@ -54,7 +57,7 @@ describe('TripPage', () => {
   });
 
   it('shows a name card instead of an empty photo for places without one', async () => {
-    session.set('u_demo');
+    session.set(TRAVELLER);
     await api.refreshSession();
     const { itinerary } = await itinerariesApi.generate({
       destination: 'Udaipur',
@@ -108,7 +111,7 @@ describe('TripPage', () => {
 });
 
 describe('TripsPage', () => {
-  beforeEach(() => session.set('u_demo'));
+  beforeEach(() => session.set(TRAVELLER));
 
   it('starts empty, then lists planned trips', async () => {
     const first = renderApp('/trips');
