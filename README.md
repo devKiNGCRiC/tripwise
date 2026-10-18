@@ -101,14 +101,21 @@ Demo accounts (mock mode):
 | `demo@tripwise.app` | `password123` | Traveller |
 | `admin@tripwise.app` | `admin12345` | Admin |
 
-**With the real backend** (needs your own free MongoDB Atlas, Gemini and/or Groq keys; see
-[`backend/README.md`](backend/README.md)):
+**With the real backend**, everything starts from the project root with one command (needs your own free
+MongoDB Atlas, Gemini and/or Groq keys; see [`backend/README.md`](backend/README.md)):
 
 ```bash
-cd backend && npm install && cp .env.example .env   # fill in the keys
-npm run seed && npm run dev                          # → API on http://localhost:4000
-# in another terminal, in frontend/: set VITE_USE_MOCKS=false in .env.local, then npm run dev
+npm run setup                          # installs the root, backend and frontend packages
+cp backend/.env.example backend/.env   # fill in the keys
+npm --prefix backend run seed          # loads the Explore destinations (once)
+npm run dev                            # API on :4000 + website on :5173, talking to each other
 ```
+
+| Root command | What it does |
+|---|---|
+| `npm run dev` | Website + real API together (logs labelled `api` / `web`) |
+| `npm run dev:mock` | Website only, on the in-browser demo API (no keys needed) |
+| `npm test` | Backend and frontend tests |
 
 Useful scripts (run inside `frontend/`):
 

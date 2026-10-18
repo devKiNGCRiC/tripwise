@@ -1,0 +1,14 @@
+{
+  "name": "tripwise",
+  "private": true,
+  "description": "TripWise: run the website and the API together from here (see README > Getting started)",
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --names api,web --prefix-colors cyan,magenta \"npm --prefix backend run dev\" \"npm --prefix frontend run dev -- --mode real\"",
+    "dev:mock": "npm --prefix frontend run dev",
+    "setup": "npm install && npm --prefix backend install && npm --prefix frontend install",
+    "test": "npm --prefix backend test && npm --prefix frontend test"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}
