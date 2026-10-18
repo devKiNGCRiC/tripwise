@@ -20,6 +20,9 @@ export function groqProvider(apiKey: string, model: string): AiProvider {
           temperature: 0.8,
           max_completion_tokens: 16_384,
           response_format: { type: 'json_object' },
+          // gpt-oss "thinks" before answering; at its default effort Groq's JSON check often
+          // rejects the answer. Low effort passes reliably and is about twice as fast.
+          ...(model.startsWith('openai/gpt-oss') ? { reasoning_effort: 'low' as const } : {}),
           messages: [
             { role: 'system', content: prompt.system },
             { role: 'user', content: prompt.user },

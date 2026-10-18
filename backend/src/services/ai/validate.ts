@@ -3,7 +3,8 @@
  *
  * An answer is rejected (InvalidAiOutput) if it isn't complete JSON, doesn't match the
  * schema, or doesn't make sense for the request: the wrong number of days, too many or
- * too few stops for the pace, times going backwards, or a transfer after the last stop.
+ * too few stops for the pace, or times going backwards. Small harmless slips are repaired
+ * instead (a transfer after the day's last stop is simply removed).
  * The fallback chain then tries the next model, so a bad answer is never saved.
  */
 import { tripDates } from '../../lib/dates.js';
@@ -43,12 +44,14 @@ function checkDay(day: AiDay, pace: Pace, label: string): void {
     throw new InvalidAiOutput(`${label}: ${count} activities for a ${pace} pace (expected ${expected - 1}–${expected + 1})`);
   }
   let previous = '';
-  day.activities.forEach((activity, index) => {
+  for (const activity of day.activities) {
     if (!CLOCK.test(activity.startTime)) throw new InvalidAiOutput(`${label}: start time "${activity.startTime}" is not HH:MM`);
     if (previous && activity.startTime <= previous) throw new InvalidAiOutput(`${label}: start times must rise through the day`);
     previous = activity.startTime;
-    if (index === count - 1 && activity.transfer) throw new InvalidAiOutput(`${label}: the last stop has a transfer`);
-  });
+  }
+  // Models often add a transfer after the last stop ("back to the hotel"). That's harmless,
+  // so it is removed rather than throwing the whole plan away.
+  delete day.activities[count - 1].transfer;
 }
 
 /** Check every day of a trip against the request. */

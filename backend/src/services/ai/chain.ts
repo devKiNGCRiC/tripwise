@@ -2,7 +2,8 @@
  * chain.ts — the AI fallback chain.
  *
  * Models are tried one after another (Gemini Flash → Flash-Lite → Groq …). Each attempt
- * streams text, has its own time limit, and its answer must pass `parse` (validate.ts).
+ * streams text and may not go silent for more than 25 s (nor run past 90 s in total), and
+ * its answer must pass `parse` (validate.ts).
  * A slow, failing or nonsensical model just hands over to the next one. Only when all of
  * them fail does the traveller see "our planners are busy" (503 AI_UNAVAILABLE).
  *
@@ -89,8 +90,11 @@ async function* untilCancelled<T>(source: AsyncIterable<T>, signal: AbortSignal)
 }
 
 /** Build a chain over the given providers. */
-export function createAiChain(providers: AiProvider[], opts: { timeoutMs?: number; log?: (entry: AttemptLog) => void } = {}): AiChain {
+export function createAiChain(providers: AiProvider[], opts: { timeoutMs?: number; maxMs?: number; log?: (entry: AttemptLog) => void } = {}): AiChain {
+  // A model may be silent for at most `timeoutMs` (first text, or between pieces) …
   const timeoutMs = opts.timeoutMs ?? 25_000;
+  // … and may take at most `maxMs` in total (long trips stream for 40 s or more).
+  const maxMs = opts.maxMs ?? 90_000;
   const log = opts.log ?? defaultLog;
 
   return {
@@ -98,13 +102,16 @@ export function createAiChain(providers: AiProvider[], opts: { timeoutMs?: numbe
       for (const provider of providers) {
         if (hooks.signal?.aborted) throw new ClientGone();
 
-        // This attempt is cancelled by its own timer or by the traveller leaving.
+        // This attempt is cancelled by its timers or by the traveller leaving.
         const controller = new AbortController();
         let timedOut = false;
-        const timer = setTimeout(() => {
+        const giveUp = () => {
           timedOut = true;
           controller.abort();
-        }, timeoutMs);
+        };
+        // The silence timer restarts whenever text arrives; the total timer never does.
+        let silence = setTimeout(giveUp, timeoutMs);
+        const total = setTimeout(giveUp, maxMs);
         const leave = () => controller.abort();
         hooks.signal?.addEventListener('abort', leave, { once: true });
 
@@ -113,6 +120,8 @@ export function createAiChain(providers: AiProvider[], opts: { timeoutMs?: numbe
         try {
           for await (const chunk of untilCancelled(provider.stream(prompt, controller.signal), controller.signal)) {
             if (!chunk) continue;
+            clearTimeout(silence);
+            silence = setTimeout(giveUp, timeoutMs);
             text += chunk;
             hooks.onText?.(chunk);
           }
@@ -128,7 +137,8 @@ export function createAiChain(providers: AiProvider[], opts: { timeoutMs?: numbe
           // Anything already shown came from a failed model: tell the stream to start over.
           if (text) hooks.onReset?.();
         } finally {
-          clearTimeout(timer);
+          clearTimeout(silence);
+          clearTimeout(total);
           hooks.signal?.removeEventListener('abort', leave);
           controller.abort();
         }

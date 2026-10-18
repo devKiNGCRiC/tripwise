@@ -38,12 +38,12 @@ describe('parseTrip', () => {
     ).toThrow(/time/i);
   });
 
-  it('rejects a transfer after the last stop of a day', () => {
-    expect(
-      parseWith((t) => {
-        t.days[0].activities.at(-1)!.transfer = { mode: 'walk', minutes: 5 };
-      }),
-    ).toThrow(InvalidAiOutput);
+  it('quietly removes a transfer after the last stop of a day (models often add "back to the hotel")', () => {
+    const trip = parseWith((t) => {
+      t.days[0].activities.at(-1)!.transfer = { mode: 'walk', minutes: 5 };
+    })();
+    expect(trip.days[0].activities.at(-1)).not.toHaveProperty('transfer');
+    expect(trip.days[0].activities[0].transfer).toEqual({ mode: 'auto', minutes: 15 });
   });
 
   it('rejects negative costs and badly written times', () => {

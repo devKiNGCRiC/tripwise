@@ -27,6 +27,16 @@ describe('AI fallback chain', () => {
     expect(slow.signals[0].aborted).toBe(true);
   });
 
+  it('lets a model that keeps writing run past the timeout (long trips), but not forever', async () => {
+    // 20 pieces ~15 ms apart ≈ 300 ms in total, never silent for 120 ms.
+    const steady = fakeProvider('gemini', [{ text: good.text, chunks: 20 }]);
+    const chain = createAiChain([steady], { timeoutMs: 120, maxMs: 5000, log: () => {} });
+    expect((await chain.run(prompt, parse)).provider).toBe('gemini');
+
+    const capped = createAiChain([fakeProvider('gemini', [{ text: good.text, chunks: 20 }])], { timeoutMs: 120, maxMs: 60, log: () => {} });
+    await expect(capped.run(prompt, parse)).rejects.toMatchObject({ code: 'AI_UNAVAILABLE' });
+  });
+
   it('moves on from an invalid answer and tells the stream to start over', async () => {
     const onReset = vi.fn();
     const onText = vi.fn();
