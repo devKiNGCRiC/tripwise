@@ -11,6 +11,9 @@ import type { MailMessage } from '../src/services/mailer.js';
 import { clearTestDb, startTestDb, stopTestDb } from './helpers/db.js';
 import { plannerChain, tripRequest } from './helpers/fakeAi.js';
 import { refreshCookie, signUp } from './helpers/auth.js';
+import { TINY_PNG } from './helpers/images.js';
+import { befriend, friendsAs } from './helpers/social.js';
+import { saveTrip } from './helpers/trips.js';
 
 beforeAll(startTestDb);
 afterEach(clearTestDb);
@@ -134,5 +137,18 @@ describe('delete account', () => {
     expect(await Session.countDocuments()).toBe(0);
   });
 
-  it.todo('also removes friendships and makes their journal photos unreachable (finished in Task 7)');
+  it('also removes friendships and makes their journal photos unreachable', async () => {
+    const asha = await signUp(app, 'asha@example.com', 'Asha');
+    const ravi = await signUp(app, 'ravi@example.com', 'Ravi');
+    await befriend(app, ravi, asha);
+    const trip = await saveTrip(asha.id);
+    const photo = (
+      await request(app).post(`/api/itineraries/${trip}/journal/photos?width=1&height=1`).set('Authorization', `Bearer ${asha.token}`).set('Content-Type', 'image/png').send(TINY_PNG)
+    ).body.journal.photos[0];
+    expect((await request(app).get(photo.url).set('Authorization', `Bearer ${ravi.token}`)).status).toBe(200);
+
+    expect((await request(app).delete('/api/me').set('Authorization', `Bearer ${asha.token}`).send({ password: 'password123' })).status).toBe(204);
+    expect((await friendsAs(app, ravi.token).list()).body.friends).toEqual([]);
+    expect((await request(app).get(photo.url).set('Authorization', `Bearer ${ravi.token}`)).status).toBe(404);
+  });
 });
