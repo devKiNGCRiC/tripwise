@@ -97,6 +97,9 @@ describe('PlannerWizard', () => {
     await fillAll(user);
     expect(within(screen.getByLabelText('Your answers')).getByText('Goa')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Generate my trip' }));
+    // The days appear one by one while the AI writes them.
+    const live = await screen.findByRole('list', { name: 'Days planned so far' });
+    expect(await within(live).findByText(/Day 1/)).toBeInTheDocument();
     await waitFor(() => expect(router.state.location.pathname).toMatch(/^\/trips\/it_/));
   });
 

@@ -16,6 +16,8 @@ export interface User {
   email: string;
   avatarUrl?: string;
   role: Role;
+  /** Which plan the account is on (decides daily limits). */
+  plan?: 'free' | 'premium';
   /** ISO date string, e.g. "2026-10-02T09:00:00.000Z" */
   createdAt: string;
   blocked: boolean;
@@ -137,6 +139,8 @@ export interface Itinerary {
   packingList: string[];
   /** Which AI wrote it — shown in admin stats. */
   provider: 'gemini' | 'groq';
+  /** 'ai' = written for this trip; 'cache' = re-used from a similar trip (instant, free). */
+  source?: 'ai' | 'cache';
   createdAt: string;
 }
 
@@ -153,6 +157,17 @@ export interface GenerateResponse {
   itinerary: Itinerary;
   quota: Quota;
 }
+
+/**
+ * One line of POST /itineraries/generate/stream: the trip arrives piece by piece.
+ * `reset` means a model failed part-way and another starts over (drop what was shown).
+ */
+export type GenerateEvent =
+  | { type: 'meta'; title: string; summary: string }
+  | { type: 'day'; day: Day }
+  | { type: 'reset' }
+  | { type: 'done'; itinerary: Itinerary; quota: Quota }
+  | { type: 'error'; error: { code: ApiErrorCode; message: string } };
 
 /* ── Errors ───────────────────────────────────────────────────────────── */
 

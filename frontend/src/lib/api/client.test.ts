@@ -153,3 +153,42 @@ describe('api client', () => {
     }
   });
 });
+
+/** A streamed response whose body arrives in the given text pieces. */
+function streamed(pieces: string[], status = 200) {
+  const encoder = new TextEncoder();
+  const body = new ReadableStream<Uint8Array>({
+    start(controller) {
+      for (const piece of pieces) controller.enqueue(encoder.encode(piece));
+      controller.close();
+    },
+  });
+  return new Response(body, { status, headers: { 'Content-Type': 'application/x-ndjson' } });
+}
+
+describe('api client streaming', () => {
+  it('reads one JSON value per line, even when lines are split across pieces', async () => {
+    const client = createApiClient({ fetchImpl: async () => streamed(['{"a":1}\n{"b"', ':2}\n']) });
+    const lines: unknown[] = [];
+    await client.stream('/s', { method: 'POST', body: {} }, (value) => lines.push(value));
+    expect(lines).toEqual([{ a: 1 }, { b: 2 }]);
+  });
+
+  it('refreshes the login on 401 and then streams', async () => {
+    const fetchImpl = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      if (pathOf(input).endsWith('/auth/refresh')) return json({ accessToken: 'fresh' });
+      const auth = (init?.headers as Record<string, string>).Authorization;
+      return auth === 'Bearer fresh' ? streamed(['{"ok":true}\n']) : json({ error: { code: 'UNAUTHORIZED', message: 'expired' } }, 401);
+    });
+    const client = createApiClient({ fetchImpl });
+    client.setAccessToken('stale');
+    const lines: unknown[] = [];
+    await client.stream('/s', { method: 'POST' }, (value) => lines.push(value));
+    expect(lines).toEqual([{ ok: true }]);
+  });
+
+  it('throws an ApiError for an error answer, like request()', async () => {
+    const client = createApiClient({ fetchImpl: async () => json({ error: { code: 'QUOTA_EXCEEDED', message: 'No more' } }, 429) });
+    await expect(client.stream('/s', { method: 'POST' }, () => {})).rejects.toMatchObject({ code: 'QUOTA_EXCEEDED', status: 429 });
+  });
+});

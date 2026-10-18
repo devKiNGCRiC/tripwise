@@ -113,5 +113,5 @@ export function issueAccessToken(userId: string): string {
 /** Strip the password before sending a user to the client. */
 export function publicUser(user: MockUser): User {
   const { password: _password, ...rest } = user;
-  return rest;
+  return { plan: 'free', ...rest };
 }

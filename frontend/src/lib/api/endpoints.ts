@@ -4,7 +4,8 @@
  * so a URL change happens in exactly one place.
  */
 import { api } from './client';
-import type { AuthResponse, Destination, DestinationFilters, GenerateResponse, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
+import { ApiError, friendlyMessage } from './errors';
+import type { AuthResponse, Destination, DestinationFilters, GenerateEvent, GenerateResponse, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
 
 /** Turn a filters object into "?a=1&b=2", skipping empty values. */
 function toQuery(params: Record<string, string | number | undefined>): string {
@@ -36,6 +37,23 @@ export const destinationsApi = {
 /** Itineraries: AI generation, the traveller's own trips, one-day regeneration and sharing. */
 export const itinerariesApi = {
   generate: (request: TripRequest) => api.request<GenerateResponse>('/itineraries/generate', { method: 'POST', body: request }),
+  /**
+   * Generate, watching the trip arrive: `onEvent` gets each event (meta, day, reset …) as it
+   * comes. Resolves with the saved trip on `done`; rejects with an ApiError on `error`.
+   */
+  generateStream: async (request: TripRequest, onEvent: (event: GenerateEvent) => void): Promise<GenerateResponse> => {
+    let result: GenerateResponse | null = null;
+    let failure: ApiError | null = null;
+    await api.stream('/itineraries/generate/stream', { method: 'POST', body: request }, (line) => {
+      const event = line as GenerateEvent;
+      onEvent(event);
+      if (event.type === 'done') result = { itinerary: event.itinerary, quota: event.quota };
+      if (event.type === 'error') failure = new ApiError(event.error.code, event.error.message, 200);
+    });
+    if (failure) throw failure;
+    if (!result) throw new ApiError('SERVER', friendlyMessage('SERVER'), 200);
+    return result;
+  },
   list: () => api.request<{ itineraries: Itinerary[] }>('/itineraries'),
   get: (id: string) => api.request<{ itinerary: Itinerary }>(`/itineraries/${encodeURIComponent(id)}`),
   remove: (id: string) => api.request<void>(`/itineraries/${encodeURIComponent(id)}`, { method: 'DELETE' }),

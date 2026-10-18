@@ -1,6 +1,7 @@
 /**
  * itineraries.ts (mock) — fake AI planner endpoints:
  *   POST   /itineraries/generate             → new plan + quota (5 per user per day)
+ *   POST   /itineraries/generate/stream      → the same, streamed day by day (JSON lines)
  *   GET    /itineraries, /itineraries/:id    → the caller's own trips only
  *   DELETE /itineraries/:id
  *   POST   /itineraries/:id/days/:n/regenerate
@@ -35,9 +36,9 @@ function quotaFor(userId: string): Quota {
   return { used, limit: DAILY_LIMIT, resetsAt: midnight.toISOString() };
 }
 
-/** Strip the owner field before sending a trip out. */
+/** Strip the owner field before sending a trip out (mock trips are always AI-written). */
 function publicTrip({ ownerId: _ownerId, ...itinerary }: StoredItinerary): Itinerary {
-  return itinerary;
+  return { source: 'ai', ...itinerary };
 }
 
 /** Find a trip the caller owns, or null. */
@@ -66,6 +67,42 @@ export const itineraryHandlers = [
     db.generations[user.id] = { day: today(), used: quota.used + 1 };
     saveTrips();
     return HttpResponse.json({ itinerary: publicTrip(stored), quota: quotaFor(user.id) });
+  }),
+
+  // POST /itineraries/generate/stream — the same plan, sent as JSON lines: meta, then each
+  // day a moment apart (so the page can show them arriving), then done.
+  http.post(apiUrl('/itineraries/generate/stream'), async ({ request }) => {
+    const user = currentUser(request);
+    if (!user) return errorResponse(401, 'UNAUTHORIZED', 'Please log in again.');
+    const req = (await request.json()) as TripRequest;
+    if (req.destination.trim().toLowerCase() === 'fail-ai') return errorResponse(503, 'AI_UNAVAILABLE', 'Both AI planners are busy — try again in a minute.');
+    const quota = quotaFor(user.id);
+    if (quota.used >= quota.limit) return errorResponse(429, 'QUOTA_EXCEEDED', `You've used all ${DAILY_LIMIT} AI plans for today.`);
+
+    const destination = db.destinations.find((d) => d.name.toLowerCase() === req.destination.trim().toLowerCase());
+    const stored: StoredItinerary = { ...generateItinerary(req, destination), id: newId('it'), createdAt: new Date().toISOString(), ownerId: user.id };
+    // Short pauses in tests, a believable pace in the browser.
+    const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, import.meta.env.MODE === 'test' ? 40 : ms));
+    const encoder = new TextEncoder();
+    const body = new ReadableStream<Uint8Array>({
+      async start(controller) {
+        const send = (event: object) => controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`));
+        await pause(700);
+        send({ type: 'meta', title: stored.title, summary: stored.summary });
+        for (const day of stored.days) {
+          await pause(450);
+          send({ type: 'day', day });
+        }
+        await pause(400);
+        // Save only at the end, like the real API.
+        db.itineraries.unshift(stored);
+        db.generations[user.id] = { day: today(), used: quota.used + 1 };
+        saveTrips();
+        send({ type: 'done', itinerary: publicTrip(stored), quota: quotaFor(user.id) });
+        controller.close();
+      },
+    });
+    return new HttpResponse(body, { headers: { 'Content-Type': 'application/x-ndjson' } });
   }),
 
   // GET /itineraries — newest first, only the caller's.

@@ -24,6 +24,10 @@ export default defineConfig({
   // traveller presses "Download PDF" — so a larger warning limit for that one file is fine.
   build: { chunkSizeWarningLimit: 1300 },
 
+  // In development, "/api" goes to the real backend on port 4000 (when VITE_USE_MOCKS=false).
+  // Same-origin like production (Cloudflare forwards /api to Render), so the login cookie works.
+  server: { proxy: { '/api': { target: 'http://localhost:4000', changeOrigin: false } } },
+
   // Unit tests run in jsdom (a fake browser) with shared setup (matchers, mock API).
   test: {
     environment: 'jsdom',

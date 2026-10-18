@@ -71,7 +71,7 @@ export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) 
     );
   }
 
-  if (generate.isPending) return <GeneratingScreen destination={values.destination} />;
+  if (generate.isPending) return <GeneratingScreen destination={values.destination} preview={generate.preview} />;
   const busy = generate.error instanceof ApiError && generate.error.code !== 'QUOTA_EXCEEDED' ? generate.error : generate.error && !(generate.error instanceof ApiError) ? generate.error : null;
 
   return (

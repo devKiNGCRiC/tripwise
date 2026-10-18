@@ -8,6 +8,7 @@
  *  4. on 401: refreshes the access token ONCE (shared by parallel calls) and retries,
  *  5. turns every failure into an ApiError with a friendly message,
  *  6. flags requests slower than `slowMs` so the UI can say "server waking up".
+ * `stream()` does the same for answers that arrive as JSON lines (the live trip planner).
  */
 import { apiUrl } from './config';
 import { ApiError, friendlyMessage, toApiError } from './errors';
@@ -111,8 +112,8 @@ export function createApiClient({ fetchImpl = (input, init) => fetch(input, init
     return refreshPromise;
   }
 
-  /** Make an API call and get typed JSON back (or an ApiError thrown). */
-  async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  /** Send a request; on 401, refresh the login once and retry. Returns the final response. */
+  async function sendWithRefresh(path: string, options: RequestOptions): Promise<Response> {
     // Remember which token this attempt used, to spot "someone already refreshed" below.
     const tokenUsed = accessToken;
     let res = await send(path, options);
@@ -129,11 +130,53 @@ export function createApiClient({ fetchImpl = (input, init) => fetch(input, init
         onUnauthorized?.();
       }
     }
-    return parse<T>(res);
+    return res;
+  }
+
+  /** Make an API call and get typed JSON back (or an ApiError thrown). */
+  async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+    return parse<T>(await sendWithRefresh(path, options));
+  }
+
+  /**
+   * Make an API call whose answer is a stream of JSON lines (one value per line), calling
+   * `onLine` for each as soon as it arrives. Errors are thrown exactly like `request()`.
+   */
+  async function stream(path: string, options: RequestOptions, onLine: (value: unknown) => void): Promise<void> {
+    const res = await sendWithRefresh(path, options);
+    // An error answer (or no body at all) is read like a normal response, which throws.
+    if (!res.ok || !res.body) {
+      await parse<unknown>(res);
+      return;
+    }
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    /** Hand over every complete line in the buffer; keep the unfinished end. */
+    const flush = (final: boolean) => {
+      const lines = buffer.split('\n');
+      buffer = final ? '' : (lines.pop() ?? '');
+      for (const line of lines) if (line.trim()) onLine(JSON.parse(line));
+    };
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        flush(false);
+      }
+      buffer += decoder.decode();
+      flush(true);
+    } catch (error) {
+      if ((error as { name?: string } | null)?.name === 'AbortError') throw error;
+      if (error instanceof SyntaxError) throw new ApiError('SERVER', friendlyMessage('SERVER'), res.status);
+      throw new ApiError('NETWORK', friendlyMessage('NETWORK'), 0);
+    }
   }
 
   return {
     request,
+    stream,
     refreshSession,
     setAccessToken(token: string | null) {
       accessToken = token;
