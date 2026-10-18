@@ -2,6 +2,7 @@
  * itineraries.ts (routes) — the traveller's trips (login required), under /api/itineraries:
  *
  *   POST   /generate                 plan a trip with AI          → { itinerary, quota }
+ *   POST   /generate/stream          the same, sent day by day     → one JSON event per line
  *   GET    /                         my trips, newest first       → { itineraries }
  *   GET    /:id                      one of my trips              → { itinerary }
  *   DELETE /:id                      delete it                    → 204
@@ -18,10 +19,13 @@ import { isValidObjectId } from 'mongoose';
 import { PLANS } from '../config/plans.js';
 import { Itinerary } from '../db/models/index.js';
 import { publicItinerary } from '../db/toPublic.js';
-import { notFound, quotaExceeded } from '../lib/errors.js';
+import { AppError, notFound, quotaExceeded } from '../lib/errors.js';
+import { tripDates } from '../lib/dates.js';
 import { currentUser, requireAuth, type AuthUser } from '../middleware/auth.js';
 import { generateLimiter } from '../middleware/rateLimit.js';
-import type { AiChain } from '../services/ai/chain.js';
+import { ClientGone, type AiChain } from '../services/ai/chain.js';
+import { createTripStreamParser } from '../services/ai/partialJson.js';
+import type { AiDay } from '../services/ai/schema.js';
 import { dayPrompt, tripPrompt } from '../services/ai/prompt.js';
 import { parseDay, parseTrip } from '../services/ai/validate.js';
 import { buildItinerary } from '../services/buildItinerary.js';
@@ -75,6 +79,102 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date }): Router 
     } catch (error) {
       await refund(user.id, 'plans', now);
       throw error;
+    }
+  });
+
+  // POST /itineraries/generate/stream — the same as /generate, but sent day by day as the
+  // AI writes it. Each line of the response is one JSON event:
+  //   {type:'meta', title, summary}   {type:'day', day}   {type:'reset'}
+  //   and finally {type:'done', itinerary, quota} or {type:'error', error:{code,message}}.
+  // Problems found before anything is sent (bad request, no plans left) are normal JSON errors.
+  router.post('/itineraries/generate/stream', auth, limiter, async (req, res) => {
+    const user = currentUser(req);
+    const now = deps.now();
+    const tripRequest = parseTripRequest(req.body, now, PLANS[user.plan].maxDays);
+    const key = cacheKey(tripRequest);
+    const dates = tripDates(tripRequest.startDate, tripRequest.endDate);
+
+    /** Start the event stream (headers go out now, so the page can listen). */
+    const open = () => {
+      res.status(200);
+      res.setHeader('Content-Type', 'application/x-ndjson; charset=utf-8');
+      res.setHeader('Cache-Control', 'no-cache, no-transform');
+      // Ask proxies not to hold the stream back.
+      res.setHeader('X-Accel-Buffering', 'no');
+      res.flushHeaders();
+    };
+    /** Send one event (if the traveller is still there). */
+    const send = (event: object) => {
+      if (!res.writableEnded && !res.destroyed) res.write(`${JSON.stringify(event)}\n`);
+    };
+    /** A day with its number and date filled in. */
+    const dayEvent = (day: AiDay, index: number) => ({
+      type: 'day',
+      day: { dayNumber: index + 1, date: dates[index], theme: day.theme, activities: day.activities },
+    });
+
+    // Cached plan: stream it straight away, no AI, no allowance used.
+    const cached = await pickCached(key, user.id);
+    if (cached) {
+      const trip = await Itinerary.create(
+        buildItinerary(cached.trip, tripRequest, { ownerId: user.id, provider: cached.provider, source: 'cache', cacheVariantId: cached.variantId }),
+      );
+      open();
+      send({ type: 'meta', title: cached.trip.title, summary: cached.trip.summary });
+      cached.trip.days.forEach((day, index) => send(dayEvent(day, index)));
+      send({ type: 'done', itinerary: publicItinerary(trip), quota: await getQuota(user.id, user.plan, now) });
+      res.end();
+      return;
+    }
+
+    if (!(await reserve(user.id, user.plan, 'plans', now))) {
+      throw quotaExceeded(`You've used all ${PLANS[user.plan].plansPerDay} AI plans for today.`);
+    }
+
+    // If the traveller closes the page, cancel the AI (and give the plan back below).
+    const leaving = new AbortController();
+    res.on('close', () => {
+      if (!res.writableFinished) leaving.abort();
+    });
+
+    open();
+    let parser = createTripStreamParser();
+    let sentDays = 0;
+    let saved = false;
+    try {
+      const { value, provider } = await deps.ai.run(tripPrompt(tripRequest), (text) => parseTrip(text, tripRequest), {
+        signal: leaving.signal,
+        // Pass along whatever is complete so far.
+        onText(chunk) {
+          const update = parser.push(chunk);
+          if (update.meta) send({ type: 'meta', ...update.meta });
+          for (const day of update.days) send(dayEvent(day, sentDays++));
+        },
+        // A model failed part-way: the page clears what it showed and we start reading afresh.
+        onReset() {
+          parser = createTripStreamParser();
+          sentDays = 0;
+          send({ type: 'reset' });
+        },
+      });
+      const cacheVariantId = (await addToCache(key, value, provider)) ?? undefined;
+      const trip = await Itinerary.create(buildItinerary(value, tripRequest, { ownerId: user.id, provider, source: 'ai', cacheVariantId }));
+      saved = true;
+      send({ type: 'done', itinerary: publicItinerary(trip), quota: await getQuota(user.id, user.plan, now) });
+    } catch (error) {
+      if (error instanceof ClientGone) return;
+      const known = error instanceof AppError;
+      if (!known) console.error('[api] stream generate failed:', error);
+      send({
+        type: 'error',
+        error: known
+          ? { code: error.code, message: error.message }
+          : { code: 'SERVER', message: 'Something went wrong on our side. Please try again.' },
+      });
+    } finally {
+      // Nothing saved (AI failed or the traveller left): give today's plan back.
+      if (!saved) await refund(user.id, 'plans', now);
+      if (!res.writableEnded) res.end();
     }
   });
 
