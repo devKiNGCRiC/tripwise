@@ -4,8 +4,8 @@
 travel crew and vibe, and it builds a day-by-day itinerary with costs, local tips and a packing list.
 You can then save it, download it as a PDF, or share it with your friends.
 
-> 🚧 **Status: in active development.** The web frontend foundation is done and runs on a built-in mock API.
-> The real backend and AI planning are next. See the [roadmap](#-roadmap).
+> 🚧 **Status: in active development.** The website and the real backend both work: accounts, saved trips and
+> real AI itineraries (Gemini, with Groq as backup). Deployment is next. See the [roadmap](#-roadmap).
 
 ---
 
@@ -13,14 +13,15 @@ You can then save it, download it as a PDF, or share it with your friends.
 
 | | Feature | Status |
 |---|---|---|
-| 🔐 | Sign up / log in (email + Google), secure JWT sessions | ✅ Frontend done (mock API) |
+| 🔐 | Sign up / log in with email, secure sessions (short tokens + rotating cookie) | ✅ Done (Google sign-in later) |
 | 🏠 | Landing page with trending destinations | ✅ Done |
 | 🏞️ | "Seven Worlds": a living, hand-drawn landscape of seven Indian regions behind every page | ✅ Done |
 | 🌗 | Day and Night for every world, region colours, photo-tinted personalisation, Calm motion | ✅ Done |
 | 📱 | Mobile-first layout with an app-style bottom tab bar | ✅ Done |
-| 🧭 | Explore destinations by world, vibe, budget and best month; destination guides | ✅ Done (mock API) |
-| 🪄 | Trip planner wizard + itinerary generation (5 free plans a day) | ✅ Done (mock AI) |
-| 🎟️ | Day-by-day itinerary (timed stops, transfers, costs), regenerate a day, PDF, share link | ✅ Done (mock AI) |
+| 🧭 | Explore destinations by world, vibe, budget and best month; destination guides | ✅ Done |
+| 🪄 | Trip planner wizard + real AI itineraries that appear day by day (5 free plans a day) | ✅ Done |
+| 🎟️ | Day-by-day itinerary (timed stops, transfers, costs), regenerate a day, PDF, share link | ✅ Done |
+| ⚡ | Similar trips served instantly from a plan cache (free, doesn't use the daily allowance) | ✅ Done |
 | 🛂 | "Passport" profile that collects a stamp for every trip | ✅ Done |
 | 📊 | Admin dashboard: analytics, destinations, users, moderation | 📅 Planned |
 | 📲 | React Native mobile app | 📅 Phase 2 |
@@ -59,11 +60,11 @@ Design spec: `docs/superpowers/specs/2026-10-17-seven-worlds-design.md` · proto
 | Layer | Technology |
 |---|---|
 | Frontend | React 19, TypeScript, Vite, Tailwind CSS 4, React Router, TanStack Query, React Hook Form + Zod, Canvas 2D (procedural landscapes), Lenis |
-| Backend | Node.js, Express, MongoDB (Mongoose) |
-| AI | Google Gemini Flash-Lite (primary) with Groq (`gpt-oss-120b`) as automatic fallback |
+| Backend | Node.js, Express 5, TypeScript, MongoDB (Mongoose), Zod |
+| AI | Google Gemini Flash → Flash-Lite, then Groq (`gpt-oss-120b`, Qwen) as automatic fallbacks; every answer is validated |
 | Database | MongoDB Atlas (free M0 cluster) |
 | Hosting | Cloudflare Pages (frontend), Render (backend) |
-| Testing | Vitest, Testing Library, MSW (mock API) |
+| Testing | Vitest, Testing Library, MSW (mock API), Supertest + in-memory MongoDB (backend) |
 
 The app is designed around free-tier limits. AI results are cached, each user gets a daily generation allowance,
 and a friendly "waking up the server" banner covers the free backend's cold starts.
@@ -73,7 +74,7 @@ and a friendly "waking up the server" banner covers the free backend's cold star
 ```
 tripwise/
 ├── frontend/     React + TypeScript web app (see frontend/README.md)
-├── backend/      Node.js + Express API (in progress)
+├── backend/      Node.js + Express API with AI planning (see backend/README.md)
 └── docs/
     ├── SRS.md                  Software requirements
     └── superpowers/
@@ -100,6 +101,15 @@ Demo accounts (mock mode):
 | `demo@tripwise.app` | `password123` | Traveller |
 | `admin@tripwise.app` | `admin12345` | Admin |
 
+**With the real backend** (needs your own free MongoDB Atlas, Gemini and/or Groq keys; see
+[`backend/README.md`](backend/README.md)):
+
+```bash
+cd backend && npm install && cp .env.example .env   # fill in the keys
+npm run seed && npm run dev                          # → API on http://localhost:4000
+# in another terminal, in frontend/: set VITE_USE_MOCKS=false in .env.local, then npm run dev
+```
+
 Useful scripts (run inside `frontend/`):
 
 ```bash
@@ -112,10 +122,14 @@ npm run build       # production build → dist/
 ## 🗺️ Roadmap
 
 - [x] **Frontend foundation:** theme, UI kit, auth pages, routing and guards, mock API, landing page
-- [ ] **Traveller features:** explore, trip planner, AI itinerary view, PDF, sharing, passport stamps
+- [x] **Traveller features:** explore, trip planner, AI itinerary view, PDF, sharing, passport stamps
 - [ ] **Admin:** dashboard and management tools, plus end-to-end tests
-- [ ] **Backend:** Express API, MongoDB models, JWT auth, Gemini + Groq integration, caching and quotas
-- [ ] **Launch:** deploy to Cloudflare Pages + Render
+- [x] **Backend:** Express API, MongoDB models, JWT auth, Gemini + Groq integration, streaming, caching and quotas
+- [ ] **Own planner:** places database (OpenStreetMap / Wikidata) + RAG, unlimited quick plans
+- [ ] **"Ask TripWise" agent:** chat on each trip with weather, routes and places as tools
+- [ ] **Crew mode:** invites, shared expenses, notes and photos
+- [ ] **Launch:** deploy to Cloudflare Pages + Render, installable PWA with offline trips
+- [ ] **Premium:** paid plan with Razorpay
 - [ ] **Phase 2:** React Native app, social sharing, AI chat assistant
 
 ## ☁️ Deployment
