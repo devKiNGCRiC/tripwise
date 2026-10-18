@@ -12,7 +12,7 @@
  */
 import type { AiChain, AiProvider } from '../../src/services/ai/chain.js';
 import { createAiChain } from '../../src/services/ai/chain.js';
-import type { AiDay, AiTrip } from '../../src/services/ai/schema.js';
+import { dayJsonSchema, type AiDay, type AiTrip } from '../../src/services/ai/schema.js';
 import { aiUnavailable } from '../../src/lib/errors.js';
 import { tripDates } from '../../src/lib/dates.js';
 import type { Pace, TripRequest } from '../../src/types/api.js';
@@ -75,6 +75,41 @@ export function fakeProvider(name: 'gemini' | 'groq', script: FakeStep[], model 
 export function fakeAiChain(...providers: AiProvider[]): AiChain {
   return createAiChain(providers, { timeoutMs: 200, log: () => {} });
 }
+
+/**
+ * A provider that "plans" like a model would: it reads the dates and pace from the prompt
+ * and answers with a valid trip, or a valid single day for regenerate prompts. Each answer
+ * gets a fresh tag (R1, R2 …) so tests can tell regenerated days apart.
+ */
+export function plannerProvider(name: 'gemini' | 'groq' = 'gemini', chunks = 4): FakeProvider {
+  let answers = 0;
+  const provider: FakeProvider = {
+    name,
+    model: `${name}-planner`,
+    calls: 0,
+    signals: [],
+    async *stream(prompt, signal) {
+      provider.calls += 1;
+      provider.signals.push(signal);
+      answers += 1;
+      const pace = (/Pace: (chill|balanced|packed)/.exec(prompt.user)?.[1] ?? 'balanced') as Pace;
+      const [, start, end] = /(\d{4}-\d\d-\d\d) to (\d{4}-\d\d-\d\d)/.exec(prompt.user) ?? [];
+      const isDay = prompt.jsonSchema === dayJsonSchema;
+      const answer = isDay ? aiDayFixture(pace, `R${answers}`) : aiTripFixture(tripRequest({ startDate: start, endDate: end, pace }), `T${answers}`);
+      for (const piece of split(JSON.stringify(answer), chunks)) {
+        await new Promise((resolve) => setTimeout(resolve, 1));
+        if (signal.aborted) throw new Error('aborted');
+        yield piece;
+      }
+    },
+  };
+  return provider;
+}
+
+/** A chain whose one model always plans successfully. */
+export const plannerChain = (provider: FakeProvider = plannerProvider()) => fakeAiChain(provider);
+/** A chain where every model fails. */
+export const failingChain = () => fakeAiChain(fakeProvider('gemini', ['error']), fakeProvider('groq', ['error']));
 
 /** A chain that must not be used in this test (fails if it is). */
 export function fakeChain(): AiChain {
