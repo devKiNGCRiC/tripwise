@@ -18,6 +18,7 @@ import { destinationRoutes } from './routes/destinations.js';
 import { healthRoutes } from './routes/health.js';
 import { itineraryRoutes } from './routes/itineraries.js';
 import { meRoutes } from './routes/me.js';
+import { profileRoutes } from './routes/profile.js';
 import { shareRoutes } from './routes/share.js';
 import type { AiChain } from './services/ai/chain.js';
 
@@ -57,6 +58,7 @@ export function createApp(deps: AppDeps, extra?: (router: Router) => void): expr
   api.use(authRoutes(now));
   api.use(destinationRoutes());
   api.use(meRoutes(now));
+  api.use(profileRoutes(now));
   api.use(itineraryRoutes({ ai: deps.ai, now }));
   api.use(shareRoutes());
   extra?.(api);

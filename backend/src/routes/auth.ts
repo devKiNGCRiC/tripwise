@@ -20,6 +20,7 @@ import { BLOCKED_MESSAGE, currentUser, requireAuth } from '../middleware/auth.js
 import { authLimiter } from '../middleware/rateLimit.js';
 import { createSession, REFRESH_TTL_MS, revokeSession, rotateSession } from '../services/sessions.js';
 import { signAccess } from '../services/tokens.js';
+import { ensureUsername, makeUsername, newInviteCode } from '../services/username.js';
 
 /** The cookie that keeps a traveller logged in. */
 export const REFRESH_COOKIE = 'tw_refresh';
@@ -64,6 +65,7 @@ export function authRoutes(now: () => Date): Router {
 
   /** Finish a successful signup/login: start a session, set the cookie, return user + token. */
   async function startSession(res: Response, user: UserDoc) {
+    await ensureUsername(user);
     const token = await createSession(user._id.toString(), now());
     setRefreshCookie(res, token);
     res.json({ user: publicUser(user), accessToken: signAccess({ id: user._id.toString(), role: user.role as 'user' | 'admin' }, now()) });
@@ -76,7 +78,13 @@ export function authRoutes(now: () => Date): Router {
     const { name, email, password } = parsed.data;
     if (await User.exists({ email })) throw conflict('An account with this email already exists. Try logging in.');
     try {
-      const user = await User.create({ name, email, passwordHash: await bcrypt.hash(password, BCRYPT_COST) });
+      const user = await User.create({
+        name,
+        email,
+        passwordHash: await bcrypt.hash(password, BCRYPT_COST),
+        username: await makeUsername(name),
+        inviteCode: newInviteCode(),
+      });
       await startSession(res, user);
     } catch (error) {
       // Two signups with the same email at the same moment: the unique index catches the second.

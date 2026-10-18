@@ -7,6 +7,7 @@ import type { NextFunction, Request, Response } from 'express';
 import { User } from '../db/models/index.js';
 import { forbidden, unauthorized } from '../lib/errors.js';
 import { verifyAccess } from '../services/tokens.js';
+import { ensureUsername } from '../services/username.js';
 
 /** The signed-in traveller, as routes see them. */
 export interface AuthUser {
@@ -42,6 +43,8 @@ export function requireAuth(now: () => Date) {
       const user = await User.findById(claims.sub);
       if (!user) throw unauthorized();
       if (user.blocked) throw forbidden(BLOCKED_MESSAGE);
+      // Accounts made before usernames existed get one now.
+      await ensureUsername(user);
 
       req.user = { id: user._id.toString(), role: user.role as AuthUser['role'], plan: user.plan as AuthUser['plan'] };
       next();
