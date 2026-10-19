@@ -47,6 +47,17 @@
     background: linear-gradient(180deg, var(--trip-sky-top), var(--trip-sky-bottom)) fixed;
     transition: background 0.9s ease;
   }
+  /*
+   * Laptop density: on laptop-width windows everything sized in rem (text, spacing,
+   * buttons, cards) scales smoothly from 14px at ~1366–1440px wide, through 14.5px at 1536px,
+   * to the full 16px at 1920px — so common laptops (and 125% Windows scaling) don't feel
+   * oversized. Phones and tablets keep 16px.
+   */
+  @media (min-width: 1024px) {
+    html {
+      font-size: clamp(14px, calc(8.5px + 0.39vw), 16px);
+    }
+  }
   body {
     min-height: 100dvh;
     background: transparent;

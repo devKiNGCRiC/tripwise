@@ -39,7 +39,7 @@ export function Hero({ who, onWhoChange }: HeroProps) {
                 {region.hi}
               </span>
             </p>
-            <h1 key={region.key} className="mt-4 text-[clamp(42px,min(6vw,10vh),108px)]">
+            <h1 key={region.key} className="mt-4 text-[clamp(40px,min(5.4vw,9vh),100px)]">
               <span className="swap">
                 {region.headline} <em>{region.accent}</em>
               </span>
