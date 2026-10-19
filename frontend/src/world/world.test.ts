@@ -74,7 +74,55 @@ describe('paletteFromPixels', () => {
   it('takes its accent from the colourful part of the photo', () => {
     expect(paletteFromPixels(orangeAndTeal()).accents.day[0]).not.toBe(paletteFromPixels(allGrey()).accents.day[0]);
   });
+
+  it("tints from the photo's colour, not its grey sky", () => {
+    // 60% hazy sky, 30% green palms, 10% shadow.
+    const { tint } = paletteFromPixels(mix([[170, 180, 190], 60], [[60, 140, 50], 30], [[20, 20, 20], 10]));
+    const [r, g, b] = rgb(tint);
+    expect(g).toBeGreaterThan(r + 30);
+    expect(g).toBeGreaterThan(b + 30);
+  });
+
+  it('never tints the world black from a dark photo (a sunset: dark water, golden sky)', () => {
+    const { tint } = paletteFromPixels(mix([[10, 11, 12], 70], [[200, 140, 60], 30]));
+    const [r, g, b] = rgb(tint);
+    expect(Math.max(r, g, b)).toBeGreaterThan(110);
+    expect(r).toBeGreaterThan(b + 50);
+  });
+
+  it('gives two different accents when the photo has two colours', () => {
+    const { day } = paletteFromPixels(orangeAndTeal()).accents;
+    expect(hueGap(hue(day[0]), hue(day[1]))).toBeGreaterThan(60);
+  });
+
+  it('keeps a grey photo neutral', () => {
+    const [r, g, b] = rgb(paletteFromPixels(allGrey()).tint);
+    expect(Math.max(r, g, b) - Math.min(r, g, b)).toBeLessThan(10);
+  });
 });
+
+/** RGBA pixels from [colour, how many] parts. */
+function mix(...parts: [[number, number, number], number][]) {
+  return parts.flatMap(([[r, g, b], n]) => Array.from({ length: n * 4 }, () => [r, g, b, 255]).flat());
+}
+/** "#rrggbb" → [r, g, b]. */
+function rgb(hex: string) {
+  return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+}
+/** Hue of "#rrggbb" in degrees. */
+function hue(hex: string) {
+  const [r, g, b] = rgb(hex).map((v) => v / 255);
+  const max = Math.max(r, g, b);
+  const d = max - Math.min(r, g, b);
+  if (!d) return 0;
+  const h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return (h * 60 + 360) % 360;
+}
+/** Distance between two hues around the colour wheel. */
+function hueGap(a: number, b: number) {
+  const d = Math.abs(a - b) % 360;
+  return d > 180 ? 360 - d : d;
+}
 
 describe('Scene', () => {
   it('draws every region by day and by night without throwing', () => {

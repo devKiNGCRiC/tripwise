@@ -78,7 +78,7 @@ export function ColoursMenu({ className }: { className?: string }) {
     const palette = await readPalette(url);
     if (!palette) {
       URL.revokeObjectURL(url);
-      return setMessage('That photo couldn’t be read — try another.');
+      return setMessage('That photo couldn’t be read — try a JPG or PNG.');
     }
     setPreview({ src: url, temporary: true });
     setTint(palette);
@@ -87,7 +87,7 @@ export function ColoursMenu({ className }: { className?: string }) {
   /** One click: tint the world from the current region's own photo. */
   async function tintFromRegionPhoto() {
     const palette = await readPalette(region.photo.src);
-    if (!palette) return setMessage('That photo couldn’t be read — try another.');
+    if (!palette) return setMessage('That photo couldn’t be read — try a JPG or PNG.');
     setPreview({ src: region.photo.src, temporary: false });
     setTint(palette);
     setMessage('Your photo’s colours now tint the whole world.');
