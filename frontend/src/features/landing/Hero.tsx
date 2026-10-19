@@ -39,7 +39,9 @@ export function Hero({ who, onWhoChange }: HeroProps) {
                 {region.hi}
               </span>
             </p>
-            <h1 key={region.key} className="mt-4 text-[clamp(40px,min(5.4vw,9vh),100px)]">
+            {/* At most ~10em wide: the headline always breaks into two balanced lines, so the
+                left column stays as tall as the region card beside it */}
+            <h1 key={region.key} className="mt-4 max-w-[10em] text-[clamp(40px,min(5.4vw,9vh),100px)]">
               <span className="swap">
                 {region.headline} <em>{region.accent}</em>
               </span>
