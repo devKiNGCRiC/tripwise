@@ -60,7 +60,7 @@ export default function PublicPassportPage() {
   const isPrivate = passport.error instanceof ApiError && passport.error.code === 'NOT_FOUND';
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-28 pb-20">
+    <div className="page-wrap pt-28 pb-20">
       <title>{passport.data ? `${passport.data.passport.cover.name}'s passport · TripWise` : 'Passport · TripWise'}</title>
       {passport.isPending && <Skeleton className="h-80 rounded-card" />}
       {(isPrivate || (passport.isError && !isPrivate)) && (

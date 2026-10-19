@@ -1,8 +1,10 @@
 /**
  * PassportCover.tsx — the navy passport cover (always navy, in both themes, like the real
- * document): the traveller's photo with a gold TripWise seal over its corner, name and
- * @username, home city, bio, type of traveller, their numbers, and a passport-style code
- * line along the bottom (decoration only).
+ * document). On wide screens it reads left to right like an open passport page:
+ *   photo with a gold TripWise seal · name, @username, home city, type and bio · the
+ *   buttons and the traveller's four numbers
+ * with a passport-style code line along the bottom (decoration only). On phones the three
+ * parts stack.
  */
 import type { ReactNode } from 'react';
 import { MapPin } from 'lucide-react';
@@ -10,7 +12,7 @@ import { TRAVELLER_TYPE_LABEL } from '@/features/account/labels';
 import type { Passport } from '@/lib/api/types';
 import { passportCode } from './passportCode';
 
-/** The cover; `actions` are the buttons in its top corner (yours: Edit profile, Friends). */
+/** The cover; `actions` are the buttons above the numbers (yours: Edit profile, Friends). */
 export function PassportCover({ passport, actions }: { passport: Passport; actions?: ReactNode }) {
   const { cover, stats } = passport;
   const numbers: [string, string][] = [
@@ -22,14 +24,14 @@ export function PassportCover({ passport, actions }: { passport: Passport; actio
 
   return (
     <section aria-label="Passport cover" className="relative isolate overflow-hidden rounded-card bg-[#0f1a40] p-6 text-[#f6efe3] shadow-[0_40px_80px_-40px_rgb(0_0_0/.55)] sm:px-8 sm:py-7">
-      {/* Gold-foil gateway arches, like the crest on a real passport */}
-      <svg aria-hidden viewBox="0 0 100 120" className="absolute -right-10 -bottom-24 -z-10 w-60 text-[#e6b765] opacity-25" fill="none" stroke="currentColor" strokeWidth="1">
+      {/* Gold-foil gateway arches, like the crest on a real passport (behind the details) */}
+      <svg aria-hidden viewBox="0 0 100 120" className="absolute bottom-[-40%] left-[34%] -z-10 w-64 text-[#e6b765] opacity-15" fill="none" stroke="currentColor" strokeWidth="1">
         {[0, 8, 16, 24].map((i) => (
           <path key={i} d={`M${i} 120 V${45 + i * 0.6} C${i} ${25 + i} ${22 + i * 0.3} ${12 + i * 0.4} 50 ${4 + i} C${78 - i * 0.3} ${12 + i * 0.4} ${100 - i} ${25 + i} ${100 - i} ${45 + i * 0.6} V120`} />
         ))}
       </svg>
 
-      <div className="flex flex-col gap-6 md:flex-row md:items-start">
+      <div className="grid gap-6 md:grid-cols-[auto_minmax(0,1fr)] xl:grid-cols-[auto_minmax(0,1fr)_minmax(320px,400px)] xl:items-center">
         {/* The photo, like a passport photo with a seal over its corner */}
         <div className="relative shrink-0 self-start">
           {cover.avatarUrl ? (
@@ -52,19 +54,13 @@ export function PassportCover({ passport, actions }: { passport: Passport; actio
           </span>
         </div>
 
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="min-w-0">
-              <p lang="hi" className="text-[#e6b765]">
-                यात्री पासपोर्ट · TripWise passport
-              </p>
-              <h1 className="font-display text-[clamp(28px,3.2vw,40px)] leading-tight">{cover.name}</h1>
-              <p className="text-[#f6efe3]/75">@{cover.username}</p>
-            </div>
-            {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
-          </div>
-
-          {/* Where they're from and what kind of traveller they are */}
+        {/* Who they are */}
+        <div className="min-w-0">
+          <p lang="hi" className="text-[#e6b765]">
+            यात्री पासपोर्ट · TripWise passport
+          </p>
+          <h1 className="font-display text-[clamp(28px,3.2vw,40px)] leading-tight">{cover.name}</h1>
+          <p className="text-[#f6efe3]/75">@{cover.username}</p>
           <div className="mt-3 flex flex-wrap items-center gap-2">
             {cover.homeCity && (
               <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-sm">
@@ -75,11 +71,14 @@ export function PassportCover({ passport, actions }: { passport: Passport; actio
             {cover.travellerType && <span className="rounded-full bg-[#e6b765] px-3 py-1 text-sm font-semibold text-[#0f1a40]">{TRAVELLER_TYPE_LABEL[cover.travellerType]}</span>}
           </div>
           {cover.bio && <p className="mt-3 max-w-[60ch] leading-relaxed text-[#f6efe3]/90">{cover.bio}</p>}
+        </div>
 
-          {/* Their numbers */}
-          <ul aria-label="Travel stats" className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {/* The buttons and their numbers (below the details until the screen is wide) */}
+        <div className="grid gap-4 md:col-span-2 xl:col-span-1">
+          {actions && <div className="flex flex-wrap gap-2 xl:justify-end">{actions}</div>}
+          <ul aria-label="Travel stats" className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-2">
             {numbers.map(([value, label]) => (
-              <li key={label} className="rounded-xl bg-[#1a2759] px-3 py-2 text-center ring-1 ring-white/6">
+              <li key={label} className="rounded-xl bg-[#1a2759] px-3 py-2.5 text-center ring-1 ring-white/6">
                 <span className="block font-display text-2xl text-white">{value}</span>
                 <span className="text-[11px] font-semibold tracking-wide text-[#f6efe3]/70 uppercase">{label}</span>
               </li>

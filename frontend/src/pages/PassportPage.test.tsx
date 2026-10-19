@@ -84,6 +84,22 @@ describe('PassportPage', () => {
     expect(within(sheet).getAllByRole('img')[0].getAttribute('src')).toMatch(/^\/api\/photos\/ph_seed_goa_1\?v=u_demo/);
   });
 
+  it('has a side column with the next trip, friends and the latest memory', async () => {
+    const { user } = renderApp('/passport');
+    const next = await screen.findByRole('region', { name: 'Next trip' });
+    expect(await within(next).findByText('Kerala Backwaters')).toBeInTheDocument();
+    expect(within(next).getByText(/In \d+ days/)).toBeInTheDocument();
+
+    const friends = screen.getByRole('region', { name: 'Your friends' });
+    expect(await within(friends).findByText('Kabir Shah')).toBeInTheDocument();
+    await user.click(within(friends).getByRole('button', { name: 'Accept Zoya Khan' }));
+    expect(await within(friends).findByText('Zoya Khan')).toBeInTheDocument();
+    expect(within(friends).queryByRole('button', { name: 'Accept Zoya Khan' })).toBeNull();
+
+    const memory = screen.getByRole('region', { name: 'Latest memory' });
+    expect(await within(memory).findByText(/Sunsets at Palolem/)).toBeInTheDocument();
+  });
+
   it("still shows today's AI plan allowance", async () => {
     renderApp('/passport');
     expect(await screen.findByText(/of 5 AI plans left today/)).toBeInTheDocument();

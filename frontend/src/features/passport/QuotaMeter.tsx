@@ -5,8 +5,8 @@
 import { useQuota } from '@/features/planner/hooks';
 import { cn } from '@/lib/utils/cn';
 
-/** Today's AI plan allowance. */
-export function QuotaMeter() {
+/** Today's AI plan allowance; `compact` drops the big title (inside a titled panel). */
+export function QuotaMeter({ compact = false }: { compact?: boolean }) {
   const { data: quota } = useQuota();
   if (!quota) return null;
   const left = Math.max(0, quota.limit - quota.used);
@@ -14,8 +14,8 @@ export function QuotaMeter() {
 
   return (
     <div>
-      <p className="font-display text-2xl">AI planner</p>
-      <p className="mt-1 font-semibold">
+      {!compact && <p className="font-display text-2xl">AI planner</p>}
+      <p className={cn('font-semibold', !compact && 'mt-1')}>
         {left} of {quota.limit} AI plans left today
       </p>
       <div aria-hidden className="mt-3 flex gap-1.5">

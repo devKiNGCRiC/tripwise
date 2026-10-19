@@ -1,8 +1,9 @@
 /**
  * PassportPage.tsx — route /passport: your passport, in three parts — who you are (the navy
  * cover with your photo, bio and numbers), where you've been (India's seven worlds and your
- * Yatra marks), and what you remember (visa pages whose stamps open trip journals). Today's
- * AI plan allowance sits at the end; settings live on the Account tab.
+ * Yatra marks), and what you remember (visa pages whose stamps open trip journals).
+ * The page uses the same width as the navbar; beside the main column sits a side column
+ * (next trip, friends, latest memory, AI plans today). Settings live on the Account tab.
  */
 import { useState } from 'react';
 import { Settings, Users } from 'lucide-react';
@@ -13,7 +14,7 @@ import { useFriends } from '@/features/friends/hooks';
 import { usePassport } from '@/features/passport/hooks';
 import { JournalSheet } from '@/features/passport/JournalSheet';
 import { PassportView } from '@/features/passport/PassportView';
-import { QuotaMeter } from '@/features/passport/QuotaMeter';
+import { FriendsPanel, LatestMemoryPanel, NextTripPanel, QuotaPanel } from '@/features/passport/SidePanels';
 import type { Stamp } from '@/lib/api/types';
 
 /** The two buttons on your own cover. */
@@ -46,7 +47,7 @@ export default function PassportPage() {
   const [open, setOpen] = useState<Stamp | null>(null);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-28 pb-20">
+    <div className="page-wrap pt-28 pb-20">
       <title>Your passport · TripWise</title>
       {passport.isPending && (
         <div role="status" className="grid gap-6">
@@ -57,11 +58,20 @@ export default function PassportPage() {
       )}
       {passport.isError && <LoadError what="your passport" onRetry={() => void passport.refetch()} />}
       {passport.data && (
-        <PassportView passport={passport.data} mine coverActions={<CoverActions />} onOpenStamp={setOpen}>
-          <section aria-label="AI plans today" className="glass-strong rounded-card p-6 sm:p-8">
-            <QuotaMeter />
-          </section>
-        </PassportView>
+        <PassportView
+          passport={passport.data}
+          mine
+          coverActions={<CoverActions />}
+          onOpenStamp={setOpen}
+          sidebar={
+            <>
+              <NextTripPanel />
+              <FriendsPanel />
+              <LatestMemoryPanel stamps={passport.data.stamps} onOpen={setOpen} />
+              <QuotaPanel />
+            </>
+          }
+        />
       )}
       {open && <JournalSheet key={open.id} stamp={open} onClose={() => setOpen(null)} />}
     </div>
