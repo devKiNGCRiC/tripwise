@@ -3,7 +3,9 @@
  *
  * Holds which of the seven regions is showing (remembered in localStorage as `tw_region`;
  * first visit = Himalaya), the landing page's auto-tour (every 10 s; it never runs once the
- * traveller has picked a region — in this visit or an earlier one), and an optional photo palette that tints everything. It also
+ * traveller has picked a region — in this visit or an earlier one), and an optional photo palette that tints everything
+ * (remembered in localStorage as `tw_tint`, so it survives a refresh; a passing tint, like a
+ * friend's colours on their passport, is applied without being remembered). It also
  * pushes the region's accent colours and sky onto <html> as CSS variables, so the whole
  * interface follows the region and Day/Night.
  */
@@ -15,6 +17,8 @@ import { REGIONS, regionByKey, type Region, type RegionKey } from './regions';
 
 /** localStorage key for the remembered region. */
 export const REGION_STORAGE_KEY = 'tw_region';
+/** localStorage key for the remembered photo colours. */
+export const TINT_STORAGE_KEY = 'tw_tint';
 /** Seconds each region shows during the auto-tour. */
 export const TOUR_SECONDS = 10;
 
@@ -29,7 +33,8 @@ interface WorldContextValue {
   stopTour: () => void;
   /** Colours read from the traveller's photo (null = the region's own colours) */
   tint: Palette | null;
-  setTint: (palette: Palette | null) => void;
+  /** Tint with a photo's colours (null = back to the region's). `temporary` = don't remember it. */
+  setTint: (palette: Palette | null, opts?: { temporary?: boolean }) => void;
 }
 
 const WorldContext = createContext<WorldContextValue | null>(null);
@@ -41,6 +46,29 @@ function readSavedIndex(): number {
     return saved ? REGIONS.indexOf(saved) : -1;
   } catch {
     return -1;
+  }
+}
+
+/** A "#rrggbb" colour. */
+const isHex = (v: unknown) => typeof v === 'string' && /^#[0-9a-f]{6}$/i.test(v);
+/** Is this a whole, valid palette (saved data can be old or broken)? */
+function isPalette(v: unknown): v is Palette {
+  const p = v as Palette | null;
+  return (
+    !!p &&
+    isHex(p.tint) &&
+    Array.isArray(p.swatches) && p.swatches.length === 4 && p.swatches.every(isHex) &&
+    [p.accents?.day, p.accents?.night].every((pair) => Array.isArray(pair) && pair.length === 2 && pair.every(isHex))
+  );
+}
+
+/** The remembered photo colours, or null. Never throws (storage can be blocked or hold junk). */
+function readSavedTint(): Palette | null {
+  try {
+    const saved: unknown = JSON.parse(window.localStorage.getItem(TINT_STORAGE_KEY) ?? 'null');
+    return isPalette(saved) ? saved : null;
+  } catch {
+    return null;
   }
 }
 
@@ -58,7 +86,7 @@ export function WorldProvider({ children }: { children: ReactNode }) {
   const [touring, setTouring] = useState(false);
   // Has the traveller ever chosen a region? Then the world stays where they put it.
   const [picked, setPicked] = useState(savedIndex >= 0);
-  const [tint, setTint] = useState<Palette | null>(null);
+  const [tint, setTintState] = useState<Palette | null>(readSavedTint);
   const { theme } = useTheme();
   const reduceMotion = usePrefersReducedMotion();
   const region = REGIONS[index];
@@ -76,6 +104,17 @@ export function WorldProvider({ children }: { children: ReactNode }) {
       } catch {
         // Storage blocked: the choice still applies for this visit.
       }
+    }
+  }, []);
+  /** Tint the world, remembering it on this device unless it's only passing. */
+  const setTint = useCallback((palette: Palette | null, opts: { temporary?: boolean } = {}) => {
+    setTintState(palette);
+    if (opts.temporary) return;
+    try {
+      if (palette) window.localStorage.setItem(TINT_STORAGE_KEY, JSON.stringify(palette));
+      else window.localStorage.removeItem(TINT_STORAGE_KEY);
+    } catch {
+      // Storage blocked: the colours still apply for this visit.
     }
   }, []);
   const startTour = useCallback(() => setTouring(!picked), [picked]);
@@ -102,7 +141,7 @@ export function WorldProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({ region, index, setRegion, touring, startTour, stopTour, tint, setTint }),
-    [region, index, setRegion, touring, startTour, stopTour, tint],
+    [region, index, setRegion, touring, startTour, stopTour, tint, setTint],
   );
   return <WorldContext value={value}>{children}</WorldContext>;
 }

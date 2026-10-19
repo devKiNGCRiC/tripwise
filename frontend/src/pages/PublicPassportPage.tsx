@@ -49,12 +49,12 @@ export default function PublicPassportPage() {
   const before = useRef(tint);
   const theme = passport.data?.passport.cover.theme;
 
-  // Wear the owner's colours while here; put yours back on leaving.
+  // Wear the owner's colours while here (never remembered as yours); put yours back on leaving.
   useEffect(() => {
     if (!theme) return;
     const previous = before.current;
-    setTint(theme);
-    return () => setTint(previous);
+    setTint(theme, { temporary: true });
+    return () => setTint(previous, { temporary: true });
   }, [theme, setTint]);
 
   const isPrivate = passport.error instanceof ApiError && passport.error.code === 'NOT_FOUND';
