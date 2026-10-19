@@ -1,12 +1,13 @@
 /**
  * Navbar.tsx — a floating glass pill at the top of every page.
- * Desktop: logo, main links, Day/Night switch, account area.
- * Mobile: logo + switch + account (main links live in MobileTabBar).
+ * Desktop: logo, main links, Colours menu, Day/Night switch, account area.
+ * Mobile: logo + Colours + switch + account (main links live in MobileTabBar).
  * It floats over the content (fixed), so pages leave room at the top for it.
  */
 import { Link, NavLink } from 'react-router';
 import { buttonClasses } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { ColoursMenu } from '@/features/colours/ColoursMenu';
 import { useFriends } from '@/features/friends/hooks';
 import { cn } from '@/lib/utils/cn';
 import { ThemeToggle } from '@/theme/ThemeToggle';
@@ -67,6 +68,8 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Tint the site from a photo, or jump to the world nearest you */}
+            <ColoursMenu />
             <ThemeToggle />
             {/* While auth is restoring, render nothing here to avoid a login-button flash. */}
             {status === 'authenticated' && user && (

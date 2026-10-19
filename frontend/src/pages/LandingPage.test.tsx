@@ -1,12 +1,14 @@
 /**
  * LandingPage.test.tsx — the Seven Worlds homepage: opens on the Himalaya, the region
- * bar and the world cards switch the whole page, the dossier shows the region's facts
- * and a 12-month chart, the planner hands off to the planner page (through login for
- * guests), traveller cards stay in sync with the hero chips and the planner, and the
- * personalisation controls are there.
+ * bar switches the whole page, the dossier shows the region's facts and a 12-month chart,
+ * the planner hands off to the planner page (through login for guests), traveller cards
+ * stay in sync with the hero chips and the planner, the world cards lead to each world's
+ * places, "Good to go" shows places at their best this month, and the colour tools live
+ * in the navbar rather than on the page.
  */
 import { screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+import { seedDestinations } from '@/mocks/data/destinations';
 import { renderApp } from '@/test/render';
 
 describe('LandingPage', () => {
@@ -76,16 +78,33 @@ describe('LandingPage', () => {
     expect(screen.getByLabelText("Who's going")).toHaveValue('Family');
   });
 
-  it('switches the world from the "Seven worlds" cards', async () => {
-    const { user } = renderApp('/');
+  it('each world card leads to its places: Explore filtered to that world, or the planner where none are listed yet', async () => {
+    const { user, router } = renderApp('/');
     const worlds = await screen.findByRole('region', { name: /Seven worlds/ });
-    await user.click(within(worlds).getByRole('button', { name: /^Konkan & Malabar/ }));
-    expect(screen.getByRole('heading', { level: 1, name: /Where the sun clocks out late\./ })).toBeInTheDocument();
+    const konkan = within(worlds).getByRole('link', { name: /^Konkan & Malabar/ });
+    expect(await within(konkan).findByText('2 places')).toBeInTheDocument();
+    expect(within(konkan).getByText(/Goa/)).toBeInTheDocument();
+    expect(within(worlds).getByRole('link', { name: /^Deccan Plateau/ })).toHaveAttribute('href', '/plan?destination=Hampi');
+    await user.click(konkan);
+    await waitFor(() => expect(router.state.location.pathname).toBe('/explore'));
+    expect(router.state.location.search).toBe('?world=konkan');
   });
 
-  it('offers photo colours and location', async () => {
+  it("shows places at their best this month", async () => {
     renderApp('/');
-    expect(await screen.findByRole('button', { name: 'Choose a photo' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Use my location' })).toBeInTheDocument();
+    const month = new Date().getMonth() + 1;
+    const name = new Date().toLocaleString('en-GB', { month: 'long' });
+    const section = await screen.findByRole('region', { name: `Good to go in ${name}` });
+    const expected = seedDestinations.filter((d) => d.bestMonths.includes(month)).slice(0, 6);
+    const cards = await within(section).findAllByRole('link', { name: new RegExp(`^(${expected.map((d) => d.name).join('|')}),`) });
+    expect(cards).toHaveLength(expected.length);
+    expect(within(section).getByRole('link', { name: /See all/ })).toHaveAttribute('href', `/explore?month=${month}`);
+  });
+
+  it('keeps the colour tools out of the page (they live in the navbar)', async () => {
+    renderApp('/');
+    await screen.findByRole('region', { name: /Seven worlds/ });
+    expect(screen.queryByRole('button', { name: 'Choose a photo' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Colours' })).toBeInTheDocument();
   });
 });
