@@ -51,7 +51,8 @@ describe('TripPage', () => {
     expect(days).toHaveLength(3);
     const first = trip.days[0].activities[0];
     expect(within(days[0]).getByText(first.startTime!)).toBeInTheDocument();
-    expect(within(days[0]).getByText(new RegExp(`${first.transfer!.minutes} min`))).toBeInTheDocument();
+    // Two transfers on a day can take the same time, so any match will do.
+    expect(within(days[0]).getAllByText(new RegExp(`${first.transfer!.minutes} min`))[0]).toBeInTheDocument();
     expect(screen.getByText(`₹${trip.estimatedCost.total.toLocaleString('en-IN')}`)).toBeInTheDocument();
     expect(screen.getByRole('list', { name: 'Packing list' })).toBeInTheDocument();
   });
