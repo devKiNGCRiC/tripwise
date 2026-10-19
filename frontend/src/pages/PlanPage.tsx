@@ -2,12 +2,14 @@
  * PlanPage.tsx — route "/plan" (logged-in travellers): the planner wizard, pre-filled
  * from the traveller's usual preferences (budget, interests, pace, company — set in Account)
  * and then from the address, which wins: `?destination=Goa` from destination pages and the
- * homepage, and `?who=Family` from the homepage's "who's going" choice.
+ * homepage, `?who=Family` from the homepage's "who's going" choice, and trip dates from
+ * the month guide (`?month=12`, or a festival's `?start=&end=`).
  */
 import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useProfile } from '@/features/account/hooks';
 import { PlannerWizard } from '@/features/planner/PlannerWizard';
+import { datesFromUrl } from '@/features/planner/urlDates';
 import { WHO_TO_TRAVELLERS, type PlannerValues } from '@/features/planner/schema';
 import type { Preferences } from '@/lib/api/types';
 
@@ -28,6 +30,7 @@ export default function PlanPage() {
   const profile = useProfile();
   const destination = params.get('destination')?.slice(0, 80) ?? '';
   const travellers = WHO_TO_TRAVELLERS[params.get('who') ?? ''];
+  const dates = datesFromUrl(params);
 
   return (
     <div className="page-wrap pt-28 pb-16">
@@ -36,7 +39,7 @@ export default function PlanPage() {
       {profile.isPending ? (
         <Skeleton className="mx-auto h-96 max-w-3xl rounded-card" />
       ) : (
-        <PlannerWizard initial={{ ...fromPreferences(profile.data?.preferences), destination, ...(travellers ? { travellers } : {}) }} />
+        <PlannerWizard initial={{ ...fromPreferences(profile.data?.preferences), destination, ...dates, ...(travellers ? { travellers } : {}) }} />
       )}
     </div>
   );

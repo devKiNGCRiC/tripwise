@@ -54,7 +54,7 @@ describe('LandingPage', () => {
     expect(within(dossier).getByRole('link', { name: /When to go & what to do/ })).toHaveAttribute('href', '#region-guide');
 
     const guide = screen.getByRole('region', { name: /Himalaya guide/ });
-    const months = within(within(guide).getByRole('list', { name: 'When to go' })).getAllByRole('listitem');
+    const months = within(within(guide).getByRole('group', { name: 'Months' })).getAllByRole('button');
     expect(months).toHaveLength(12);
     expect(months.map((m) => m.textContent)).toEqual(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']);
     expect(months.filter((m) => m.getAttribute('aria-current') === 'date')).toHaveLength(1);
