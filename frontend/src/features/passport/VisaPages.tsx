@@ -31,7 +31,8 @@ function StampMark({ stamp, tilt }: { stamp: Stamp; tilt: number }) {
       className={cn('grid size-28 place-content-center rounded-full border-4 text-center leading-tight sm:size-32', upcoming ? 'border-dashed border-ink/30 text-soft' : 'border-double mix-blend-multiply dark:mix-blend-normal')}
       style={{ transform: `rotate(${upcoming ? 0 : tilt}deg)`, ...(upcoming ? {} : { borderColor: ink, color: ink }) }}
     >
-      <span className="px-2 font-display text-sm tracking-wider uppercase sm:text-base">{stamp.destination}</span>
+      {/* Long names get smaller letters so they stay inside the ring */}
+      <span className={cn('px-3 font-display tracking-wider uppercase', stamp.destination.length > 10 ? 'text-[11px] leading-tight sm:text-xs' : 'text-sm sm:text-base')}>{stamp.destination}</span>
       {stamp.localName && (
         <span lang="hi" className="text-sm">
           {stamp.localName}

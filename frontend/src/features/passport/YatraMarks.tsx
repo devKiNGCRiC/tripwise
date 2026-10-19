@@ -4,6 +4,7 @@
  */
 import type { Passport } from '@/lib/api/types';
 import { cn } from '@/lib/utils/cn';
+import { MarkIcon } from './MarkIcon';
 
 /** "2026-09-14" → "14 Sep 2026". */
 const nice = (date: string) => new Date(`${date}T00:00:00`).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -30,11 +31,11 @@ export function YatraMarks({ passport }: { passport: Passport }) {
             <span
               aria-hidden
               className={cn(
-                'grid size-14 place-items-center rounded-2xl text-2xl',
-                mark.earnedAt ? 'border border-[#e6c47c] bg-[#fff3d6] shadow-[0_6px_18px_-8px_rgb(224_155_45/.7)]' : 'bg-ink/6 opacity-40 grayscale',
+                'grid size-14 place-items-center rounded-2xl',
+                mark.earnedAt ? 'border border-[#e6c47c] bg-[#fff3d6] text-[#b8543a] shadow-[0_6px_18px_-8px_rgb(224_155_45/.7)]' : 'border border-dashed border-ink/20 text-ink/30',
               )}
             >
-              {mark.emoji}
+              <MarkIcon id={mark.id} className="size-6" />
             </span>
             <span aria-hidden className={cn('text-xs leading-tight font-semibold', !mark.earnedAt && 'text-soft')}>
               {mark.name}
@@ -44,7 +45,7 @@ export function YatraMarks({ passport }: { passport: Passport }) {
       </ul>
       {nextUp && (
         <p className="mt-5 border-t border-line pt-4 text-sm text-soft">
-          Next: {nextUp.emoji} <span className="font-semibold text-ink">{nextUp.name}</span> — {nextUp.how.charAt(0).toLowerCase() + nextUp.how.slice(1)}
+          Next: <span className="font-semibold text-ink">{nextUp.name}</span> — {nextUp.how.charAt(0).toLowerCase() + nextUp.how.slice(1)}
         </p>
       )}
     </section>

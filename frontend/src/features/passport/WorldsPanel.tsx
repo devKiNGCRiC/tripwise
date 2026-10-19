@@ -8,19 +8,17 @@ import { Link } from 'react-router';
 import type { Passport } from '@/lib/api/types';
 import { cn } from '@/lib/utils/cn';
 import { regionByKey } from '@/world/regions';
+import { WorldIcon } from './WorldIcon';
 
 /** The seven worlds panel. `mine` adds the "Plan it" link. */
 export function WorldsPanel({ passport, mine }: { passport: Passport; mine: boolean }) {
-  const visited = passport.worlds.filter((w) => w.visited).length;
   const title = mine ? 'Your seven worlds' : 'Seven worlds';
 
   return (
     <section aria-label={title} className="glass-strong rounded-card p-6 sm:p-8">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 className="font-display text-2xl">{title}</h2>
-        <p className="text-sm font-semibold text-soft">
-          {visited} of 7{passport.abroadCount > 0 && ` · Beyond India ${passport.abroadCount}`}
-        </p>
+        {passport.abroadCount > 0 && <p className="text-sm font-semibold text-soft">Beyond India · {passport.abroadCount}</p>}
       </div>
 
       <ul className="mt-6 grid grid-cols-4 gap-x-2 gap-y-5 sm:grid-cols-7">
@@ -31,11 +29,10 @@ export function WorldsPanel({ passport, mine }: { passport: Passport; mine: bool
             <li key={world.key} aria-label={`${world.name}: ${world.visited ? 'visited' : 'not yet'}`} className="flex flex-col items-center gap-2 text-center">
               <span
                 aria-hidden
-                className={cn('grid size-14 place-items-center rounded-full text-lg text-white transition sm:size-16', world.visited ? 'shadow-[0_0_0_5px_rgb(255_255_255/.6)]' : 'opacity-35 grayscale')}
-                style={{ background: world.visited ? colour : '#9aa7b2' }}
-                lang="hi"
+                className={cn('grid size-14 place-items-center rounded-full transition sm:size-16', world.visited ? 'text-white shadow-[0_0_0_5px_rgb(255_255_255/.6)]' : 'border-2 border-dashed border-ink/20 text-ink/35')}
+                style={world.visited ? { background: colour } : undefined}
               >
-                {region?.hi.charAt(0) ?? '•'}
+                <WorldIcon world={world.key} className="size-7 sm:size-8" />
               </span>
               <span aria-hidden className={cn('text-xs leading-tight font-semibold', !world.visited && 'text-soft')}>
                 {world.name}
