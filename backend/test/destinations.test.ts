@@ -5,6 +5,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import request from 'supertest';
 import { createApp } from '../src/app.js';
 import { seedDestinations } from '../scripts/seed-destinations.js';
+import catalogue from '../src/data/destinations.json' with { type: 'json' };
 import { startTestDb, stopTestDb } from './helpers/db.js';
 import { fakeChain } from './helpers/fakeAi.js';
 
@@ -20,11 +21,11 @@ const app = createApp({ ai: fakeChain() });
 const list = (query = '') => request(app).get(`/api/destinations${query}`);
 
 describe('destinations', () => {
-  it('seeds all 12 places, in catalogue order, safe to run twice', async () => {
-    expect(await seedDestinations()).toBe(12);
+  it('seeds the whole catalogue, in catalogue order, safe to run twice', async () => {
+    expect(await seedDestinations()).toBe(catalogue.length);
     const res = await list();
     expect(res.status).toBe(200);
-    expect(res.body.destinations).toHaveLength(12);
+    expect(res.body.destinations).toHaveLength(catalogue.length);
     expect(res.body.destinations[0].slug).toBe('goa');
     expect(res.body.destinations[0]).not.toHaveProperty('_id');
     expect(res.body.destinations[0]).not.toHaveProperty('order');
@@ -50,7 +51,8 @@ describe('destinations', () => {
   });
 
   it('treats search text literally (no crash on regex characters)', async () => {
-    const res = await list('?q=(');
+    // Regex characters no name contains: a crash or a match-everything would both fail.
+    const res = await list('?q=*[(');
     expect(res.status).toBe(200);
     expect(res.body.destinations).toEqual([]);
   });

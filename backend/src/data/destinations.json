@@ -226,6 +226,1445 @@
     }
   },
   {
+    "id": "d_rishikesh",
+    "slug": "rishikesh",
+    "region": "himalaya",
+    "localName": "ऋषिकेश",
+    "name": "Rishikesh",
+    "country": "India",
+    "vibes": [
+      "spiritual",
+      "adventure",
+      "nature"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      2,
+      3,
+      4,
+      9,
+      10,
+      11
+    ],
+    "summary": "Yoga capital on the Ganga: suspension bridges, evening aarti and white-water rafting.",
+    "highlights": [
+      "Lakshman Jhula",
+      "Ram Jhula Bridge",
+      "Neelkanth Mahadev Temple",
+      "Parmarth Niketan"
+    ],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Rishikesh%2C_Lakshman_Jhula.jpg/1280px-Rishikesh%2C_Lakshman_Jhula.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "McKay Savage from London, UK · CC BY 2.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Rishikesh,_Lakshman_Jhula.jpg"
+    }
+  },
+  {
+    "id": "d_dharamshala",
+    "slug": "dharamshala",
+    "region": "himalaya",
+    "localName": "धर्मशाला",
+    "name": "Dharamshala & McLeod Ganj",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "spiritual",
+      "nature"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11
+    ],
+    "summary": "Little Lhasa under the Dhauladhars: monasteries, Tibetan momos and the Triund trek.",
+    "highlights": [
+      "Namgyal Monastery",
+      "Jama Masjid Dharamshala",
+      "Tibet Museum",
+      "Dal Lake"
+    ],
+    "avgDailyCost": {
+      "amount": 2200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Lama_Dance%2C_Dharamsala%2C_India.jpg/1280px-Lama_Dance%2C_Dharamsala%2C_India.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "John Hill · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Lama_Dance,_Dharamsala,_India.jpg"
+    }
+  },
+  {
+    "id": "d_shimla",
+    "slug": "shimla",
+    "region": "himalaya",
+    "localName": "शिमला",
+    "name": "Shimla",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "romantic",
+      "nature"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      10,
+      11,
+      12
+    ],
+    "summary": "The old summer capital: Mall Road, colonial churches and the toy train through the hills.",
+    "highlights": [
+      "Jakhu Temple",
+      "Tara Devi Temple",
+      "Christ Church (Shimla)",
+      "Sanjauli Mosque"
+    ],
+    "avgDailyCost": {
+      "amount": 3500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/View_of_Jhakoo_Hanuman_from_the_Ridge.JPG/1280px-View_of_Jhakoo_Hanuman_from_the_Ridge.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Rvbalaiyer · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:View_of_Jhakoo_Hanuman_from_the_Ridge.JPG"
+    }
+  },
+  {
+    "id": "d_spiti",
+    "slug": "spiti",
+    "region": "himalaya",
+    "localName": "स्पीति",
+    "name": "Spiti Valley",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "adventure",
+      "spiritual"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      6,
+      7,
+      8,
+      9
+    ],
+    "summary": "A cold desert at 3,800 m: cliff-top monasteries, fossil villages and endless night skies.",
+    "highlights": [
+      "Key Monastery",
+      "Manirang",
+      "Takling La (Pass)",
+      "Tabo Monastery, Himachal Pradesh"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Kee_monastery_Spiti_Valley_%28edited%29.jpg/1280px-Kee_monastery_Spiti_Valley_%28edited%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Original: Kulbhushan Singh Suryawanshi (website) Derivative work: Aristeas · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Kee_monastery_Spiti_Valley_(edited).jpg"
+    }
+  },
+  {
+    "id": "d_darjeeling",
+    "slug": "darjeeling",
+    "region": "himalaya",
+    "localName": "दार्जिलिंग",
+    "name": "Darjeeling",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "nature",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      10,
+      11
+    ],
+    "summary": "Tea gardens, the toy train and Kanchenjunga at sunrise from Tiger Hill.",
+    "highlights": [
+      "Darjeeling Himalayan Railway",
+      "Padmaja Naidu Himalayan Zoological Park",
+      "Tiger Hill, Darjeeling",
+      "Senchal Lake"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Darjeeling_Himalayan_Railway_Diesel_Locomotive.jpg/1280px-Darjeeling_Himalayan_Railway_Diesel_Locomotive.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Subhrajyoti07 · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Darjeeling_Himalayan_Railway_Diesel_Locomotive.jpg"
+    }
+  },
+  {
+    "id": "d_gangtok",
+    "slug": "gangtok",
+    "region": "himalaya",
+    "localName": "गंगटोक",
+    "name": "Gangtok",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "spiritual",
+      "nature"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      10,
+      11,
+      12
+    ],
+    "summary": "Sikkim’s tidy hill capital: monasteries, MG Marg and high lakes towards Nathu La.",
+    "highlights": [
+      "Lake Tsongmo",
+      "Rumtek Monastery",
+      "Namgyal Institute of Tibetology",
+      "Hanuman Tok"
+    ],
+    "avgDailyCost": {
+      "amount": 3200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Tsongmo_Lake_or_Changu_Lake_-_East_Sikkim.jpg/1280px-Tsongmo_Lake_or_Changu_Lake_-_East_Sikkim.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Indrajit Das · CC BY 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Tsongmo_Lake_or_Changu_Lake_-_East_Sikkim.jpg"
+    }
+  },
+  {
+    "id": "d_jaisalmer",
+    "slug": "jaisalmer",
+    "region": "thar",
+    "localName": "जैसलमेर",
+    "name": "Jaisalmer",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "adventure",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "The Golden City: a living sandstone fort, carved havelis and nights on the Thar dunes.",
+    "highlights": [
+      "Jaisalmer Fort",
+      "Gadisar Lake",
+      "Jaisalmer War Museum",
+      "Jaisalmer Folklore Museum"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Jaisalmer_forteresse.jpg/1280px-Jaisalmer_forteresse.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Gérard Janot · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Jaisalmer_forteresse.jpg"
+    }
+  },
+  {
+    "id": "d_jodhpur",
+    "slug": "jodhpur",
+    "region": "thar",
+    "localName": "जोधपुर",
+    "name": "Jodhpur",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "food",
+      "city"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "The Blue City under Mehrangarh Fort, with spice markets and stepwells in the old town.",
+    "highlights": [
+      "Mehrangarh Fort",
+      "Kaylana Lake",
+      "Balsamand Lake",
+      "Toor Ji Ka Jhalra"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Mehrangarh_Fort.jpg/1280px-Mehrangarh_Fort.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Knowledge Seeker · Public domain",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Mehrangarh_Fort.jpg"
+    }
+  },
+  {
+    "id": "d_udaipur",
+    "slug": "udaipur",
+    "region": "thar",
+    "localName": "उदयपुर",
+    "name": "Udaipur",
+    "country": "India",
+    "vibes": [
+      "romantic",
+      "culture",
+      "city"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      9,
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "The City of Lakes: palaces on Lake Pichola, rooftop sunsets and old-city lanes.",
+    "highlights": [
+      "Lake Pichola",
+      "Jagdish Temple",
+      "Jag Mandir",
+      "Monsoon Palace"
+    ],
+    "avgDailyCost": {
+      "amount": 4000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Udaipur-Picholasee-02-2018-gje.jpg/1280px-Udaipur-Picholasee-02-2018-gje.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Gerd Eichmann · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Udaipur-Picholasee-02-2018-gje.jpg"
+    }
+  },
+  {
+    "id": "d_pushkar",
+    "slug": "pushkar",
+    "region": "thar",
+    "localName": "पुष्कर",
+    "name": "Pushkar",
+    "country": "India",
+    "vibes": [
+      "spiritual",
+      "culture",
+      "party"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "A holy lake ringed by 52 ghats, the rare Brahma temple and the famous camel fair.",
+    "highlights": [
+      "Pushkar Lake",
+      "Brahma Temple",
+      "Ana Sagar Lake",
+      "Lake Foy Sagar"
+    ],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Pushkar_Lake.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "credit": "LRBurdak · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Pushkar_Lake.jpg"
+    }
+  },
+  {
+    "id": "d_bikaner",
+    "slug": "bikaner",
+    "region": "thar",
+    "localName": "बीकानेर",
+    "name": "Bikaner",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "food",
+      "adventure"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Junagarh Fort, the camel research farm and the original home of bhujia.",
+    "highlights": [
+      "Karni Mata Temple",
+      "Junagarh Fort",
+      "Gajner Wildlife Sanctuary",
+      "Bhandasar Jain Temple"
+    ],
+    "avgDailyCost": {
+      "amount": 2200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Le_temple_de_Karni_Mata_%28Deshnoke%29_%288423353617%29.jpg/1280px-Le_temple_de_Karni_Mata_%28Deshnoke%29_%288423353617%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Jean-Pierre Dalbéra from Paris, France · CC BY 2.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Le_temple_de_Karni_Mata_(Deshnoke)_(8423353617).jpg"
+    }
+  },
+  {
+    "id": "d_agra",
+    "slug": "agra",
+    "region": "ganga",
+    "localName": "आगरा",
+    "name": "Agra",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "romantic",
+      "city"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "The Taj Mahal at dawn, Agra Fort and Mughal tombs along the Yamuna.",
+    "highlights": [
+      "Taj Mahal",
+      "Agra Fort",
+      "Akbar's Tomb",
+      "Tomb of I'timād-ud-Daulah"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Taj_Mahal%2C_Agra%2C_India_edit3.jpg/1280px-Taj_Mahal%2C_Agra%2C_India_edit3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Taj_Mahal,_Agra,_India_edit2.jpg: Yann; edited by King of Hearts derivative work · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Taj_Mahal,_Agra,_India_edit3.jpg"
+    }
+  },
+  {
+    "id": "d_delhi",
+    "slug": "delhi",
+    "region": "ganga",
+    "localName": "दिल्ली",
+    "name": "Delhi",
+    "country": "India",
+    "vibes": [
+      "city",
+      "food",
+      "culture"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Seven cities in one: Old Delhi’s food lanes, Mughal tombs and Lutyens’ boulevards.",
+    "highlights": [
+      "Red Fort",
+      "Qutb Minar",
+      "Humayun's Tomb",
+      "Jama Masjid, Delhi"
+    ],
+    "avgDailyCost": {
+      "amount": 3500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Red_Fort%2C_Delhi_by_alexfurr.jpg/1280px-Red_Fort%2C_Delhi_by_alexfurr.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Alex Furr · Attribution",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Red_Fort,_Delhi_by_alexfurr.jpg"
+    }
+  },
+  {
+    "id": "d_amritsar",
+    "slug": "amritsar",
+    "region": "ganga",
+    "localName": "अमृतसर",
+    "name": "Amritsar",
+    "country": "India",
+    "vibes": [
+      "spiritual",
+      "food",
+      "culture"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "The Golden Temple’s langar, Jallianwala Bagh and kulchas worth the trip alone.",
+    "highlights": [
+      "Harmandir Sahib",
+      "Akal Takht",
+      "Jallianwala Bagh",
+      "Durgiana Temple"
+    ],
+    "avgDailyCost": {
+      "amount": 2200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Hamandir_Sahib_%28Golden_Temple%29.jpg/1280px-Hamandir_Sahib_%28Golden_Temple%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "This picture has been taken by Oleg Yunakov. Contact e-mail: yunakovgmail.com. I · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Hamandir_Sahib_(Golden_Temple).jpg"
+    }
+  },
+  {
+    "id": "d_bodh_gaya",
+    "slug": "bodh-gaya",
+    "region": "ganga",
+    "localName": "बोधगया",
+    "name": "Bodh Gaya",
+    "country": "India",
+    "vibes": [
+      "spiritual",
+      "culture"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Where the Buddha found enlightenment: the Mahabodhi Temple and monasteries of many nations.",
+    "highlights": [
+      "Mahabodhi Temple",
+      "Sujata Garh",
+      "The Great Buddha",
+      "Archaeological Museum of Bodhgaya"
+    ],
+    "avgDailyCost": {
+      "amount": 1800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Mahabodhitemple.jpg/1280px-Mahabodhitemple.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Bpilgrim · CC BY-SA 2.5",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Mahabodhitemple.jpg"
+    }
+  },
+  {
+    "id": "d_lucknow",
+    "slug": "lucknow",
+    "region": "ganga",
+    "localName": "लखनऊ",
+    "name": "Lucknow",
+    "country": "India",
+    "vibes": [
+      "food",
+      "culture",
+      "city"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Nawabi city of kebabs and chikan embroidery, with the Bara Imambara’s maze.",
+    "highlights": [
+      "Bara Imambara",
+      "Rumi Darwaza",
+      "Sikandar Bagh",
+      "Chattar Manzil"
+    ],
+    "avgDailyCost": {
+      "amount": 2800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f0/Bara_Imambara_Lucknow.jpg/1280px-Bara_Imambara_Lucknow.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Muhammad Mahdi Karim · GFDL 1.2",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Bara_Imambara_Lucknow.jpg"
+    }
+  },
+  {
+    "id": "d_hampi",
+    "slug": "hampi",
+    "region": "deccan",
+    "localName": "हम्पी",
+    "name": "Hampi",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "adventure",
+      "nature"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2
+    ],
+    "summary": "The ruined Vijayanagara capital among giant boulders, with sunrise from Matanga Hill.",
+    "highlights": [
+      "Vijayanagara",
+      "Virupaksha Temple",
+      "Pampa Sarovar",
+      "Matanga Hill"
+    ],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/ShrineInTankVijayanagara.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "credit": "No machine-readable author provided. Imc assumed (based on copyright claims). · Public domain",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:ShrineInTankVijayanagara.jpg"
+    }
+  },
+  {
+    "id": "d_hyderabad",
+    "slug": "hyderabad",
+    "region": "deccan",
+    "localName": "हैदराबाद",
+    "name": "Hyderabad",
+    "country": "India",
+    "vibes": [
+      "food",
+      "culture",
+      "city"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2
+    ],
+    "summary": "Charminar, Golconda Fort and the biryani the city is famous for.",
+    "highlights": [
+      "Charminar",
+      "Salar Jung Museum",
+      "Mecca Masjid",
+      "Hussain Sagar"
+    ],
+    "avgDailyCost": {
+      "amount": 3200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Charminar-Pride_of_Hyderabad.jpg/1280px-Charminar-Pride_of_Hyderabad.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Gopikrishna Narla · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Charminar-Pride_of_Hyderabad.jpg"
+    }
+  },
+  {
+    "id": "d_ellora",
+    "slug": "ellora",
+    "region": "deccan",
+    "localName": "एलोरा",
+    "name": "Ellora & Aurangabad",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "spiritual"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "The rock-cut Kailasa temple, Buddhist and Jain caves, and Daulatabad’s hill fort.",
+    "highlights": [
+      "Ellora Caves",
+      "Kailasa Temple, Ellora",
+      "Bibi Ka Maqbara",
+      "Grishneshwar temple"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Ellora_Caves%2C_India%2C_Kailasanatha_Temple_2.jpg/1280px-Ellora_Caves%2C_India%2C_Kailasanatha_Temple_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Vyacheslav Argenberg · CC BY 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Ellora_Caves,_India,_Kailasanatha_Temple_2.jpg"
+    }
+  },
+  {
+    "id": "d_mysuru",
+    "slug": "mysuru",
+    "region": "deccan",
+    "localName": "मैसूरु",
+    "name": "Mysuru",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "city",
+      "food"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2
+    ],
+    "summary": "The illuminated Mysore Palace, Chamundi Hill and silk, sandalwood and Mysore pak.",
+    "highlights": [
+      "Mysore Palace",
+      "St. Philomena's Cathedral",
+      "Chamundi Hills",
+      "Chamundeshwari Temple"
+    ],
+    "avgDailyCost": {
+      "amount": 2800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Mysore_Palace_Morning.jpg/1280px-Mysore_Palace_Morning.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Muhammad Mahdi Karim · GFDL 1.2",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Mysore_Palace_Morning.jpg"
+    }
+  },
+  {
+    "id": "d_badami",
+    "slug": "badami",
+    "region": "deccan",
+    "localName": "बादामी",
+    "name": "Badami, Aihole & Pattadakal",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "adventure"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2
+    ],
+    "summary": "Chalukya cave temples above a red-sandstone lake, and the cradle of temple architecture.",
+    "highlights": [
+      "Pattadakal Group of Monuments",
+      "Badami cave temples",
+      "Bhutanatha group of temples, Badami",
+      "Durga temple, Aihole"
+    ],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/48/7th_-_9th_century_Hindu_and_Jain_temples%2C_Pattadakal_monuments_Karnataka_7.jpg/1280px-7th_-_9th_century_Hindu_and_Jain_temples%2C_Pattadakal_monuments_Karnataka_7.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Ms Sarah Welch · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:7th_-_9th_century_Hindu_and_Jain_temples,_Pattadakal_monuments_Karnataka_7.jpg"
+    }
+  },
+  {
+    "id": "d_bijapur",
+    "slug": "bijapur",
+    "region": "deccan",
+    "localName": "विजयपुरा",
+    "name": "Vijayapura (Bijapur)",
+    "country": "India",
+    "vibes": [
+      "culture"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2
+    ],
+    "summary": "The Gol Gumbaz whispering gallery and the Adil Shahi tombs and mosques.",
+    "highlights": [
+      "Gol Gumbaz",
+      "Jama Masjid, Bijapur",
+      "Bara Kaman",
+      "Bijapur Fort"
+    ],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Gol_Gumbaj2.JPG/1280px-Gol_Gumbaj2.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Meesanjay · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Gol_Gumbaj2.JPG"
+    }
+  },
+  {
+    "id": "d_munnar",
+    "slug": "munnar",
+    "region": "ghats",
+    "localName": "मुन्नार",
+    "name": "Munnar",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "mountains",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      9,
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Tea estates rolling over the hills, misty viewpoints and the Nilgiri tahr of Eravikulam.",
+    "highlights": [
+      "Western Ghats",
+      "Anamudi",
+      "Eravikulam National Park",
+      "Anaimalai Hills"
+    ],
+    "avgDailyCost": {
+      "amount": 3200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Naikolli_Mala_near_Anamudi.jpg/1280px-Naikolli_Mala_near_Anamudi.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Arunguy2002 · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Naikolli_Mala_near_Anamudi.jpg"
+    }
+  },
+  {
+    "id": "d_coorg",
+    "slug": "coorg",
+    "region": "ghats",
+    "localName": "कूर्ग",
+    "name": "Coorg",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "food",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Coffee estates, waterfalls and Kodava pork curry in the misty hills of Kodagu.",
+    "highlights": [
+      "Pushpagiri",
+      "Namdroling Monastery",
+      "Pushpagiri Wildlife Sanctuary",
+      "Honnamana Kere"
+    ],
+    "avgDailyCost": {
+      "amount": 3500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/On_the_Cliff.jpg/1280px-On_the_Cliff.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Charananasam · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:On_the_Cliff.jpg"
+    }
+  },
+  {
+    "id": "d_ooty",
+    "slug": "ooty",
+    "region": "ghats",
+    "localName": "ऊटी",
+    "name": "Ooty",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "nature",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11
+    ],
+    "summary": "The Nilgiri toy train, botanical gardens and tea country around the lake.",
+    "highlights": [
+      "Nilgiri Mountains",
+      "Nilgiri Mountain Railway",
+      "Doddabetta",
+      "Pykara"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Nilgiris_Range_Bokkapuram_Sep22_R16_06380.jpg/1280px-Nilgiris_Range_Bokkapuram_Sep22_R16_06380.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "This Photo was taken by Timothy A. Gonsalves. Feel free to use my photos, but pl · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Nilgiris_Range_Bokkapuram_Sep22_R16_06380.jpg"
+    }
+  },
+  {
+    "id": "d_wayanad",
+    "slug": "wayanad",
+    "region": "ghats",
+    "localName": "वायनाड",
+    "name": "Wayanad",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "summary": "Rainforest, the Edakkal caves’ ancient carvings and wildlife at Muthanga.",
+    "highlights": [
+      "Edakkal Caves",
+      "Soochipara Falls",
+      "Thusharagiri Falls",
+      "Wayanad Wildlife Sanctuary"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Edakkal_Caves_0429.jpg/1280px-Edakkal_Caves_0429.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Vengolis · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Edakkal_Caves_0429.jpg"
+    }
+  },
+  {
+    "id": "d_kodaikanal",
+    "slug": "kodaikanal",
+    "region": "ghats",
+    "localName": "कोडैकनाल",
+    "name": "Kodaikanal",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "nature",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10
+    ],
+    "summary": "A star-shaped lake, pine forests and cliff-edge views over the plains.",
+    "highlights": [
+      "Palani Hills",
+      "Thalaiyar Falls",
+      "Kodaikanal Lake",
+      "Kumbakkarai Falls"
+    ],
+    "avgDailyCost": {
+      "amount": 2800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/Palani_Hills.jpg/1280px-Palani_Hills.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "No machine-readable author provided. Vinay~commonswiki assumed (based on copyrig · Public domain",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Palani_Hills.jpg"
+    }
+  },
+  {
+    "id": "d_mahabaleshwar",
+    "slug": "mahabaleshwar",
+    "region": "ghats",
+    "localName": "महाबळेश्वर",
+    "name": "Mahabaleshwar",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "romantic",
+      "mountains"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "summary": "Strawberry farms, Sahyadri viewpoints and Shivaji’s Pratapgad fort nearby.",
+    "highlights": [
+      "Pratapgad",
+      "Venna Lake",
+      "Kamalgad",
+      "Chandragad"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Pratapgad_The_Fort_of_Valour.jpg/1280px-Pratapgad_The_Fort_of_Valour.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Neeraj Rane · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Pratapgad_The_Fort_of_Valour.jpg"
+    }
+  },
+  {
+    "id": "d_kochi",
+    "slug": "kochi",
+    "region": "konkan",
+    "localName": "कोच्चि",
+    "name": "Kochi",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "food",
+      "city"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Chinese fishing nets, Jew Town’s spice lanes and Kathakali in Fort Kochi.",
+    "highlights": [
+      "St. Francis Church",
+      "Santa Cruz Basilica",
+      "Willingdon Island",
+      "Mattancherry Palace"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Church_of_St_Anthony_of_Lisbon.jpg/1280px-Church_of_St_Anthony_of_Lisbon.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "SerChevalerie · CC0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Church_of_St_Anthony_of_Lisbon.jpg"
+    }
+  },
+  {
+    "id": "d_mumbai",
+    "slug": "mumbai",
+    "region": "konkan",
+    "localName": "मुंबई",
+    "name": "Mumbai",
+    "country": "India",
+    "vibes": [
+      "city",
+      "food",
+      "party"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      11,
+      12,
+      1,
+      2
+    ],
+    "summary": "Gateway of India, Marine Drive at night and vada pav on every corner.",
+    "highlights": [
+      "Elephanta Caves",
+      "Elephanta Island",
+      "Haji Ali Dargah",
+      "Chhatrapati Shivaji Maharaj Vastu Sangrahalaya"
+    ],
+    "avgDailyCost": {
+      "amount": 4500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Elephanta_Caves%2C_India.jpg/1280px-Elephanta_Caves%2C_India.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Vyacheslav Argenberg · CC BY 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Elephanta_Caves,_India.jpg"
+    }
+  },
+  {
+    "id": "d_gokarna",
+    "slug": "gokarna",
+    "region": "konkan",
+    "localName": "गोकर्ण",
+    "name": "Gokarna",
+    "country": "India",
+    "vibes": [
+      "beach",
+      "spiritual",
+      "nature"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "A temple town with quiet coves — Om, Kudle and Half Moon beaches on a cliff trail.",
+    "highlights": [
+      "Mahabaleshwar Temple"
+    ],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Main_entry_to_the_Mahabaleshwar_Temple_at_Gokaran.jpg/1280px-Main_entry_to_the_Mahabaleshwar_Temple_at_Gokaran.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Nvvchar · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Main_entry_to_the_Mahabaleshwar_Temple_at_Gokaran.jpg"
+    }
+  },
+  {
+    "id": "d_varkala",
+    "slug": "varkala",
+    "region": "konkan",
+    "localName": "वर्कला",
+    "name": "Varkala",
+    "country": "India",
+    "vibes": [
+      "beach",
+      "spiritual",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Red laterite cliffs above the Arabian Sea, with cafés on the edge and a 2,000-year-old temple.",
+    "highlights": [
+      "Varkala Beach",
+      "Anchuthengu Fort",
+      "Janardanaswamy Temple",
+      "Palakkavu Bhagavathi temple"
+    ],
+    "avgDailyCost": {
+      "amount": 2800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Anchutheng_fort.jpg/1280px-Anchutheng_fort.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Prasanthvembayam · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Anchutheng_fort.jpg"
+    }
+  },
+  {
+    "id": "d_shillong",
+    "slug": "shillong",
+    "region": "sisters",
+    "localName": "शिलांग",
+    "name": "Shillong",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "city",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "summary": "The Scotland of the East: pine hills, Ward’s Lake, live music and waterfalls nearby.",
+    "highlights": [
+      "Shillong Plateau",
+      "Umiam Lake",
+      "Madina Mosque, Shillong",
+      "Bishop Falls"
+    ],
+    "avgDailyCost": {
+      "amount": 2800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/66/Shillong_peak.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "credit": "Sindhuja0505 · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Shillong_peak.jpg"
+    }
+  },
+  {
+    "id": "d_cherrapunji",
+    "slug": "cherrapunji",
+    "region": "sisters",
+    "localName": "चेरापूंजी",
+    "name": "Cherrapunji (Sohra)",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "summary": "Living root bridges, plunging waterfalls and caves in one of the wettest places on earth.",
+    "highlights": [
+      "Nohsngithiang Falls",
+      "Nohkalikai Falls",
+      "Kynrem Falls",
+      "Wah Kaba Falls"
+    ],
+    "avgDailyCost": {
+      "amount": 2800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Cherrapunji_waterfalls_%28India%2C_2013%29.jpg/1280px-Cherrapunji_waterfalls_%28India%2C_2013%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Indrani911basu · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Cherrapunji_waterfalls_(India,_2013).jpg"
+    }
+  },
+  {
+    "id": "d_tawang",
+    "slug": "tawang",
+    "region": "sisters",
+    "localName": "तवांग",
+    "name": "Tawang",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "spiritual",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10
+    ],
+    "summary": "India’s largest monastery at 3,000 m, high lakes and the drive over Sela Pass.",
+    "highlights": [
+      "Tawang Monastery",
+      "Sela Pass",
+      "Bum La Pass",
+      "Chumi Gyatse Falls"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Tawang_Monastery_%28Tibetan_Buddhist%29.jpg/1280px-Tawang_Monastery_%28Tibetan_Buddhist%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Vikramjit Kakati · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Tawang_Monastery_(Tibetan_Buddhist).jpg"
+    }
+  },
+  {
+    "id": "d_kaziranga",
+    "slug": "kaziranga",
+    "region": "sisters",
+    "localName": "काज़ीरंगा",
+    "name": "Kaziranga",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "summary": "Home of two-thirds of the world’s one-horned rhinos; jeep and elephant-grass safaris.",
+    "highlights": [
+      "Kaziranga National Park",
+      "Hatimura Temple",
+      "Bharali Namghar",
+      "Nagsankar Mandir"
+    ],
+    "avgDailyCost": {
+      "amount": 4000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Indian_Rhinoceros_Rhinoceros_unicornis_by_Dr._Raju_Kasambe_%285%29.JPG/1280px-Indian_Rhinoceros_Rhinoceros_unicornis_by_Dr._Raju_Kasambe_%285%29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Dr. Raju Kasambe · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Indian_Rhinoceros_Rhinoceros_unicornis_by_Dr._Raju_Kasambe_(5).JPG"
+    }
+  },
+  {
+    "id": "d_kohima",
+    "slug": "kohima",
+    "region": "sisters",
+    "localName": "कोहिमा",
+    "name": "Kohima",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "summary": "Naga hill capital: the WWII cemetery, Dzukou Valley and the Hornbill Festival in December.",
+    "highlights": [
+      "Mary Help of Christians Cathedral, Kohima",
+      "Nagaland State Museum",
+      "Dzüko Valley",
+      "Kohima Botanical Garden"
+    ],
+    "avgDailyCost": {
+      "amount": 2800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Mary_Help_of_Christians_Cathedral_Kohima.jpg/1280px-Mary_Help_of_Christians_Cathedral_Kohima.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Rita Willaert · CC BY 2.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Mary_Help_of_Christians_Cathedral_Kohima.jpg"
+    }
+  },
+  {
+    "id": "d_majuli",
+    "slug": "majuli",
+    "region": "sisters",
+    "localName": "माजुली",
+    "name": "Majuli",
+    "country": "India",
+    "vibes": [
+      "spiritual",
+      "culture",
+      "nature"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "A huge river island on the Brahmaputra with Vaishnavite satras and mask-making.",
+    "highlights": [
+      "Burhi Gosani Devalaya Jorhat",
+      "Mulai Kathoni",
+      "Bongal Pukhuri",
+      "Moinaporia Namghar"
+    ],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/SRI_SRI_BURHI_GOSANI_DEVALAYA_Jorhat_Assam_India.jpg/1280px-SRI_SRI_BURHI_GOSANI_DEVALAYA_Jorhat_Assam_India.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Sarangakrishnachetia · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:SRI_SRI_BURHI_GOSANI_DEVALAYA_Jorhat_Assam_India.jpg"
+    }
+  },
+  {
     "id": "d_bali",
     "slug": "bali",
     "localName": "बाली",
