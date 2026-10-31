@@ -137,6 +137,8 @@ export interface Activity {
   estCost?: number;
   /** Getting to the NEXT activity (absent on the day's last one) */
   transfer?: { mode: TransferMode; minutes: number };
+  /** The catalogue place this stop is at, when it is one (id and coordinates, for maps later). */
+  place?: { id: string; lat: number; lon: number };
 }
 
 export interface Day {

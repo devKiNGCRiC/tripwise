@@ -2,7 +2,8 @@
  * prompt.ts — what we tell the AI.
  *
  * `system` holds the fixed rules (how a good TripWise plan looks); `user` holds this
- * traveller's details. Anything the traveller typed (the destination) is cut short and
+ * traveller's details and, for destinations in our catalogue, a shortlist of real places to
+ * prefer (services/places.ts) so plans are built on places that exist. Anything the traveller typed (the destination) is cut short and
  * wrapped in tags, and the rules say to treat it as data — so text like "ignore your
  * instructions" in the destination box can't take over the model.
  */
@@ -37,6 +38,14 @@ function safeDestination(text: string): string {
   return text.replace(/[<>]/g, '').trim().slice(0, 80);
 }
 
+/** The catalogue shortlist as prompt lines (empty when the destination isn't in the catalogue). */
+function placesBlock(places: { name: string; kind: string }[] = []): string {
+  if (!places.length) return '';
+  return `Real places at this destination (TripWise's catalogue, most relevant first). For sightseeing stops, prefer these and write their names exactly as given; add well-known food spots, markets and experiences as needed:
+${places.map((p) => `- ${p.name} (${p.kind})`).join('\n')}
+`;
+}
+
 /** Rules shared by every TripWise prompt. */
 const RULES = `You are TripWise, a friendly travel planner based in India who plans trips anywhere in the world.
 Write practical, realistic plans that a real traveller can follow.
@@ -53,7 +62,7 @@ Rules:
 - Answer with JSON only, exactly matching the given schema. No extra text.`;
 
 /** The prompt for a whole trip. */
-export function tripPrompt(req: TripRequest): Prompt {
+export function tripPrompt(req: TripRequest, places?: { name: string; kind: string }[]): Prompt {
   const dates = tripDates(req.startDate, req.endDate);
   const perDay = ACTIVITIES_PER_DAY[req.pace];
   const month = MONTHS[Number(req.startDate.slice(5, 7)) - 1];
@@ -65,12 +74,12 @@ Budget: about ${req.budget.amount} ${req.budget.currency} per person per day.
 Loves: ${req.interests.join(', ')}.
 Pace: ${req.pace} — exactly ${perDay} activities every day (meals at a named place count as activities).
 Write exactly ${dates.length} days, in order, leaning towards what they love.
-JSON schema: ${JSON.stringify(tripJsonSchema)}`;
+${placesBlock(places)}JSON schema: ${JSON.stringify(tripJsonSchema)}`;
   return { system: RULES, user, jsonSchema: tripJsonSchema };
 }
 
 /** The prompt for a fresh take on one day, avoiding places used on the other days. */
-export function dayPrompt(req: TripRequest, otherDays: AiDay[], dayNumber: number): Prompt {
+export function dayPrompt(req: TripRequest, otherDays: AiDay[], dayNumber: number, places?: { name: string; kind: string }[]): Prompt {
   const perDay = ACTIVITIES_PER_DAY[req.pace];
   const used = otherDays
     .filter((_, index) => index !== dayNumber - 1)
@@ -81,6 +90,6 @@ Dates of the trip: ${req.startDate} to ${req.endDate}.
 Who: ${GROUP[req.travellers]}. Budget: about ${req.budget.amount} ${req.budget.currency} per person per day.
 Loves: ${req.interests.join(', ')}. Pace: ${req.pace} — exactly ${perDay} activities.
 Do not repeat these places from other days: ${used.length ? used.join('; ') : 'none'}.
-JSON schema: ${JSON.stringify(dayJsonSchema)}`;
+${placesBlock(places)}JSON schema: ${JSON.stringify(dayJsonSchema)}`;
   return { system: RULES, user, jsonSchema: dayJsonSchema };
 }

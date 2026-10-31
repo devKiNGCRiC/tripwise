@@ -43,6 +43,8 @@ export interface Activity {
   estCost?: number;
   /** Getting to the next activity (absent on the day's last one). */
   transfer?: { mode: TransferMode; minutes: number };
+  /** The catalogue place this stop is at, when it is one. */
+  place?: { id: string; lat: number; lon: number };
 }
 
 /** One day of the trip. */

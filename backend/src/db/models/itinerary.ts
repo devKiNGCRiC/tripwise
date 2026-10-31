@@ -21,6 +21,11 @@ const activitySchema = new Schema(
       type: new Schema({ mode: { type: String, required: true }, minutes: { type: Number, required: true } }, { _id: false }),
       default: undefined,
     },
+    /** The catalogue place this stop is at, when it is one (services/places.ts). */
+    place: {
+      type: new Schema({ id: { type: String, required: true }, lat: { type: Number, required: true }, lon: { type: Number, required: true } }, { _id: false }),
+      default: undefined,
+    },
   },
   { _id: false },
 );

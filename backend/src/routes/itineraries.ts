@@ -29,6 +29,7 @@ import type { AiDay } from '../services/ai/schema.js';
 import { dayPrompt, tripPrompt } from '../services/ai/prompt.js';
 import { parseDay, parseTrip } from '../services/ai/validate.js';
 import { buildItinerary } from '../services/buildItinerary.js';
+import { groundingFor, matchPlaces } from '../services/places.js';
 import { addToCache, cacheKey, pickCached } from '../services/cache.js';
 import type { PhotoStore } from '../services/photos.js';
 import { getQuota, nextIstMidnight, refund, reserve } from '../services/quota.js';
@@ -71,12 +72,21 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     const now = deps.now();
     const tripRequest = parseTripRequest(req.body, now, PLANS[user.plan].maxDays);
     const key = cacheKey(tripRequest);
+    // Real places at this destination: a shortlist for the AI, and all of them to link stops to.
+    const grounding = await groundingFor(tripRequest.destination, tripRequest.interests);
 
     // A similar trip was planned before: re-use one of those plans (instant and free).
     const cached = await pickCached(key, user.id);
     if (cached) {
       const trip = await Itinerary.create(
-        buildItinerary(cached.trip, tripRequest, { region: await regionFor(tripRequest.destination, cached.trip.region), ownerId: user.id, provider: cached.provider, source: 'cache', cacheVariantId: cached.variantId }),
+        buildItinerary(cached.trip, tripRequest, {
+          region: await regionFor(tripRequest.destination, cached.trip.region),
+          ownerId: user.id,
+          provider: cached.provider,
+          source: 'cache',
+          cacheVariantId: cached.variantId,
+          places: grounding.all,
+        }),
       );
       res.json({ itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
       return;
@@ -88,10 +98,12 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     }
     let trip;
     try {
-      const { value, provider } = await deps.ai.run(tripPrompt(tripRequest), (text) => parseTrip(text, tripRequest));
+      const { value, provider } = await deps.ai.run(tripPrompt(tripRequest, grounding.shortlist), (text) => parseTrip(text, tripRequest));
       // Keep the new plan for similar trips later (while the pool has room).
       const cacheVariantId = (await addToCache(key, value, provider)) ?? undefined;
-      trip = await Itinerary.create(buildItinerary(value, tripRequest, { region: await regionFor(tripRequest.destination, value.region), ownerId: user.id, provider, source: 'ai', cacheVariantId }));
+      trip = await Itinerary.create(
+        buildItinerary(value, tripRequest, { region: await regionFor(tripRequest.destination, value.region), ownerId: user.id, provider, source: 'ai', cacheVariantId, places: grounding.all }),
+      );
     } catch (error) {
       // Nothing was saved: give today's plan back.
       await refund(user.id, 'plans', now);
@@ -111,6 +123,8 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     const tripRequest = parseTripRequest(req.body, now, PLANS[user.plan].maxDays);
     const key = cacheKey(tripRequest);
     const dates = tripDates(tripRequest.startDate, tripRequest.endDate);
+    // Real places at this destination: a shortlist for the AI, and all of them to link stops to.
+    const grounding = await groundingFor(tripRequest.destination, tripRequest.interests);
 
     /** Start the event stream (headers go out now, so the page can listen). */
     const open = () => {
@@ -135,7 +149,14 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     const cached = await pickCached(key, user.id);
     if (cached) {
       const trip = await Itinerary.create(
-        buildItinerary(cached.trip, tripRequest, { region: await regionFor(tripRequest.destination, cached.trip.region), ownerId: user.id, provider: cached.provider, source: 'cache', cacheVariantId: cached.variantId }),
+        buildItinerary(cached.trip, tripRequest, {
+          region: await regionFor(tripRequest.destination, cached.trip.region),
+          ownerId: user.id,
+          provider: cached.provider,
+          source: 'cache',
+          cacheVariantId: cached.variantId,
+          places: grounding.all,
+        }),
       );
       open();
       send({ type: 'meta', title: cached.trip.title, summary: cached.trip.summary });
@@ -160,7 +181,7 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     let sentDays = 0;
     let saved = false;
     try {
-      const { value, provider } = await deps.ai.run(tripPrompt(tripRequest), (text) => parseTrip(text, tripRequest), {
+      const { value, provider } = await deps.ai.run(tripPrompt(tripRequest, grounding.shortlist), (text) => parseTrip(text, tripRequest), {
         signal: leaving.signal,
         // Pass along whatever is complete so far.
         onText(chunk) {
@@ -176,7 +197,9 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
         },
       });
       const cacheVariantId = (await addToCache(key, value, provider)) ?? undefined;
-      const trip = await Itinerary.create(buildItinerary(value, tripRequest, { region: await regionFor(tripRequest.destination, value.region), ownerId: user.id, provider, source: 'ai', cacheVariantId }));
+      const trip = await Itinerary.create(
+        buildItinerary(value, tripRequest, { region: await regionFor(tripRequest.destination, value.region), ownerId: user.id, provider, source: 'ai', cacheVariantId, places: grounding.all }),
+      );
       saved = true;
       send({ type: 'done', itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
     } catch (error) {
@@ -235,9 +258,10 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     try {
       const request = trip.request as unknown as TripRequest;
       const otherDays = trip.days.map((day) => ({ theme: day.theme, activities: day.activities as never }));
-      const { value } = await deps.ai.run(dayPrompt(request, otherDays, dayNumber), (text) => parseDay(text, request.pace as Pace));
-      // Replace just this day; its number and date stay the same.
-      trip.set(`days.${dayNumber - 1}`, { dayNumber, date: current.date, theme: value.theme, activities: value.activities });
+      const grounding = await groundingFor(request.destination, request.interests);
+      const { value } = await deps.ai.run(dayPrompt(request, otherDays, dayNumber, grounding.shortlist), (text) => parseDay(text, request.pace as Pace));
+      // Replace just this day; its number and date stay the same; stops at catalogue places are linked.
+      trip.set(`days.${dayNumber - 1}`, { dayNumber, date: current.date, theme: value.theme, activities: matchPlaces(value.activities, grounding.all, request.destination) });
       await trip.save();
       res.json({ itinerary: publicItinerary(trip) });
     } catch (error) {
