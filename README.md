@@ -19,7 +19,7 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 🌗 | Day and Night for every world, region colours, photo-tinted personalisation, Calm motion | ✅ Done |
 | 📱 | Mobile-first layout with an app-style bottom tab bar | ✅ Done |
 | 🧭 | Explore 50 destinations by world, vibe, budget and best month; destination guides with their top places | ✅ Done |
-| 📍 | Places catalogue: 1,030 real places across 44 Indian destinations in all seven worlds (Wikidata, credited Commons photos) | ✅ Done |
+| 📍 | Places catalogue: 1,028 real places across 44 Indian destinations in all seven worlds (Wikidata, credited Commons photos) | ✅ Done |
 | 🧠 | AI plans grounded in real places; TripWise's own planner as a free, unlimited Quick plan and when the AI is down | ✅ Done |
 | 🪄 | Trip planner wizard + real AI itineraries that appear day by day (5 free plans a day) | ✅ Done |
 | 🎟️ | Day-by-day itinerary (timed stops, transfers, costs), regenerate a day, PDF, share link | ✅ Done |

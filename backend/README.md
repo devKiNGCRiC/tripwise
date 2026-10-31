@@ -19,7 +19,7 @@ website ──/api──► Express API ──► MongoDB Atlas (users, trips, d
   "our planners are busy" and the attempt doesn't count against their daily plans.
 - **Streaming.** `POST /api/itineraries/generate/stream` sends the trip day by day while the AI writes it.
 - **Places catalogue.** `src/data/destinations.json` and `src/data/places.json` hold 50 destinations and
-  1,030 places at 44 Indian ones (all seven worlds), built by `npm run import:catalogue` from Wikidata (CC0)
+  1,028 places at 44 Indian ones (all seven worlds), built by `npm run import:catalogue` from Wikidata (CC0)
   with credited Wikimedia Commons photos. The website's demo mode reads the same two files.
 - **Grounded plans.** For a catalogue destination (found however it's typed: "Hampi, Karnataka", "Leh",
   "Alleppey"), the AI gets a shortlist of real places that suit the traveller's interests, and stops that
