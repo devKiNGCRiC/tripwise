@@ -4,8 +4,12 @@
 travel crew and vibe, and it builds a day-by-day itinerary with costs, local tips and a packing list.
 You can then save it, download it as a PDF, or share it with your friends.
 
-> 🚧 **Status: in active development.** The website and the real backend both work: accounts, saved trips and
-> real AI itineraries (Gemini, with Groq as backup). Deployment is next. See the [roadmap](#-roadmap).
+![TripWise homepage: the Himalaya world with the trip planner, the region guide and the seven worlds bar](docs/screenshots/home.png)
+
+> 🚧 **Status: in active development.** The website and the real backend both work: accounts, passports and
+> friends, saved trips, real AI itineraries (Gemini, with Groq as backup) grounded in a catalogue of 1,028 real
+> places, and TripWise's own free Quick plan. Next: the "Ask TripWise" chat, Crew mode, then launch on
+> Cloudflare Pages + Render. See the [roadmap](#-roadmap).
 
 ---
 
@@ -14,11 +18,12 @@ You can then save it, download it as a PDF, or share it with your friends.
 | | Feature | Status |
 |---|---|---|
 | 🔐 | Sign up / log in with email, secure sessions (short tokens + rotating cookie) | ✅ Done (Google sign-in later) |
-| 🏠 | Landing page with trending destinations | ✅ Done |
+| 🏠 | Homepage that leads into planning: the seven worlds, places at their best this month | ✅ Done |
+| 📅 | Month-by-month guide: tap a month for its weather (IMD averages), festivals with dates, and what's in season | ✅ Done |
 | 🏞️ | "Seven Worlds": a living, hand-drawn landscape of seven Indian regions behind every page | ✅ Done |
-| 🌗 | Day and Night for every world, region colours, photo-tinted personalisation, Calm motion | ✅ Done |
+| 🌗 | Day and Night for every world, region colours, a Colours menu that tints the site from your photo (kept on your account), Calm motion | ✅ Done |
 | 📱 | Mobile-first layout with an app-style bottom tab bar | ✅ Done |
-| 🧭 | Explore 50 destinations by world, vibe, budget and best month; destination guides with their top places | ✅ Done |
+| 🧭 | Explore 50 destinations (44 in India across all seven worlds, 6 abroad) by world, vibe, budget and best month; destination guides with their top places | ✅ Done |
 | 📍 | Places catalogue: 1,028 real places across 44 Indian destinations in all seven worlds (Wikidata, credited Commons photos) | ✅ Done |
 | 🧠 | AI plans grounded in real places; TripWise's own planner as a free, unlimited Quick plan and when the AI is down | ✅ Done |
 | 🪄 | Trip planner wizard + real AI itineraries that appear day by day (5 free plans a day) | ✅ Done |
