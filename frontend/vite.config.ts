@@ -15,9 +15,13 @@ export default defineConfig({
   // React (JSX + fast refresh) and Tailwind CSS v4 (utility classes) plugins.
   plugins: [react(), tailwindcss()],
 
-  // `@/` points at `src/` — must match "paths" in tsconfig.json.
+  // `@/` points at `src/`; `@catalogue/` at the backend's catalogue files (destinations and
+  // places), so the mock API serves exactly the real data. Both must match "paths" in tsconfig.json.
   resolve: {
-    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@catalogue': fileURLToPath(new URL('../backend/src/data', import.meta.url)),
+    },
   },
 
   // The PDF maker (@react-pdf/renderer, ~1.2 MB) is its own chunk, downloaded only when a

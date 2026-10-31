@@ -74,6 +74,28 @@ export interface Destination {
   image: { url: string; credit: string; creditUrl: string };
 }
 
+/** What kind of place it is (backend services/placeKinds.ts). */
+export type PlaceKind = 'temple' | 'shrine' | 'ghat' | 'fort' | 'palace' | 'museum' | 'wildlife' | 'heritage' | 'beach' | 'water' | 'garden' | 'nature' | 'market' | 'monument';
+
+/** A place to visit at a destination, from the catalogue (Wikidata; photos from Commons, credited). */
+export interface Place {
+  /** Stable id from the Wikidata item, e.g. "p_Q1234" */
+  id: string;
+  /** The destination's slug */
+  destination: string;
+  name: string;
+  description?: string;
+  kind: PlaceKind;
+  interests: Interest[];
+  lat: number;
+  lon: number;
+  /** How many Wikipedias cover it (higher = more famous) */
+  fame: number;
+  wikidata: string;
+  wikipedia?: string;
+  image?: { url: string; credit: string; creditUrl: string };
+}
+
 /** Optional filters for GET /destinations. */
 export interface DestinationFilters {
   vibe?: Vibe;

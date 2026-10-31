@@ -27,7 +27,9 @@
     "types": ["vite/client", "node"],
 
     // `@/lib/api/client` instead of `../../../lib/api/client`. Mirrored in vite.config.ts.
-    "paths": { "@/*": ["./src/*"] }
+    "paths": { "@/*": ["./src/*"], "@catalogue/*": ["../backend/src/data/*"] },
+    // The catalogue is JSON, shared with the backend.
+    "resolveJsonModule": true
   },
   "include": ["src", "vite.config.ts"]
 }

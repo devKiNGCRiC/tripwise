@@ -78,13 +78,15 @@ describe('LandingPage', () => {
     expect(screen.getByLabelText("Who's going")).toHaveValue('Family');
   });
 
-  it('each world card leads to its places: Explore filtered to that world, or the planner where none are listed yet', async () => {
+  it('each world card leads to its places in Explore', async () => {
     const { user, router } = renderApp('/');
     const worlds = await screen.findByRole('region', { name: /Seven worlds/ });
     const konkan = within(worlds).getByRole('link', { name: /^Konkan & Malabar/ });
-    expect(await within(konkan).findByText('2 places')).toBeInTheDocument();
+    const count = seedDestinations.filter((d) => d.region === 'konkan').length;
+    expect(await within(konkan).findByText(`${count} destinations`)).toBeInTheDocument();
     expect(within(konkan).getByText(/Goa/)).toBeInTheDocument();
-    expect(within(worlds).getByRole('link', { name: /^Deccan Plateau/ })).toHaveAttribute('href', '/plan?destination=Hampi');
+    // Every world now has places in the catalogue.
+    expect(within(worlds).getByRole('link', { name: /^Deccan Plateau/ })).toHaveAttribute('href', '/explore?world=deccan');
     await user.click(konkan);
     await waitFor(() => expect(router.state.location.pathname).toBe('/explore'));
     expect(router.state.location.search).toBe('?world=konkan');

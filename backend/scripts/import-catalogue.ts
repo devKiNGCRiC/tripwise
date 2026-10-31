@@ -155,7 +155,8 @@ async function credits(files: string[]): Promise<Map<string, CataloguePlace['ima
       const licence = meta.LicenseShortName?.value?.trim();
       if (!info?.thumburl || !author || !licence) continue;
       const asked = (back.get(page.title) ?? page.title).replace(/^File:/, '');
-      found.set(asked, { url: info.thumburl, credit: `${author.slice(0, 80)} · ${licence}`, creditUrl: info.descriptionurl });
+      // Drop Commons' tracking parameters from the photo address.
+      found.set(asked, { url: info.thumburl.split('?')[0], credit: `${author.slice(0, 80)} · ${licence}`, creditUrl: info.descriptionurl });
     }
     await sleep(500);
   }

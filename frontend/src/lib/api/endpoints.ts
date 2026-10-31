@@ -5,7 +5,7 @@
  */
 import { api } from './client';
 import { ApiError, friendlyMessage } from './errors';
-import type { AuthResponse, Card, Destination, DestinationFilters, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
+import type { AuthResponse, Card, Destination, DestinationFilters, Interest, Place, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
 
 /** Turn a filters object into "?a=1&b=2", skipping empty values. */
 function toQuery(params: Record<string, string | number | undefined>): string {
@@ -32,6 +32,9 @@ export const destinationsApi = {
   list: (filters: DestinationFilters = {}) =>
     api.request<{ destinations: Destination[] }>(`/destinations${toQuery({ ...filters })}`),
   get: (slug: string) => api.request<{ destination: Destination }>(`/destinations/${encodeURIComponent(slug)}`),
+  /** A destination's places, most famous first (optionally only those suiting one interest). */
+  places: (slug: string, interest?: Interest) =>
+    api.request<{ places: Place[] }>(`/destinations/${encodeURIComponent(slug)}/places${toQuery({ interest })}`),
 };
 
 /** Itineraries: AI generation, the traveller's own trips, one-day regeneration and sharing. */

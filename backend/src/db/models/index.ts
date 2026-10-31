@@ -8,6 +8,7 @@ export { Friendship } from './friendship.js';
 export { Itinerary, type ItineraryDoc, type ItineraryFields } from './itinerary.js';
 export { Journal } from './journal.js';
 export { PasswordReset } from './passwordReset.js';
+export { Place, type PlaceFields } from './place.js';
 export { Photo } from './photo.js';
 export { PlanCache } from './planCache.js';
 export { Session } from './session.js';

@@ -5,7 +5,11 @@
  */
 import { screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+import { seedDestinations } from '@/mocks/data/destinations';
 import { renderApp } from '@/test/render';
+
+/** Every destination in the catalogue. */
+const ALL = seedDestinations.length;
 
 /** The destination links in the results grid. */
 async function results() {
@@ -16,19 +20,19 @@ async function results() {
 describe('ExplorePage', () => {
   it('lists every destination at first', async () => {
     renderApp('/explore');
-    await waitFor(async () => expect(await results()).toHaveLength(12));
+    await waitFor(async () => expect(await results()).toHaveLength(ALL));
     expect(screen.getByRole('heading', { level: 1, name: /Explore/ })).toBeInTheDocument();
   });
 
   it('narrows by vibe and keeps the filter in the address', async () => {
     const { user, router } = renderApp('/explore');
-    await waitFor(async () => expect(await results()).toHaveLength(12));
+    await waitFor(async () => expect(await results()).toHaveLength(ALL));
     await user.selectOptions(screen.getByRole('combobox', { name: 'Vibe' }), 'beach');
     await waitFor(() => expect(router.state.location.search).toContain('vibe=beach'));
     await waitFor(async () => {
       const names = (await results()).map((a) => a.getAttribute('aria-label'));
       expect(names.length).toBeGreaterThan(0);
-      expect(names.length).toBeLessThan(12);
+      expect(names.length).toBeLessThan(ALL);
       expect(names.some((n) => n?.startsWith('Goa'))).toBe(true);
     });
   });
@@ -42,22 +46,23 @@ describe('ExplorePage', () => {
 
   it('filters by world (one of the seven regions)', async () => {
     const { user } = renderApp('/explore');
-    await waitFor(async () => expect(await results()).toHaveLength(12));
+    await waitFor(async () => expect(await results()).toHaveLength(ALL));
+    const himalaya = seedDestinations.filter((d) => d.region === 'himalaya').map((d) => d.name).sort();
     await user.click(within(screen.getByRole('group', { name: 'World' })).getByRole('button', { name: 'Himalaya' }));
-    await waitFor(async () => expect((await results()).map((a) => a.getAttribute('aria-label')?.split(',')[0]).sort()).toEqual(['Ladakh', 'Manali']));
+    await waitFor(async () => expect((await results()).map((a) => a.getAttribute('aria-label')?.split(',')[0]).sort()).toEqual(himalaya));
   });
 
   it('searches by name', async () => {
     const { user } = renderApp('/explore');
-    await user.type(await screen.findByRole('searchbox', { name: 'Search destinations' }), 'jai');
-    await waitFor(async () => expect((await results()).map((a) => a.getAttribute('aria-label')?.split(',')[0])).toEqual(['Jaipur']));
+    await user.type(await screen.findByRole('searchbox', { name: 'Search destinations' }), 'jaisal');
+    await waitFor(async () => expect((await results()).map((a) => a.getAttribute('aria-label')?.split(',')[0])).toEqual(['Jaisalmer']));
   });
 
   it('shows a friendly empty state and clears filters', async () => {
     const { user } = renderApp('/explore?q=atlantis');
     expect(await screen.findByText('No places match those filters.')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Clear filters' }));
-    await waitFor(async () => expect(await results()).toHaveLength(12));
+    await waitFor(async () => expect(await results()).toHaveLength(ALL));
   });
 });
 

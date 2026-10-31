@@ -61,7 +61,7 @@ describe('TripPage', () => {
     session.set(TRAVELLER);
     await api.refreshSession();
     const { itinerary } = await itinerariesApi.generate({
-      destination: 'Udaipur',
+      destination: 'Kasol',
       startDate: inDays(20),
       endDate: inDays(21),
       budget: { amount: 3000, currency: 'INR' },
@@ -70,8 +70,9 @@ describe('TripPage', () => {
       pace: 'balanced',
     });
     renderApp(`/trips/${itinerary.id}`);
-    const card = await screen.findByRole('img', { name: 'Udaipur' });
-    expect(card).toHaveTextContent('Udaipur');
+    // Kasol isn't in the catalogue, so it has no photo.
+    const card = await screen.findByRole('img', { name: 'Kasol' });
+    expect(card).toHaveTextContent('Kasol');
   });
 
   it('opens with a photo of the place and a day strip to jump between days', async () => {

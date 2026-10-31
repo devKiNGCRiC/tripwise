@@ -68,7 +68,7 @@ export function Worlds() {
               </span>
               {destinations && (
                 <span className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 rounded-full border border-white/30 bg-black/30 px-3 py-1 text-[13px] font-semibold backdrop-blur-md">
-                  {ours.length ? `${ours.length} ${ours.length === 1 ? 'place' : 'places'}` : 'Plan with AI'}
+                  {ours.length ? `${ours.length} ${ours.length === 1 ? 'destination' : 'destinations'}` : 'Plan with AI'}
                   <ArrowUpRight aria-hidden className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               )}

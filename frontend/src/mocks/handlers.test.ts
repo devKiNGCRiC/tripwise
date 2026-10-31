@@ -7,6 +7,7 @@
 import { describe, expect, it } from 'vitest';
 import { api } from '@/lib/api/client';
 import { authApi, destinationsApi } from '@/lib/api/endpoints';
+import { seedDestinations } from './data/destinations';
 import { session } from './db';
 
 describe('mock auth API', () => {
@@ -44,9 +45,10 @@ describe('mock auth API', () => {
 });
 
 describe('mock destinations API', () => {
-  it('lists 12 destinations', async () => {
+  it('lists the whole shared catalogue', async () => {
     const { destinations } = await destinationsApi.list();
-    expect(destinations).toHaveLength(12);
+    expect(destinations).toHaveLength(seedDestinations.length);
+    expect(destinations.length).toBeGreaterThan(40);
   });
 
   it('filters by vibe and budget', async () => {
