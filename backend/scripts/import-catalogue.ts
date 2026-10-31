@@ -18,6 +18,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { classify, type PlaceKind } from '../src/services/placeKinds.js';
 import type { Interest } from '../src/types/api.js';
+import { cleanAuthor } from './catalogue/credit.js';
 import { EXISTING, NEW, type Search } from './catalogue/destinations.js';
 
 /** Who we are (Wikimedia asks every script to say so, with a way to reach the project). */
@@ -151,12 +152,13 @@ async function credits(files: string[]): Promise<Map<string, CataloguePlace['ima
     for (const page of Object.values(data.query?.pages ?? {})) {
       const info = page.imageinfo?.[0];
       const meta = info?.extmetadata ?? {};
-      const author = (meta.Artist?.value ?? '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+      // A real, short author name (placeholders like "No machine-readable author" count as none).
+      const author = cleanAuthor(meta.Artist?.value ?? '');
       const licence = meta.LicenseShortName?.value?.trim();
       if (!info?.thumburl || !author || !licence) continue;
       const asked = (back.get(page.title) ?? page.title).replace(/^File:/, '');
       // Drop Commons' tracking parameters from the photo address.
-      found.set(asked, { url: info.thumburl.split('?')[0], credit: `${author.slice(0, 80)} · ${licence}`, creditUrl: info.descriptionurl });
+      found.set(asked, { url: info.thumburl.split('?')[0], credit: `${author} · ${licence}`, creditUrl: info.descriptionurl });
     }
     await sleep(500);
   }

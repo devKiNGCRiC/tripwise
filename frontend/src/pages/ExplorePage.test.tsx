@@ -75,6 +75,28 @@ describe('DestinationPage', () => {
     expect(within(screen.getByRole('list', { name: 'Best months' })).getAllByRole('listitem')).toHaveLength(12);
   });
 
+  it('lists its top places, credited, filterable by interest, with more on request', async () => {
+    const { user } = renderApp('/destinations/hampi');
+    const section = await screen.findByRole('region', { name: 'Top places in Hampi' });
+    const names = async () => within(await within(section).findByRole('list', { name: 'Places' })).getAllByRole('heading').map((h) => h.textContent);
+    expect(await names()).toContain('Virupaksha Temple');
+    expect(await names()).toHaveLength(12);
+    expect(within(section).getAllByRole('link', { name: /^Photo: / }).length).toBeGreaterThan(0);
+
+    await user.click(within(section).getByRole('button', { name: /^Show all \d+ places$/ }));
+    expect((await names()).length).toBeGreaterThan(12);
+
+    await user.click(within(section).getByRole('button', { name: 'Nature' }));
+    await waitFor(async () => expect(await names()).not.toContain('Virupaksha Temple'));
+    expect(await names()).toContain('Matanga Hill');
+  });
+
+  it('has no places section abroad (not in the catalogue yet)', async () => {
+    renderApp('/destinations/paris');
+    await screen.findByRole('heading', { level: 1, name: /Paris/ });
+    expect(screen.queryByRole('region', { name: /Top places/ })).not.toBeInTheDocument();
+  });
+
   it('says so when a destination does not exist', async () => {
     renderApp('/destinations/nowhere');
     expect(await screen.findByRole('heading', { name: 'Destination not found' })).toBeInTheDocument();

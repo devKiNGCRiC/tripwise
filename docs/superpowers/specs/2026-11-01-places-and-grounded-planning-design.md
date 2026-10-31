@@ -1,6 +1,6 @@
 # Places database & grounded planning — design (roadmap step 3)
 
-**Date:** 2026-11-01 · **Status:** approved by the owner ("start implementing and testing the next features")
+**Date:** 2026-11-01 · **Status:** built (approved by the owner: "start implementing and testing the next features")
 
 ## Why
 TripWise has 12 destinations, and three of the seven worlds (Deccan, Western Ghats, Seven Sisters) have
@@ -20,13 +20,15 @@ allowance is used up. Step 3 gives TripWise its own knowledge of places and uses
    timed by pace, with transfers estimated from distance. It is used:
    - automatically when every AI provider fails (instead of an error), and
    - on request as a free, unlimited **Quick plan** when the day's AI allowance is used up.
+   Places it doesn't know answer **404 `NO_CATALOGUE`** (not a fake trip).
 4. **Destination pages show their places** ("Top places", filterable by interest).
 
 ## Non-goals (this step)
 - Embedding / vector search. Retrieval here is exact (destination + interest tags), which is accurate and
   free; semantic search arrives with the "Ask TripWise" chat in step 4, where free text needs it.
-- Maps, opening hours, live prices, restaurants. (Food stops stay the AI's job; the own planner adds
-  meal breaks without naming restaurants.)
+- Maps, opening hours, live prices, restaurants. (Food stops stay the AI's job; the own planner adds a
+  lunch break without naming a restaurant.)
+- Ziro had only two places and no credited photo, so it isn't in the catalogue yet.
 - Places outside India.
 
 ## Anti-goals

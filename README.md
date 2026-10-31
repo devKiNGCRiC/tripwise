@@ -18,7 +18,9 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 🏞️ | "Seven Worlds": a living, hand-drawn landscape of seven Indian regions behind every page | ✅ Done |
 | 🌗 | Day and Night for every world, region colours, photo-tinted personalisation, Calm motion | ✅ Done |
 | 📱 | Mobile-first layout with an app-style bottom tab bar | ✅ Done |
-| 🧭 | Explore destinations by world, vibe, budget and best month; destination guides | ✅ Done |
+| 🧭 | Explore 50 destinations by world, vibe, budget and best month; destination guides with their top places | ✅ Done |
+| 📍 | Places catalogue: 1,030 real places across 44 Indian destinations in all seven worlds (Wikidata, credited Commons photos) | ✅ Done |
+| 🧠 | AI plans grounded in real places; TripWise's own planner as a free, unlimited Quick plan and when the AI is down | ✅ Done |
 | 🪄 | Trip planner wizard + real AI itineraries that appear day by day (5 free plans a day) | ✅ Done |
 | 🎟️ | Day-by-day itinerary (timed stops, transfers, costs), regenerate a day, PDF, share link | ✅ Done |
 | ⚡ | Similar trips served instantly from a plan cache (free, doesn't use the daily allowance) | ✅ Done |
@@ -109,7 +111,7 @@ MongoDB Atlas, Gemini and/or Groq keys; see [`backend/README.md`](backend/README
 ```bash
 npm run setup                          # installs the root, backend and frontend packages
 cp backend/.env.example backend/.env   # fill in the keys
-npm --prefix backend run seed          # loads the Explore destinations (once)
+npm --prefix backend run seed          # loads the Explore destinations and their places (once)
 npm run dev                            # API on :4000 + website on :5173, talking to each other
 ```
 
@@ -143,7 +145,7 @@ Add their keys to `backend/.env` (names in `backend/.env.example`); TripWise swi
 - [x] **Traveller features:** explore, trip planner, AI itinerary view, PDF, sharing, passport stamps
 - [ ] **Admin:** dashboard and management tools, plus end-to-end tests
 - [x] **Backend:** Express API, MongoDB models, JWT auth, Gemini + Groq integration, streaming, caching and quotas
-- [ ] **Own planner:** places database (OpenStreetMap / Wikidata) + RAG, unlimited quick plans
+- [x] **Own planner:** places catalogue (Wikidata) + grounded AI plans, free unlimited Quick plans
 - [ ] **"Ask TripWise" agent:** chat on each trip with weather, routes and places as tools
 - [x] **Profile, Passport & Friends:** account, journals, Yatra marks, friends and public passports
 - [ ] **Crew mode:** plan trips together, shared expenses, notes and photos

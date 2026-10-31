@@ -18,6 +18,15 @@ website ──/api──► Express API ──► MongoDB Atlas (users, trips, d
   broken or wrong answer passes the request to the next model. If every model fails, the traveller sees
   "our planners are busy" and the attempt doesn't count against their daily plans.
 - **Streaming.** `POST /api/itineraries/generate/stream` sends the trip day by day while the AI writes it.
+- **Places catalogue.** `src/data/destinations.json` and `src/data/places.json` hold 50 destinations and
+  1,030 places at 44 Indian ones (all seven worlds), built by `npm run import:catalogue` from Wikidata (CC0)
+  with credited Wikimedia Commons photos. The website's demo mode reads the same two files.
+- **Grounded plans.** For a catalogue destination (found however it's typed: "Hampi, Karnataka", "Leh",
+  "Alleppey"), the AI gets a shortlist of real places that suit the traveller's interests, and stops that
+  name a catalogue place are saved with its id and coordinates.
+- **Our own planner.** `services/localPlanner.ts` builds a trip from catalogue places with no AI: days that
+  stay in one area, timed by pace, with a lunch break and transfers by distance. It answers
+  `POST /itineraries/quick` (free and unlimited) and takes over automatically when every AI model is down.
 - **Plan cache.** Up to 3 AI plans are kept per kind of trip (place, length, month, group, pace, interests,
   budget band). Once 3 exist, similar requests get one instantly. That doesn't use the allowance, and nobody
   gets the same plan twice.
@@ -42,7 +51,7 @@ website ──/api──► Express API ──► MongoDB Atlas (users, trips, d
    | `CLIENT_ORIGIN` | Where the website runs (default `http://localhost:5173`) |
    | `GEMINI_MODELS`, `GROQ_MODELS` | Models to try, in order (defaults are in `.env.example`) |
 
-3. `npm run seed` loads the 12 Explore destinations. It's safe to run again.
+3. `npm run seed` loads the Explore destinations and their places. It's safe to run again.
 4. `npm run dev` starts the API on http://localhost:4000.
 
 For the website to use it: in `frontend/.env.local` set `VITE_USE_MOCKS=false`, then run `npm run dev` there.
@@ -56,7 +65,8 @@ Vite forwards `/api` to port 4000.
 | `npm test` | All tests (in-memory MongoDB and fake AI; never touches Atlas or real AI) |
 | `npm run typecheck` | TypeScript check |
 | `npm run build` / `npm start` | Production build, then run it |
-| `npm run seed` | Load the destinations into MongoDB |
+| `npm run seed` | Load the destinations and places into MongoDB |
+| `npm run import:catalogue` | Rebuild the places catalogue from Wikidata and Commons (a few minutes; needs internet) |
 | `npm run smoke:ai` | Ask each real AI model for one small trip and report ok / invalid / error |
 
 ## Privacy in short
@@ -85,8 +95,10 @@ Limits are set in `src/config/plans.ts`. A new day starts at midnight India time
 | `POST /auth/refresh`, `/auth/logout` | cookie | New access token / end the login |
 | `GET /auth/me` | ✓ | The signed-in user |
 | `GET /destinations`, `/destinations/:slug` | | Explore catalogue (filters: `vibe`, `budget`, `month`, `q`) |
+| `GET /destinations/:slug/places` | | A destination's places, most famous first (filter: `interest`) |
 | `POST /itineraries/generate` | ✓ | Plan a trip → `{ itinerary, quota }` |
 | `POST /itineraries/generate/stream` | ✓ | The same, streamed as JSON lines |
+| `POST /itineraries/quick` | ✓ | TripWise's own plan from the catalogue: no AI, no quota (404 `NO_CATALOGUE` elsewhere) |
 | `GET /itineraries`, `/itineraries/:id`, `DELETE /itineraries/:id` | ✓ | My trips |
 | `POST /itineraries/:id/days/:n/regenerate` | ✓ | A fresh idea for one day |
 | `POST /itineraries/:id/share`, `GET /share/:shareId` | ✓ / | Share link / open a shared trip |

@@ -373,7 +373,7 @@
     },
     "image": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Kee_monastery_Spiti_Valley_%28edited%29.jpg/1280px-Kee_monastery_Spiti_Valley_%28edited%29.jpg",
-      "credit": "Original: Kulbhushan Singh Suryawanshi (website) Derivative work: Aristeas · CC BY-SA 4.0",
+      "credit": "Original: Kulbhushan Singh Suryawanshi ( website ) Derivati… · CC BY-SA 4.0",
       "creditUrl": "https://commons.wikimedia.org/wiki/File:Kee_monastery_Spiti_Valley_(edited).jpg"
     }
   },
@@ -516,7 +516,7 @@
       "Mehrangarh Fort",
       "Kaylana Lake",
       "Balsamand Lake",
-      "Toor Ji Ka Jhalra"
+      "Ghanta Ghar"
     ],
     "avgDailyCost": {
       "amount": 3000,
@@ -554,8 +554,8 @@
     "highlights": [
       "Lake Pichola",
       "Jagdish Temple",
-      "Jag Mandir",
-      "Monsoon Palace"
+      "City Palace, Udaipur",
+      "Jag Mandir"
     ],
     "avgDailyCost": {
       "amount": 4000,
@@ -677,7 +677,7 @@
     },
     "image": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Taj_Mahal%2C_Agra%2C_India_edit3.jpg/1280px-Taj_Mahal%2C_Agra%2C_India_edit3.jpg",
-      "credit": "Taj_Mahal,_Agra,_India_edit2.jpg: Yann; edited by King of Hearts derivative work · CC BY-SA 3.0",
+      "credit": "Taj_Mahal,_Agra,_India_edit2.jpg : Yann ; edited by King of… · CC BY-SA 3.0",
       "creditUrl": "https://commons.wikimedia.org/wiki/File:Taj_Mahal,_Agra,_India_edit3.jpg"
     }
   },
@@ -753,7 +753,7 @@
     },
     "image": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Hamandir_Sahib_%28Golden_Temple%29.jpg/1280px-Hamandir_Sahib_%28Golden_Temple%29.jpg",
-      "credit": "This picture has been taken by Oleg Yunakov. Contact e-mail: yunakovgmail.com. I · CC BY-SA 3.0",
+      "credit": "This picture has been taken by Oleg Yunakov · CC BY-SA 3.0",
       "creditUrl": "https://commons.wikimedia.org/wiki/File:Hamandir_Sahib_(Golden_Temple).jpg"
     }
   },
@@ -864,9 +864,9 @@
       "currency": "INR"
     },
     "image": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/ShrineInTankVijayanagara.jpg",
-      "credit": "No machine-readable author provided. Imc assumed (based on copyright claims). · Public domain",
-      "creditUrl": "https://commons.wikimedia.org/wiki/File:ShrineInTankVijayanagara.jpg"
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Inner_Courtyard_of_Virupaksha_Temple_at_Hampi.jpg/1280px-Inner_Courtyard_of_Virupaksha_Temple_at_Hampi.jpg",
+      "credit": "AMITABHA GUPTA · CC BY 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Inner_Courtyard_of_Virupaksha_Temple_at_Hampi.jpg"
     }
   },
   {
@@ -1166,7 +1166,7 @@
     },
     "image": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Nilgiris_Range_Bokkapuram_Sep22_R16_06380.jpg/1280px-Nilgiris_Range_Bokkapuram_Sep22_R16_06380.jpg",
-      "credit": "This Photo was taken by Timothy A. Gonsalves. Feel free to use my photos, but pl · CC BY-SA 4.0",
+      "credit": "Timothy A. Gonsalves · CC BY-SA 4.0",
       "creditUrl": "https://commons.wikimedia.org/wiki/File:Nilgiris_Range_Bokkapuram_Sep22_R16_06380.jpg"
     }
   },
@@ -1242,9 +1242,9 @@
       "currency": "INR"
     },
     "image": {
-      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/Palani_Hills.jpg/1280px-Palani_Hills.jpg",
-      "credit": "No machine-readable author provided. Vinay~commonswiki assumed (based on copyrig · Public domain",
-      "creditUrl": "https://commons.wikimedia.org/wiki/File:Palani_Hills.jpg"
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Rattail_falls.jpg/1280px-Rattail_falls.jpg",
+      "credit": "Barbaragailblock · CC BY 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Rattail_falls.jpg"
     }
   },
   {
@@ -1582,7 +1582,7 @@
     },
     "image": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Indian_Rhinoceros_Rhinoceros_unicornis_by_Dr._Raju_Kasambe_%285%29.JPG/1280px-Indian_Rhinoceros_Rhinoceros_unicornis_by_Dr._Raju_Kasambe_%285%29.JPG",
-      "credit": "Dr. Raju Kasambe · CC BY-SA 4.0",
+      "credit": "Dr · CC BY-SA 4.0",
       "creditUrl": "https://commons.wikimedia.org/wiki/File:Indian_Rhinoceros_Rhinoceros_unicornis_by_Dr._Raju_Kasambe_(5).JPG"
     }
   },
@@ -1650,8 +1650,8 @@
     "summary": "A huge river island on the Brahmaputra with Vaishnavite satras and mask-making.",
     "highlights": [
       "Burhi Gosani Devalaya Jorhat",
-      "Mulai Kathoni",
       "Bongal Pukhuri",
+      "Mulai Kathoni",
       "Moinaporia Namghar"
     ],
     "avgDailyCost": {

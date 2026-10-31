@@ -36,4 +36,11 @@ describe('sizedImage', () => {
   it('leaves other URLs untouched', () => {
     expect(sizedImage('https://example.com/a.jpg', 800)).toBe('https://example.com/a.jpg');
   });
+
+  it("asks Wikimedia for the smallest standard thumbnail that's wide enough", () => {
+    const url = 'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Lakshman_Jhula.jpg/1280px-Lakshman_Jhula.jpg';
+    expect(sizedImage(url, 400)).toBe('https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Lakshman_Jhula.jpg/500px-Lakshman_Jhula.jpg');
+    expect(sizedImage(url, 250)).toContain('/250px-');
+    expect(sizedImage(url, 1400)).toContain('/1280px-');
+  });
 });

@@ -1,5 +1,5 @@
 /**
- * hooks.ts (explore) — data hooks for destinations.
+ * hooks.ts (explore) — data hooks for destinations and their places.
  * The query key includes the filters, so each filter combo is cached separately
  * and flipping back to a previous filter is instant.
  */
@@ -22,5 +22,14 @@ export function useDestination(slug: string) {
     queryKey: ['destination', slug],
     queryFn: () => destinationsApi.get(slug),
     select: (data) => data.destination,
+  });
+}
+
+/** A destination's places, most famous first (none abroad yet). */
+export function useDestinationPlaces(slug: string) {
+  return useQuery({
+    queryKey: ['destination', slug, 'places'],
+    queryFn: () => destinationsApi.places(slug),
+    select: (data) => data.places,
   });
 }
