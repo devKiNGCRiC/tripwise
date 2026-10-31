@@ -40,6 +40,8 @@ export const destinationsApi = {
 /** Itineraries: AI generation, the traveller's own trips, one-day regeneration and sharing. */
 export const itinerariesApi = {
   generate: (request: TripRequest) => api.request<GenerateResponse>('/itineraries/generate', { method: 'POST', body: request }),
+  /** TripWise's own plan from the places catalogue: no AI, free and unlimited (NO_CATALOGUE if it doesn't know the place). */
+  quick: (request: TripRequest) => api.request<GenerateResponse>('/itineraries/quick', { method: 'POST', body: request }),
   /**
    * Generate, watching the trip arrive: `onEvent` gets each event (meta, day, reset …) as it
    * comes. Resolves with the saved trip on `done`; rejects with an ApiError on `error`.

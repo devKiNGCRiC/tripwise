@@ -1,19 +1,25 @@
 /**
- * buildItinerary.ts — turns the AI's creative answer into a complete trip record.
+ * buildItinerary.ts — turns a planned trip (the AI's answer, or TripWise's own planner's)
+ * into a complete trip record.
  * The server, not the AI, decides the facts: each day's number and date, the total cost
  * (the sum of the breakdown), who owns it, which model wrote it, and which stops are
  * catalogue places (with their coordinates).
  */
 import { tripDates } from '../lib/dates.js';
 import type { TripRequest } from '../types/api.js';
-import type { AiTrip } from './ai/schema.js';
+import type { AiActivity, AiTrip } from './ai/schema.js';
 import { matchPlaces, type PlanPlace } from './places.js';
+
+/** A planned trip: the AI's answer, or our own planner's (whose stops have no cost guess but know their place). */
+export type TripDraft = Omit<AiTrip, 'days'> & {
+  days: { theme: string; activities: (Omit<AiActivity, 'estCost'> & { estCost?: number; place?: { id: string; lat: number; lon: number } })[] }[];
+};
 
 /** Extra facts about where the plan came from. */
 export interface BuildMeta {
   ownerId: string;
-  provider: 'gemini' | 'groq';
-  source: 'ai' | 'cache';
+  provider: 'gemini' | 'groq' | 'tripwise';
+  source: 'ai' | 'cache' | 'local';
   cacheVariantId?: string;
   /** The trip's world (services/region.ts). */
   region?: string | null;
@@ -22,7 +28,7 @@ export interface BuildMeta {
 }
 
 /** The fields to save for a new trip. */
-export function buildItinerary(ai: AiTrip, req: TripRequest, meta: BuildMeta) {
+export function buildItinerary(ai: TripDraft, req: TripRequest, meta: BuildMeta) {
   const dates = tripDates(req.startDate, req.endDate);
   const { stay, food, transport, activities } = ai.breakdown;
   return {

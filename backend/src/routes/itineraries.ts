@@ -3,6 +3,7 @@
  *
  *   POST   /generate                 plan a trip with AI          → { itinerary, quota }
  *   POST   /generate/stream          the same, sent day by day     → one JSON event per line
+ *   POST   /quick                    TripWise's own plan, no AI    → { itinerary, quota }
  *   GET    /                         my trips, newest first       → { itineraries }
  *   GET    /:id                      one of my trips              → { itinerary }
  *   DELETE /:id                      delete it                    → 204
@@ -12,6 +13,8 @@
  * Someone else's trip always answers 404, so we never reveal that it exists.
  * AI calls reserve today's allowance first and give it back if the AI fails. Similar trips
  * are served from the plan cache (services/cache.ts) without using the allowance.
+ * AI plans are grounded in the places catalogue (services/places.ts); when every AI model is
+ * down, catalogue destinations are planned by TripWise's own planner instead (free).
  */
 import { randomBytes } from 'node:crypto';
 import { Router } from 'express';
@@ -19,7 +22,7 @@ import { isValidObjectId } from 'mongoose';
 import { PLANS } from '../config/plans.js';
 import { Itinerary, Journal } from '../db/models/index.js';
 import { publicItinerary } from '../db/toPublic.js';
-import { AppError, notFound, quotaExceeded } from '../lib/errors.js';
+import { AppError, noCatalogue, notFound, quotaExceeded } from '../lib/errors.js';
 import { tripDates } from '../lib/dates.js';
 import { currentUser, requireAuth, type AuthUser } from '../middleware/auth.js';
 import { generateLimiter } from '../middleware/rateLimit.js';
@@ -29,7 +32,8 @@ import type { AiDay } from '../services/ai/schema.js';
 import { dayPrompt, tripPrompt } from '../services/ai/prompt.js';
 import { parseDay, parseTrip } from '../services/ai/validate.js';
 import { buildItinerary } from '../services/buildItinerary.js';
-import { groundingFor, matchPlaces } from '../services/places.js';
+import type { LocalTrip } from '../services/localPlanner.js';
+import { groundingFor, localTripFor, matchPlaces } from '../services/places.js';
 import { addToCache, cacheKey, pickCached } from '../services/cache.js';
 import type { PhotoStore } from '../services/photos.js';
 import { getQuota, nextIstMidnight, refund, reserve } from '../services/quota.js';
@@ -58,6 +62,16 @@ async function quotaAfterSave(user: AuthUser, now: Date): Promise<Quota> {
     console.error('[api] could not read the quota after saving a trip:', error);
     return { used: 0, limit: PLANS[user.plan].plansPerDay, resetsAt: nextIstMidnight(now).toISOString() };
   }
+}
+
+/** Did every AI model fail (as opposed to a bad request or the traveller leaving)? */
+const isAiDown = (error: unknown) => error instanceof AppError && error.code === 'AI_UNAVAILABLE';
+
+/** Save a trip from TripWise's own planner. */
+async function saveLocalTrip(local: LocalTrip, tripRequest: TripRequest, ownerId: string) {
+  return Itinerary.create(
+    buildItinerary(local, tripRequest, { region: await regionFor(tripRequest.destination, local.region), ownerId, provider: 'tripwise', source: 'local' }),
+  );
 }
 
 /** The itinerary routes. */
@@ -107,8 +121,23 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     } catch (error) {
       // Nothing was saved: give today's plan back.
       await refund(user.id, 'plans', now);
-      throw error;
+      // Every AI model is down: plan it ourselves from the catalogue (free), if we know the place.
+      const local = isAiDown(error) ? await localTripFor(tripRequest) : null;
+      if (!local) throw error;
+      trip = await saveLocalTrip(local, tripRequest, user.id);
     }
+    res.json({ itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
+  });
+
+  // POST /itineraries/quick — TripWise's own planner, no AI: free and unlimited, for
+  // destinations in the catalogue (404 NO_CATALOGUE elsewhere).
+  router.post('/itineraries/quick', auth, limiter, async (req, res) => {
+    const user = currentUser(req);
+    const now = deps.now();
+    const tripRequest = parseTripRequest(req.body, now, PLANS[user.plan].maxDays);
+    const local = await localTripFor(tripRequest);
+    if (!local) throw noCatalogue(`TripWise doesn't know enough places in ${tripRequest.destination} for a quick plan yet — try the AI planner tomorrow.`);
+    const trip = await saveLocalTrip(local, tripRequest, user.id);
     res.json({ itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
   });
 
@@ -204,6 +233,20 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
       send({ type: 'done', itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
     } catch (error) {
       if (error instanceof ClientGone) return;
+      // Every AI model is down: plan it ourselves from the catalogue (free), if we know the place.
+      const local = isAiDown(error) ? await localTripFor(tripRequest) : null;
+      if (local) {
+        const trip = await saveLocalTrip(local, tripRequest, user.id);
+        // The AI plan wasn't used: give it back now (and not again below).
+        await refund(user.id, 'plans', now);
+        saved = true;
+        // Anything the AI showed before failing goes; the whole local plan replaces it.
+        send({ type: 'reset' });
+        send({ type: 'meta', title: local.title, summary: local.summary });
+        publicItinerary(trip).days.forEach((day) => send({ type: 'day', day }));
+        send({ type: 'done', itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
+        return;
+      }
       const known = error instanceof AppError;
       if (!known) console.error('[api] stream generate failed:', error);
       send({

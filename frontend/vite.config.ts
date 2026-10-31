@@ -16,11 +16,13 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
 
   // `@/` points at `src/`; `@catalogue/` at the backend's catalogue files (destinations and
-  // places), so the mock API serves exactly the real data. Both must match "paths" in tsconfig.json.
+  // places) and `@planner` at TripWise's own planner, so the mock API serves exactly the real
+  // data and plans exactly the same way. All must match "paths" in tsconfig.json.
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@catalogue': fileURLToPath(new URL('../backend/src/data', import.meta.url)),
+      '@planner': fileURLToPath(new URL('../backend/src/services/localPlanner.ts', import.meta.url)),
     },
   },
 

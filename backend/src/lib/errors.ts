@@ -7,7 +7,7 @@
  */
 
 /** Machine-readable error codes — the same list as the frontend (minus its client-only NETWORK). */
-export type ApiErrorCode = 'VALIDATION' | 'UNAUTHORIZED' | 'FORBIDDEN' | 'NOT_FOUND' | 'QUOTA_EXCEEDED' | 'AI_UNAVAILABLE' | 'SERVER';
+export type ApiErrorCode = 'VALIDATION' | 'UNAUTHORIZED' | 'FORBIDDEN' | 'NOT_FOUND' | 'QUOTA_EXCEEDED' | 'AI_UNAVAILABLE' | 'NO_CATALOGUE' | 'SERVER';
 
 /** An error we expect and want to show to the user, with its HTTP status and code. */
 export class AppError extends Error {
@@ -33,6 +33,8 @@ export const forbidden = (message: string) => new AppError(403, 'FORBIDDEN', mes
 export const notFound = (message = "We couldn't find that.") => new AppError(404, 'NOT_FOUND', message);
 /** 429 — a daily allowance is used up. */
 export const quotaExceeded = (message: string) => new AppError(429, 'QUOTA_EXCEEDED', message);
+/** 404 — TripWise's own planner doesn't know enough places at this destination yet. */
+export const noCatalogue = (message: string) => new AppError(404, 'NO_CATALOGUE', message);
 /** 503 — every AI model failed or is busy. */
 export const aiUnavailable = (message = 'Our AI planners are busy right now. Please try again in a minute.') =>
   new AppError(503, 'AI_UNAVAILABLE', message);

@@ -129,6 +129,19 @@ describe('PlannerWizard', () => {
     expect(within(screen.getByLabelText('Your answers')).getByText('Goa')).toBeInTheDocument();
   });
 
+  it('offers a free quick plan from the places catalogue once the AI plans are used up', async () => {
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    db.generations.u_demo = { day: today, used: 5 };
+    const { user, router } = renderApp('/plan');
+    await fillAll(user);
+    await user.click(screen.getByRole('button', { name: 'Generate my trip' }));
+    const dialog = await screen.findByRole('dialog', { name: "You've planned 5 trips today" });
+    await user.click(within(dialog).getByRole('button', { name: 'Make a quick plan instead' }));
+    await waitFor(() => expect(router.state.location.pathname).toMatch(/^\/trips\/it_/));
+    expect(await screen.findByText(/Planned by TripWise from our places catalogue/)).toBeInTheDocument();
+  });
+
   it('offers a retry when both AI planners are busy', async () => {
     const { user } = renderApp('/plan');
     await fillAll(user, 'fail-ai');

@@ -163,10 +163,11 @@ export interface Itinerary {
   };
   tips: string[];
   packingList: string[];
-  /** Which AI wrote it — shown in admin stats. */
-  provider: 'gemini' | 'groq';
-  /** 'ai' = written for this trip; 'cache' = re-used from a similar trip (instant, free). */
-  source?: 'ai' | 'cache';
+  /** Which AI wrote it — or 'tripwise' for TripWise's own planner (no AI). */
+  provider: 'gemini' | 'groq' | 'tripwise';
+  /** 'ai' = written for this trip; 'cache' = re-used from a similar trip (instant, free);
+   *  'local' = planned by TripWise from its places catalogue (no AI, free). */
+  source?: 'ai' | 'cache' | 'local';
   /** Which of India's seven worlds the trip is in ('abroad' outside India; null if unknown). */
   region?: RegionKey | 'abroad' | null;
   createdAt: string;
@@ -361,6 +362,7 @@ export type ApiErrorCode =
   | 'NOT_FOUND'
   | 'QUOTA_EXCEEDED'
   | 'AI_UNAVAILABLE'
+  | 'NO_CATALOGUE'
   | 'SERVER'
   | 'NETWORK';
 

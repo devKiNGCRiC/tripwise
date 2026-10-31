@@ -1,14 +1,21 @@
 /**
  * QuotaDialog.tsx — shown when today's 5 free AI plans are used up: says when they reset
- * (from the quota endpoint; local midnight if it can't be read) and closes back to the
- * planner with every answer intact. A modal: focus moves to OK, Escape closes it.
+ * (from the quota endpoint; local midnight if it can't be read), offers a free Quick plan
+ * from TripWise's places catalogue instead (no AI), and closes back to the planner with
+ * every answer intact. A modal: focus moves to OK, Escape closes it.
  */
 import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/Button';
 import { useQuota } from './hooks';
 
-/** The "daily limit reached" dialog. */
-export function QuotaDialog({ onClose }: { onClose: () => void }) {
+/** The "daily limit reached" dialog. `quick` = the Quick plan button's state and action. */
+export function QuotaDialog({
+  onClose,
+  quick,
+}: {
+  onClose: () => void;
+  quick?: { onPlan: () => void; pending: boolean; error: string | null };
+}) {
   const { data: quota } = useQuota();
   const okRef = useRef<HTMLButtonElement>(null);
   const resets = quota ? new Date(quota.resetsAt) : null;
@@ -29,6 +36,19 @@ export function QuotaDialog({ onClose }: { onClose: () => void }) {
           You've planned 5 trips today
         </h2>
         <p className="mt-3 text-soft">Free AI plans are limited to 5 a day so everyone gets a turn. Your allowance resets at {when}, and your answers are saved here.</p>
+        {quick && (
+          <div className="mt-5 rounded-2xl bg-ink/5 p-4 text-left">
+            <p className="text-sm text-soft">Can't wait? TripWise can plan it from its own catalogue of real places right now — free, no AI, no limit.</p>
+            <Button variant="secondary" className="mt-3 w-full" onClick={quick.onPlan} loading={quick.pending}>
+              Make a quick plan instead
+            </Button>
+            {quick.error && (
+              <p role="alert" className="mt-2 text-sm text-danger">
+                {quick.error}
+              </p>
+            )}
+          </div>
+        )}
         <Button ref={okRef} className="mt-6" onClick={onClose}>
           OK
         </Button>

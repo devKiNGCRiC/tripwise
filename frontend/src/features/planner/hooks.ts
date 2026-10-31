@@ -2,6 +2,7 @@
  * hooks.ts (planner) — server calls for planning:
  *   useGenerateItinerary → asks the AI planner for a trip, streamed day by day (`preview`);
  *                          on success the trips list and the quota are refreshed
+ *   useQuickPlan         → TripWise's own plan from the places catalogue (no AI, free, unlimited)
  *   useQuota             → how many AI plans are left today
  */
 import { useCallback, useState } from 'react';
@@ -48,6 +49,18 @@ export function useGenerateItinerary() {
     },
   });
   return { ...mutation, preview };
+}
+
+/** A Quick plan from the places catalogue; the new trip is cached and the trips list refreshed. */
+export function useQuickPlan() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (request: TripRequest) => itinerariesApi.quick(request),
+    onSuccess: ({ itinerary }) => {
+      queryClient.setQueryData(['trip', itinerary.id], { itinerary });
+      void queryClient.invalidateQueries({ queryKey: ['trips'] });
+    },
+  });
 }
 
 /** Today's AI plan allowance. */

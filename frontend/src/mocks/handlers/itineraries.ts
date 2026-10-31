@@ -14,7 +14,9 @@
 import { http, HttpResponse } from 'msw';
 import { apiUrl } from '@/lib/api/config';
 import type { Destination, Itinerary, Quota, TripRequest } from '@/lib/api/types';
-import { buildDay, generateItinerary } from '../data/generator';
+import { planLocalTrip } from '@planner';
+import { buildDay, generateItinerary, tripDates } from '../data/generator';
+import { seedPlaces } from '../data/destinations';
 import { db, saveTrips, type StoredItinerary } from '../db';
 import { currentUser, errorResponse, latency } from './shared';
 
@@ -36,7 +38,7 @@ function quotaFor(userId: string): Quota {
   return { used, limit: DAILY_LIMIT, resetsAt: midnight.toISOString() };
 }
 
-/** Strip the owner field before sending a trip out (mock trips are always AI-written). */
+/** Strip the owner field before sending a trip out (mock trips are AI-written unless they say otherwise). */
 function publicTrip({ ownerId: _ownerId, ...itinerary }: StoredItinerary): Itinerary {
   return { source: 'ai', ...itinerary };
 }
@@ -50,6 +52,15 @@ function ownTrip(userId: string, id: unknown) {
 function regionOf(destination: Destination | undefined): Itinerary['region'] {
   if (!destination) return null;
   return destination.country === 'India' ? (destination.region ?? null) : 'abroad';
+}
+
+/** Lower-case letters and digits only, for comparing place names. */
+const plain = (text: string) => text.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, ' ').trim();
+
+/** The catalogue destination a typed place means ("Hampi", "Hampi, Karnataka"), like the real API's lookup. */
+function catalogueDestination(text: string): Destination | undefined {
+  const wanted = new Set([plain(text), plain(text.split(',')[0])]);
+  return db.destinations.find((d) => wanted.has(plain(d.name)) || wanted.has(plain(d.slug.replace(/-/g, ' '))));
 }
 
 /** Small unique ids for the mock store. */
@@ -71,6 +82,41 @@ export const itineraryHandlers = [
     const stored: StoredItinerary = { ...generateItinerary(req, destination), region: regionOf(destination), id: newId('it'), createdAt: new Date().toISOString(), ownerId: user.id };
     db.itineraries.unshift(stored);
     db.generations[user.id] = { day: today(), used: quota.used + 1 };
+    saveTrips();
+    return HttpResponse.json({ itinerary: publicTrip(stored), quota: quotaFor(user.id) });
+  }),
+
+  // POST /itineraries/quick — TripWise's own plan from the catalogue (the backend's planner,
+  // run here): no AI, no quota; NO_CATALOGUE for places it doesn't know enough about.
+  http.post(apiUrl('/itineraries/quick'), async ({ request }) => {
+    await latency();
+    const user = currentUser(request);
+    if (!user) return errorResponse(401, 'UNAUTHORIZED', 'Please log in again.');
+    const req = (await request.json()) as TripRequest;
+    const destination = catalogueDestination(req.destination);
+    const local =
+      destination?.country === 'India'
+        ? planLocalTrip(req, { name: destination.name, region: destination.region, avgDailyCost: destination.avgDailyCost.amount }, seedPlaces.filter((p) => p.destination === destination.slug))
+        : null;
+    if (!local) return errorResponse(404, 'NO_CATALOGUE', `TripWise doesn't know enough places in ${req.destination} for a quick plan yet — try the AI planner tomorrow.`);
+    const dates = tripDates(req.startDate, req.endDate);
+    const { stay, food, transport, activities } = local.breakdown;
+    const stored: StoredItinerary = {
+      id: newId('it'),
+      request: req,
+      title: local.title,
+      summary: local.summary,
+      days: local.days.map((day, i) => ({ dayNumber: i + 1, date: dates[i], theme: day.theme, activities: day.activities })),
+      estimatedCost: { total: stay + food + transport + activities, breakdown: local.breakdown, currency: 'INR' },
+      tips: local.tips,
+      packingList: local.packingList,
+      provider: 'tripwise',
+      source: 'local',
+      region: regionOf(destination),
+      createdAt: new Date().toISOString(),
+      ownerId: user.id,
+    };
+    db.itineraries.unshift(stored);
     saveTrips();
     return HttpResponse.json({ itinerary: publicTrip(stored), quota: quotaFor(user.id) });
   }),

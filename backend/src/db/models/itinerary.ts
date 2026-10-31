@@ -1,7 +1,8 @@
 /**
  * itinerary.ts — a saved trip plan (same shape as the frontend's `Itinerary`), plus:
  *   - ownerId: whose trip it is (never sent to the website)
- *   - source: 'ai' (written now) or 'cache' (re-used from a similar trip)
+ *   - source: 'ai' (written now), 'cache' (re-used from a similar trip) or 'local' (planned by
+ *     TripWise's own planner from the catalogue, no AI — provider 'tripwise')
  *   - cacheVariantId: which cached plan it is, so one traveller never gets the same twice
  *   - shareId: set once a public share link is created
  *   - region: which of India's seven worlds it's in ('abroad' outside India)
@@ -70,8 +71,8 @@ const itinerarySchema = new Schema(
     },
     tips: { type: [String], default: [] },
     packingList: { type: [String], default: [] },
-    provider: { type: String, enum: ['gemini', 'groq'], required: true },
-    source: { type: String, enum: ['ai', 'cache'], default: 'ai' },
+    provider: { type: String, enum: ['gemini', 'groq', 'tripwise'], required: true },
+    source: { type: String, enum: ['ai', 'cache', 'local'], default: 'ai' },
     /** Which of the seven worlds (or 'abroad'); null when unknown. Lights worlds on the passport. */
     region: { type: String, default: null },
     cacheVariantId: String,

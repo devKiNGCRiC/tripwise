@@ -15,6 +15,7 @@ const FRIENDLY: Record<ApiErrorCode, string> = {
   NOT_FOUND: "We couldn't find that.",
   QUOTA_EXCEEDED: "You've used all your trip generations for today.",
   AI_UNAVAILABLE: 'Both AI planners are busy right now. Try again in a minute.',
+  NO_CATALOGUE: "TripWise doesn't know enough places there for a quick plan yet.",
   SERVER: 'Something went wrong on our side. Please try again.',
   NETWORK: "We can't reach TripWise right now. Check your connection and try again.",
 };

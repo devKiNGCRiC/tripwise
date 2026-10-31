@@ -8,11 +8,14 @@
  *   groundingFor     everything a planning request needs: the shortlist and all places
  *   matchPlaces      links stops that name a catalogue place (even loosely, "Vittala" for
  *                    "Vitthala") to it, adding its id and coordinates
+ *   localTripFor     a whole trip from TripWise's own planner (services/localPlanner.ts), or
+ *                    null when the destination isn't in the catalogue or has too few places
  * Retrieval is exact (destination + interest tags), which is accurate and free; semantic
  * search comes with the "Ask TripWise" chat.
  */
 import { Destination, Place } from '../db/models/index.js';
-import type { Interest } from '../types/api.js';
+import type { Interest, TripRequest } from '../types/api.js';
+import { planLocalTrip, rankForInterests, type LocalTrip } from './localPlanner.js';
 
 /** A catalogue place as the planner uses it. */
 export interface PlanPlace {
@@ -23,6 +26,7 @@ export interface PlanPlace {
   lat: number;
   lon: number;
   fame: number;
+  description?: string;
 }
 
 /** A stop's link to a catalogue place. */
@@ -85,20 +89,16 @@ export async function findDestination(text: string) {
   // "Hampi, Karnataka" → also try "hampi".
   const first = plain(text.split(',')[0]);
   const wanted = new Set([whole, first]);
-  const all = await Destination.find({}, { _id: 0, slug: 1, name: 1, region: 1, country: 1 }).lean();
+  const all = await Destination.find({}, { _id: 0, slug: 1, name: 1, region: 1, country: 1, avgDailyCost: 1 }).lean();
   const alias = ALIASES[whole] ?? ALIASES[first];
   if (alias) return all.find((d) => d.slug === alias) ?? null;
   return all.find((d) => namesOf(d).some((name) => wanted.has(name))) ?? null;
 }
 
-/** Score weight of each interest a place shares with the traveller. */
-const INTEREST_WEIGHT = 3;
-
-/** A destination's places, best first for these interests. */
+/** A destination's places, best first for these interests (the same ranking the own planner uses). */
 export async function rankPlaces(slug: string, interests: readonly Interest[]): Promise<PlanPlace[]> {
-  const places = (await Place.find({ destination: slug }, { _id: 0, id: 1, name: 1, kind: 1, interests: 1, lat: 1, lon: 1, fame: 1 }).lean()) as PlanPlace[];
-  const score = (p: PlanPlace) => Math.log2(1 + p.fame) + INTEREST_WEIGHT * p.interests.filter((i) => interests.includes(i as Interest)).length;
-  return places.sort((a, b) => score(b) - score(a) || b.fame - a.fame || a.name.localeCompare(b.name));
+  const places = (await Place.find({ destination: slug }, { _id: 0, id: 1, name: 1, kind: 1, interests: 1, lat: 1, lon: 1, fame: 1, description: 1 }).lean()) as PlanPlace[];
+  return rankForInterests(places, interests);
 }
 
 /** The top `n` places for these interests (none for destinations without places). */
@@ -154,4 +154,12 @@ export function matchPlaces<T extends { title: string; location?: string }>(stop
       .sort((a, b) => b.words.length - a.words.length || b.p.fame - a.p.fame)[0];
     return best ? { ...stop, place: { id: best.p.id, lat: best.p.lat, lon: best.p.lon } } : { ...stop };
   });
+}
+
+/** A trip from TripWise's own planner (no AI), or null if we don't know enough places there. */
+export async function localTripFor(req: TripRequest): Promise<LocalTrip | null> {
+  const found = await findDestination(req.destination);
+  if (!found || found.country !== 'India' || !found.avgDailyCost) return null;
+  const places = await rankPlaces(found.slug, req.interests);
+  return planLocalTrip(req, { name: found.name, region: found.region, avgDailyCost: found.avgDailyCost.amount }, places);
 }

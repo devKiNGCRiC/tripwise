@@ -70,9 +70,10 @@ export interface Itinerary {
   };
   tips: string[];
   packingList: string[];
-  provider: 'gemini' | 'groq';
-  /** 'ai' = written for this trip; 'cache' = re-used from a similar trip. */
-  source?: 'ai' | 'cache';
+  /** Which model wrote it, or 'tripwise' for TripWise's own planner. */
+  provider: 'gemini' | 'groq' | 'tripwise';
+  /** 'ai' = written for this trip; 'cache' = re-used from a similar trip; 'local' = TripWise's own planner (no AI). */
+  source?: 'ai' | 'cache' | 'local';
   /** Which of India's seven worlds the trip is in ('abroad' outside India; null if unknown). */
   region?: 'himalaya' | 'thar' | 'ganga' | 'deccan' | 'ghats' | 'konkan' | 'sisters' | 'abroad' | null;
   createdAt: string;

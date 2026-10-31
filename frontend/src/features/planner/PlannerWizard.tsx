@@ -17,7 +17,7 @@ import { GlassPanel } from '@/components/ui/GlassPanel';
 import { ApiError } from '@/lib/api/errors';
 import { cn } from '@/lib/utils/cn';
 import { GeneratingScreen } from './GeneratingScreen';
-import { useGenerateItinerary } from './hooks';
+import { useGenerateItinerary, useQuickPlan } from './hooks';
 import { PlannerPreview } from './PlannerPreview';
 import { QuotaDialog } from './QuotaDialog';
 import { plannerResolver, type PlannerValues } from './schema';
@@ -39,6 +39,7 @@ export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) 
   const [quotaOpen, setQuotaOpen] = useState(false);
   const navigate = useNavigate();
   const generate = useGenerateItinerary();
+  const quick = useQuickPlan();
   const form = useForm<PlannerValues>({
     resolver: plannerResolver,
     defaultValues: { destination: '', startDate: '', endDate: '', budget: 3000, travellers: 'solo', interests: [], pace: 'balanced', ...initial },
@@ -52,6 +53,11 @@ export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) 
   async function goNext() {
     if (await trigger(current.fields, { shouldFocus: true })) setStep((s) => Math.min(last, s + 1));
   }
+  /** The answers as a trip request. */
+  function tripRequest() {
+    const v = getValues();
+    return { destination: v.destination.trim(), startDate: v.startDate, endDate: v.endDate, budget: { amount: v.budget, currency: 'INR' }, travellers: v.travellers, interests: v.interests, pace: v.pace };
+  }
   /** Check every answer (sending the traveller back to the first step with a problem), then ask the AI. */
   async function submit() {
     if (!(await trigger())) {
@@ -59,9 +65,8 @@ export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) 
       if (firstBad >= 0) setStep(firstBad);
       return;
     }
-    const v = getValues();
     generate.mutate(
-      { destination: v.destination.trim(), startDate: v.startDate, endDate: v.endDate, budget: { amount: v.budget, currency: 'INR' }, travellers: v.travellers, interests: v.interests, pace: v.pace },
+      tripRequest(),
       {
         onSuccess: ({ itinerary }) => navigate(`/trips/${itinerary.id}`),
         onError: (error) => {
@@ -143,6 +148,12 @@ export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) 
             onClose={() => {
               setQuotaOpen(false);
               generate.reset();
+              quick.reset();
+            }}
+            quick={{
+              onPlan: () => quick.mutate(tripRequest(), { onSuccess: ({ itinerary }) => navigate(`/trips/${itinerary.id}`) }),
+              pending: quick.isPending,
+              error: quick.error ? quick.error.message : null,
             }}
           />
         )}

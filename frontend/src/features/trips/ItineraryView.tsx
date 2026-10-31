@@ -40,6 +40,10 @@ export function ItineraryView({ itinerary, actions, onRegenerateDay, regeneratin
           </p>
           <h1 className="mt-2 text-[clamp(38px,5vw,72px)]">{itinerary.title}</h1>
           <p className="mt-3 max-w-[60ch] text-lg text-soft">{itinerary.summary}</p>
+          {/* Plans from TripWise's own planner say so (no AI wrote them) */}
+          {itinerary.provider === 'tripwise' && (
+            <p className="mt-2 text-sm text-soft">Planned by TripWise from our places catalogue — no AI used. Check opening hours before you go.</p>
+          )}
           <ul className="mt-5 flex flex-wrap gap-2 text-sm font-semibold">
             <li className="flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5">
               <CalendarDays aria-hidden className="size-4" /> {rangeLabel(request.startDate, request.endDate)}
