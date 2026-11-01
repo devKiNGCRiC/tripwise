@@ -12,8 +12,9 @@
  *   POST   /api/tolis/:id/members           { username }     → { toli }       leaders add a friend
  *   PATCH  /api/tolis/:id/members/:userId   { role?, requestsOff? } → { toli } role: the Sutradhar ('sutradhar' passes it on);
  *                                                            requestsOff: leaders stop someone's raise-hand requests
- *   DELETE /api/tolis/:id/members/:userId                     → 204            leave (self) or remove (leaders)
- *   PATCH  /api/tolis/:id/me                { phone }        → { toli }       share a phone number with this Toli (null hides it)
+ *   DELETE /api/tolis/:id/members/:userId                     → 204            leave (self) or remove (leaders);
+ *                                                                               409 while they owe or are owed money
+ *   PATCH  /api/tolis/:id/me                { phone?, upi? } → { toli }       share a phone number / UPI ID with this Toli (null hides it)
  *   GET    /api/tolis/:id/budget                             → { budget }     my range + the range that suits everyone
  *   PUT    /api/tolis/:id/budget            { low, high }    → { budget }     set my private range (INR a day)
  *   DELETE /api/tolis/:id/budget                             → { budget }     clear mine
@@ -31,6 +32,8 @@ import { Itinerary, Toli, ToliActivity, ToliBudget, User } from '../db/models/in
 import { clash, forbidden, notFound } from '../lib/errors.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
 import { unreadCount } from '../services/chaupal.js';
+import { memberBalance } from '../services/lekha.js';
+import { isUpiId } from '../services/lekhaRules.js';
 import { relation } from '../services/social.js';
 import { blockedWith, groupBudget, inviteUrlFor, loadMember, logActivity, MAX_MEMBERS, memberCards, requireLeader, TOLI_NOT_FOUND, toliView } from '../services/tolis.js';
 import { defaultsForType } from '../services/toliRules.js';
@@ -54,15 +57,24 @@ const patchSchema = z.object({ name: createSchema.shape.name.optional(), announc
 const memberSchema = z
   .object({ role: z.enum(['sutradhar', 'sah', 'sahyatri'], { error: 'Unknown role.' }).optional(), requestsOff: z.boolean().optional() })
   .refine((m) => m.role !== undefined || m.requestsOff !== undefined, 'Nothing to change.');
-/** An Indian mobile number, or null to stop sharing. */
-const phoneSchema = z.object({
-  phone: z
-    .string()
-    .transform((raw) => raw.replace(/[\s()-]/g, ''))
-    .refine((v) => /^(\+?91)?[6-9]\d{9}$/.test(v), 'Enter a 10-digit Indian mobile number.')
-    .transform((v) => `+91${v.slice(-10)}`)
-    .nullable(),
-});
+/** What I share with this Toli: an Indian mobile number and/or a UPI ID (null stops sharing). */
+const meSchema = z
+  .object({
+    phone: z
+      .string()
+      .transform((raw) => raw.replace(/[\s()-]/g, ''))
+      .refine((v) => /^(\+?91)?[6-9]\d{9}$/.test(v), 'Enter a 10-digit Indian mobile number.')
+      .transform((v) => `+91${v.slice(-10)}`)
+      .nullable()
+      .optional(),
+    upi: z
+      .string()
+      .trim()
+      .refine(isUpiId, 'That doesn’t look like a UPI ID (like name@bank).')
+      .nullable()
+      .optional(),
+  })
+  .refine((m) => m.phone !== undefined || m.upi !== undefined, 'Nothing to change.');
 
 /** A private budget range: whole rupees a day, low ≤ high. */
 const budgetSchema = z
@@ -226,6 +238,8 @@ export function tolisRoutes(deps: { now: () => Date; appUrl: string }): Router {
       // The Sutradhar can't be removed; only the Sutradhar removes co-leaders.
       if (target.role === 'sutradhar' || (target.role === 'sah' && member.role !== 'sutradhar')) throw forbidden('You can’t remove that person.');
     }
+    // Nobody leaves owing money, or being owed it — the Lekha must still add up.
+    if ((await memberBalance(toli._id.toString(), targetId)) !== 0) throw clash('Settle up first — this Sahyatri still owes or is owed money in the Lekha.');
     toli.members.pull({ userId: target.userId });
     await toli.save();
     // Their private budget range goes with them.
@@ -234,11 +248,12 @@ export function tolisRoutes(deps: { now: () => Date; appUrl: string }): Router {
     res.status(204).end();
   });
 
-  // PATCH /tolis/:id/me — share (or stop sharing) a phone number with this Toli.
+  // PATCH /tolis/:id/me — share (or stop sharing) a phone number or UPI ID with this Toli.
   router.patch('/tolis/:id/me', auth, async (req, res) => {
     const { toli, member } = await loadMember(String(req.params.id), currentUser(req).id);
-    const { phone } = phoneSchema.parse(req.body);
-    member.phone = phone ?? undefined;
+    const { phone, upi } = meSchema.parse(req.body);
+    if (phone !== undefined) member.phone = phone ?? undefined;
+    if (upi !== undefined) member.upi = upi ?? undefined;
     await toli.save();
     res.json({ toli: await toliView(toli, member, deps.now(), deps.appUrl) });
   });

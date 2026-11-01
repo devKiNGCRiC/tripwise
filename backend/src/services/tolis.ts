@@ -32,6 +32,8 @@ export interface MemberCard {
   role: ToliRole;
   /** Only when they chose to share it with this Toli. */
   phone?: string;
+  /** Their UPI ID, only when they chose to share it with this Toli. */
+  upi?: string;
 }
 
 /** The Toli as a member sees it. */
@@ -42,7 +44,7 @@ export interface ToliView {
   announcementMode: boolean;
   tripId: string | null;
   choices: { destination?: string; startDate?: string; endDate?: string; transport?: string };
-  me: { role: ToliRole; canPost: boolean; requestsOff: boolean; phone?: string };
+  me: { role: ToliRole; canPost: boolean; requestsOff: boolean; phone?: string; upi?: string };
   members: MemberCard[];
   memberCount: number;
   /** For planning the Sahyatra: the interests members saved (most common first, max 5) and
@@ -121,6 +123,7 @@ export async function memberCards(toli: ToliDoc): Promise<MemberCard[]> {
         ...(user.avatar ? { avatarUrl: avatarUrl(user._id.toString(), user.avatar.version) } : {}),
         role: m.role as ToliRole,
         ...(m.phone ? { phone: m.phone } : {}),
+        ...(m.upi ? { upi: m.upi } : {}),
       },
     ];
   });
@@ -148,6 +151,7 @@ export async function toliView(toli: ToliDoc, member: Member, now: Date, appUrl:
       canPost: canPost({ role, postUntil: member.postUntil?.toISOString() ?? null, oneMessage: member.oneMessage }, toli.announcementMode, now.toISOString()),
       requestsOff: member.requestsOff,
       ...(member.phone ? { phone: member.phone } : {}),
+      ...(member.upi ? { upi: member.upi } : {}),
     },
     members: await memberCards(toli),
     memberCount: toli.members.length,
