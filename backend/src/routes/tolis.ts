@@ -10,7 +10,8 @@
  *   GET    /api/toli-invites/:token                           → { invite }     a preview before joining
  *   POST   /api/toli-invites/:token/join                      → { toli }       join (again is fine)
  *   POST   /api/tolis/:id/members           { username }     → { toli }       leaders add a friend
- *   PATCH  /api/tolis/:id/members/:userId   { role }         → { toli }       the Sutradhar; role 'sutradhar' passes it on
+ *   PATCH  /api/tolis/:id/members/:userId   { role?, requestsOff? } → { toli } role: the Sutradhar ('sutradhar' passes it on);
+ *                                                            requestsOff: leaders stop someone's raise-hand requests
  *   DELETE /api/tolis/:id/members/:userId                     → 204            leave (self) or remove (leaders)
  *   PATCH  /api/tolis/:id/me                { phone }        → { toli }       share a phone number with this Toli (null hides it)
  *   GET    /api/tolis/:id/budget                             → { budget }     my range + the range that suits everyone
@@ -45,8 +46,10 @@ const createSchema = z.object({
 });
 /** Changes leaders may make. */
 const patchSchema = z.object({ name: createSchema.shape.name.optional(), announcementMode: z.boolean().optional() });
-/** A role change. */
-const roleSchema = z.object({ role: z.enum(['sutradhar', 'sah', 'sahyatri'], { error: 'Unknown role.' }) });
+/** A change to a member: their role, or whether they may raise their hand. */
+const memberSchema = z
+  .object({ role: z.enum(['sutradhar', 'sah', 'sahyatri'], { error: 'Unknown role.' }).optional(), requestsOff: z.boolean().optional() })
+  .refine((m) => m.role !== undefined || m.requestsOff !== undefined, 'Nothing to change.');
 /** An Indian mobile number, or null to stop sharing. */
 const phoneSchema = z.object({
   phone: z
@@ -184,19 +187,24 @@ export function tolisRoutes(deps: { now: () => Date; appUrl: string }): Router {
     res.json({ toli: await toliView(toli, member, deps.now(), deps.appUrl) });
   });
 
-  // PATCH /tolis/:id/members/:userId — the Sutradhar changes a role (or passes the Sutradhar role on).
+  // PATCH /tolis/:id/members/:userId — the Sutradhar changes a role (or passes the Sutradhar
+  // role on); leaders turn someone's raise-hand requests off or on.
   router.patch('/tolis/:id/members/:userId', auth, async (req, res) => {
     const me = currentUser(req).id;
     const { toli, member } = await loadMember(String(req.params.id), me);
-    if (member.role !== 'sutradhar') throw forbidden('Only the Sutradhar can change roles.');
-    const { role } = roleSchema.parse(req.body);
+    const { role, requestsOff } = memberSchema.parse(req.body);
     const target = toli.members.find((m) => m.userId.toString() === String(req.params.userId));
+    if (role !== undefined && member.role !== 'sutradhar') throw forbidden('Only the Sutradhar can change roles.');
+    if (requestsOff !== undefined) requireLeader(member);
     if (!target) throw notFound('That person isn’t in this Toli.');
-    if (target === member) throw clash('Pass the Sutradhar role to someone else instead.');
-    if (role === 'sutradhar') member.role = 'sah';
-    target.role = role;
+    if (requestsOff !== undefined) target.requestsOff = requestsOff;
+    if (role !== undefined) {
+      if (target === member) throw clash('Pass the Sutradhar role to someone else instead.');
+      if (role === 'sutradhar') member.role = 'sah';
+      target.role = role;
+    }
     await toli.save();
-    await logActivity(toli._id.toString(), me, 'role', { userId: target.userId.toString(), role }, deps.now());
+    if (role !== undefined) await logActivity(toli._id.toString(), me, 'role', { userId: target.userId.toString(), role }, deps.now());
     res.json({ toli: await toliView(toli, member, deps.now(), deps.appUrl) });
   });
 
