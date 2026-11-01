@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { Input } from '@/components/ui/Input';
 import { useToast } from '@/components/ui/Toast';
+import { NamesChoice } from '@/features/words/NamesToggle';
 import { ApiError } from '@/lib/api/errors';
 import type { Interest, Pace, Preferences, Profile, Travellers } from '@/lib/api/types';
 import { AccountSection, FormError } from './AccountSection';
@@ -118,6 +119,10 @@ export function PreferencesForm({ profile }: { profile: Profile }) {
               </Chip>
             ))}
           </div>
+        </div>
+        <div className="sm:col-span-3">
+          <p className="mb-2 text-sm font-semibold text-soft">Feature names (changes straight away)</p>
+          <NamesChoice />
         </div>
         <div className="grid gap-3 sm:col-span-3">
           <FormError message={error} />

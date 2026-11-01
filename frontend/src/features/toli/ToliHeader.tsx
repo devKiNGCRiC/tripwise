@@ -7,8 +7,9 @@ import { Copy, Megaphone } from 'lucide-react';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
+import { useWords } from '@/features/words/WordsProvider';
 import type { Toli } from '@/lib/api/types';
-import { ROLE_LABEL, TYPE_LABEL } from './labels';
+import { roleLabel, TYPE_LABEL } from './labels';
 
 /** Faces shown before "+N". */
 const FACES = 5;
@@ -20,6 +21,7 @@ export function whatsappInvite(toli: Pick<Toli, 'name'>, inviteUrl: string) {
 
 /** The Toli page header. */
 export function ToliHeader({ toli }: { toli: Toli }) {
+  const { w, english } = useWords();
   const toast = useToast();
   const sutradhar = toli.members.find((m) => m.role === 'sutradhar');
 
@@ -38,10 +40,15 @@ export function ToliHeader({ toli }: { toli: Toli }) {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
           <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">
-            <span lang="hi" className="font-hindi normal-case tracking-normal text-[#b8862f]">
-              टोली
-            </span>{' '}
-            · Toli · plan trips together
+            {!english && (
+              <>
+                <span lang="hi" className="font-hindi normal-case tracking-normal text-[#b8862f]">
+                  टोली
+                </span>{' '}
+                · Toli ·{' '}
+              </>
+            )}
+            plan trips together
           </p>
           <h1 className="mt-2 text-[clamp(36px,5vw,60px)]">{toli.name}</h1>
           <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
@@ -51,7 +58,7 @@ export function ToliHeader({ toli }: { toli: Toli }) {
                 <Megaphone aria-hidden className="size-3.5" /> Announcement mode — leaders post, everyone reads
               </span>
             )}
-            <span className="text-soft">You’re the {ROLE_LABEL[toli.me.role]}</span>
+            <span className="text-soft">You’re the {roleLabel(w, toli.me.role)}</span>
           </div>
         </div>
         {toli.inviteUrl && (
@@ -72,7 +79,7 @@ export function ToliHeader({ toli }: { toli: Toli }) {
           ))}
         </div>
         <p className="text-sm text-soft">
-          {toli.memberCount} {toli.memberCount === 1 ? 'Sahyatri' : 'Sahyatris'}
+          {toli.memberCount} {toli.memberCount === 1 ? w.sahyatri : w.sahyatris}
           {sutradhar && ` · led by ${sutradhar.name}`}
           {toli.memberCount > FACES && ` · +${toli.memberCount - FACES} more`}
         </p>

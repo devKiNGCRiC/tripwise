@@ -1,6 +1,6 @@
 /**
  * DecideTab.tsx — deciding together: the Toli's polls (newest first) and "New poll", the
- * private budget check, and for leaders "Plan the Sahyatra with TripWise", which opens the
+ * private budget check, and for leaders "Plan the {w.sahyatra} with TripWise", which opens the
  * planner for this Toli prefilled with what's been decided (destination, dates), the budget
  * that suits everyone and the members' favourite interests.
  */
@@ -9,6 +9,7 @@ import { Sparkles } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import { Button, buttonClasses } from '@/components/ui/Button';
+import { useWords } from '@/features/words/WordsProvider';
 import { toliApi } from '@/lib/api/endpoints';
 import type { Toli } from '@/lib/api/types';
 import { BudgetComfort } from './BudgetComfort';
@@ -32,6 +33,7 @@ export function planUrl(toli: Toli) {
 
 /** The Decide tab. */
 export function DecideTab({ toli }: { toli: Toli }) {
+  const { w } = useWords();
   const polls = useQuery({ queryKey: ['polls', toli.id], queryFn: () => toliApi.polls(toli.id), select: (d) => d.polls, refetchInterval: TOLI_REFRESH_MS });
   const [creating, setCreating] = useState(false);
 
@@ -58,7 +60,7 @@ export function DecideTab({ toli }: { toli: Toli }) {
           <section className="glass-strong grid gap-3 rounded-card p-5">
             <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">Ready?</p>
             <Link to={planUrl(toli)} className={buttonClasses({ variant: 'glow' })}>
-              <Sparkles aria-hidden className="size-4" /> Plan the Sahyatra with TripWise
+              <Sparkles aria-hidden className="size-4" /> Plan the {w.sahyatra} with TripWise
             </Link>
             <p className="text-sm text-soft">Opens the planner with what you’ve decided, the budget that suits everyone and the group’s favourite interests.</p>
           </section>

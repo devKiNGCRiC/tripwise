@@ -11,10 +11,13 @@ import { Button, buttonClasses } from '@/components/ui/Button';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 import { useToliAction } from '@/features/toli/hooks';
 import { TYPE_LABEL } from '@/features/toli/labels';
+import { useWords } from '@/features/words/WordsProvider';
+import { article } from '@/features/words/words';
 import { toliApi } from '@/lib/api/endpoints';
 
 /** Route "/toli/join/:token". */
 export default function ToliJoinPage() {
+  const { w, english } = useWords();
   const { token = '' } = useParams();
   const navigate = useNavigate();
   const invite = useQuery({ queryKey: ['toli-invite', token], queryFn: () => toliApi.invite(token), select: (d) => d.invite, retry: false });
@@ -22,7 +25,7 @@ export default function ToliJoinPage() {
 
   return (
     <WorldStage>
-      <title>Join a Toli · TripWise</title>
+      <title>{`Join ${article(w.toli)} · TripWise`}</title>
       <GlassPanel className="mx-auto flex max-w-lg flex-col items-center gap-4 text-center">
         {invite.isPending && <p className="text-soft">Opening the invite…</p>}
         {invite.isError && (
@@ -30,16 +33,16 @@ export default function ToliJoinPage() {
             <h1 className="text-[clamp(28px,4vw,44px)]">This invite isn't available</h1>
             <p className="text-soft">The link may be old — ask for a fresh one.</p>
             <Link to="/tolis" className={buttonClasses()}>
-              Your Tolis
+              Your {w.tolis}
             </Link>
           </>
         )}
         {invite.data && (
           <>
-            <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">Toli · plan trips together</p>
+            <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">{english ? 'Plan trips together' : 'Toli · plan trips together'}</p>
             <h1 className="text-[clamp(30px,4.5vw,52px)]">Join {invite.data.name}</h1>
             <p className="text-soft">
-              {TYPE_LABEL[invite.data.type]} · {invite.data.memberCount} Sahyatris
+              {TYPE_LABEL[invite.data.type]} · {invite.data.memberCount} {w.sahyatris}
             </p>
             {invite.data.sutradhar && (
               <p className="flex items-center gap-2">
@@ -48,11 +51,11 @@ export default function ToliJoinPage() {
             )}
             {invite.data.alreadyMember ? (
               <Link to={`/tolis/${invite.data.toliId}`} className={buttonClasses({ size: 'lg' })}>
-                Open this Toli
+                Open this {w.toli}
               </Link>
             ) : (
               <Button size="lg" loading={join.isPending} onClick={() => join.mutate(undefined, { onSuccess: ({ toli }) => navigate(`/tolis/${toli.id}`) })}>
-                Join this Toli
+                Join this {w.toli}
               </Button>
             )}
             {join.isError && (

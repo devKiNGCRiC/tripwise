@@ -6,7 +6,7 @@
  * power the passport and the Account tab.
  */
 import { model, Schema, type InferSchemaType, type HydratedDocument } from 'mongoose';
-import { PACES, PASSPORT_VISIBILITY, TRAVELLER_TYPES, TRAVELLERS } from '../../lib/enums.js';
+import { NAME_STYLES, PACES, PASSPORT_VISIBILITY, TRAVELLER_TYPES, TRAVELLERS } from '../../lib/enums.js';
 
 /** What a user looks like in the database. */
 const userSchema = new Schema(
@@ -37,6 +37,8 @@ const userSchema = new Schema(
           interests: { type: [String], default: undefined },
           pace: { type: String, enum: [...PACES] },
           travellers: { type: String, enum: [...TRAVELLERS] },
+          /** How feature names read (absent = Indian). */
+          names: { type: String, enum: [...NAME_STYLES] },
         },
         { _id: false },
       ),

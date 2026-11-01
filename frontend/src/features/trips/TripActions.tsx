@@ -12,11 +12,14 @@ import { Link } from 'react-router';
 import { Users } from 'lucide-react';
 import { Button, buttonClasses } from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
+import { useWords } from '@/features/words/WordsProvider';
+import { article } from '@/features/words/words';
 import type { Itinerary } from '@/lib/api/types';
 import { useShareTrip } from './hooks';
 
 /** Header buttons for a trip the traveller owns. */
 export function TripActions({ itinerary }: { itinerary: Itinerary }) {
+  const { w } = useWords();
   const share = useShareTrip(itinerary.id);
   const toast = useToast();
   const [making, setMaking] = useState(false);
@@ -62,11 +65,11 @@ export function TripActions({ itinerary }: { itinerary: Itinerary }) {
       </Button>
       {itinerary.toliId ? (
         <Link to={`/tolis/${itinerary.toliId}`} className={buttonClasses({ variant: 'ghost' })}>
-          <Users aria-hidden className="size-4" /> Open the Toli
+          <Users aria-hidden className="size-4" /> Open the {w.toli}
         </Link>
       ) : (
         <Link to={`/tolis?trip=${itinerary.id}`} className={buttonClasses({ variant: 'ghost' })}>
-          <Users aria-hidden className="size-4" /> Plan with a Toli
+          <Users aria-hidden className="size-4" /> Plan with {article(w.toli)}
         </Link>
       )}
     </>

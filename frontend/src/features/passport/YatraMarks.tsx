@@ -2,6 +2,7 @@
  * YatraMarks.tsx — badges earned by travelling (never bought): earned ones glow, the rest
  * wait in grey with a line on how to earn them, and the closest one to earn is suggested.
  */
+import { useWords } from '@/features/words/WordsProvider';
 import type { Passport } from '@/lib/api/types';
 import { cn } from '@/lib/utils/cn';
 import { MarkIcon } from './MarkIcon';
@@ -11,13 +12,14 @@ const nice = (date: string) => new Date(`${date}T00:00:00`).toLocaleDateString('
 
 /** The Yatra marks panel. */
 export function YatraMarks({ passport }: { passport: Passport }) {
+  const { w } = useWords();
   const earned = passport.marks.filter((m) => m.earnedAt);
   const nextUp = passport.marks.find((m) => !m.earnedAt);
 
   return (
-    <section aria-label="Yatra marks" className="glass-strong rounded-card p-6 sm:p-8">
+    <section aria-label={w.yatraMarks} className="glass-strong rounded-card p-6 sm:p-8">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="font-display text-2xl">Yatra marks</h2>
+        <h2 className="font-display text-2xl">{w.yatraMarks}</h2>
         <p className="text-sm font-semibold text-soft">{earned.length} earned</p>
       </div>
       <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">

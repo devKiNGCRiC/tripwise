@@ -10,6 +10,7 @@ import { useState, type FormEvent } from 'react';
 import { Hand } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/Button';
+import { useWords } from '@/features/words/WordsProvider';
 import { toliApi } from '@/lib/api/endpoints';
 import type { Anurodh, AnurodhAction, Toli } from '@/lib/api/types';
 import { TOLI_REFRESH_MS } from './hooks';
@@ -186,6 +187,7 @@ function HandRequest({ toli, request }: { toli: Toli; request: Anurodh }) {
 
 /** Leaders: everyone's raised hands. */
 export function RaisedHands({ toli }: { toli: Toli }) {
+  const { english } = useWords();
   const hands = useHands(toli.id);
   const requests = hands.data?.requests ?? [];
 
@@ -195,9 +197,11 @@ export function RaisedHands({ toli }: { toli: Toli }) {
     <section aria-label="Raised hands" className="glass-strong grid gap-3 rounded-card p-5">
       <h2 className="text-xl">
         Raised hands{' '}
-        <span lang="hi" className="font-hindi text-base text-[#b8862f]">
-          अनुरोध
-        </span>
+        {!english && (
+          <span lang="hi" className="font-hindi text-base text-[#b8862f]">
+            अनुरोध
+          </span>
+        )}
       </h2>
       {requests.length === 0 && <p className="text-sm text-soft">No raised hands right now.</p>}
       {requests.map((r) => (

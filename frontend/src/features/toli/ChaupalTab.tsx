@@ -9,6 +9,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { useWords } from '@/features/words/WordsProvider';
 import { toliApi } from '@/lib/api/endpoints';
 import { ApiError } from '@/lib/api/errors';
 import type { ChaupalMessage, Toli } from '@/lib/api/types';
@@ -51,6 +52,7 @@ function newClientId() {
 
 /** The Chaupal tab. */
 export function ChaupalTab({ toli }: { toli: Toli }) {
+  const { w } = useWords();
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const messages = useQuery({ queryKey: ['messages', toli.id], queryFn: () => toliApi.messages(toli.id), select: (d) => d.messages, refetchInterval: CHAT_REFRESH_MS });
@@ -132,7 +134,7 @@ export function ChaupalTab({ toli }: { toli: Toli }) {
       <section aria-label="Chaupal" className="glass-strong grid gap-4 rounded-card p-4 sm:p-5">
         {messages.isPending ? (
           <p role="status" className="text-soft">
-            Opening the Chaupal…
+            Opening the {w.chaupal}…
           </p>
         ) : messages.isError ? (
           <p role="alert" className="text-danger">
@@ -140,7 +142,7 @@ export function ChaupalTab({ toli }: { toli: Toli }) {
           </p>
         ) : (
           <>
-            {messages.data.length === 0 && queue.length === 0 && <p className="text-soft">No messages yet — say namaste to the Toli 🙏</p>}
+            {messages.data.length === 0 && queue.length === 0 && <p className="text-soft">No messages yet — say namaste to the {w.toli} 🙏</p>}
             <MessageList toli={toli} messages={messages.data} pending={queue} meId={user?.id} onReply={setReplyTo} />
           </>
         )}

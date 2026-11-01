@@ -8,6 +8,7 @@ import { NavLink } from 'react-router';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { useFriends } from '@/features/friends/hooks';
 import { useTolis } from '@/features/toli/hooks';
+import { useWords } from '@/features/words/WordsProvider';
 import { cn } from '@/lib/utils/cn';
 
 interface Tab {
@@ -18,6 +19,7 @@ interface Tab {
 
 /** Bottom navigation for phones. */
 export function MobileTabBar() {
+  const { w } = useWords();
   const { user } = useAuth();
   // Friend requests waiting (a dot on the Passport tab).
   const waiting = useFriends().data?.incoming.length ?? 0;
@@ -29,7 +31,7 @@ export function MobileTabBar() {
     { to: '/explore', label: 'Explore', icon: Compass },
     { to: '/plan', label: 'Plan', icon: Sparkles },
     { to: '/trips', label: 'Trips', icon: Ticket },
-    { to: '/tolis', label: 'Tolis', icon: Users },
+    { to: '/tolis', label: w.tolis, icon: Users },
     user ? { to: '/passport', label: 'Passport', icon: UserRound } : { to: '/login', label: 'Log in', icon: LogIn },
   ];
 

@@ -86,6 +86,15 @@ describe('profile', () => {
     expect(res.body.profile).not.toHaveProperty('passwordHash');
   });
 
+  // Feature names: Indian (Hindi/Sanskrit) or plain English, chosen per person.
+  it('saves the choice of Indian or English names, and refuses anything else', async () => {
+    const { token } = await signUp(app);
+    expect((await patch(token, { preferences: { names: 'english' } })).status).toBe(200);
+    const res = await request(app).get('/api/me/profile').set('Authorization', `Bearer ${token}`);
+    expect(res.body.profile.preferences.names).toBe('english');
+    expect((await patch(token, { preferences: { names: 'hinglish' } })).status).toBe(400);
+  });
+
   it('starts with friends-only privacy and journals shown', async () => {
     const { token } = await signUp(app);
     const res = await request(app).get('/api/me/profile').set('Authorization', `Bearer ${token}`);

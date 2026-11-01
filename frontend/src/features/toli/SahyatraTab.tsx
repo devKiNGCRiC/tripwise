@@ -10,6 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useTrip } from '@/features/trips/hooks';
+import { useWords } from '@/features/words/WordsProvider';
 import { toliApi } from '@/lib/api/endpoints';
 import type { Toli } from '@/lib/api/types';
 import { TOLI_REFRESH_MS } from './hooks';
@@ -21,6 +22,7 @@ type OpenForm = { key: string; target: SuggestTarget } | null;
 
 /** The Sahyatra tab. */
 export function SahyatraTab({ toli }: { toli: Toli }) {
+  const { w, english } = useWords();
   const trip = useTrip(toli.tripId ?? '');
   const sujhavs = useQuery({ queryKey: ['sujhavs', toli.id], queryFn: () => toliApi.sujhavs(toli.id), select: (d) => d.sujhavs, refetchInterval: TOLI_REFRESH_MS, enabled: !!toli.tripId });
   const [form, setForm] = useState<OpenForm>(null);
@@ -28,7 +30,7 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
   if (!toli.tripId) {
     return (
       <section className="glass-strong grid gap-3 rounded-card p-6">
-        <h2 className="text-2xl">No Sahyatra yet</h2>
+        <h2 className="text-2xl">No {w.sahyatra} yet</h2>
         <p className="text-soft">Decide where and when together in the Decide tab, then plan the shared trip with TripWise.</p>
         <Link to="?tab=decide" replace className="justify-self-start font-semibold underline decoration-accent decoration-2 underline-offset-4">
           Go to Decide
@@ -56,9 +58,9 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
         {trip.data && (
           <>
             <div className="glass-strong rounded-card p-5">
-              <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">Sahyatra · the shared trip</p>
+              <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">{english ? 'The shared trip' : 'Sahyatra · the shared trip'}</p>
               <h2 className="mt-1 text-2xl">{trip.data.title}</h2>
-              <p className="text-sm text-soft">Anyone can suggest a change; the Sutradhar and Sah-Sutradhars decide.</p>
+              <p className="text-sm text-soft">Anyone can suggest a change; the {w.sutradhar} and {w.sah}s decide.</p>
             </div>
             {trip.data.days.map((day) => (
               <section key={day.dayNumber} aria-label={`Day ${day.dayNumber} · ${day.theme}`} className="glass-strong grid gap-3 rounded-card p-5">
@@ -102,11 +104,17 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
       <aside className="grid gap-4 lg:sticky lg:top-28">
         <section className="glass-strong grid gap-3 rounded-card p-5">
           <h2 className="text-xl">
-            Sujhav{' '}
-            <span lang="hi" className="font-hindi text-base text-[#b8862f]">
-              सुझाव
-            </span>{' '}
-            · suggestions
+            {english ? (
+              'Suggestions'
+            ) : (
+              <>
+                Sujhav{' '}
+                <span lang="hi" className="font-hindi text-base text-[#b8862f]">
+                  सुझाव
+                </span>{' '}
+                · suggestions
+              </>
+            )}
           </h2>
           {sujhavs.isPending && <Skeleton className="h-24 rounded-2xl" />}
           {sujhavs.data && open.length === 0 && <p className="text-sm text-soft">No open suggestions. Use “Suggest…” on the plan.</p>}

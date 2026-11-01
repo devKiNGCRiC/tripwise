@@ -9,6 +9,7 @@
 import { useState, type FormEvent } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/Button';
+import { useWords } from '@/features/words/WordsProvider';
 import { toliApi } from '@/lib/api/endpoints';
 import type { Activity, SujhavChange } from '@/lib/api/types';
 
@@ -20,6 +21,7 @@ const FIELD = 'h-11 rounded-2xl border border-line bg-white/70 px-4 outline-none
 
 /** The suggestion form. */
 export function SuggestForm({ toliId, target, onDone }: { toliId: string; target: SuggestTarget; onDone: () => void }) {
+  const { w } = useWords();
   const queryClient = useQueryClient();
   const [choice, setChoice] = useState(target.kind === 'stop' ? 'swap' : target.kind === 'day' ? 'add' : 'add-day');
   const [title, setTitle] = useState('');
@@ -133,7 +135,7 @@ export function SuggestForm({ toliId, target, onDone }: { toliId: string; target
         </label>
       )}
       <label className="grid gap-1">
-        <span className="text-sm font-semibold">Note for the Toli (optional)</span>
+        <span className="text-sm font-semibold">Note for the {w.toli} (optional)</span>
         <input value={note} onChange={(e) => setNote(e.target.value)} maxLength={280} className={FIELD} />
       </label>
       {error && (

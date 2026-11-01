@@ -13,6 +13,7 @@ import { useProfile } from '@/features/account/hooks';
 import { PlannerWizard } from '@/features/planner/PlannerWizard';
 import { datesFromUrl } from '@/features/planner/urlDates';
 import { WHO_TO_TRAVELLERS, type PlannerValues } from '@/features/planner/schema';
+import { useWords } from '@/features/words/WordsProvider';
 import { toliApi } from '@/lib/api/endpoints';
 import type { Interest, Preferences } from '@/lib/api/types';
 
@@ -32,6 +33,7 @@ function fromPreferences(prefs: Preferences | undefined): Partial<PlannerValues>
 
 /** Route "/plan". */
 export default function PlanPage() {
+  const { w } = useWords();
   const [params] = useSearchParams();
   const profile = useProfile();
   const destination = params.get('destination')?.slice(0, 80) ?? '';
@@ -48,7 +50,7 @@ export default function PlanPage() {
       <title>Plan a trip · TripWise</title>
       {toli.data && (
         <p className="glass mx-auto mb-4 max-w-3xl rounded-2xl px-5 py-3 text-center">
-          Planning the Sahyatra for <b>{toli.data.name}</b> — every Sahyatri will see it.
+          Planning the {w.sahyatra} for <b>{toli.data.name}</b> — every {w.sahyatri} will see it.
         </p>
       )}
       {/* Wait briefly for preferences so the form starts filled in (a failed load just starts blank). */}

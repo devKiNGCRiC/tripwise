@@ -230,6 +230,8 @@ export interface Preferences {
   interests?: Interest[];
   pace?: Pace;
   travellers?: Travellers;
+  /** How feature names read: Hindi/Sanskrit (default) or plain English. */
+  names?: 'indian' | 'english';
 }
 
 /** Privacy choices. */

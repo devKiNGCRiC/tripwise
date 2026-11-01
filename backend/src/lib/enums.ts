@@ -9,6 +9,8 @@ export const INTERESTS = ['food', 'culture', 'adventure', 'nightlife', 'nature',
 export const PACES = ['chill', 'balanced', 'packed'] as const;
 /** Who is travelling. */
 export const TRAVELLERS = ['solo', 'couple', 'friends', 'family'] as const;
+/** How feature names read: Hindi/Sanskrit (with an English line) or plain English. */
+export const NAME_STYLES = ['indian', 'english'] as const;
 /** The kind of traveller someone says they are (shown on their passport). */
 export const TRAVELLER_TYPES = [
   'solo-explorer',

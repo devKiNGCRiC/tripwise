@@ -7,6 +7,7 @@ import { useState, type FormEvent } from 'react';
 import { Plus } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/Button';
+import { useWords } from '@/features/words/WordsProvider';
 import { toliApi } from '@/lib/api/endpoints';
 import type { NewPoll, PollKind, TravelMode } from '@/lib/api/types';
 
@@ -23,6 +24,7 @@ const MODES: [TravelMode, string][] = [
 
 /** The new-poll form. */
 export function CreatePoll({ toliId, onDone }: { toliId: string; onDone: () => void }) {
+  const { english } = useWords();
   const queryClient = useQueryClient();
   const [kind, setKind] = useState<PollKind>('tithi');
   const [question, setQuestion] = useState('');
@@ -65,7 +67,7 @@ export function CreatePoll({ toliId, onDone }: { toliId: string; onDone: () => v
       <label className="grid gap-1">
         <span className="text-sm font-semibold">Kind of poll</span>
         <select value={kind} onChange={(e) => setKind(e.target.value as PollKind)} className={FIELD}>
-          <option value="tithi">Dates (Tithi)</option>
+          <option value="tithi">{english ? 'Dates' : 'Dates (Tithi)'}</option>
           <option value="destination">Where to go</option>
           <option value="transport">How to travel</option>
           <option value="free">Any question</option>

@@ -10,6 +10,7 @@ import { useAuth } from '@/features/auth/AuthProvider';
 import { ColoursMenu } from '@/features/colours/ColoursMenu';
 import { useFriends } from '@/features/friends/hooks';
 import { useTolis } from '@/features/toli/hooks';
+import { useWords } from '@/features/words/WordsProvider';
 import { cn } from '@/lib/utils/cn';
 import { ThemeToggle } from '@/theme/ThemeToggle';
 import { Logo } from './Logo';
@@ -35,6 +36,7 @@ function initials(name: string) {
 
 /** The floating glass navigation bar. */
 export function Navbar() {
+  const { w } = useWords();
   const { user, status } = useAuth();
   // Friend requests waiting for an answer (a dot on your passport bubble).
   const waiting = useFriends().data?.incoming.length ?? 0;
@@ -64,8 +66,8 @@ export function Navbar() {
               </NavLink>
             )}
             {user && (
-              <NavLink to="/tolis" className={navLinkClass} aria-label={unread ? `Tolis (${unread} unread)` : 'Tolis'}>
-                Tolis
+              <NavLink to="/tolis" className={navLinkClass} aria-label={unread ? `${w.tolis} (${unread} unread)` : w.tolis}>
+                {w.tolis}
                 {unread > 0 && <span aria-hidden className="ml-1 inline-block size-2 rounded-full bg-danger align-middle" />}
               </NavLink>
             )}

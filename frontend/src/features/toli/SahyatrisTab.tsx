@@ -11,16 +11,18 @@ import { useNavigate } from 'react-router';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { useWords } from '@/features/words/WordsProvider';
 import { toliApi } from '@/lib/api/endpoints';
 import type { Toli, ToliMember, ToliRole } from '@/lib/api/types';
 import { useToliAction } from './hooks';
-import { ROLE_LABEL } from './labels';
+import { roleLabel } from './labels';
 
 /** Small round action link/button styles. */
 const ROUND = 'grid size-9 place-items-center rounded-full border border-line hover:bg-ink/6';
 
 /** One Sahyatri, with what the viewer may do. */
 function MemberRow({ toli, member }: { toli: Toli; member: ToliMember }) {
+  const { w } = useWords();
   const { user } = useAuth();
   const setRole = useToliAction(toli.id, (role: ToliRole) => toliApi.updateMember(toli.id, member.id, { role }));
   const remove = useToliAction(toli.id, () => toliApi.removeMember(toli.id, member.id));
@@ -31,14 +33,14 @@ function MemberRow({ toli, member }: { toli: Toli; member: ToliMember }) {
   const digits = member.phone?.replace(/^\+/, '');
 
   return (
-    <li aria-label={`${member.name}, ${ROLE_LABEL[member.role]}`} className="flex flex-wrap items-center gap-3 rounded-2xl border border-line bg-white/50 p-3 dark:bg-white/5">
+    <li aria-label={`${member.name}, ${roleLabel(w, member.role)}`} className="flex flex-wrap items-center gap-3 rounded-2xl border border-line bg-white/50 p-3 dark:bg-white/5">
       <Avatar name={member.name} url={member.avatarUrl} className="size-10 text-base" />
       <div className="min-w-0 flex-1">
         <p className="font-semibold">
           {member.name} {isMe && <span className="text-soft">(you)</span>}
         </p>
         <p className="text-sm text-soft">
-          @{member.username} · <span>{ROLE_LABEL[member.role]}</span>
+          @{member.username} · <span>{roleLabel(w, member.role)}</span>
         </p>
       </div>
       {member.phone && !isMe && (
@@ -55,15 +57,15 @@ function MemberRow({ toli, member }: { toli: Toli; member: ToliMember }) {
         <div className="flex flex-wrap gap-1.5">
           {member.role === 'sahyatri' ? (
             <Button size="sm" variant="secondary" loading={setRole.isPending} onClick={() => setRole.mutate('sah')}>
-              Make Sah-Sutradhar
+              Make {w.sah}
             </Button>
           ) : (
             <Button size="sm" variant="secondary" loading={setRole.isPending} onClick={() => setRole.mutate('sahyatri')}>
-              Make Sahyatri
+              Make {w.sahyatri}
             </Button>
           )}
-          <Button size="sm" variant="ghost" onClick={() => window.confirm(`Pass the Sutradhar role to ${member.name}? You'll become a Sah-Sutradhar.`) && setRole.mutate('sutradhar')}>
-            Pass Sutradhar role
+          <Button size="sm" variant="ghost" onClick={() => window.confirm(`Pass the ${w.sutradhar} role to ${member.name}? You'll become a ${w.sah}.`) && setRole.mutate('sutradhar')}>
+            Pass {w.sutradhar} role
           </Button>
         </div>
       )}
@@ -107,6 +109,7 @@ function AddFriend({ toli }: { toli: Toli }) {
 
 /** Share or hide my number with this Toli. */
 function MyNumber({ toli }: { toli: Toli }) {
+  const { w } = useWords();
   const [phone, setPhone] = useState('');
   const save = useToliAction(toli.id, (value: string | null) => toliApi.setPhone(toli.id, value));
 
@@ -119,7 +122,7 @@ function MyNumber({ toli }: { toli: Toli }) {
   return toli.me.phone ? (
     <div className="flex flex-wrap items-center gap-3 text-sm">
       <span>
-        Your number <b>{toli.me.phone}</b> is shared with this Toli (for Call buttons).
+        Your number <b>{toli.me.phone}</b> is shared with this {w.toli} (for Call buttons).
       </span>
       <Button size="sm" variant="ghost" loading={save.isPending} onClick={() => save.mutate(null)}>
         Stop sharing
@@ -128,7 +131,7 @@ function MyNumber({ toli }: { toli: Toli }) {
   ) : (
     <form onSubmit={onSubmit} className="flex flex-wrap items-end gap-2">
       <label className="grid min-w-56 flex-1 gap-1.5">
-        <span className="text-sm font-semibold">Your phone number (shared with this Toli only)</span>
+        <span className="text-sm font-semibold">Your phone number (shared with this {w.toli} only)</span>
         <input value={phone} onChange={(e) => setPhone(e.target.value)} inputMode="tel" placeholder="98765 43210" className="h-11 rounded-2xl border border-line bg-white/60 px-4 outline-none focus:border-accent dark:bg-white/5" />
       </label>
       <Button type="submit" variant="secondary" loading={save.isPending} disabled={!phone.trim()}>
@@ -145,6 +148,7 @@ function MyNumber({ toli }: { toli: Toli }) {
 
 /** The Sahyatris tab. */
 export function SahyatrisTab({ toli }: { toli: Toli }) {
+  const { w, english } = useWords();
   const { user } = useAuth();
   const navigate = useNavigate();
   const leave = useToliAction(toli.id, () => toliApi.removeMember(toli.id, user!.id));
@@ -153,10 +157,12 @@ export function SahyatrisTab({ toli }: { toli: Toli }) {
     <section aria-label="Sahyatris" className="glass-strong grid gap-5 rounded-card p-6">
       <div>
         <h2 className="text-2xl">
-          Sahyatris{' '}
-          <span lang="hi" className="font-hindi text-lg text-[#b8862f]">
-            सहयात्री
-          </span>
+          {w.sahyatris}{' '}
+          {!english && (
+            <span lang="hi" className="font-hindi text-lg text-[#b8862f]">
+              सहयात्री
+            </span>
+          )}
         </h2>
         <p className="text-sm text-soft">Fellow travellers. Those who share a number get Call buttons.</p>
       </div>
@@ -168,10 +174,10 @@ export function SahyatrisTab({ toli }: { toli: Toli }) {
       {toli.me.role !== 'sahyatri' && <AddFriend toli={toli} />}
       <MyNumber toli={toli} />
       {toli.me.role === 'sutradhar' ? (
-        <p className="text-sm text-soft">To leave, pass the Sutradhar role to someone first.</p>
+        <p className="text-sm text-soft">To leave, pass the {w.sutradhar} role to someone first.</p>
       ) : (
         <Button variant="ghost" className="justify-self-start text-danger" loading={leave.isPending} onClick={() => leave.mutate(undefined, { onSuccess: () => navigate('/tolis') })}>
-          Leave this Toli
+          Leave this {w.toli}
         </Button>
       )}
     </section>

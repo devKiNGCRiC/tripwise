@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { useWords } from '@/features/words/WordsProvider';
 import { toliApi } from '@/lib/api/endpoints';
 import type { Poll, Toli } from '@/lib/api/types';
 import { cn } from '@/lib/utils/cn';
@@ -20,6 +21,7 @@ function listOf(names: string[]) {
 
 /** One poll. */
 export function PollCard({ toli, poll }: { toli: Toli; poll: Poll }) {
+  const { english } = useWords();
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [error, setError] = useState('');
@@ -58,7 +60,7 @@ export function PollCard({ toli, poll }: { toli: Toli; poll: Poll }) {
   return (
     <article aria-label={poll.question} className="glass-strong grid gap-3 rounded-card p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">{poll.kind === 'tithi' ? 'Tithi · dates' : poll.kind === 'destination' ? 'Where to' : poll.kind === 'transport' ? 'Getting there' : 'Poll'}</p>
+        <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">{poll.kind === 'tithi' ? (english ? 'Dates' : 'Tithi · dates') : poll.kind === 'destination' ? 'Where to' : poll.kind === 'transport' ? 'Getting there' : 'Poll'}</p>
         {poll.closesAt && open && <span className="text-xs text-soft">Closes {new Date(poll.closesAt).toLocaleString('en-IN', { weekday: 'short', hour: 'numeric', minute: '2-digit' })}</span>}
       </div>
       <h3 className="text-xl">{poll.question}</h3>

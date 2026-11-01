@@ -8,6 +8,8 @@ import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { useTrip } from '@/features/trips/hooks';
+import { useWords } from '@/features/words/WordsProvider';
+import { article } from '@/features/words/words';
 import { toliApi } from '@/lib/api/endpoints';
 import type { TripType } from '@/lib/api/types';
 import { cn } from '@/lib/utils/cn';
@@ -19,6 +21,7 @@ const TYPES: TripType[] = ['friends', 'family', 'college', 'office'];
 
 /** The "Start a Toli" form. */
 export function CreateToli({ fromTrip }: { fromTrip?: string }) {
+  const { w } = useWords();
   const navigate = useNavigate();
   const trip = useTrip(fromTrip ?? '');
   const [name, setName] = useState('');
@@ -34,15 +37,15 @@ export function CreateToli({ fromTrip }: { fromTrip?: string }) {
   return (
     <form onSubmit={onSubmit} className="glass-strong grid gap-4 rounded-card p-6" aria-labelledby="start-toli">
       <h2 id="start-toli" className="text-2xl">
-        Start a Toli
+        Start {article(w.toli)}
       </h2>
       {fromTrip && trip.data && (
         <p className="rounded-2xl bg-accent/10 px-4 py-2 text-sm">
-          Starting from your trip <b>{trip.data.title}</b> — it becomes the Toli’s Sahyatra.
+          Starting from your trip <b>{trip.data.title}</b> — it becomes the {w.toli}’s {w.sahyatra}.
         </p>
       )}
       <label className="grid gap-1.5">
-        <span className="text-sm font-semibold">Toli name</span>
+        <span className="text-sm font-semibold">{w.toli} name</span>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -59,14 +62,14 @@ export function CreateToli({ fromTrip }: { fromTrip?: string }) {
           </label>
         ))}
       </div>
-      <p className="text-sm text-soft">College and office Tolis start in announcement mode — leaders post, everyone reads. School trips (under 18) come later, with parents’ consent.</p>
+      <p className="text-sm text-soft">College and office {w.tolis} start in announcement mode — leaders post, everyone reads. School trips (under 18) come later, with parents’ consent.</p>
       {create.isError && (
         <p role="alert" className="text-sm text-danger">
           {create.error.message}
         </p>
       )}
       <Button type="submit" loading={create.isPending} disabled={name.trim().length < 2} className="justify-self-start">
-        Create Toli
+        Create {w.toli}
       </Button>
     </form>
   );

@@ -31,7 +31,7 @@ export interface Profile extends PublicUser {
   bio: string;
   travellerType: string | null;
   homeCity: string;
-  preferences: { budget?: number; interests?: string[]; pace?: string; travellers?: string };
+  preferences: { budget?: number; interests?: string[]; pace?: string; travellers?: string; names?: string };
   privacy: { passport: 'friends' | 'everyone' | 'private'; showJournal: boolean };
   theme: unknown;
   inviteCode: string;
@@ -50,6 +50,7 @@ export function profileOf(user: UserDoc): Profile {
       ...(prefs.interests?.length ? { interests: [...prefs.interests] } : {}),
       ...(prefs.pace ? { pace: prefs.pace } : {}),
       ...(prefs.travellers ? { travellers: prefs.travellers } : {}),
+      ...(prefs.names ? { names: prefs.names } : {}),
     },
     privacy: { passport: (user.privacy?.passport ?? 'friends') as Profile['privacy']['passport'], showJournal: user.privacy?.showJournal ?? true },
     theme: user.theme ?? null,

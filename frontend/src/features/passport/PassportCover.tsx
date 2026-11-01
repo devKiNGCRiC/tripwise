@@ -9,17 +9,19 @@
 import type { ReactNode } from 'react';
 import { MapPin } from 'lucide-react';
 import { TRAVELLER_TYPE_LABEL } from '@/features/account/labels';
+import { useWords } from '@/features/words/WordsProvider';
 import type { Passport } from '@/lib/api/types';
 import { passportCode } from './passportCode';
 
 /** The cover; `actions` are the buttons above the numbers (yours: Edit profile, Friends). */
 export function PassportCover({ passport, actions }: { passport: Passport; actions?: ReactNode }) {
+  const { w } = useWords();
   const { cover, stats } = passport;
   const numbers: [string, string][] = [
     [String(stats.trips), 'Trips'],
     [`${stats.worlds}/7`, 'Worlds'],
     [String(stats.daysAway), 'Days away'],
-    [String(stats.marks), 'Yatra marks'],
+    [String(stats.marks), w.yatraMarks],
   ];
 
   return (

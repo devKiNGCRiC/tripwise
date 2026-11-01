@@ -12,7 +12,7 @@ import { z } from 'zod';
 import { User } from '../db/models/index.js';
 import { profileOf } from '../db/toPublic.js';
 import { badRequest, conflict, unauthorized } from '../lib/errors.js';
-import { INTERESTS, PACES, PASSPORT_VISIBILITY, TRAVELLER_TYPES, TRAVELLERS } from '../lib/enums.js';
+import { INTERESTS, NAME_STYLES, PACES, PASSPORT_VISIBILITY, TRAVELLER_TYPES, TRAVELLERS } from '../lib/enums.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
 import { normalizeUsername, usernameProblem } from '../services/username.js';
 
@@ -42,6 +42,7 @@ const patchSchema = z.object({
       interests: z.array(z.enum(INTERESTS)).max(5, 'Pick up to 5 interests').optional(),
       pace: z.enum(PACES).optional(),
       travellers: z.enum(TRAVELLERS).optional(),
+      names: z.enum(NAME_STYLES, { error: 'Pick Indian or English names' }).optional(),
     })
     .optional(),
   privacy: z
