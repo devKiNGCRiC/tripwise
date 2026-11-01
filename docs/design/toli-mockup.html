@@ -1,0 +1,209 @@
+<!doctype html>
+<!--
+  toli-mockup.html — a static mockup of Toli (group trips) for the owner to approve before the
+  screens are built: My Tolis, a Toli page (Decide and Sahyatra tabs), Chaupal on a phone in
+  announcement mode with raise-hand, and the leader's raise-hand queue. Seven Worlds glass style.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toli mockup · TripWise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet" />
+<style>
+  /* Tokens (Himalaya by day, as in the app) */
+  :root { --ink:#121417; --soft:#3c4149; --line:rgb(18 20 23/.12); --accent:#2f6f9f; --accent2:#be513a; --glass:rgb(255 255 255/.55); --glass-strong:rgb(255 255 255/.74); --edge:rgb(255 255 255/.7); }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:'Plus Jakarta Sans',system-ui,sans-serif; color:var(--ink); background:linear-gradient(#bcd8ee 0%,#e9eff2 38%,#cfdccf 62%,#5d7b63 100%) fixed; padding:24px 16px 80px; }
+  h1,h2,h3,.display { font-family:'Fraunces',Georgia,serif; font-weight:600; letter-spacing:-.01em; }
+  .hi { font-family:'Tiro Devanagari Hindi',serif; color:#b8862f; }
+  .wrap { max-width:1280px; margin:0 auto; display:grid; gap:28px; }
+  .label { font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--soft); }
+  .note { background:#fff7e0; border:1px dashed #d4a640; border-radius:14px; padding:10px 14px; font-size:13px; color:#6b5313; }
+  .glass { background:var(--glass); border:1px solid var(--edge); backdrop-filter:blur(20px); border-radius:28px; padding:22px; box-shadow:0 30px 80px -40px rgb(0 0 0/.35); }
+  .strong { background:var(--glass-strong); }
+  .row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .chip { border:1px solid var(--line); border-radius:999px; padding:5px 12px; font-size:13px; font-weight:600; background:rgb(255 255 255/.5); }
+  .chip.on { background:var(--accent); color:#fff; border-color:transparent; }
+  .btn { border:0; border-radius:999px; padding:10px 18px; font:600 14px 'Plus Jakarta Sans'; background:var(--ink); color:#fff; cursor:pointer; }
+  .btn.accent { background:var(--accent); } .btn.ghost { background:transparent; color:var(--ink); border:1px solid var(--line); } .btn.sm { padding:6px 12px; font-size:13px; }
+  .btn.wa { background:#25d366; color:#06331a; }
+  .av { width:34px; height:34px; border-radius:50%; display:grid; place-items:center; font:600 14px 'Fraunces'; color:#fff; border:2px solid #fff; margin-left:-8px; }
+  .av:first-child { margin-left:0; }
+  .tabs { display:flex; gap:4px; background:rgb(255 255 255/.45); border:1px solid var(--edge); border-radius:999px; padding:4px; width:max-content; max-width:100%; overflow:auto; }
+  .tab { padding:8px 16px; border-radius:999px; font-size:14px; font-weight:600; color:var(--soft); white-space:nowrap; }
+  .tab.on { background:var(--ink); color:#fff; }
+  .grid2 { display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); }
+  .card { background:rgb(255 255 255/.7); border:1px solid var(--line); border-radius:22px; padding:18px; display:grid; gap:12px; }
+  .bar { height:8px; border-radius:99px; background:rgb(47 111 159/.15); overflow:hidden; } .bar > i { display:block; height:100%; background:var(--accent); border-radius:99px; }
+  .opt { display:grid; grid-template-columns:22px 1fr auto; gap:10px; align-items:center; padding:10px 12px; border:1px solid var(--line); border-radius:14px; }
+  .opt.best { border-color:var(--accent); background:rgb(47 111 159/.08); }
+  .box { width:20px; height:20px; border-radius:6px; border:2px solid var(--accent); display:grid; place-items:center; color:#fff; font-size:13px; }
+  .box.on { background:var(--accent); }
+  .muted { color:var(--soft); font-size:13px; }
+  .nudge { background:rgb(190 81 58/.1); color:#8a3524; border-radius:12px; padding:8px 12px; font-size:13px; font-weight:600; }
+  .stop { display:grid; grid-template-columns:56px 1fr auto; gap:12px; align-items:start; padding:12px 0; border-bottom:1px solid var(--line); }
+  .sujhav { border-left:4px solid var(--accent2); }
+  /* Phone */
+  .phone { width:380px; max-width:100%; height:760px; border-radius:44px; background:#111; padding:12px; margin:0 auto; }
+  .screen { height:100%; border-radius:34px; overflow:hidden; background:linear-gradient(#dbe8f1,#eef2ef); display:grid; grid-template-rows:auto 1fr auto; }
+  .chat-top { padding:14px 16px; background:rgb(255 255 255/.75); border-bottom:1px solid var(--line); }
+  .msgs { padding:12px; display:flex; flex-direction:column; gap:10px; overflow:hidden; }
+  .msg { max-width:82%; background:#fff; border-radius:16px 16px 16px 4px; padding:9px 12px; font-size:14px; box-shadow:0 2px 6px rgb(0 0 0/.05); }
+  .msg.me { align-self:flex-end; background:var(--accent); color:#fff; border-radius:16px 16px 4px 16px; }
+  .msg .who { font-size:12px; font-weight:700; color:var(--accent); margin-bottom:2px; }
+  .mention { background:rgb(47 111 159/.15); color:var(--accent); border-radius:6px; padding:0 4px; font-weight:600; }
+  .msg.card { max-width:92%; border:1px solid var(--line); }
+  .ann { padding:10px 12px; background:rgb(255 255 255/.85); border-top:1px solid var(--line); display:grid; gap:8px; }
+  .sheet { background:#fff; border-radius:20px 20px 0 0; padding:16px; box-shadow:0 -10px 30px rgb(0 0 0/.12); display:grid; gap:10px; }
+  input.fake { width:100%; border:1px solid var(--line); border-radius:12px; padding:10px 12px; font:inherit; }
+  .range { position:relative; height:8px; border-radius:99px; background:#dfe6ec; margin:18px 6px 8px; }
+  .range > i { position:absolute; top:0; height:100%; background:var(--accent); border-radius:99px; }
+  .range > b { position:absolute; top:-6px; width:20px; height:20px; border-radius:50%; background:#fff; border:3px solid var(--accent); }
+  .split { display:grid; gap:24px; grid-template-columns:minmax(0,1fr) 380px; align-items:start; }
+  @media (max-width: 900px) { .split { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="note"><b>Mockup for approval</b> — not the real app. Layout, names and buttons are what matter; real data, colours per world and Night mode come with the build.</div>
+
+  <!-- ① My Tolis -->
+  <section class="glass strong" style="display:grid;gap:18px">
+    <div class="row" style="justify-content:space-between">
+      <div><p class="label">Toli · plan trips together</p><h1 style="font-size:40px">Your Tolis <span class="hi" style="font-size:26px">टोली</span></h1></div>
+      <button class="btn accent">+ Start a Toli</button>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="row" style="justify-content:space-between"><h3 style="font-size:22px">Kerala Toli</h3><span class="chip">Friends</span></div>
+        <div class="row"><span class="av" style="background:#2f6f9f">D</span><span class="av" style="background:#be513a">K</span><span class="av" style="background:#6b8e4e">Z</span><span class="muted">3 Sahyatris · you're the Sutradhar</span></div>
+        <p class="muted">Sahyatra: <b style="color:var(--ink)">Kerala Backwaters · 12–15 Nov</b></p>
+        <div class="row"><span class="chip on">💬 2 new in Chaupal</span><span class="chip">1 Sujhav to decide</span></div>
+      </div>
+      <div class="card">
+        <div class="row" style="justify-content:space-between"><h3 style="font-size:22px">Office offsite</h3><span class="chip">Office · 18+</span></div>
+        <div class="row"><span class="av" style="background:#be513a">K</span><span class="av" style="background:#2f6f9f">D</span><span class="av" style="background:#6b8e4e">Z</span><span class="muted">48 Sahyatris · Kabir leads</span></div>
+        <p class="muted">📣 Announcement mode — leaders post, everyone reads</p>
+        <div class="row"><span class="chip">Tithi poll open</span></div>
+      </div>
+      <div class="card" style="border-style:dashed">
+        <h3 style="font-size:20px">Start a Toli</h3>
+        <input class="fake" value="Goa with the gang" />
+        <div class="row"><span class="chip on">Friends</span><span class="chip">Family</span><span class="chip">College · 18+</span><span class="chip">Office · 18+</span></div>
+        <p class="muted">College and office Tolis start in announcement mode. School trips (under 18) come later, with parents' consent.</p>
+        <button class="btn">Create Toli</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② A Toli: header + Decide tab -->
+  <section class="glass strong" style="display:grid;gap:18px">
+    <div class="row" style="justify-content:space-between;align-items:flex-start">
+      <div>
+        <p class="label">Toli · plan trips together</p>
+        <h1 style="font-size:46px">Kerala Toli</h1>
+        <div class="row" style="margin-top:8px"><span class="av" style="background:#2f6f9f">D</span><span class="av" style="background:#be513a">K</span><span class="av" style="background:#6b8e4e">Z</span><span class="muted">Demo (Sutradhar) · Kabir · Zoya</span></div>
+      </div>
+      <div class="row"><button class="btn wa">Invite on WhatsApp</button><button class="btn ghost">Copy link</button></div>
+    </div>
+    <div class="tabs"><span class="tab">Sahyatra</span><span class="tab on">Decide</span><span class="tab">Chaupal ²</span><span class="tab">Sahyatris</span><span class="tab">Activity</span></div>
+
+    <div class="grid2">
+      <!-- Tithi poll -->
+      <div class="card">
+        <div class="row" style="justify-content:space-between"><p class="label">Tithi · date poll</p><span class="muted">closes Fri 6 pm</span></div>
+        <h3 style="font-size:22px">When can you go?</h3>
+        <div class="opt best"><span class="box on">✓</span><div><b>12–15 Nov</b><div class="bar" style="margin-top:6px"><i style="width:100%"></i></div></div><span class="muted">3 of 3 ★ best overlap</span></div>
+        <div class="opt"><span class="box on">✓</span><div><b>19–22 Nov</b><div class="bar" style="margin-top:6px"><i style="width:66%"></i></div></div><span class="muted">2</span></div>
+        <div class="opt"><span class="box"></span><div><b>3–6 Dec</b><div class="bar" style="margin-top:6px"><i style="width:33%"></i></div></div><span class="muted">1</span></div>
+        <p class="nudge">⏳ Zoya hasn't voted yet</p>
+        <div class="row"><button class="btn sm">Close & use 12–15 Nov</button><span class="muted">(leaders)</span></div>
+      </div>
+      <!-- Destination poll -->
+      <div class="card">
+        <p class="label">Where shall we go?</p>
+        <div class="opt best"><span class="box on">✓</span><div><b>Kerala Backwaters</b><p class="muted">Best Sep–Mar · ~₹4,000/day · Alappuzha Beach, Kumarakom Bird Sanctuary, Marari Beach</p></div><span class="muted">2</span></div>
+        <div class="opt"><span class="box"></span><div><b>Coorg</b><p class="muted">Best Oct–Mar · ~₹3,500/day · Abbey Falls, Namdroling Monastery, Tadiandamol</p></div><span class="muted">1</span></div>
+        <div class="opt"><span class="box"></span><div><b>Our cousin's farmhouse</b><p class="muted">Not in TripWise's catalogue yet</p></div><span class="muted">0</span></div>
+        <p class="muted">Facts come from TripWise's own catalogue — no ten browser tabs.</p>
+      </div>
+      <!-- Budget comfort -->
+      <div class="card">
+        <p class="label">Budget comfort · private</p>
+        <h3 style="font-size:22px">₹2,500 – ₹3,000 a day suits all 3</h3>
+        <p class="muted">Your range (only you see it): <b style="color:var(--ink)">₹2,000 – ₹3,000</b></p>
+        <div class="range"><i style="left:15%;width:35%"></i><b style="left:13%"></b><b style="left:48%"></b></div>
+        <p class="muted">Nobody sees anyone's own numbers — only the range that works for everyone.</p>
+      </div>
+      <!-- Transport + plan -->
+      <div class="card">
+        <p class="label">How shall we travel?</p>
+        <div class="opt best"><span class="box on">✓</span><b>Train</b><span class="muted">2</span></div>
+        <div class="opt"><span class="box"></span><b>Flight</b><span class="muted">1</span></div>
+        <hr style="border:0;border-top:1px solid var(--line)" />
+        <p class="label">Ready?</p>
+        <button class="btn accent">✨ Plan the Sahyatra with TripWise</button>
+        <p class="muted">Opens the planner with Kerala, 12–15 Nov, ₹3,000/day and the group's favourite interests filled in.</p>
+        <div class="row"><button class="btn ghost sm">+ New poll</button><span class="muted">destination · Tithi · transport · any question</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ Sahyatra tab + Sujhav -->
+  <section class="glass strong" style="display:grid;gap:14px">
+    <div class="tabs"><span class="tab on">Sahyatra</span><span class="tab">Decide</span><span class="tab">Chaupal</span><span class="tab">Sahyatris</span><span class="tab">Activity</span></div>
+    <div class="grid2">
+      <div class="card">
+        <h3 style="font-size:22px">Day 1 · Around Alappuzha</h3>
+        <div class="stop"><b>09:00</b><div><b>Alappuzha Beach</b><p class="muted">Sunrise walk on the old pier.</p></div><button class="btn ghost sm">Suggest…</button></div>
+        <div class="stop"><b>11:30</b><div><b>Houseboat cruise</b><p class="muted">Lunch on board.</p></div><button class="btn ghost sm">Suggest…</button></div>
+        <div class="stop" style="border:0"><b>17:00</b><div><b>Marari Beach</b><p class="muted">Quiet sunset.</p></div><button class="btn ghost sm">Suggest…</button></div>
+        <p class="muted">Sahyatris suggest; only the Sutradhar and Sah-Sutradhars change the plan.</p>
+      </div>
+      <div class="card sujhav">
+        <p class="label">Sujhav · suggestion</p>
+        <h3 style="font-size:20px">Kabir suggests: add a day</h3>
+        <p><b>“A slow day on the houseboat”</b></p>
+        <p class="muted">“One more lazy day, please!”</p>
+        <div class="row"><button class="btn ghost sm">👍 2</button><button class="btn ghost sm">👎 0</button><span class="muted">Zoya and you agreed</span></div>
+        <div class="row"><button class="btn sm accent">Approve — add Day 5</button><button class="btn ghost sm">Decline…</button></div>
+        <p class="muted">If the plan changes before approval, TripWise says so instead of editing the wrong stop.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ Chaupal on a phone, and the leader's queue -->
+  <section class="split">
+    <div class="glass strong" style="display:grid;gap:14px">
+      <p class="label">Chaupal · the Toli's chat <span class="hi" style="font-size:16px;letter-spacing:0">चौपाल</span></p>
+      <h2 style="font-size:30px">Raised hands <span class="muted" style="font-family:'Plus Jakarta Sans';font-size:14px">(leaders see this)</span></h2>
+      <div class="card">
+        <div class="row" style="justify-content:space-between"><b>✋ Demo Traveller</b><span class="muted">2 min ago</span></div>
+        <p>“Bus 2 timing changed — can I tell everyone?”</p>
+        <div class="row"><button class="btn sm accent">Allow 1 message</button><button class="btn ghost sm">30 min</button><button class="btn ghost sm">1 hour</button><button class="btn ghost sm">Whole trip</button></div>
+        <div class="row"><button class="btn ghost sm">Reply privately…</button><button class="btn ghost sm">Decline</button><button class="btn ghost sm" style="color:#8a3524">Turn off requests for Demo</button></div>
+      </div>
+      <p class="muted">One open request each · 10 minutes' wait after a decline · a private reply is seen only by the person who asked.</p>
+      <p class="muted">Calls: each Sahyatri who shares a number gets a <b>📞 Call</b> button (phone or WhatsApp call) on the Sahyatris tab.</p>
+    </div>
+    <div class="phone"><div class="screen">
+      <div class="chat-top"><b class="display" style="font-size:18px">Office offsite</b><p class="muted">48 Sahyatris · 📣 Announcement mode</p></div>
+      <div class="msgs">
+        <div class="msg"><div class="who">Kabir (Sutradhar)</div>Offsite on 26 Nov. Buses leave at 7 am sharp 🚌</div>
+        <div class="msg card"><div class="who">Kabir</div><b>📊 How shall we travel?</b><div class="opt best" style="margin-top:6px;padding:6px 8px"><span class="box on">✓</span>Bus<span class="muted">31</span></div><div class="opt" style="margin-top:4px;padding:6px 8px"><span class="box"></span>Train<span class="muted">12</span></div></div>
+        <div class="msg"><div class="who">Zoya (allowed for 30 min)</div>Rooms 101–110 are ours. <span class="mention">@demotraveller</span> you're in 104!</div>
+        <div class="msg me">✋ Hand raised: “Bus 2 timing changed”</div>
+      </div>
+      <div class="sheet">
+        <b>Raise your hand</b>
+        <p class="muted">Only leaders post here. Tell them what it's about:</p>
+        <input class="fake" value="Bus 2 timing changed" />
+        <button class="btn accent">✋ Raise hand</button>
+      </div>
+    </div></div>
+  </section>
+</main>
+</body>
+</html>
