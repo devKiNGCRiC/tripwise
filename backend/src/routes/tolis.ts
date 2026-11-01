@@ -13,6 +13,9 @@
  *   PATCH  /api/tolis/:id/members/:userId   { role }         → { toli }       the Sutradhar; role 'sutradhar' passes it on
  *   DELETE /api/tolis/:id/members/:userId                     → 204            leave (self) or remove (leaders)
  *   PATCH  /api/tolis/:id/me                { phone }        → { toli }       share a phone number with this Toli (null hides it)
+ *   GET    /api/tolis/:id/budget                             → { budget }     my range + the range that suits everyone
+ *   PUT    /api/tolis/:id/budget            { low, high }    → { budget }     set my private range (INR a day)
+ *   DELETE /api/tolis/:id/budget                             → { budget }     clear mine
  *
  * Anyone who isn't a member gets 404 for everything, as if the Toli didn't exist; people
  * blocked by (or blocking) a member can't join or be added. College and office Tolis start
@@ -22,11 +25,11 @@ import { randomBytes } from 'node:crypto';
 import { Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 import { z } from 'zod';
-import { Itinerary, Toli, User } from '../db/models/index.js';
+import { Itinerary, Toli, ToliBudget, User } from '../db/models/index.js';
 import { clash, forbidden, notFound } from '../lib/errors.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
 import { relation } from '../services/social.js';
-import { blockedWith, inviteUrlFor, loadMember, logActivity, MAX_MEMBERS, memberCards, requireLeader, TOLI_NOT_FOUND, toliView } from '../services/tolis.js';
+import { blockedWith, groupBudget, inviteUrlFor, loadMember, logActivity, MAX_MEMBERS, memberCards, requireLeader, TOLI_NOT_FOUND, toliView } from '../services/tolis.js';
 import { defaultsForType } from '../services/toliRules.js';
 import { normalizeUsername } from '../services/username.js';
 
@@ -52,6 +55,11 @@ const phoneSchema = z.object({
     .transform((v) => `+91${v.slice(-10)}`)
     .nullable(),
 });
+
+/** A private budget range: whole rupees a day, low ≤ high. */
+const budgetSchema = z
+  .object({ low: z.number().int().min(100, 'At least ₹100 a day.').max(100_000), high: z.number().int().min(100).max(100_000, 'At most ₹1,00,000 a day.') })
+  .refine((b) => b.low <= b.high, 'The lower number should come first.');
 
 /** The Toli routes. */
 export function tolisRoutes(deps: { now: () => Date; appUrl: string }): Router {
@@ -200,6 +208,8 @@ export function tolisRoutes(deps: { now: () => Date; appUrl: string }): Router {
     }
     toli.members.pull({ userId: target.userId });
     await toli.save();
+    // Their private budget range goes with them.
+    await ToliBudget.deleteOne({ toliId: toli._id.toString(), userId: targetId });
     await logActivity(toli._id.toString(), me, targetId === me ? 'left' : 'removed', targetId === me ? {} : { userId: targetId }, deps.now());
     res.status(204).end();
   });
@@ -211,6 +221,36 @@ export function tolisRoutes(deps: { now: () => Date; appUrl: string }): Router {
     member.phone = phone ?? undefined;
     await toli.save();
     res.json({ toli: await toliView(toli, member, deps.now(), deps.appUrl) });
+  });
+
+  /** My range and the Toli's shared one (only ever the overlap — nobody else's numbers). */
+  async function budgetView(toli: Parameters<typeof groupBudget>[0], userId: string) {
+    const mine = await ToliBudget.findOne({ toliId: toli._id.toString(), userId }).lean();
+    return { mine: mine ? [mine.low, mine.high] : null, group: await groupBudget(toli) };
+  }
+
+  // GET /tolis/:id/budget — my range and the one that suits everyone.
+  router.get('/tolis/:id/budget', auth, async (req, res) => {
+    const me = currentUser(req).id;
+    const { toli } = await loadMember(String(req.params.id), me);
+    res.json({ budget: await budgetView(toli, me) });
+  });
+
+  // PUT /tolis/:id/budget — set my private range.
+  router.put('/tolis/:id/budget', auth, async (req, res) => {
+    const me = currentUser(req).id;
+    const { toli } = await loadMember(String(req.params.id), me);
+    const { low, high } = budgetSchema.parse(req.body);
+    await ToliBudget.updateOne({ toliId: toli._id.toString(), userId: me }, { low, high }, { upsert: true });
+    res.json({ budget: await budgetView(toli, me) });
+  });
+
+  // DELETE /tolis/:id/budget — clear my range.
+  router.delete('/tolis/:id/budget', auth, async (req, res) => {
+    const me = currentUser(req).id;
+    const { toli } = await loadMember(String(req.params.id), me);
+    await ToliBudget.deleteOne({ toliId: toli._id.toString(), userId: me });
+    res.json({ budget: await budgetView(toli, me) });
   });
 
   return router;

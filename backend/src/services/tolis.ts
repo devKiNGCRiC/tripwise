@@ -5,14 +5,15 @@
  *   requireLeader  403 unless the member is the Sutradhar or a Sah-Sutradhar
  *   blockedWith    has this person blocked, or been blocked by, any member?
  *   logActivity    add an event to the Toli's activity feed
+ *   groupBudget    the daily budget that suits everyone who answered (never anyone's own numbers)
  *   toliView       the Toli as a member sees it (members with roles; the invite link for leaders;
  *                  planDefaults: the members' favourite interests, for planning the Sahyatra)
  */
 import { isValidObjectId } from 'mongoose';
-import { Block, Toli, ToliActivity, User, type ToliDoc } from '../db/models/index.js';
+import { Block, Toli, ToliActivity, ToliBudget, User, type ToliDoc } from '../db/models/index.js';
 import { avatarUrl } from '../db/toPublic.js';
 import { forbidden, notFound } from '../lib/errors.js';
-import { canPost, isLeader, type ToliRole, type TripType } from './toliRules.js';
+import { budgetRange, canPost, isLeader, type ToliRole, type TripType } from './toliRules.js';
 
 /** The same answer for a missing Toli and one you're not in. */
 export const TOLI_NOT_FOUND = "This Toli isn't available.";
@@ -44,10 +45,27 @@ export interface ToliView {
   me: { role: ToliRole; canPost: boolean; requestsOff: boolean; phone?: string };
   members: MemberCard[];
   memberCount: number;
-  /** For planning the Sahyatra: the interests members saved, most common first (max 5). */
-  planDefaults: { interests: string[] };
+  /** For planning the Sahyatra: the interests members saved (most common first, max 5) and
+   *  the top of the budget range that suits everyone, when there is one. */
+  planDefaults: { interests: string[]; budget?: number };
   /** Leaders only. */
   inviteUrl?: string;
+}
+
+/** The Toli's budget comfort as everyone sees it. */
+export interface BudgetGroup {
+  answered: number;
+  members: number;
+  range: [number, number] | null;
+  closest?: [number, number];
+}
+
+/** The daily range that suits every current member who answered (members only; no one's own numbers). */
+export async function groupBudget(toli: ToliDoc): Promise<BudgetGroup> {
+  const entries = await ToliBudget.find({ toliId: toli._id.toString() }).lean();
+  const memberIds = toli.members.map((m) => m.userId.toString());
+  const result = budgetRange(Object.fromEntries(entries.map((e) => [e.userId, [e.low, e.high] as [number, number]])), memberIds);
+  return { answered: result.answered, members: memberIds.length, range: result.range, ...(result.closest ? { closest: result.closest } : {}) };
 }
 
 /** Interests a planning request takes at most. */
@@ -108,6 +126,12 @@ export async function memberCards(toli: ToliDoc): Promise<MemberCard[]> {
   });
 }
 
+/** What the planner starts from for this Toli. */
+async function planDefaultsOf(toli: ToliDoc): Promise<ToliView['planDefaults']> {
+  const range = (await groupBudget(toli)).range;
+  return { interests: await favouriteInterests(toli), ...(range ? { budget: range[1] } : {}) };
+}
+
 /** The Toli as `member` sees it. */
 export async function toliView(toli: ToliDoc, member: Member, now: Date, appUrl: string): Promise<ToliView> {
   const role = member.role as ToliRole;
@@ -127,7 +151,7 @@ export async function toliView(toli: ToliDoc, member: Member, now: Date, appUrl:
     },
     members: await memberCards(toli),
     memberCount: toli.members.length,
-    planDefaults: { interests: await favouriteInterests(toli) },
+    planDefaults: await planDefaultsOf(toli),
     ...(isLeader(role) ? { inviteUrl: inviteUrlFor(appUrl, toli.inviteToken) } : {}),
   };
 }

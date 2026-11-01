@@ -16,5 +16,6 @@ export { Session } from './session.js';
 export { Sujhav } from './sujhav.js';
 export { Toli, type ToliDoc, type ToliFields } from './toli.js';
 export { ToliActivity } from './toliActivity.js';
+export { ToliBudget } from './toliBudget.js';
 export { Usage } from './usage.js';
 export { User, type UserDoc, type UserFields } from './user.js';
