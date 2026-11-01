@@ -44,6 +44,30 @@ TanStack Query, MSW, Testing Library. No new dependencies.
 
 ---
 
+### Task 0: Indian or English names (owner's request, 2026-11-02)
+Each person chooses how feature names read: **Indian** (default — the Hindi/Sanskrit word with its plain-English
+line, as now) or **English** (plain words everyone understands, older users and Gen Z alike — no slang, no Hindi).
+Saved on the account (and on the device for instant start); per person, so one Toli can read both ways.
+
+| key | Indian | English |
+|---|---|---|
+| toli / tolis | Toli / Tolis | Group / Groups |
+| sahyatri / sahyatris | Sahyatri / Sahyatris | Member / Members |
+| sahyatra | Sahyatra | Group trip (tab: Trip) |
+| sutradhar / sah | Sutradhar / Sah-Sutradhar | Leader / Co-leader |
+| sujhav / sujhavs | Sujhav / Sujhavs | Suggestion / Suggestions |
+| tithi | Tithi | Dates |
+| chaupal | Chaupal | Group chat (tab: Chat) |
+| anurodh | Anurodh | Raise hand |
+| lekha | Lekha | Money |
+| yatraMarks | Yatra marks | Travel badges |
+
+**Files:** Create `frontend/src/features/words/words.ts` (the table as `WORDS: Record<'indian'|'english', Words>` + `type NameStyle`), `frontend/src/features/words/WordsProvider.tsx` (`WordsProvider`, `useWords(): { w: Words; style: NameStyle; english: boolean; setStyle(s): void }` — device key `tripwise:names`; follows the account's `preferences.names` once signed in, like `AccountThemeSync`; `setStyle` saves to the device and, when signed in, to the account), `frontend/src/features/words/NamesToggle.tsx` (a switch "English names", `aria-pressed`); Modify backend `db/models/user.ts`, `routes/profile.ts` (zod `names: z.enum(['indian','english']).optional()`), `db/toPublic.ts`; frontend `lib/api/types.ts` (`Preferences.names?`), `RootLayout.tsx` (provider), `features/account/PreferencesForm.tsx` (a "Feature names" choice), every Toli screen + Navbar + MobileTabBar + TripActions + PlanPage banner + passport Yatra marks (visible text only — identifiers, routes and API values stay); `features/toli/labels.ts` (`ROLE_LABEL`/`TABS` become functions of `Words`). In English mode the Devanagari decorations beside Toli headings are hidden; the footer's "शुभ यात्रा" and destinations' local names stay. Server error messages stay as they are (ledger).
+- [ ] **Step 1: Write the failing tests** — `features/words/Words.test.tsx`: default shows "Tolis" in the navbar and "Sahyatris" tab; turning on "English names" on a Toli page shows "Groups" in the navbar, tabs "Trip · Decide · Chat · Members · Activity", "You're the Leader", and the account's `preferences.names` becomes `'english'` in the mock db; a fresh render after that starts in English; the account Preferences form switches it back to Indian. Backend `test/profile.test.ts`: `PATCH /me/profile {preferences:{names:'english'}}` saves; `'hinglish'` → 400.
+- [ ] **Step 2–4:** FAIL → implement → PASS; the whole frontend suite stays green (existing tests use the default Indian names), plus backend suite, tsc, eslint.
+- [ ] **Step 5: Commit** `feat: Indian or English names — everyone chooses how Toli words read (saved on the account)`.
+Later tasks build Lekha with `useWords()` from the start (`w.lekha`).
+
 ### Task 1: Pure money rules (shared by API and mock)
 **Files:** Create `backend/src/services/lekhaRules.ts`; Test `backend/test/lekhaRules.test.ts`.
 
