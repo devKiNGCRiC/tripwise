@@ -64,11 +64,13 @@ describe('PassportPage', () => {
   });
 
   it('only shows the journal form once the saved journal has loaded (nothing typed gets wiped)', async () => {
-    // A slow network: the journal arrives a moment after the sheet opens.
+    // A slow network: the journal is held back until the sheet is open (then released below).
+    let release = () => {};
+    const held = new Promise<void>((resolve) => (release = resolve));
     server.use(
       http.get(apiUrl('/itineraries/:id/journal'), async () => {
         // Wait, then let the normal demo handler answer (returning nothing falls through).
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        await held;
       }),
     );
     const { user } = renderApp('/passport');
@@ -76,6 +78,7 @@ describe('PassportPage', () => {
     await user.click(within(stamps).getByRole('button', { name: /Goa journal/ }));
     const sheet = await screen.findByRole('dialog', { name: 'Goa journal' });
     expect(within(sheet).queryByLabelText('Your memory')).toBeNull();
+    release();
     expect(await within(sheet).findByLabelText('Your memory')).toHaveValue(
       'Sunsets at Palolem, bebinca at every café and an evening in Fontainhas we will never forget.',
     );
