@@ -1,7 +1,8 @@
 /**
  * tolis.ts (routes) — Tolis: groups of Sahyatris planning a trip together (login required).
  *
- *   POST   /api/tolis                       { name, type }   → 201 { toli }   the creator is the Sutradhar
+ *   POST   /api/tolis                       { name, type, tripId? } → 201 { toli } the creator is the Sutradhar;
+ *                                                            tripId = one of their own trips becomes the Sahyatra
  *   GET    /api/tolis                                         → { tolis }      mine, newest first
  *   GET    /api/tolis/:id                                     → { toli }
  *   PATCH  /api/tolis/:id                   { name?, announcementMode? }      leaders
@@ -19,8 +20,9 @@
  */
 import { randomBytes } from 'node:crypto';
 import { Router } from 'express';
+import { isValidObjectId } from 'mongoose';
 import { z } from 'zod';
-import { Toli, User } from '../db/models/index.js';
+import { Itinerary, Toli, User } from '../db/models/index.js';
 import { clash, forbidden, notFound } from '../lib/errors.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
 import { relation } from '../services/social.js';
@@ -35,6 +37,7 @@ const newToken = () => randomBytes(18).toString('base64url');
 const createSchema = z.object({
   name: z.string().trim().min(2, 'Give your Toli a name (2–60 characters).').max(60, 'Give your Toli a name (2–60 characters).'),
   type: z.enum(['friends', 'family', 'college', 'office'], { error: 'Pick the kind of trip: friends, family, college or office.' }),
+  tripId: z.string().optional(),
 });
 /** Changes leaders may make. */
 const patchSchema = z.object({ name: createSchema.shape.name.optional(), announcementMode: z.boolean().optional() });
@@ -58,9 +61,19 @@ export function tolisRoutes(deps: { now: () => Date; appUrl: string }): Router {
   // POST /tolis — start a Toli; the creator is its Sutradhar.
   router.post('/tolis', auth, async (req, res) => {
     const me = currentUser(req).id;
-    const { name, type } = createSchema.parse(req.body);
+    const { name, type, tripId } = createSchema.parse(req.body);
     const now = deps.now();
+    // Starting from one of my own trips: it becomes the Sahyatra (a trip belongs to one Toli at most).
+    const trip = tripId ? (isValidObjectId(tripId) ? await Itinerary.findOne({ _id: tripId, ownerId: me }) : null) : null;
+    if (tripId && !trip) throw notFound("We couldn't find that trip.");
+    if (trip?.toliId) throw clash('That trip already belongs to a Toli.');
     const toli = await Toli.create({ name, type, ...defaultsForType(type), inviteToken: newToken(), members: [{ userId: me, role: 'sutradhar', joinedAt: now }] });
+    if (trip) {
+      trip.toliId = toli._id.toString();
+      await trip.save();
+      toli.tripId = trip._id.toString();
+      await toli.save();
+    }
     await logActivity(toli._id.toString(), me, 'created', { name }, now);
     res.status(201).json({ toli: await toliView(toli, toli.members[0], now, deps.appUrl) });
   });

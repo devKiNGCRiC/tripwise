@@ -70,6 +70,8 @@ export interface Itinerary {
   };
   tips: string[];
   packingList: string[];
+  /** The Toli this trip is the Sahyatra of (null for a solo trip). */
+  toliId?: string | null;
   /** Which model wrote it, or 'tripwise' for TripWise's own planner. */
   provider: 'gemini' | 'groq' | 'tripwise';
   /** 'ai' = written for this trip; 'cache' = re-used from a similar trip; 'local' = TripWise's own planner (no AI). */

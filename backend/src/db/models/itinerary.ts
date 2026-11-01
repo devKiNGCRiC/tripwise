@@ -46,6 +46,8 @@ const daySchema = new Schema(
 const itinerarySchema = new Schema(
   {
     ownerId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    /** The Toli this trip is the Sahyatra of (its members can read it; its leaders change it). */
+    toliId: { type: String, default: null, index: true },
     shareId: { type: String, unique: true, sparse: true },
     request: {
       destination: { type: String, required: true },

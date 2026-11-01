@@ -4,13 +4,15 @@
  *   POST   /generate                 plan a trip with AI          → { itinerary, quota }
  *   POST   /generate/stream          the same, sent day by day     → one JSON event per line
  *   POST   /quick                    TripWise's own plan, no AI    → { itinerary, quota }
- *   GET    /                         my trips, newest first       → { itineraries }
+ *   GET    /                         my trips + my Tolis' Sahyatras → { itineraries }
  *   GET    /:id                      one of my trips              → { itinerary }
  *   DELETE /:id                      delete it                    → 204
  *   POST   /:id/days/:n/regenerate   a fresh idea for one day     → { itinerary }
  *   POST   /:id/share                make (or reuse) a share link → { shareId }
  *
- * Someone else's trip always answers 404, so we never reveal that it exists.
+ * Someone else's trip always answers 404, so we never reveal that it exists. A Toli's trip
+ * (its Sahyatra) is readable by every Sahyatri and changed only by its leaders (403 for
+ * the rest); generate/quick with `toliId` plan it (leaders only).
  * AI calls reserve today's allowance first and give it back if the AI fails. Similar trips
  * are served from the plan cache (services/cache.ts) without using the allowance.
  * AI plans are grounded in the places catalogue (services/places.ts); when every AI model is
@@ -20,9 +22,9 @@ import { randomBytes } from 'node:crypto';
 import { Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 import { PLANS } from '../config/plans.js';
-import { Itinerary, Journal } from '../db/models/index.js';
+import { Itinerary, Journal, Toli, type ItineraryDoc, type ToliDoc } from '../db/models/index.js';
 import { publicItinerary } from '../db/toPublic.js';
-import { AppError, noCatalogue, notFound, quotaExceeded } from '../lib/errors.js';
+import { AppError, forbidden, noCatalogue, notFound, quotaExceeded } from '../lib/errors.js';
 import { tripDates } from '../lib/dates.js';
 import { currentUser, requireAuth, type AuthUser } from '../middleware/auth.js';
 import { generateLimiter } from '../middleware/rateLimit.js';
@@ -38,16 +40,58 @@ import { addToCache, cacheKey, pickCached } from '../services/cache.js';
 import type { PhotoStore } from '../services/photos.js';
 import { getQuota, nextIstMidnight, refund, reserve } from '../services/quota.js';
 import { regionFor } from '../services/region.js';
+import { loadMember, logActivity, requireLeader } from '../services/tolis.js';
+import { isLeader, type ToliRole } from '../services/toliRules.js';
 import { parseTripRequest } from '../services/tripRequest.js';
 import type { Pace, Quota, TripRequest } from '../types/api.js';
 
 /** "We couldn't find that trip." — also for other people's trips. */
 const TRIP_NOT_FOUND = "We couldn't find that trip.";
 
-/** One of the traveller's own trips, or null (bad id, missing, or someone else's). */
-async function findOwned(id: string, user: AuthUser) {
+/** A trip and whether the user may change it. */
+type Access = { trip: ItineraryDoc; canChange: boolean };
+
+/**
+ * A trip the user may see: their own, or the Sahyatra of a Toli they're in (leaders may
+ * change it; Sahyatris may only read). Null for bad ids, missing trips and everyone else's.
+ */
+async function findTrip(id: string, user: AuthUser): Promise<Access | null> {
   if (!isValidObjectId(id)) return null;
-  return Itinerary.findOne({ _id: id, ownerId: user.id });
+  const trip = await Itinerary.findById(id);
+  if (!trip) return null;
+  if (trip.toliId) {
+    const toli = await Toli.findById(trip.toliId, { members: 1 }).lean();
+    const member = toli?.members.find((m) => m.userId.toString() === user.id);
+    if (member) return { trip, canChange: isLeader(member.role as ToliRole) };
+  }
+  return trip.ownerId.toString() === user.id ? { trip, canChange: true } : null;
+}
+
+/** A trip the user may change: 404 for strangers, 403 for a Toli's Sahyatris. */
+async function findChangeable(id: string, user: AuthUser): Promise<ItineraryDoc> {
+  const access = await findTrip(id, user);
+  if (!access) throw notFound(TRIP_NOT_FOUND);
+  if (!access.canChange) throw forbidden('Only the Sutradhar and Sah-Sutradhars can change the Sahyatra — suggest it instead.');
+  return access.trip;
+}
+
+/** The Toli a planning request is for (`toliId` in the body): leaders only; null for a solo trip. */
+async function toliFor(body: unknown, user: AuthUser): Promise<ToliDoc | null> {
+  const toliId = (body as { toliId?: unknown } | null)?.toliId;
+  if (toliId === undefined || toliId === null) return null;
+  const { toli, member } = await loadMember(String(toliId), user.id);
+  requireLeader(member, 'Only the Sutradhar and Sah-Sutradhars can plan the Sahyatra.');
+  return toli;
+}
+
+/** Make a newly planned trip the Toli's Sahyatra (nothing to do for a solo trip). */
+async function linkSahyatra(toli: ToliDoc | null, trip: ItineraryDoc, actorId: string, now: Date) {
+  if (!toli) return;
+  trip.toliId = toli._id.toString();
+  await trip.save();
+  toli.tripId = trip._id.toString();
+  await toli.save();
+  await logActivity(toli._id.toString(), actorId, 'planned', { tripId: trip._id.toString(), title: trip.title }, now);
 }
 
 /**
@@ -85,6 +129,8 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     const user = currentUser(req);
     const now = deps.now();
     const tripRequest = parseTripRequest(req.body, now, PLANS[user.plan].maxDays);
+    // Planning for a Toli? Only its leaders may (null for a solo trip).
+    const toli = await toliFor(req.body, user);
     const key = cacheKey(tripRequest);
     // Real places at this destination: a shortlist for the AI, and all of them to link stops to.
     const grounding = await groundingFor(tripRequest.destination, tripRequest.interests);
@@ -102,6 +148,8 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
           places: grounding.all,
         }),
       );
+      // A Toli's plan becomes its Sahyatra.
+      await linkSahyatra(toli, trip, user.id, now);
       res.json({ itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
       return;
     }
@@ -126,6 +174,8 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
       if (!local) throw error;
       trip = await saveLocalTrip(local, tripRequest, user.id);
     }
+    // A Toli's plan becomes its Sahyatra.
+    await linkSahyatra(toli, trip, user.id, now);
     res.json({ itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
   });
 
@@ -135,9 +185,13 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     const user = currentUser(req);
     const now = deps.now();
     const tripRequest = parseTripRequest(req.body, now, PLANS[user.plan].maxDays);
+    // Planning for a Toli? Only its leaders may (null for a solo trip).
+    const toli = await toliFor(req.body, user);
     const local = await localTripFor(tripRequest);
     if (!local) throw noCatalogue(`TripWise doesn't know enough places in ${tripRequest.destination} for a quick plan yet — try the AI planner tomorrow.`);
     const trip = await saveLocalTrip(local, tripRequest, user.id);
+    // A Toli's plan becomes its Sahyatra.
+    await linkSahyatra(toli, trip, user.id, now);
     res.json({ itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
   });
 
@@ -150,6 +204,8 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     const user = currentUser(req);
     const now = deps.now();
     const tripRequest = parseTripRequest(req.body, now, PLANS[user.plan].maxDays);
+    // Planning for a Toli? Only its leaders may (null for a solo trip).
+    const toli = await toliFor(req.body, user);
     const key = cacheKey(tripRequest);
     const dates = tripDates(tripRequest.startDate, tripRequest.endDate);
     // Real places at this destination: a shortlist for the AI, and all of them to link stops to.
@@ -190,6 +246,8 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
       open();
       send({ type: 'meta', title: cached.trip.title, summary: cached.trip.summary });
       cached.trip.days.forEach((day, index) => send(dayEvent(day, index)));
+      // A Toli's plan becomes its Sahyatra.
+      await linkSahyatra(toli, trip, user.id, now);
       send({ type: 'done', itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
       res.end();
       return;
@@ -230,6 +288,8 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
         buildItinerary(value, tripRequest, { region: await regionFor(tripRequest.destination, value.region), ownerId: user.id, provider, source: 'ai', cacheVariantId, places: grounding.all }),
       );
       saved = true;
+      // A Toli's plan becomes its Sahyatra.
+      await linkSahyatra(toli, trip, user.id, now);
       send({ type: 'done', itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
     } catch (error) {
       if (error instanceof ClientGone) return;
@@ -244,6 +304,8 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
         send({ type: 'reset' });
         send({ type: 'meta', title: local.title, summary: local.summary });
         publicItinerary(trip).days.forEach((day) => send({ type: 'day', day }));
+        // A Toli's plan becomes its Sahyatra.
+        await linkSahyatra(toli, trip, user.id, now);
         send({ type: 'done', itinerary: publicItinerary(trip), quota: await quotaAfterSave(user, now) });
         return;
       }
@@ -262,23 +324,26 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     }
   });
 
-  // GET /itineraries — my trips, newest first.
+  // GET /itineraries — my trips and my Tolis' Sahyatras, newest first.
   router.get('/itineraries', auth, async (req, res) => {
-    const trips = await Itinerary.find({ ownerId: currentUser(req).id }).sort({ createdAt: -1, _id: -1 });
+    const me = currentUser(req).id;
+    const tolis = await Toli.find({ 'members.userId': me }, { _id: 1 }).lean();
+    const trips = await Itinerary.find({ $or: [{ ownerId: me }, { toliId: { $in: tolis.map((t) => t._id.toString()) } }] }).sort({ createdAt: -1, _id: -1 });
     res.json({ itineraries: trips.map(publicItinerary) });
   });
 
-  // GET /itineraries/:id — one of my trips.
+  // GET /itineraries/:id — one of my trips, or my Toli's Sahyatra.
   router.get('/itineraries/:id', auth, async (req, res) => {
-    const trip = await findOwned(String(req.params.id), currentUser(req));
-    if (!trip) throw notFound(TRIP_NOT_FOUND);
-    res.json({ itinerary: publicItinerary(trip) });
+    const access = await findTrip(String(req.params.id), currentUser(req));
+    if (!access) throw notFound(TRIP_NOT_FOUND);
+    res.json({ itinerary: publicItinerary(access.trip) });
   });
 
-  // DELETE /itineraries/:id — delete one of my trips.
+  // DELETE /itineraries/:id — delete one of my trips (a Sahyatra: leaders only).
   router.delete('/itineraries/:id', auth, async (req, res) => {
-    const trip = await findOwned(String(req.params.id), currentUser(req));
-    if (!trip) throw notFound(TRIP_NOT_FOUND);
+    const trip = await findChangeable(String(req.params.id), currentUser(req));
+    // A deleted Sahyatra leaves its Toli without a plan.
+    if (trip.toliId) await Toli.updateOne({ _id: trip.toliId, tripId: trip._id.toString() }, { tripId: null });
     // Its journal and photos go with it.
     const journal = await Journal.findOneAndDelete({ itineraryId: trip._id }).lean();
     await Promise.all((journal?.photos ?? []).map((p) => deps.photos.remove(p.id)));
@@ -291,8 +356,7 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
   router.post('/itineraries/:id/days/:n/regenerate', auth, async (req, res) => {
     const user = currentUser(req);
     const now = deps.now();
-    const trip = await findOwned(String(req.params.id), user);
-    if (!trip) throw notFound(TRIP_NOT_FOUND);
+    const trip = await findChangeable(String(req.params.id), user);
     const dayNumber = Number(req.params.n);
     const current = Number.isInteger(dayNumber) ? trip.days[dayNumber - 1] : undefined;
     if (!current) throw notFound("We couldn't find that day.");
@@ -315,8 +379,7 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
 
   // POST /itineraries/:id/share — create the public link once, then keep returning it.
   router.post('/itineraries/:id/share', auth, async (req, res) => {
-    const trip = await findOwned(String(req.params.id), currentUser(req));
-    if (!trip) throw notFound(TRIP_NOT_FOUND);
+    const trip = await findChangeable(String(req.params.id), currentUser(req));
     if (!trip.shareId) {
       // 9 random bytes → 12 URL-safe characters: impossible to guess.
       trip.shareId = randomBytes(9).toString('base64url');

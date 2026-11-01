@@ -5,7 +5,8 @@
  *   requireLeader  403 unless the member is the Sutradhar or a Sah-Sutradhar
  *   blockedWith    has this person blocked, or been blocked by, any member?
  *   logActivity    add an event to the Toli's activity feed
- *   toliView       the Toli as a member sees it (members with roles; the invite link for leaders)
+ *   toliView       the Toli as a member sees it (members with roles; the invite link for leaders;
+ *                  planDefaults: the members' favourite interests, for planning the Sahyatra)
  */
 import { isValidObjectId } from 'mongoose';
 import { Block, Toli, ToliActivity, User, type ToliDoc } from '../db/models/index.js';
@@ -43,8 +44,21 @@ export interface ToliView {
   me: { role: ToliRole; canPost: boolean; requestsOff: boolean; phone?: string };
   members: MemberCard[];
   memberCount: number;
+  /** For planning the Sahyatra: the interests members saved, most common first (max 5). */
+  planDefaults: { interests: string[] };
   /** Leaders only. */
   inviteUrl?: string;
+}
+
+/** Interests a planning request takes at most. */
+const MAX_INTERESTS = 5;
+
+/** The members' saved interests, most common first (ties alphabetical), at most five. */
+async function favouriteInterests(toli: ToliDoc): Promise<string[]> {
+  const users = await User.find({ _id: { $in: toli.members.map((m) => m.userId) } }, { 'preferences.interests': 1 }).lean();
+  const counts = new Map<string, number>();
+  for (const user of users) for (const interest of user.preferences?.interests ?? []) counts.set(interest, (counts.get(interest) ?? 0) + 1);
+  return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, MAX_INTERESTS).map(([interest]) => interest);
 }
 
 /** The Toli and the caller's membership (404 for bad ids, missing Tolis and non-members). */
@@ -113,6 +127,7 @@ export async function toliView(toli: ToliDoc, member: Member, now: Date, appUrl:
     },
     members: await memberCards(toli),
     memberCount: toli.members.length,
+    planDefaults: { interests: await favouriteInterests(toli) },
     ...(isLeader(role) ? { inviteUrl: inviteUrlFor(appUrl, toli.inviteToken) } : {}),
   };
 }
