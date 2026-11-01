@@ -12,6 +12,8 @@ import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useToli } from '@/features/toli/hooks';
 import { TABS, type ToliTab } from '@/features/toli/labels';
+import { ActivityTab } from '@/features/toli/ActivityTab';
+import { ChaupalTab } from '@/features/toli/ChaupalTab';
 import { DecideTab } from '@/features/toli/DecideTab';
 import { SahyatraTab } from '@/features/toli/SahyatraTab';
 import { SahyatrisTab } from '@/features/toli/SahyatrisTab';
@@ -20,17 +22,13 @@ import { ApiError } from '@/lib/api/errors';
 import type { Toli } from '@/lib/api/types';
 import { cn } from '@/lib/utils/cn';
 
-/** A tab still to come (filled in by the next steps of the build). */
-function Later({ title }: { title: string }) {
-  return <p className="glass rounded-card p-6 text-soft">{title} is coming next.</p>;
-}
-
 /** The chosen tab's content. */
 function TabContent({ tab, toli }: { tab: ToliTab; toli: Toli }) {
   if (tab === 'sahyatris') return <SahyatrisTab toli={toli} />;
-  if (tab === 'sahyatra') return <SahyatraTab toli={toli} />;
   if (tab === 'decide') return <DecideTab toli={toli} />;
-  return <Later title={TABS.find((t) => t.key === tab)!.label} />;
+  if (tab === 'chaupal') return <ChaupalTab toli={toli} />;
+  if (tab === 'activity') return <ActivityTab toli={toli} />;
+  return <SahyatraTab toli={toli} />;
 }
 
 /** Route "/tolis/:id". */
