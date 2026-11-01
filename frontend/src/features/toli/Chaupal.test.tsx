@@ -64,6 +64,29 @@ describe('Chaupal', () => {
     await waitFor(() => expect(db.messages.filter((m) => m.text === 'Reached Alappuzha!')).toHaveLength(1));
     await waitFor(() => expect(screen.queryByText(/Waiting for signal/)).not.toBeInTheDocument());
   });
+
+  // A shared family phone: what one person wrote offline is never sent as someone else.
+  it('sends a waiting message only from the account that wrote it', async () => {
+    server.use(http.post(apiUrl('/tolis/:id/messages'), () => HttpResponse.error()));
+    const demo = renderApp('/tolis/t_seed_kerala?tab=chaupal');
+    await messages();
+    await demo.user.type(screen.getByLabelText('Message'), 'Demo wrote this offline');
+    await demo.user.click(screen.getByRole('button', { name: 'Send' }));
+    await screen.findByText(/Waiting for signal/);
+    demo.unmount();
+    server.resetHandlers();
+
+    session.set('u_raj');
+    const raj = renderApp('/tolis/t_seed_kerala?tab=chaupal');
+    await messages();
+    window.dispatchEvent(new Event('online'));
+    expect(screen.queryByText(/Waiting for signal/)).not.toBeInTheDocument();
+    raj.unmount();
+
+    session.set('u_demo');
+    renderApp('/tolis/t_seed_kerala?tab=chaupal');
+    await waitFor(() => expect(db.messages.filter((m) => m.text === 'Demo wrote this offline').map((m) => m.authorId)).toEqual(['u_demo']));
+  });
 });
 
 describe('announcement mode', () => {

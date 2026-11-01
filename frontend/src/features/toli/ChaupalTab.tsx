@@ -22,23 +22,23 @@ export const CHAT_REFRESH_MS = 3000;
 /** A message waiting on the phone, with its photos. */
 type Queued = PendingMessage & { photoIds: string[] };
 
-/** Where a Toli's waiting messages are kept. */
-const queueKey = (toliId: string) => `tripwise:toli-outbox:${toliId}`;
+/** Where my waiting messages for a Toli are kept (per account, so a shared phone never sends them as someone else). */
+const queueKey = (userId: string, toliId: string) => `tripwise:toli-outbox:${userId}:${toliId}`;
 
 /** Read the waiting messages (storage may be unavailable). */
-function loadQueue(toliId: string): Queued[] {
+function loadQueue(key: string): Queued[] {
   try {
-    return JSON.parse(localStorage.getItem(queueKey(toliId)) ?? '[]') as Queued[];
+    return JSON.parse(localStorage.getItem(key) ?? '[]') as Queued[];
   } catch {
     return [];
   }
 }
 
 /** Save the waiting messages. */
-function saveQueue(toliId: string, queue: Queued[]) {
+function saveQueue(key: string, queue: Queued[]) {
   try {
-    if (queue.length) localStorage.setItem(queueKey(toliId), JSON.stringify(queue));
-    else localStorage.removeItem(queueKey(toliId));
+    if (queue.length) localStorage.setItem(key, JSON.stringify(queue));
+    else localStorage.removeItem(key);
   } catch {
     // Storage blocked: the queue still lives in memory for this visit.
   }
@@ -54,7 +54,8 @@ export function ChaupalTab({ toli }: { toli: Toli }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const messages = useQuery({ queryKey: ['messages', toli.id], queryFn: () => toliApi.messages(toli.id), select: (d) => d.messages, refetchInterval: CHAT_REFRESH_MS });
-  const [queue, setQueue] = useState<Queued[]>(() => loadQueue(toli.id));
+  const outbox = queueKey(user?.id ?? 'signed-out', toli.id);
+  const [queue, setQueue] = useState<Queued[]>(() => loadQueue(outbox));
   const [replyTo, setReplyTo] = useState<ChaupalMessage | null>(null);
   const [error, setError] = useState('');
   const sending = useRef(new Set<string>());
@@ -65,10 +66,10 @@ export function ChaupalTab({ toli }: { toli: Toli }) {
     (change: (q: Queued[]) => Queued[]) =>
       setQueue((q) => {
         const next = change(q);
-        saveQueue(toli.id, next);
+        saveQueue(outbox, next);
         return next;
       }),
-    [toli.id],
+    [outbox],
   );
 
   /** Try to send one waiting message; it stays queued only when there's no signal. */

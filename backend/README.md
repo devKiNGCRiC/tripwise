@@ -111,5 +111,17 @@ Limits are set in `src/config/plans.ts`. A new day starts at midnight India time
 | `GET /photos/:id`, `GET /avatars/:userId` | | Journal photo (signed per viewer, re-checked every time) / profile photo |
 | `GET /friends`, `POST /friends/requests`, `…/accept`, `…/decline`, `DELETE …` | ✓ | Friends and requests |
 | `POST`/`DELETE /blocks`, `GET /users/:username/card`, `GET`/`POST /invites/:code…`, `POST /me/invite-code` | ✓ | Blocking, finding by @username, invite links |
+| `POST /tolis`, `GET /tolis`, `GET`/`PATCH /tolis/:id` | ✓ | Start a Toli (optionally from a trip), my Tolis with unread counts, one Toli, rename / announcement mode |
+| `POST /tolis/:id/invite`, `GET /toli-invites/:token`, `POST …/join` | ✓ | New invite link (leaders), preview an invite, join |
+| `POST /tolis/:id/members`, `PATCH`/`DELETE …/members/:userId`, `PATCH /tolis/:id/me` | ✓ | Add a friend, change a role or turn off their requests, remove or leave; share my phone |
+| `GET`/`PUT`/`DELETE /tolis/:id/budget` | ✓ | My private budget range and the range that suits everyone |
+| `GET /tolis/:id/activity` | ✓ | What happened in the Toli |
+| `GET`/`POST /tolis/:id/sujhavs`, `PUT …/:sid/vote`, `POST …/:sid/approve`, `…/decline` | ✓ | Suggestions on the Sahyatra (leaders approve or decline) |
+| `GET`/`POST /tolis/:id/polls`, `PUT …/:pid/vote`, `POST …/:pid/close` | ✓ | Polls: Tithi (dates), destination, transport, free |
+| `GET`/`POST /tolis/:id/messages`, `POST …/messages/photos`, `POST /tolis/:id/read` | ✓ | Chaupal (chat): messages (`clientId` makes retries safe), photos, mark read |
+| `GET`/`POST /tolis/:id/anurodh`, `POST …/anurodh/:rid/decide` | ✓ | Raise a hand in announcement mode; leaders allow (1 message, 30 min, 1 hour, whole trip), reply privately or decline |
+
+Toli rules: someone who isn't in the Toli gets 404; a member acting above their role gets 403; a clash with
+the current state (e.g. voting in a closed poll) gets 409 `CONFLICT`.
 
 Errors always look like `{ "error": { "code": "…", "message": "…" } }`.

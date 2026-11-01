@@ -8,8 +8,9 @@ You can then save it, download it as a PDF, or share it with your friends.
 
 > 🚧 **Status: in active development.** The website and the real backend both work: accounts, passports and
 > friends, saved trips, real AI itineraries (Gemini, with Groq as backup) grounded in a catalogue of 1,028 real
-> places, and TripWise's own free Quick plan. Next: the "Ask TripWise" chat, Crew mode, then launch on
-> Cloudflare Pages + Render. See the [roadmap](#-roadmap).
+> places, TripWise's own free Quick plan, and Tolis for planning together (polls, suggestions and a group
+> chat). Next: Toli money and on-trip tools, the "Ask TripWise" chat, then launch on Cloudflare Pages +
+> Render. See the [roadmap](#-roadmap).
 
 ---
 
@@ -31,6 +32,10 @@ You can then save it, download it as a PDF, or share it with your friends.
 | ⚡ | Similar trips served instantly from a plan cache (free, doesn't use the daily allowance) | ✅ Done |
 | 🛂 | Passport: photo, bio and traveller type; India's seven worlds lighting up; 12 Yatra marks; visa-page stamps with trip journals (diya ratings, memories, photos) | ✅ Done |
 | 👥 | Friends by @username or invite link, public passports with privacy (Friends / Everyone / Only me), blocking | ✅ Done |
+| 🪔 | **Toli** (टोली): plan a trip together with your Sahyatris — invite on WhatsApp or by link, Sutradhar / Sah-Sutradhar / Sahyatri roles, friends / family / office / school / pilgrimage trips, no member limit | ✅ Done |
+| 🗳️ | Deciding together: Sujhav (suggest changes to the Sahyatra, vote, the Sutradhar approves), polls for dates (Tithi), destination (compared on TripWise's facts), transport or anything, private budget comfort | ✅ Done |
+| 💬 | Chaupal, the Toli's chat: replies, @mentions, photos, live poll and suggestion cards, messages that wait for signal and send themselves; announcement mode where Sahyatris raise a hand (Anurodh); activity feed | ✅ Done |
+| 💰 | Toli money (shared and personal expenses, UPI and cash), groups within the Toli, "where is my Sahyatri", notes and an album | 📅 Next |
 | 🔑 | Account: preferences that pre-fill the planner, change password, forgot password, sign out everywhere, delete my data | ✅ Done |
 | 📊 | Admin dashboard: analytics, destinations, users, moderation | 📅 Planned |
 | 📲 | React Native mobile app | 📅 Phase 2 |
@@ -153,7 +158,8 @@ Add their keys to `backend/.env` (names in `backend/.env.example`); TripWise swi
 - [x] **Own planner:** places catalogue (Wikidata) + grounded AI plans, free unlimited Quick plans
 - [ ] **"Ask TripWise" agent:** chat on each trip with weather, routes and places as tools
 - [x] **Profile, Passport & Friends:** account, journals, Yatra marks, friends and public passports
-- [ ] **Crew mode:** plan trips together, shared expenses, notes and photos
+- [x] **Toli, part 1:** plan trips together: invites, roles, suggestions, polls, budget comfort, Chaupal chat
+- [ ] **Toli, parts 2–3:** shared expenses, groups and "where is my Sahyatri", notes, album, offline tools
 - [ ] **Launch:** deploy to Cloudflare Pages + Render, installable PWA with offline trips
 - [ ] **Premium:** paid plan with Razorpay
 - [ ] **Phase 2:** React Native app, social sharing, AI chat assistant

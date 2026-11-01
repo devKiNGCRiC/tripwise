@@ -1,6 +1,6 @@
 # Toli — planning and travelling together (design)
 
-**Date:** 2026-11-01 · **Status:** approved by the owner · **Roadmap:** step 5 ("Crew mode")
+**Date:** 2026-11-01 · **Status:** approved by the owner · Part 1 built (2026-11-01) · **Roadmap:** step 5 ("Crew mode")
 
 ## Why
 Group trips break down in the same places, in the owner's words: planning, dates, budget, getting everyone
