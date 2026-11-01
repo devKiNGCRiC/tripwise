@@ -58,6 +58,11 @@ describe('Tolis', () => {
 
     await user.click(within(raj).getByRole('button', { name: 'Make Sah-Sutradhar' }));
     expect(await within(screen.getByRole('listitem', { name: /Raj Roy/ })).findByText('Sah-Sutradhar')).toBeInTheDocument();
+    // Ananya still owes money in the Lekha: removing her is refused, and the screen says why.
+    await user.click(within(screen.getByRole('listitem', { name: /Ananya Das/ })).getByRole('button', { name: 'Remove Ananya Das' }));
+    expect(await within(screen.getByRole('listitem', { name: /Ananya Das/ })).findByRole('alert')).toHaveTextContent(/Settle up first/);
+    // Once she has paid Raj back, she can be removed.
+    db.toliSettlements.push({ id: 'st_test', toliId: 't_seed_kerala', from: 'u_ananya', to: 'u_raj', amount: 132000, method: 'cash', recordedBy: 'u_demo', clientId: 'test', createdAt: new Date().toISOString() });
     await user.click(within(screen.getByRole('listitem', { name: /Ananya Das/ })).getByRole('button', { name: 'Remove Ananya Das' }));
     await waitFor(() => expect(screen.queryByRole('listitem', { name: /Ananya Das/ })).not.toBeInTheDocument());
   });

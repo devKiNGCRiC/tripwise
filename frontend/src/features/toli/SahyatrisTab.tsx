@@ -74,6 +74,12 @@ function MemberRow({ toli, member }: { toli: Toli; member: ToliMember }) {
           Remove
         </Button>
       )}
+      {/* Why a change was refused (e.g. they still owe money in the Lekha). */}
+      {(remove.isError || setRole.isError) && (
+        <p role="alert" className="w-full text-sm text-danger">
+          {(remove.error ?? setRole.error)?.message}
+        </p>
+      )}
     </li>
   );
 }
@@ -179,6 +185,11 @@ export function SahyatrisTab({ toli }: { toli: Toli }) {
         <Button variant="ghost" className="justify-self-start text-danger" loading={leave.isPending} onClick={() => leave.mutate(undefined, { onSuccess: () => navigate('/tolis') })}>
           Leave this {w.toli}
         </Button>
+      )}
+      {leave.isError && (
+        <p role="alert" className="text-sm text-danger">
+          {leave.error.message}
+        </p>
       )}
     </section>
   );

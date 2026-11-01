@@ -5,6 +5,7 @@
  * and the real Express backend MUST both return exactly these shapes, which is
  * what lets us switch from mock to real by flipping one env variable.
  */
+import type { Category, PayMethod, Split } from '@lekha-rules';
 import type { SujhavChange, ToliRole, TripType } from '@toli-rules';
 
 /* ── Users & auth ─────────────────────────────────────────────────────── */
@@ -393,6 +394,8 @@ export interface ToliMember {
   role: ToliRole;
   /** Only when they chose to share it with this Toli. */
   phone?: string;
+  /** Their UPI ID, only when they chose to share it with this Toli. */
+  upi?: string;
 }
 
 /** A Toli as a member sees it. */
@@ -405,7 +408,7 @@ export interface Toli {
   tripId: string | null;
   /** What polls decided. */
   choices: { destination?: string; startDate?: string; endDate?: string; transport?: string };
-  me: { role: ToliRole; canPost: boolean; requestsOff: boolean; phone?: string };
+  me: { role: ToliRole; canPost: boolean; requestsOff: boolean; phone?: string; upi?: string };
   members: ToliMember[];
   memberCount: number;
   /** For planning: members' favourite interests, and the top of the budget range that suits all. */
@@ -534,6 +537,80 @@ export interface Anurodh {
 
 /** A leader's answer to a raised hand. */
 export type AnurodhAction = 'one' | '30m' | '1h' | 'trip' | 'reply' | 'decline';
+
+/* ── Lekha (a Toli's money; amounts in whole paise) ───────────────────── */
+
+export type { Category, PayMethod, Split } from '@lekha-rules';
+
+/** An expense as a member sees it. */
+export interface ToliExpense {
+  id: string;
+  title: string;
+  amount: number;
+  category: Category;
+  method: PayMethod;
+  /** Which day of the Sahyatra (1 = first), when given. */
+  day?: number;
+  /** Personal ones are only ever shown to their owner. */
+  personal: boolean;
+  paidBy: ToliPerson;
+  shares: { person: ToliPerson; amount: number }[];
+  addedBy: ToliPerson;
+  canDelete: boolean;
+  createdAt: string;
+}
+
+/** A new expense (`clientId` is made on the phone, so an offline retry is stored once). */
+export interface NewExpense {
+  clientId: string;
+  title: string;
+  amount: number;
+  category: Category;
+  method: PayMethod;
+  day?: number;
+  personal?: boolean;
+  /** Default: me. */
+  paidBy?: string;
+  /** Default: everyone, equally. */
+  split?: Split;
+}
+
+/** Money paid back between two Sahyatris (never deleted). */
+export interface Settlement {
+  id: string;
+  from: ToliPerson;
+  to: ToliPerson;
+  amount: number;
+  method: PayMethod;
+  recordedBy: ToliPerson;
+  createdAt: string;
+}
+
+/** A payment back to record. */
+export interface NewSettlement {
+  clientId: string;
+  from: string;
+  to: string;
+  amount: number;
+  method: PayMethod;
+}
+
+/** Everything the Lekha tab shows (my personal spending only ever to me). */
+export interface LekhaSummary {
+  /** Members, largest owed first; positive = gets money back. */
+  balances: { person: ToliPerson; net: number }[];
+  /** The fewest payments that settle everyone (a UPI link when the payee shared a UPI ID). */
+  settleUp: { from: ToliPerson; to: ToliPerson; amount: number; upiLink?: string }[];
+  totals: {
+    total: number;
+    byCategory: Record<Category, number>;
+    perPerson: { person: ToliPerson; share: number }[];
+    mine: { share: number; personal: number; total: number };
+    /** TripWise's estimate for the Sahyatra (paise), null without one. */
+    estimate: number | null;
+  };
+  settlements: Settlement[];
+}
 
 /** One event in a Toli's activity feed. */
 export interface ToliEvent {

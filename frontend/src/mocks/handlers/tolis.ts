@@ -6,6 +6,7 @@
  * Non-members get NOT_FOUND for everything about a Toli.
  */
 import { http, HttpResponse } from 'msw';
+import { balances, isUpiId } from '@lekha-rules';
 import { applySujhav, budgetRange, canPost, defaultsForType, isLeader, tallyPoll, type DayLike, type SujhavChange, type ToliRole } from '@toli-rules';
 import { apiUrl } from '@/lib/api/config';
 import type { Anurodh, AnurodhAction, ChaupalMessage, Interest, NewMessage, NewPoll, Poll, Sujhav, Toli, ToliBudget, ToliPerson } from '@/lib/api/types';
@@ -60,7 +61,7 @@ const clash = (message: string) => errorResponse(409, 'CONFLICT', message);
 const invalid = (message: string) => errorResponse(400, 'VALIDATION', message);
 
 /** A person for Toli features. */
-function personOf(userId: string): ToliPerson {
+export function personOf(userId: string): ToliPerson {
   const user = db.users.find((u) => u.id === userId);
   if (!user) return { id: userId, name: 'Former Sahyatri', username: '' };
   const shown = publicUser(user);
@@ -106,6 +107,14 @@ function favouriteInterests(toli: MockToli): Interest[] {
   return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 5).map(([i]) => i);
 }
 
+/** Everyone's net position in a Toli's Lekha (group expenses and settlements). */
+export function toliNet(toliId: string): Record<string, number> {
+  return balances(
+    db.toliExpenses.filter((e) => e.toliId === toliId && !e.personal && !e.deletedAt).map((e) => ({ paidBy: e.paidBy, parts: e.parts })),
+    db.toliSettlements.filter((s) => s.toliId === toliId).map((s) => ({ from: s.from, to: s.to, amount: s.amount })),
+  );
+}
+
 /** The Toli as `member` sees it. */
 function toliView(toli: MockToli, member: MockMember): Toli {
   const range = groupBudget(toli).range;
@@ -116,10 +125,10 @@ function toliView(toli: MockToli, member: MockMember): Toli {
     announcementMode: toli.announcementMode,
     tripId: toli.tripId,
     choices: Object.fromEntries(Object.entries(toli.choices).filter(([, v]) => v)),
-    me: { role: member.role, canPost: mayPost(toli, member), requestsOff: !!member.requestsOff, ...(member.phone ? { phone: member.phone } : {}) },
+    me: { role: member.role, canPost: mayPost(toli, member), requestsOff: !!member.requestsOff, ...(member.phone ? { phone: member.phone } : {}), ...(member.upi ? { upi: member.upi } : {}) },
     members: toli.members.flatMap((m) => {
       const person = db.users.find((u) => u.id === m.userId);
-      return person ? [{ ...personOf(m.userId), role: m.role, ...(m.phone ? { phone: m.phone } : {}) }] : [];
+      return person ? [{ ...personOf(m.userId), role: m.role, ...(m.phone ? { phone: m.phone } : {}), ...(m.upi ? { upi: m.upi } : {}) }] : [];
     }),
     memberCount: toli.members.length,
     planDefaults: { interests: favouriteInterests(toli), ...(range ? { budget: range[1] } : {}) },
@@ -228,7 +237,7 @@ const today = () => {
 };
 
 /** Run a handler for a logged-in member of the Toli in the URL. */
-async function asMember(request: Request, toliId: unknown, run: (user: MockUser, toli: MockToli, member: MockMember) => Response | Promise<Response>): Promise<Response> {
+export async function asMember(request: Request, toliId: unknown, run: (user: MockUser, toli: MockToli, member: MockMember) => Response | Promise<Response>): Promise<Response> {
   await latency();
   const user = currentUser(request);
   if (!user) return needLogin();
@@ -376,6 +385,8 @@ export const toliHandlers = [
         if (!isLeader(member.role)) return leadersOnly();
         if (target.role === 'sutradhar' || (target.role === 'sah' && member.role !== 'sutradhar')) return leadersOnly('You can’t remove that person.');
       }
+      // Nobody leaves owing money, or being owed it — the Lekha must still add up.
+      if ((toliNet(toli.id)[target.userId] ?? 0) !== 0) return clash('Settle up first — this Sahyatri still owes or is owed money in the Lekha.');
       toli.members = toli.members.filter((m) => m !== target);
       delete db.toliBudgets[`${toli.id}|${target.userId}`];
       logEvent(toli.id, user.id, target.userId === user.id ? 'left' : 'removed', target.userId === user.id ? {} : { userId: target.userId });
@@ -385,12 +396,18 @@ export const toliHandlers = [
 
   http.patch(apiUrl('/tolis/:id/me'), ({ request, params }) =>
     asMember(request, params.id, async (_user, toli, member) => {
-      const { phone } = (await request.json()) as { phone: string | null };
+      const { phone, upi } = (await request.json()) as { phone?: string | null; upi?: string | null };
+      if (phone === undefined && upi === undefined) return invalid('Nothing to change.');
       if (phone === null) delete member.phone;
-      else {
+      else if (phone !== undefined) {
         const digits = phone.replace(/[\s()-]/g, '');
         if (!/^(\+?91)?[6-9]\d{9}$/.test(digits)) return invalid('Enter a 10-digit Indian mobile number.');
         member.phone = `+91${digits.slice(-10)}`;
+      }
+      if (upi === null) delete member.upi;
+      else if (upi !== undefined) {
+        if (!isUpiId(upi.trim())) return invalid('That doesn’t look like a UPI ID (like name@bank).');
+        member.upi = upi.trim();
       }
       return HttpResponse.json({ toli: toliView(toli, member) });
     }),

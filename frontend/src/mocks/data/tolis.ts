@@ -1,12 +1,14 @@
 /**
  * tolis.ts (mock data) — Tolis for the demo, and the shapes the mock stores them in:
  *   Kerala Toli    Demo is the Sutradhar, with Raj and Ananya; its Sahyatra is Demo's upcoming
- *                  Kerala trip; one open suggestion, one Tithi poll and a few chat messages
+ *                  Kerala trip; one open suggestion, one Tithi poll, a few chat messages, and a
+ *                  Lekha: Raj paid the houseboat deposit for all three, Demo a lunch for Demo and
+ *                  Ananya, Ananya an auto for all three; Demo's banana chips are personal
  *   Office offsite Raj leads an office Toli in announcement mode; Demo and Ananya are Sahyatris
  * Stored records mirror the real API's collections (members inside the Toli; suggestions,
  * polls, budgets, messages, raised hands and events alongside).
  */
-import type { SujhavChange, ToliRole, TravelMode, TripType } from '@/lib/api/types';
+import type { Category, PayMethod, SujhavChange, ToliRole, TravelMode, TripType } from '@/lib/api/types';
 import { dayFromToday } from './social';
 
 /** A member inside a Toli. */
@@ -19,6 +21,7 @@ export interface MockMember {
   requestsOff?: boolean;
   lastReadAt?: string;
   phone?: string;
+  upi?: string;
 }
 
 /** A Toli. */
@@ -102,6 +105,37 @@ export interface MockToliEvent {
   at: string;
 }
 
+/** An expense in a Toli's Lekha (paise; `parts` adds up to `amount`). */
+export interface MockExpense {
+  id: string;
+  toliId: string;
+  addedBy: string;
+  clientId: string;
+  personal: boolean;
+  title: string;
+  amount: number;
+  category: Category;
+  method: PayMethod;
+  day?: number;
+  paidBy: string;
+  parts: Record<string, number>;
+  deletedAt?: string;
+  createdAt: string;
+}
+
+/** Money paid back between two members. */
+export interface MockSettlement {
+  id: string;
+  toliId: string;
+  from: string;
+  to: string;
+  amount: number;
+  method: PayMethod;
+  recordedBy: string;
+  clientId: string;
+  createdAt: string;
+}
+
 /** Everything Toli-related the mock stores. */
 export interface MockToliStore {
   tolis: MockToli[];
@@ -112,6 +146,8 @@ export interface MockToliStore {
   messages: MockMessage[];
   anurodhs: MockAnurodh[];
   toliEvents: MockToliEvent[];
+  toliExpenses: MockExpense[];
+  toliSettlements: MockSettlement[];
 }
 
 /** A time some hours ago, as ISO text. */
@@ -130,7 +166,7 @@ export function seedToliStore(): MockToliStore {
         inviteToken: 'keralaTOLIjoin2026x',
         members: [
           { userId: 'u_demo', role: 'sutradhar', joinedAt: hoursAgo(72), lastReadAt: hoursAgo(5) },
-          { userId: 'u_raj', role: 'sahyatri', joinedAt: hoursAgo(70), phone: '+919876543210' },
+          { userId: 'u_raj', role: 'sahyatri', joinedAt: hoursAgo(70), phone: '+919876543210', upi: 'king@okicici' },
           { userId: 'u_ananya', role: 'sahyatri', joinedAt: hoursAgo(60) },
         ],
         choices: {},
@@ -189,6 +225,13 @@ export function seedToliStore(): MockToliStore {
       { id: 'ms_seed_4', toliId: 't_seed_office', authorId: 'u_raj', text: `Offsite on ${dayFromToday(25)}. Buses leave the office at 7 am sharp.`, mentions: [], photoIds: [], clientId: 'seed-4', createdAt: hoursAgo(28) },
     ],
     anurodhs: [],
+    toliExpenses: [
+      { id: 'ex_seed_1', toliId: 't_seed_kerala', addedBy: 'u_raj', clientId: 'seed-ex-1', personal: false, title: 'Houseboat deposit', amount: 360000, category: 'stay', method: 'upi', day: 1, paidBy: 'u_raj', parts: { u_demo: 120000, u_raj: 120000, u_ananya: 120000 }, createdAt: hoursAgo(30) },
+      { id: 'ex_seed_2', toliId: 't_seed_kerala', addedBy: 'u_demo', clientId: 'seed-ex-2', personal: false, title: 'Karimeen lunch', amount: 84000, category: 'food', method: 'cash', day: 1, paidBy: 'u_demo', parts: { u_demo: 42000, u_ananya: 42000 }, createdAt: hoursAgo(26) },
+      { id: 'ex_seed_3', toliId: 't_seed_kerala', addedBy: 'u_ananya', clientId: 'seed-ex-3', personal: false, title: 'Auto to the jetty', amount: 45000, category: 'transport', method: 'cash', paidBy: 'u_ananya', parts: { u_demo: 15000, u_raj: 15000, u_ananya: 15000 }, createdAt: hoursAgo(25) },
+      { id: 'ex_seed_4', toliId: 't_seed_kerala', addedBy: 'u_demo', clientId: 'seed-ex-4', personal: true, title: 'Banana chips', amount: 25000, category: 'shopping', method: 'cash', paidBy: 'u_demo', parts: { u_demo: 25000 }, createdAt: hoursAgo(24) },
+    ],
+    toliSettlements: [],
     toliEvents: [
       { id: 'ev_seed_1', toliId: 't_seed_kerala', actorId: 'u_demo', type: 'created', data: { name: 'Kerala Toli' }, at: hoursAgo(72) },
       { id: 'ev_seed_2', toliId: 't_seed_kerala', actorId: 'u_raj', type: 'joined', data: { via: 'link' }, at: hoursAgo(70) },

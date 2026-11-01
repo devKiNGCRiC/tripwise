@@ -5,7 +5,7 @@
  */
 import { api } from './client';
 import { ApiError, friendlyMessage } from './errors';
-import type { Anurodh, AnurodhAction, AuthResponse, Card, ChaupalMessage, Destination, DestinationFilters, Interest, NewMessage, NewPoll, Place, Poll, SujhavChange, Sujhav, Toli, ToliBudget, ToliEvent, ToliInvite, ToliRole, TripType, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
+import type { Anurodh, AnurodhAction, AuthResponse, Card, ChaupalMessage, Destination, DestinationFilters, Interest, LekhaSummary, NewExpense, NewMessage, NewPoll, NewSettlement, Place, Poll, Settlement, SujhavChange, Sujhav, Toli, ToliBudget, ToliEvent, ToliExpense, ToliInvite, ToliRole, TripType, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
 
 /** Turn a filters object into "?a=1&b=2", skipping empty values. */
 function toQuery(params: Record<string, string | number | undefined>): string {
@@ -150,6 +150,7 @@ export const toliApi = {
   updateMember: (id: string, userId: string, changes: { role?: ToliRole; requestsOff?: boolean }) =>
     api.request<{ toli: Toli }>(toliPath(id, `/members/${encodeURIComponent(userId)}`), { method: 'PATCH', body: changes }),
   removeMember: (id: string, userId: string) => api.request<void>(toliPath(id, `/members/${encodeURIComponent(userId)}`), { method: 'DELETE' }),
+  setMe: (id: string, share: { phone?: string | null; upi?: string | null }) => api.request<{ toli: Toli }>(toliPath(id, '/me'), { method: 'PATCH', body: share }),
   setPhone: (id: string, phone: string | null) => api.request<{ toli: Toli }>(toliPath(id, '/me'), { method: 'PATCH', body: { phone } }),
   // Budget comfort (my range stays private).
   budget: (id: string) => api.request<{ budget: ToliBudget }>(toliPath(id, '/budget')),
@@ -173,6 +174,12 @@ export const toliApi = {
   send: (id: string, message: NewMessage) => api.request<{ message: ChaupalMessage }>(toliPath(id, '/messages'), { method: 'POST', body: message }),
   uploadPhoto: (id: string, photo: Blob) => api.request<{ photo: { id: string; url: string } }>(toliPath(id, '/messages/photos'), { method: 'POST', body: photo }),
   markRead: (id: string) => api.request<void>(toliPath(id, '/read'), { method: 'POST' }),
+  // Lekha (money).
+  expenses: (id: string) => api.request<{ expenses: ToliExpense[] }>(toliPath(id, '/expenses')),
+  addExpense: (id: string, expense: NewExpense) => api.request<{ expense: ToliExpense }>(toliPath(id, '/expenses'), { method: 'POST', body: expense }),
+  deleteExpense: (id: string, eid: string) => api.request<void>(toliPath(id, `/expenses/${eid}`), { method: 'DELETE' }),
+  lekha: (id: string) => api.request<{ lekha: LekhaSummary }>(toliPath(id, '/lekha')),
+  settle: (id: string, settlement: NewSettlement) => api.request<{ settlement: Settlement }>(toliPath(id, '/settlements'), { method: 'POST', body: settlement }),
   // Anurodh (raise your hand).
   raiseHand: (id: string, about: string) => api.request<{ anurodh: Anurodh }>(toliPath(id, '/anurodh'), { method: 'POST', body: { about } }),
   hands: (id: string) => api.request<{ requests: Anurodh[]; mine: Anurodh | null }>(toliPath(id, '/anurodh')),
