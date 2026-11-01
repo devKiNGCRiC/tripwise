@@ -1,7 +1,8 @@
 /**
  * ToliPage.tsx — route /tolis/:id: one Toli — its header (name, kind, Sahyatris, invite) and
  * one tab at a time (`?tab=`): Sahyatra (the shared trip and suggestions), Decide (polls,
- * budget comfort, planning), Chaupal (the chat), Sahyatris (people and roles) and Activity.
+ * budget comfort, planning), Lekha (money), Chaupal (the chat), Sahyatris (people and roles)
+ * and Activity.
  * A Toli you're not in (or that doesn't exist) says it isn't available.
  */
 import { Link, useParams, useSearchParams } from 'react-router';
@@ -15,6 +16,7 @@ import { TAB_KEYS, tabsFor, type ToliTab } from '@/features/toli/labels';
 import { ActivityTab } from '@/features/toli/ActivityTab';
 import { ChaupalTab } from '@/features/toli/ChaupalTab';
 import { DecideTab } from '@/features/toli/DecideTab';
+import { LekhaTab } from '@/features/toli/lekha/LekhaTab';
 import { SahyatraTab } from '@/features/toli/SahyatraTab';
 import { SahyatrisTab } from '@/features/toli/SahyatrisTab';
 import { ToliHeader } from '@/features/toli/ToliHeader';
@@ -29,6 +31,7 @@ import { cn } from '@/lib/utils/cn';
 function TabContent({ tab, toli }: { tab: ToliTab; toli: Toli }) {
   if (tab === 'sahyatris') return <SahyatrisTab toli={toli} />;
   if (tab === 'decide') return <DecideTab toli={toli} />;
+  if (tab === 'lekha') return <LekhaTab toli={toli} />;
   if (tab === 'chaupal') return <ChaupalTab toli={toli} />;
   if (tab === 'activity') return <ActivityTab toli={toli} />;
   return <SahyatraTab toli={toli} />;

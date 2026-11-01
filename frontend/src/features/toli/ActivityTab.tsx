@@ -1,8 +1,10 @@
 /**
  * ActivityTab.tsx — what happened in the Toli, newest first, as plain sentences: who started
- * it, who joined or left, role changes, the Sahyatra being planned, suggestions and polls.
+ * it, who joined or left, role changes, the Sahyatra being planned, suggestions, polls, and
+ * money (expenses added or deleted, payments back).
  */
 import { useQuery } from '@tanstack/react-query';
+import { formatRupees } from '@lekha-rules';
 import { Avatar } from '@/components/ui/Avatar';
 import type { Words } from '@/features/words/words';
 import { useWords } from '@/features/words/WordsProvider';
@@ -41,6 +43,12 @@ export function describeEvent(toli: Toli, event: ToliEvent, w: Words): string {
       return `${who} declined ${nameOf(toli, d.authorId)}’s suggestion`;
     case 'poll-created':
       return `${who} asked: ${String(d.question ?? '')}`;
+    case 'expense-added':
+      return `${who} added ${String(d.title ?? 'an expense')} (${formatRupees(Number(d.amount ?? 0))})`;
+    case 'expense-deleted':
+      return `${who} deleted ${String(d.title ?? 'an expense')} (${formatRupees(Number(d.amount ?? 0))})`;
+    case 'settled':
+      return `${who} recorded ${nameOf(toli, d.from)} paying ${nameOf(toli, d.to)} back ${formatRupees(Number(d.amount ?? 0))}`;
     case 'poll-closed':
       return `${who} closed “${String(d.question ?? '')}” — decided: ${String(d.winner ?? '')}`;
     default:
