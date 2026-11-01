@@ -12,5 +12,7 @@ export { Place, type PlaceFields } from './place.js';
 export { Photo } from './photo.js';
 export { PlanCache } from './planCache.js';
 export { Session } from './session.js';
+export { Toli, type ToliDoc, type ToliFields } from './toli.js';
+export { ToliActivity } from './toliActivity.js';
 export { Usage } from './usage.js';
 export { User, type UserDoc, type UserFields } from './user.js';
