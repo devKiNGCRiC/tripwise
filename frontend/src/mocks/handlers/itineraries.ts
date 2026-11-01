@@ -19,6 +19,7 @@ import { buildDay, generateItinerary, tripDates } from '../data/generator';
 import { seedPlaces } from '../data/destinations';
 import { db, saveTrips, type StoredItinerary } from '../db';
 import { currentUser, errorResponse, latency } from './shared';
+import { checkToliPlanner, linkSahyatra, toliAccess } from './tolis';
 
 /** AI plans allowed per user per day. */
 const DAILY_LIMIT = 5;
@@ -43,9 +44,20 @@ function publicTrip({ ownerId: _ownerId, ...itinerary }: StoredItinerary): Itine
   return { source: 'ai', ...itinerary };
 }
 
-/** Find a trip the caller owns, or null. */
-function ownTrip(userId: string, id: unknown) {
-  return db.itineraries.find((t) => t.id === id && t.ownerId === userId) ?? null;
+/** A trip the caller may see (their own, or their Toli's Sahyatra) and whether they may change it; null otherwise. */
+function findTrip(userId: string, id: unknown) {
+  const trip = db.itineraries.find((t) => t.id === id);
+  if (!trip) return null;
+  const access = toliAccess(trip, userId);
+  return access.read ? { trip, change: access.change } : null;
+}
+
+/** A trip the caller may change: the trip, or the error to send (404 strangers, 403 Sahyatris). */
+function changeableTrip(userId: string, id: unknown) {
+  const found = findTrip(userId, id);
+  if (!found) return { error: errorResponse(404, 'NOT_FOUND', "We couldn't find that trip.") };
+  if (!found.change) return { error: errorResponse(403, 'FORBIDDEN', 'Only the Sutradhar and Sah-Sutradhars can change the Sahyatra — suggest it instead.') };
+  return { trip: found.trip };
 }
 
 /** A catalogue place's world ('abroad' outside India); unknown places have none. */
@@ -73,6 +85,9 @@ export const itineraryHandlers = [
     const user = currentUser(request);
     if (!user) return errorResponse(401, 'UNAUTHORIZED', 'Please log in again.');
     const req = (await request.json()) as TripRequest;
+    // Planning a Toli's Sahyatra: leaders only.
+    const toliError = checkToliPlanner(req.toliId, user.id);
+    if (toliError) return toliError;
     if (req.destination.trim().toLowerCase() === 'fail-ai') return errorResponse(503, 'AI_UNAVAILABLE', 'Both AI planners are busy — try again in a minute.');
     const quota = quotaFor(user.id);
     if (quota.used >= quota.limit) return errorResponse(429, 'QUOTA_EXCEEDED', `You've used all ${DAILY_LIMIT} AI plans for today.`);
@@ -81,6 +96,7 @@ export const itineraryHandlers = [
     const destination = db.destinations.find((d) => d.name.toLowerCase() === req.destination.trim().toLowerCase());
     const stored: StoredItinerary = { ...generateItinerary(req, destination), region: regionOf(destination), id: newId('it'), createdAt: new Date().toISOString(), ownerId: user.id };
     db.itineraries.unshift(stored);
+    linkSahyatra(req.toliId, stored, user.id);
     db.generations[user.id] = { day: today(), used: quota.used + 1 };
     saveTrips();
     return HttpResponse.json({ itinerary: publicTrip(stored), quota: quotaFor(user.id) });
@@ -93,6 +109,9 @@ export const itineraryHandlers = [
     const user = currentUser(request);
     if (!user) return errorResponse(401, 'UNAUTHORIZED', 'Please log in again.');
     const req = (await request.json()) as TripRequest;
+    // Planning a Toli's Sahyatra: leaders only.
+    const toliError = checkToliPlanner(req.toliId, user.id);
+    if (toliError) return toliError;
     const destination = catalogueDestination(req.destination);
     const local =
       destination?.country === 'India'
@@ -117,6 +136,7 @@ export const itineraryHandlers = [
       ownerId: user.id,
     };
     db.itineraries.unshift(stored);
+    linkSahyatra(req.toliId, stored, user.id);
     saveTrips();
     return HttpResponse.json({ itinerary: publicTrip(stored), quota: quotaFor(user.id) });
   }),
@@ -127,6 +147,9 @@ export const itineraryHandlers = [
     const user = currentUser(request);
     if (!user) return errorResponse(401, 'UNAUTHORIZED', 'Please log in again.');
     const req = (await request.json()) as TripRequest;
+    // Planning a Toli's Sahyatra: leaders only.
+    const toliError = checkToliPlanner(req.toliId, user.id);
+    if (toliError) return toliError;
     if (req.destination.trim().toLowerCase() === 'fail-ai') return errorResponse(503, 'AI_UNAVAILABLE', 'Both AI planners are busy — try again in a minute.');
     const quota = quotaFor(user.id);
     if (quota.used >= quota.limit) return errorResponse(429, 'QUOTA_EXCEEDED', `You've used all ${DAILY_LIMIT} AI plans for today.`);
@@ -148,6 +171,7 @@ export const itineraryHandlers = [
         await pause(400);
         // Save only at the end, like the real API.
         db.itineraries.unshift(stored);
+    linkSahyatra(req.toliId, stored, user.id);
         db.generations[user.id] = { day: today(), used: quota.used + 1 };
         saveTrips();
         send({ type: 'done', itinerary: publicTrip(stored), quota: quotaFor(user.id) });
@@ -162,7 +186,7 @@ export const itineraryHandlers = [
     await latency();
     const user = currentUser(request);
     if (!user) return errorResponse(401, 'UNAUTHORIZED', 'Please log in again.');
-    return HttpResponse.json({ itineraries: db.itineraries.filter((t) => t.ownerId === user.id).map(publicTrip) });
+    return HttpResponse.json({ itineraries: db.itineraries.filter((t) => toliAccess(t, user.id).read).map(publicTrip) });
   }),
 
   // GET /itineraries/:id
@@ -170,9 +194,9 @@ export const itineraryHandlers = [
     await latency();
     const user = currentUser(request);
     if (!user) return errorResponse(401, 'UNAUTHORIZED', 'Please log in again.');
-    const trip = ownTrip(user.id, params.id);
-    if (!trip) return errorResponse(404, 'NOT_FOUND', "We couldn't find that trip.");
-    return HttpResponse.json({ itinerary: publicTrip(trip) });
+    const found = findTrip(user.id, params.id);
+    if (!found) return errorResponse(404, 'NOT_FOUND', "We couldn't find that trip.");
+    return HttpResponse.json({ itinerary: publicTrip(found.trip) });
   }),
 
   // DELETE /itineraries/:id
@@ -180,9 +204,11 @@ export const itineraryHandlers = [
     await latency();
     const user = currentUser(request);
     if (!user) return errorResponse(401, 'UNAUTHORIZED', 'Please log in again.');
-    const trip = ownTrip(user.id, params.id);
-    if (!trip) return errorResponse(404, 'NOT_FOUND', "We couldn't find that trip.");
+    const { trip, error } = changeableTrip(user.id, params.id);
+    if (!trip) return error;
     db.itineraries = db.itineraries.filter((t) => t !== trip);
+    // A deleted Sahyatra leaves its Toli without a plan.
+    for (const toli of db.tolis) if (toli.tripId === trip.id) toli.tripId = null;
     // Its journal and photos go with it.
     const journal = db.journals.find((j) => j.itineraryId === trip.id);
     for (const photo of journal?.photos ?? []) delete db.photos[photo.id];
@@ -196,9 +222,10 @@ export const itineraryHandlers = [
     await latency();
     const user = currentUser(request);
     if (!user) return errorResponse(401, 'UNAUTHORIZED', 'Please log in again.');
-    const trip = ownTrip(user.id, params.id);
+    const { trip, error } = changeableTrip(user.id, params.id);
+    if (!trip) return error;
     const n = Number(params.n);
-    if (!trip || !trip.days[n - 1]) return errorResponse(404, 'NOT_FOUND', "We couldn't find that day.");
+    if (!trip.days[n - 1]) return errorResponse(404, 'NOT_FOUND', "We couldn't find that day.");
     const destination = db.destinations.find((d) => d.name.toLowerCase() === trip.request.destination.trim().toLowerCase());
     trip.variants = (trip.variants ?? 0) + 1;
     trip.days[n - 1] = buildDay(trip.request, destination, trip.days[n - 1].date, n, trip.variants);
@@ -211,8 +238,8 @@ export const itineraryHandlers = [
     await latency();
     const user = currentUser(request);
     if (!user) return errorResponse(401, 'UNAUTHORIZED', 'Please log in again.');
-    const trip = ownTrip(user.id, params.id);
-    if (!trip) return errorResponse(404, 'NOT_FOUND', "We couldn't find that trip.");
+    const { trip, error } = changeableTrip(user.id, params.id);
+    if (!trip) return error;
     trip.shareId ??= newId('sh');
     saveTrips();
     return HttpResponse.json({ shareId: trip.shareId });

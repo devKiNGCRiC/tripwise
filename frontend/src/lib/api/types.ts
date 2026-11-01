@@ -5,6 +5,7 @@
  * and the real Express backend MUST both return exactly these shapes, which is
  * what lets us switch from mock to real by flipping one env variable.
  */
+import type { SujhavChange, ToliRole, TripType } from '@toli-rules';
 
 /* ── Users & auth ─────────────────────────────────────────────────────── */
 
@@ -122,6 +123,8 @@ export interface TripRequest {
   travellers: Travellers;
   interests: Interest[];
   pace: Pace;
+  /** Planning a Toli's shared trip (leaders only). */
+  toliId?: string;
 }
 
 /** How you get from one activity to the next. */
@@ -163,6 +166,8 @@ export interface Itinerary {
   };
   tips: string[];
   packingList: string[];
+  /** The Toli this trip is the Sahyatra of (null for a solo trip). */
+  toliId?: string | null;
   /** Which AI wrote it — or 'tripwise' for TripWise's own planner (no AI). */
   provider: 'gemini' | 'groq' | 'tripwise';
   /** 'ai' = written for this trip; 'cache' = re-used from a similar trip (instant, free);
@@ -363,10 +368,176 @@ export type ApiErrorCode =
   | 'QUOTA_EXCEEDED'
   | 'AI_UNAVAILABLE'
   | 'NO_CATALOGUE'
+  | 'CONFLICT'
   | 'SERVER'
   | 'NETWORK';
 
 /** Shape of every error response body from the API. */
 export interface ApiErrorBody {
   error: { code: ApiErrorCode; message: string; details?: unknown };
+}
+
+/* ── Toli: planning and travelling together ────────────────────────────── */
+
+/** Toli roles, trip types, suggested changes and stops — the same definitions the API uses. */
+export type { SujhavChange, StopDraft, ToliRole, TripType } from '@toli-rules';
+
+/** A Sahyatri as their Toli shows them. */
+export interface ToliMember {
+  id: string;
+  name: string;
+  username: string;
+  avatarUrl?: string;
+  role: ToliRole;
+  /** Only when they chose to share it with this Toli. */
+  phone?: string;
+}
+
+/** A Toli as a member sees it. */
+export interface Toli {
+  id: string;
+  name: string;
+  type: TripType;
+  announcementMode: boolean;
+  /** The Sahyatra (shared trip), once planned. */
+  tripId: string | null;
+  /** What polls decided. */
+  choices: { destination?: string; startDate?: string; endDate?: string; transport?: string };
+  me: { role: ToliRole; canPost: boolean; requestsOff: boolean; phone?: string };
+  members: ToliMember[];
+  memberCount: number;
+  /** For planning: members' favourite interests, and the top of the budget range that suits all. */
+  planDefaults: { interests: Interest[]; budget?: number };
+  /** Leaders only. */
+  inviteUrl?: string;
+  /** In "my Tolis" only: chat messages I haven't read. */
+  unread?: number;
+}
+
+/** What an invite link leads to. */
+export interface ToliInvite {
+  toliId: string;
+  name: string;
+  type: TripType;
+  memberCount: number;
+  sutradhar?: { id: string; name: string; username: string; avatarUrl?: string };
+  alreadyMember: boolean;
+}
+
+/** Someone in a Toli feature (author, voter, actor). */
+export interface ToliPerson {
+  id: string;
+  name: string;
+  username: string;
+  avatarUrl?: string;
+}
+
+/** A suggestion on the Sahyatra. */
+export interface Sujhav {
+  id: string;
+  author: ToliPerson | null;
+  change: SujhavChange;
+  note?: string;
+  up: number;
+  down: number;
+  myVote: 1 | -1 | 0;
+  status: 'open' | 'approved' | 'declined';
+  decidedBy?: ToliPerson | null;
+  decidedAt?: string;
+  reason?: string;
+  createdAt: string;
+}
+
+/** Kinds of poll. */
+export type PollKind = 'destination' | 'tithi' | 'transport' | 'free';
+/** Ways of travelling a transport poll offers. */
+export type TravelMode = 'train' | 'bus' | 'flight' | 'car' | 'bike';
+
+/** One option of a poll. */
+export interface PollOption {
+  id: string;
+  label: string;
+  start?: string;
+  end?: string;
+  mode?: TravelMode;
+  /** Destination polls: TripWise's facts when the place is in the catalogue (null otherwise). */
+  facts?: { slug: string; bestMonths: number[]; avgDailyCost: number | null; topPlaces: string[] } | null;
+}
+
+/** A poll as a member sees it. */
+export interface Poll {
+  id: string;
+  kind: PollKind;
+  question: string;
+  options: PollOption[];
+  multi: boolean;
+  closesAt?: string;
+  status: 'open' | 'closed';
+  winner?: string;
+  counts: Record<string, number>;
+  myVotes: string[];
+  leading: string[];
+  notVoted: ToliPerson[];
+  authorId: string;
+  createdAt: string;
+}
+
+/** A new poll. */
+export type NewPoll =
+  | { kind: 'destination'; question?: string; options: { label: string }[]; closesAt?: string }
+  | { kind: 'tithi'; question?: string; options: { start: string; end: string }[]; closesAt?: string }
+  | { kind: 'transport'; question?: string; options: { mode: TravelMode }[]; closesAt?: string }
+  | { kind: 'free'; question: string; options: { label: string }[]; closesAt?: string };
+
+/** Budget comfort: my private range and what suits everyone (never anyone else's numbers). */
+export interface ToliBudget {
+  mine: [number, number] | null;
+  group: { answered: number; members: number; range: [number, number] | null; closest?: [number, number] };
+}
+
+/** A chat (Chaupal) message. */
+export interface ChaupalMessage {
+  id: string;
+  author: ToliPerson;
+  text: string;
+  replyTo?: { id: string; text: string; authorName: string };
+  /** Mentioned members' ids. */
+  mentions: string[];
+  card?: { type: 'sujhav' | 'poll' | 'place' | 'plan'; id: string; title: string };
+  photos: { id: string; url: string }[];
+  clientId: string;
+  createdAt: string;
+}
+
+/** A new chat message. */
+export interface NewMessage {
+  text: string;
+  /** Made on the phone, so an offline retry is stored once. */
+  clientId: string;
+  replyTo?: string;
+  photoIds?: string[];
+  card?: { type: 'place' | 'plan'; id: string };
+}
+
+/** A raised hand (Anurodh). `reply` only ever reaches the person who asked. */
+export interface Anurodh {
+  id: string;
+  user: ToliPerson;
+  about: string;
+  status: 'open' | 'granted' | 'declined' | 'answered';
+  grant?: 'one' | '30m' | '1h' | 'trip';
+  reply?: string;
+  createdAt: string;
+}
+
+/** A leader's answer to a raised hand. */
+export type AnurodhAction = 'one' | '30m' | '1h' | 'trip' | 'reply' | 'decline';
+
+/** One event in a Toli's activity feed. */
+export interface ToliEvent {
+  id: string;
+  actor: ToliPerson;
+  type: string;
+  data: Record<string, unknown>;
+  at: string;
 }

@@ -5,7 +5,7 @@
  */
 import { api } from './client';
 import { ApiError, friendlyMessage } from './errors';
-import type { AuthResponse, Card, Destination, DestinationFilters, Interest, Place, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
+import type { Anurodh, AnurodhAction, AuthResponse, Card, ChaupalMessage, Destination, DestinationFilters, Interest, NewMessage, NewPoll, Place, Poll, SujhavChange, Sujhav, Toli, ToliBudget, ToliEvent, ToliInvite, ToliRole, TripType, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
 
 /** Turn a filters object into "?a=1&b=2", skipping empty values. */
 function toQuery(params: Record<string, string | number | undefined>): string {
@@ -134,4 +134,48 @@ export const usersApi = {
   card: (username: string) => api.request<{ card: Card; relation: Relation }>(`/users/${encodeURIComponent(username)}/card`),
   invite: (code: string) => api.request<{ card: Card }>(`/invites/${encodeURIComponent(code)}`),
   acceptInvite: (code: string) => api.request<{ friend: Card }>(`/invites/${encodeURIComponent(code)}/accept`, { method: 'POST' }),
+};
+
+/** Tolis: groups planning a trip together — members, suggestions, polls, budget, chat and activity. */
+const toliPath = (id: string, rest = '') => `/tolis/${encodeURIComponent(id)}${rest}`;
+export const toliApi = {
+  list: () => api.request<{ tolis: Toli[] }>('/tolis'),
+  create: (input: { name: string; type: TripType; tripId?: string }) => api.request<{ toli: Toli }>('/tolis', { method: 'POST', body: input }),
+  get: (id: string) => api.request<{ toli: Toli }>(toliPath(id)),
+  update: (id: string, changes: { name?: string; announcementMode?: boolean }) => api.request<{ toli: Toli }>(toliPath(id), { method: 'PATCH', body: changes }),
+  newInviteLink: (id: string) => api.request<{ inviteUrl: string }>(toliPath(id, '/invite'), { method: 'POST' }),
+  invite: (token: string) => api.request<{ invite: ToliInvite }>(`/toli-invites/${encodeURIComponent(token)}`),
+  join: (token: string) => api.request<{ toli: Toli }>(`/toli-invites/${encodeURIComponent(token)}/join`, { method: 'POST' }),
+  addMember: (id: string, username: string) => api.request<{ toli: Toli }>(toliPath(id, '/members'), { method: 'POST', body: { username } }),
+  updateMember: (id: string, userId: string, changes: { role?: ToliRole; requestsOff?: boolean }) =>
+    api.request<{ toli: Toli }>(toliPath(id, `/members/${encodeURIComponent(userId)}`), { method: 'PATCH', body: changes }),
+  removeMember: (id: string, userId: string) => api.request<void>(toliPath(id, `/members/${encodeURIComponent(userId)}`), { method: 'DELETE' }),
+  setPhone: (id: string, phone: string | null) => api.request<{ toli: Toli }>(toliPath(id, '/me'), { method: 'PATCH', body: { phone } }),
+  // Budget comfort (my range stays private).
+  budget: (id: string) => api.request<{ budget: ToliBudget }>(toliPath(id, '/budget')),
+  setBudget: (id: string, low: number, high: number) => api.request<{ budget: ToliBudget }>(toliPath(id, '/budget'), { method: 'PUT', body: { low, high } }),
+  clearBudget: (id: string) => api.request<{ budget: ToliBudget }>(toliPath(id, '/budget'), { method: 'DELETE' }),
+  activity: (id: string, before?: string) => api.request<{ activity: ToliEvent[] }>(toliPath(id, `/activity${toQuery({ before })}`)),
+  // Sujhav (suggestions).
+  sujhavs: (id: string, status?: Sujhav['status']) => api.request<{ sujhavs: Sujhav[] }>(toliPath(id, `/sujhavs${toQuery({ status })}`)),
+  suggest: (id: string, change: SujhavChange, note?: string) => api.request<{ sujhav: Sujhav }>(toliPath(id, '/sujhavs'), { method: 'POST', body: { change, ...(note ? { note } : {}) } }),
+  voteSujhav: (id: string, sid: string, vote: 1 | -1 | 0) => api.request<{ sujhav: Sujhav }>(toliPath(id, `/sujhavs/${sid}/vote`), { method: 'PUT', body: { vote } }),
+  approveSujhav: (id: string, sid: string) => api.request<{ sujhav: Sujhav }>(toliPath(id, `/sujhavs/${sid}/approve`), { method: 'POST' }),
+  declineSujhav: (id: string, sid: string, reason?: string) =>
+    api.request<{ sujhav: Sujhav }>(toliPath(id, `/sujhavs/${sid}/decline`), { method: 'POST', body: reason ? { reason } : {} }),
+  // Polls.
+  polls: (id: string) => api.request<{ polls: Poll[] }>(toliPath(id, '/polls')),
+  createPoll: (id: string, poll: NewPoll) => api.request<{ poll: Poll }>(toliPath(id, '/polls'), { method: 'POST', body: poll }),
+  votePoll: (id: string, pid: string, optionIds: string[]) => api.request<{ poll: Poll }>(toliPath(id, `/polls/${pid}/vote`), { method: 'PUT', body: { optionIds } }),
+  closePoll: (id: string, pid: string, winner?: string) => api.request<{ poll: Poll }>(toliPath(id, `/polls/${pid}/close`), { method: 'POST', body: winner ? { winner } : {} }),
+  // Chaupal (the Toli's chat).
+  messages: (id: string, after?: string) => api.request<{ messages: ChaupalMessage[] }>(toliPath(id, `/messages${toQuery({ after })}`)),
+  send: (id: string, message: NewMessage) => api.request<{ message: ChaupalMessage }>(toliPath(id, '/messages'), { method: 'POST', body: message }),
+  uploadPhoto: (id: string, photo: Blob) => api.request<{ photo: { id: string; url: string } }>(toliPath(id, '/messages/photos'), { method: 'POST', body: photo }),
+  markRead: (id: string) => api.request<void>(toliPath(id, '/read'), { method: 'POST' }),
+  // Anurodh (raise your hand).
+  raiseHand: (id: string, about: string) => api.request<{ anurodh: Anurodh }>(toliPath(id, '/anurodh'), { method: 'POST', body: { about } }),
+  hands: (id: string) => api.request<{ requests: Anurodh[]; mine: Anurodh | null }>(toliPath(id, '/anurodh')),
+  decideHand: (id: string, rid: string, action: AnurodhAction, reply?: string) =>
+    api.request<{ anurodh: Anurodh }>(toliPath(id, `/anurodh/${rid}/decide`), { method: 'POST', body: { action, ...(reply ? { reply } : {}) } }),
 };

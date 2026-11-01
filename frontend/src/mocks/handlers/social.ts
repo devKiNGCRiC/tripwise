@@ -16,6 +16,7 @@ import { dayFromToday, type MockJournal } from '../data/social';
 import type { MockUser } from '../data/users';
 import { db, mockInviteCode, publicUser, saveTrips, session } from '../db';
 import { currentUser, errorResponse, latency } from './shared';
+import { canSeeChatPhoto } from './tolis';
 
 /** Words nobody may take as a username. */
 const RESERVED = new Set(['admin', 'tripwise', 'passport', 'join', 'api', 'login', 'signup', 'u', 'me', 'help', 'support']);
@@ -365,7 +366,8 @@ export const socialHandlers = [
     // The viewer named in the link (as <img> sends no login), else the login sent with it.
     const named = new URL(request.url).searchParams.get('v');
     const viewer = named ? (named === 'anon' ? null : named) : viewerOf(request);
-    if (!photo || !owner || !canSeeJournalOf(viewer, owner)) return errorResponse(404, 'NOT_FOUND', "We couldn't find that.");
+    // The owner, people who may see their journal, or — for a chat photo — members of that Toli.
+    if (!photo || !owner || (!canSeeJournalOf(viewer, owner) && !canSeeChatPhoto(viewer, String(params.photoId)))) return errorResponse(404, 'NOT_FOUND', "We couldn't find that.");
     // Seeded photos are links to the destination pictures.
     if (photo.href) return Response.redirect(photo.href, 302);
     return new HttpResponse(photo.blob, { headers: { 'Content-Type': photo.blob!.type, 'Cache-Control': 'private, no-cache' } });

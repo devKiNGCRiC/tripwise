@@ -9,6 +9,7 @@
 import type { Destination, Itinerary, User } from '@/lib/api/types';
 import { seedDestinations } from './data/destinations';
 import { seedFriendships, seedJournals, seedPhotos, seedTrips, type MockFriendship, type MockJournal, type MockPhoto } from './data/social';
+import { seedToliStore, type MockToliStore } from './data/tolis';
 import { seedUsers, type MockUser } from './data/users';
 
 /** A saved trip as the fake database keeps it: plus its owner and how often days were regenerated. */
@@ -17,7 +18,7 @@ export interface StoredItinerary extends Itinerary {
   variants?: number;
 }
 
-interface MockDb {
+interface MockDb extends MockToliStore {
   users: MockUser[];
   destinations: Destination[];
   itineraries: StoredItinerary[];
@@ -77,16 +78,20 @@ function createDb(): MockDb {
   const saved = PERSIST ? loadSavedTrips() : { itineraries: [], generations: {} };
   // The seeded demo trips are always there (added if an earlier visit's saved list lacks them).
   const seeded = seedTrips().filter((t) => !saved.itineraries.some((s) => s.id === t.id));
+  // The demo's upcoming Kerala trip is the seeded Kerala Toli's shared trip.
+  const itineraries = [...saved.itineraries, ...seeded].map((t) => (t.id === 'it_seed_kerala' ? { ...t, toliId: 't_seed_kerala' } : t));
   return {
     users: structuredClone(seedUsers),
     destinations: structuredClone(seedDestinations),
-    itineraries: [...saved.itineraries, ...seeded],
+    itineraries,
     generations: saved.generations,
     journals: seedJournals(),
     photos: seedPhotos(),
     avatars: {},
     friendships: seedFriendships(),
     blocks: [],
+    // Tolis (groups planning together); the Kerala trip is the seeded Toli's Sahyatra.
+    ...seedToliStore(),
   };
 }
 

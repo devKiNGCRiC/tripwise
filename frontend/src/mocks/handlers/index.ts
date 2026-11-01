@@ -6,5 +6,6 @@ import { authHandlers } from './auth';
 import { destinationHandlers } from './destinations';
 import { itineraryHandlers } from './itineraries';
 import { socialHandlers } from './social';
+import { toliHandlers } from './tolis';
 
-export const handlers = [...authHandlers, ...destinationHandlers, ...itineraryHandlers, ...socialHandlers];
+export const handlers = [...authHandlers, ...destinationHandlers, ...itineraryHandlers, ...socialHandlers, ...toliHandlers];

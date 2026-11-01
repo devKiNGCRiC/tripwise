@@ -27,7 +27,7 @@
     "types": ["vite/client", "node"],
 
     // `@/lib/api/client` instead of `../../../lib/api/client`. Mirrored in vite.config.ts.
-    "paths": { "@/*": ["./src/*"], "@catalogue/*": ["../backend/src/data/*"], "@planner": ["../backend/src/services/localPlanner.ts"] },
+    "paths": { "@/*": ["./src/*"], "@catalogue/*": ["../backend/src/data/*"], "@planner": ["../backend/src/services/localPlanner.ts"], "@toli-rules": ["../backend/src/services/toliRules.ts"] },
     // The catalogue is JSON, shared with the backend.
     "resolveJsonModule": true
   },
