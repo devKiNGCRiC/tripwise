@@ -5,7 +5,9 @@
  *   PUT    /api/itineraries/:id/journal   { rating, memory } → { journal }
  *   POST   /api/itineraries/:id/journal/photos?width&height&alt   raw image → { journal }
  *   DELETE /api/itineraries/:id/journal/photos/:photoId    → { journal }
- *   GET    /api/photos/:photoId           the photo, only for people allowed to see it
+ *   GET    /api/photos/:photoId           the photo, only for people allowed to see it (its owner,
+ *                                         those who may see their journal, or — for a photo shared
+ *                                         in a Toli's chat — that Toli's members)
  *
  * Journals open once a trip is over. Someone else's trip, journal or photo is always 404.
  */
@@ -47,6 +49,8 @@ export function journalRoutes(deps: {
   now: () => Date;
   photos: PhotoStore;
   canSeeJournalOf: (viewerId: string | null, ownerId: string) => Promise<boolean>;
+  /** Photos shared in a Toli's chat: may this person see it? (members of that Toli) */
+  canSeeChatPhoto?: (viewerId: string | null, photoId: string) => Promise<boolean>;
 }): Router {
   const router = Router();
   const { now, photos } = deps;
@@ -139,7 +143,7 @@ export function journalRoutes(deps: {
     // Who is looking: from a signed link (as used in <img>), else from a login token.
     const linked = viewerFromLink(id, req.query, now());
     const viewer = linked !== undefined ? linked : await optionalViewer(req, now());
-    if (viewer !== ownerId && !(await deps.canSeeJournalOf(viewer, ownerId))) throw notFound();
+    if (viewer !== ownerId && !(await deps.canSeeJournalOf(viewer, ownerId)) && !(await deps.canSeeChatPhoto?.(viewer, id))) throw notFound();
     const photo = await photos.get(id);
     if (!photo) throw notFound();
     res.setHeader('Content-Type', photo.contentType);

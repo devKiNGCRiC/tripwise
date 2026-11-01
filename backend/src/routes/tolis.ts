@@ -3,7 +3,7 @@
  *
  *   POST   /api/tolis                       { name, type, tripId? } → 201 { toli } the creator is the Sutradhar;
  *                                                            tripId = one of their own trips becomes the Sahyatra
- *   GET    /api/tolis                                         → { tolis }      mine, newest first
+ *   GET    /api/tolis                                         → { tolis }      mine, newest first (+ unread chat count)
  *   GET    /api/tolis/:id                                     → { toli }
  *   PATCH  /api/tolis/:id                   { name?, announcementMode? }      leaders
  *   POST   /api/tolis/:id/invite                              → { inviteUrl }  leaders; the old link stops
@@ -28,6 +28,7 @@ import { z } from 'zod';
 import { Itinerary, Toli, ToliBudget, User } from '../db/models/index.js';
 import { clash, forbidden, notFound } from '../lib/errors.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
+import { unreadCount } from '../services/chaupal.js';
 import { relation } from '../services/social.js';
 import { blockedWith, groupBudget, inviteUrlFor, loadMember, logActivity, MAX_MEMBERS, memberCards, requireLeader, TOLI_NOT_FOUND, toliView } from '../services/tolis.js';
 import { defaultsForType } from '../services/toliRules.js';
@@ -86,12 +87,19 @@ export function tolisRoutes(deps: { now: () => Date; appUrl: string }): Router {
     res.status(201).json({ toli: await toliView(toli, toli.members[0], now, deps.appUrl) });
   });
 
-  // GET /tolis — the Tolis I'm in, newest first.
+  // GET /tolis — the Tolis I'm in, newest first, each with its unread Chaupal count.
   router.get('/tolis', auth, async (req, res) => {
     const me = currentUser(req).id;
     const tolis = await Toli.find({ 'members.userId': me }).sort({ createdAt: -1 });
     const now = deps.now();
-    res.json({ tolis: await Promise.all(tolis.map((t) => toliView(t, t.members.find((m) => m.userId.toString() === me)!, now, deps.appUrl))) });
+    res.json({
+      tolis: await Promise.all(
+        tolis.map(async (t) => {
+          const member = t.members.find((m) => m.userId.toString() === me)!;
+          return { ...(await toliView(t, member, now, deps.appUrl)), unread: await unreadCount(t._id.toString(), me, member.lastReadAt ?? member.joinedAt) };
+        }),
+      ),
+    });
   });
 
   // GET /tolis/:id — one Toli.

@@ -17,6 +17,7 @@ import { accountRoutes } from './routes/account.js';
 import { authRoutes } from './routes/auth.js';
 import { avatarRoutes } from './routes/avatars.js';
 import { destinationRoutes } from './routes/destinations.js';
+import { chaupalRoutes } from './routes/chaupal.js';
 import { pollRoutes } from './routes/polls.js';
 import { sujhavRoutes } from './routes/sujhavs.js';
 import { tolisRoutes } from './routes/tolis.js';
@@ -32,6 +33,7 @@ import { userRoutes } from './routes/users.js';
 import type { AiChain } from './services/ai/chain.js';
 import { createMailer, type Mailer } from './services/mailer.js';
 import { createPhotoStore, type PhotoStore } from './services/photos.js';
+import { canSeeChatPhoto } from './services/chaupal.js';
 import { canSeeJournalOf } from './services/social.js';
 
 /** The swappable parts of the app (real ones in server.ts, fakes in tests). */
@@ -82,13 +84,14 @@ export function createApp(deps: AppDeps, extra?: (router: Router) => void): expr
   api.use(avatarRoutes(now));
   api.use(passportRoutes(now));
   api.use(accountRoutes({ now, mailer: deps.mailer ?? createMailer({}), appUrl: deps.appUrl ?? 'http://localhost:5173', photos }));
-  api.use(journalRoutes({ now, photos, canSeeJournalOf }));
+  api.use(journalRoutes({ now, photos, canSeeJournalOf, canSeeChatPhoto }));
   api.use(friendsRoutes(now));
   api.use(userRoutes(now));
   api.use(itineraryRoutes({ ai: deps.ai, now, photos }));
   api.use(tolisRoutes({ now, appUrl: deps.appUrl ?? 'http://localhost:5173' }));
   api.use(sujhavRoutes(now));
   api.use(pollRoutes(now));
+  api.use(chaupalRoutes({ now, photos }));
   api.use(shareRoutes());
   extra?.(api);
   app.use('/api', api);
