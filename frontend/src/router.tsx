@@ -54,6 +54,9 @@ export const routes: RouteObject[] = [
           { path: 'passport/account', lazy: lazyPage(() => import('@/pages/AccountPage')) },
           { path: 'passport/friends', lazy: lazyPage(() => import('@/pages/FriendsPage')) },
           { path: 'join/:code', lazy: lazyPage(() => import('@/pages/JoinPage')) },
+          { path: 'tolis', lazy: lazyPage(() => import('@/pages/TolisPage')) },
+          { path: 'tolis/:id', lazy: lazyPage(() => import('@/pages/ToliPage')) },
+          { path: 'toli/join/:token', lazy: lazyPage(() => import('@/pages/ToliJoinPage')) },
         ],
       },
 

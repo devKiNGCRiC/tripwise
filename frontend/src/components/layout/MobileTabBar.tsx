@@ -3,10 +3,11 @@
  * a floating glass pill with five thumb-reachable tabs. The active tab gets a
  * solid ink bubble. The account tab becomes "Log in" for guests.
  */
-import { Compass, House, LogIn, Sparkles, Ticket, UserRound, type LucideIcon } from 'lucide-react';
+import { Compass, LogIn, Sparkles, Ticket, UserRound, Users, type LucideIcon } from 'lucide-react';
 import { NavLink } from 'react-router';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { useFriends } from '@/features/friends/hooks';
+import { useTolis } from '@/features/toli/hooks';
 import { cn } from '@/lib/utils/cn';
 
 interface Tab {
@@ -20,12 +21,15 @@ export function MobileTabBar() {
   const { user } = useAuth();
   // Friend requests waiting (a dot on the Passport tab).
   const waiting = useFriends().data?.incoming.length ?? 0;
+  // Unread Chaupal messages (a dot on the Tolis tab).
+  const unread = (useTolis().data ?? []).reduce((sum, t) => sum + (t.unread ?? 0), 0);
 
   const tabs: Tab[] = [
-    { to: '/', label: 'Home', icon: House },
+    // Five tabs fit a phone: Home is the logo in the top bar.
     { to: '/explore', label: 'Explore', icon: Compass },
     { to: '/plan', label: 'Plan', icon: Sparkles },
     { to: '/trips', label: 'Trips', icon: Ticket },
+    { to: '/tolis', label: 'Tolis', icon: Users },
     user ? { to: '/passport', label: 'Passport', icon: UserRound } : { to: '/login', label: 'Log in', icon: LogIn },
   ];
 
@@ -46,7 +50,7 @@ export function MobileTabBar() {
             >
               <span className="relative">
                 <Icon className="size-5" aria-hidden />
-                {to === '/passport' && waiting > 0 && <span aria-hidden className="absolute -top-1 -right-1.5 size-2.5 rounded-full bg-danger" />}
+                {((to === '/passport' && waiting > 0) || (to === '/tolis' && unread > 0)) && <span aria-hidden className="absolute -top-1 -right-1.5 size-2.5 rounded-full bg-danger" />}
               </span>
               {label}
             </NavLink>

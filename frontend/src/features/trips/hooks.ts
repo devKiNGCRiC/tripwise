@@ -17,7 +17,8 @@ export function useTrips() {
 
 /** One trip by id. */
 export function useTrip(id: string) {
-  return useQuery({ queryKey: ['trip', id], queryFn: () => itinerariesApi.get(id), select: (data) => data.itinerary });
+  // No id, no request (e.g. a form that only sometimes starts from a trip).
+  return useQuery({ queryKey: ['trip', id], queryFn: () => itinerariesApi.get(id), select: (data) => data.itinerary, enabled: !!id });
 }
 
 /** Regenerate day `n` of trip `id`. */

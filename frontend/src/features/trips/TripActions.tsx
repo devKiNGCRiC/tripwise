@@ -3,10 +3,14 @@
  *   Download PDF → builds the PDF on demand (pdf/downloadPdf.ts, loaded lazily)
  *   Share        → creates a public read-only link; uses the device's share sheet when
  *                  there is one, otherwise copies the link and says "Link copied"
+ *   Toli         → "Plan with a Toli" starts a group from this trip; a Toli's shared trip
+ *                  links back to its Toli
  */
 import { Download, Share2 } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/ui/Button';
+import { Link } from 'react-router';
+import { Users } from 'lucide-react';
+import { Button, buttonClasses } from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
 import type { Itinerary } from '@/lib/api/types';
 import { useShareTrip } from './hooks';
@@ -56,6 +60,15 @@ export function TripActions({ itinerary }: { itinerary: Itinerary }) {
       <Button variant="secondary" icon={<Share2 aria-hidden className="size-4" />} loading={share.isPending} onClick={() => void onShare()}>
         Share
       </Button>
+      {itinerary.toliId ? (
+        <Link to={`/tolis/${itinerary.toliId}`} className={buttonClasses({ variant: 'ghost' })}>
+          <Users aria-hidden className="size-4" /> Open the Toli
+        </Link>
+      ) : (
+        <Link to={`/tolis?trip=${itinerary.id}`} className={buttonClasses({ variant: 'ghost' })}>
+          <Users aria-hidden className="size-4" /> Plan with a Toli
+        </Link>
+      )}
     </>
   );
 }

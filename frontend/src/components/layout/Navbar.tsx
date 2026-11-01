@@ -9,6 +9,7 @@ import { buttonClasses } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { ColoursMenu } from '@/features/colours/ColoursMenu';
 import { useFriends } from '@/features/friends/hooks';
+import { useTolis } from '@/features/toli/hooks';
 import { cn } from '@/lib/utils/cn';
 import { ThemeToggle } from '@/theme/ThemeToggle';
 import { Logo } from './Logo';
@@ -37,6 +38,8 @@ export function Navbar() {
   const { user, status } = useAuth();
   // Friend requests waiting for an answer (a dot on your passport bubble).
   const waiting = useFriends().data?.incoming.length ?? 0;
+  // Unread Chaupal messages across my Tolis (a dot on the Tolis link).
+  const unread = (useTolis().data ?? []).reduce((sum, t) => sum + (t.unread ?? 0), 0);
 
   return (
     <header className="fixed inset-x-0 top-3 z-40 sm:top-3.5">
@@ -58,6 +61,12 @@ export function Navbar() {
             {user && (
               <NavLink to="/trips" className={navLinkClass}>
                 My trips
+              </NavLink>
+            )}
+            {user && (
+              <NavLink to="/tolis" className={navLinkClass} aria-label={unread ? `Tolis (${unread} unread)` : 'Tolis'}>
+                Tolis
+                {unread > 0 && <span aria-hidden className="ml-1 inline-block size-2 rounded-full bg-danger align-middle" />}
               </NavLink>
             )}
             {user?.role === 'admin' && (
