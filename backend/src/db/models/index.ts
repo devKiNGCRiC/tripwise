@@ -20,5 +20,6 @@ export { Toli, type ToliDoc, type ToliFields } from './toli.js';
 export { ToliActivity } from './toliActivity.js';
 export { ToliBudget } from './toliBudget.js';
 export { ToliExpense } from './toliExpense.js';
+export { ToliSettlement } from './toliSettlement.js';
 export { Usage } from './usage.js';
 export { User, type UserDoc, type UserFields } from './user.js';

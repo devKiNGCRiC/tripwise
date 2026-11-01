@@ -7,6 +7,10 @@
  *   GET    /api/tolis/:id/expenses        → { expenses }   group ones + my personal ones, newest first
  *   DELETE /api/tolis/:id/expenses/:eid   → 204            group: whoever added it or leaders;
  *                                                           personal: the owner only (others 404)
+ *   POST   /api/tolis/:id/settlements     { clientId, from, to, amount, method } → 201 { settlement }
+ *                                            any member records a payment back (retry → 200); never deleted
+ *   GET    /api/tolis/:id/lekha           → { lekha }  balances, the fewest payments to settle up
+ *                                            (with Pay-with-UPI links), totals, settlements
  *
  * Group expenses are split only among the members who shared them (everyone, by default).
  * Personal expenses are the owner's own record: never shown to anyone else, never in activity.
@@ -14,10 +18,10 @@
 import { Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 import { z } from 'zod';
-import { ToliExpense } from '../db/models/index.js';
+import { ToliExpense, ToliSettlement } from '../db/models/index.js';
 import { badRequest, forbidden, notFound } from '../lib/errors.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
-import { expenseViews } from '../services/lekha.js';
+import { expenseViews, lekhaSummary, settlementViews } from '../services/lekha.js';
 import { CATEGORIES, splitExpense, type Split } from '../services/lekhaRules.js';
 import { loadMember, logActivity } from '../services/tolis.js';
 import { isLeader, type ToliRole } from '../services/toliRules.js';
@@ -43,6 +47,15 @@ const expenseSchema = z.object({
   personal: z.boolean().optional(),
   paidBy: z.string().optional(),
   split: splitSchema.optional(),
+});
+
+/** A payment back between two members. */
+const settlementSchema = z.object({
+  clientId: z.string().min(1).max(100),
+  from: z.string(),
+  to: z.string(),
+  amount: z.number().int('Amounts are in whole paise.').min(1, 'Enter an amount.').max(MAX_AMOUNT),
+  method: z.enum(['upi', 'cash']),
 });
 
 /** Why a split was refused, in words. */
@@ -125,6 +138,36 @@ export function lekhaRoutes(now: () => Date): Router {
     await expense.save();
     if (!expense.personal) await logActivity(toli._id.toString(), me, 'expense-deleted', { title: expense.title, amount: expense.amount }, at);
     res.status(204).end();
+  });
+
+  // POST /tolis/:id/settlements — record money paid back (offline-safe; kept forever).
+  router.post('/tolis/:id/settlements', auth, async (req, res) => {
+    const me = currentUser(req).id;
+    const { toli } = await loadMember(String(req.params.id), me);
+    const input = settlementSchema.parse(req.body);
+    const toliId = toli._id.toString();
+
+    // Sent before (an offline retry)? Answer with the stored one.
+    const earlier = await ToliSettlement.findOne({ toliId, recordedBy: me, clientId: input.clientId });
+    if (earlier) {
+      res.json({ settlement: (await settlementViews([earlier]))[0] });
+      return;
+    }
+    const memberIds = new Set(toli.members.map((m) => m.userId.toString()));
+    if (input.from === input.to) throw badRequest('Someone can’t pay themselves back.');
+    if (!memberIds.has(input.from) || !memberIds.has(input.to)) throw badRequest('Both people must be Sahyatris of this Toli.');
+
+    const at = now();
+    const settlement = await ToliSettlement.create({ toliId, from: input.from, to: input.to, amount: input.amount, method: input.method, recordedBy: me, clientId: input.clientId, createdAt: at });
+    await logActivity(toliId, me, 'settled', { from: input.from, to: input.to, amount: input.amount }, at);
+    res.status(201).json({ settlement: (await settlementViews([settlement]))[0] });
+  });
+
+  // GET /tolis/:id/lekha — balances, settle-up, totals and settlements.
+  router.get('/tolis/:id/lekha', auth, async (req, res) => {
+    const me = currentUser(req).id;
+    const { toli } = await loadMember(String(req.params.id), me);
+    res.json({ lekha: await lekhaSummary(toli, me) });
   });
 
   return router;
