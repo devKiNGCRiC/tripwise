@@ -13,11 +13,11 @@ describe('FriendsPage', () => {
   it('lists friends and lets you accept a request', async () => {
     const { user } = renderApp('/passport/friends');
     const friends = await screen.findByRole('region', { name: 'Friends' });
-    expect(await within(friends).findByText('Kabir Shah')).toBeInTheDocument();
+    expect(await within(friends).findByText('Raj Roy')).toBeInTheDocument();
     const requests = screen.getByRole('region', { name: 'Requests' });
-    expect(within(requests).getByText('Zoya Khan')).toBeInTheDocument();
-    await user.click(within(requests).getByRole('button', { name: 'Accept Zoya Khan' }));
-    expect(await within(friends).findByText('Zoya Khan')).toBeInTheDocument();
+    expect(within(requests).getByText('Ananya Das')).toBeInTheDocument();
+    await user.click(within(requests).getByRole('button', { name: 'Accept Ananya Das' }));
+    expect(await within(friends).findByText('Ananya Das')).toBeInTheDocument();
   });
 
   it('finds people by exact @username and sends a request', async () => {

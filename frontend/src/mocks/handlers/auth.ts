@@ -67,8 +67,8 @@ export const authHandlers = [
     if (!user) {
       user = person({
         id: 'u_google',
-        name: 'Google Explorer',
-        username: mockUsername('Google Explorer'),
+        name: 'Gaurav Yatri',
+        username: mockUsername('Gaurav Yatri'),
         email: 'google.explorer@tripwise.app',
         password: crypto.randomUUID(),
         createdAt: new Date().toISOString(),

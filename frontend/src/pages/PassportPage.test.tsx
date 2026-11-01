@@ -91,10 +91,10 @@ describe('PassportPage', () => {
     expect(within(next).getByText(/In \d+ days/)).toBeInTheDocument();
 
     const friends = screen.getByRole('region', { name: 'Your friends' });
-    expect(await within(friends).findByText('Kabir Shah')).toBeInTheDocument();
-    await user.click(within(friends).getByRole('button', { name: 'Accept Zoya Khan' }));
-    expect(await within(friends).findByText('Zoya Khan')).toBeInTheDocument();
-    expect(within(friends).queryByRole('button', { name: 'Accept Zoya Khan' })).toBeNull();
+    expect(await within(friends).findByText('Raj Roy')).toBeInTheDocument();
+    await user.click(within(friends).getByRole('button', { name: 'Accept Ananya Das' }));
+    expect(await within(friends).findByText('Ananya Das')).toBeInTheDocument();
+    expect(within(friends).queryByRole('button', { name: 'Accept Ananya Das' })).toBeNull();
 
     const memory = screen.getByRole('region', { name: 'Latest memory' });
     expect(await within(memory).findByText(/Sunsets at Palolem/)).toBeInTheDocument();

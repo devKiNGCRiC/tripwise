@@ -1,8 +1,8 @@
 /**
  * tolis.ts (mock data) — Tolis for the demo, and the shapes the mock stores them in:
- *   Kerala Toli    Demo is the Sutradhar, with Kabir and Zoya; its Sahyatra is Demo's upcoming
+ *   Kerala Toli    Demo is the Sutradhar, with Raj and Ananya; its Sahyatra is Demo's upcoming
  *                  Kerala trip; one open suggestion, one Tithi poll and a few chat messages
- *   Office offsite Kabir leads an office Toli in announcement mode; Demo and Zoya are Sahyatris
+ *   Office offsite Raj leads an office Toli in announcement mode; Demo and Ananya are Sahyatris
  * Stored records mirror the real API's collections (members inside the Toli; suggestions,
  * polls, budgets, messages, raised hands and events alongside).
  */
@@ -130,8 +130,8 @@ export function seedToliStore(): MockToliStore {
         inviteToken: 'keralaTOLIjoin2026x',
         members: [
           { userId: 'u_demo', role: 'sutradhar', joinedAt: hoursAgo(72), lastReadAt: hoursAgo(5) },
-          { userId: 'u_kabir', role: 'sahyatri', joinedAt: hoursAgo(70), phone: '+919876543210' },
-          { userId: 'u_zoya', role: 'sahyatri', joinedAt: hoursAgo(60) },
+          { userId: 'u_raj', role: 'sahyatri', joinedAt: hoursAgo(70), phone: '+919876543210' },
+          { userId: 'u_ananya', role: 'sahyatri', joinedAt: hoursAgo(60) },
         ],
         choices: {},
         createdAt: hoursAgo(72),
@@ -144,9 +144,9 @@ export function seedToliStore(): MockToliStore {
         tripId: null,
         inviteToken: 'officeTOLIjoin2026x',
         members: [
-          { userId: 'u_kabir', role: 'sutradhar', joinedAt: hoursAgo(48) },
+          { userId: 'u_raj', role: 'sutradhar', joinedAt: hoursAgo(48) },
           { userId: 'u_demo', role: 'sahyatri', joinedAt: hoursAgo(40) },
-          { userId: 'u_zoya', role: 'sahyatri', joinedAt: hoursAgo(30) },
+          { userId: 'u_ananya', role: 'sahyatri', joinedAt: hoursAgo(30) },
         ],
         choices: {},
         createdAt: hoursAgo(48),
@@ -156,10 +156,10 @@ export function seedToliStore(): MockToliStore {
       {
         id: 'sj_seed_1',
         toliId: 't_seed_kerala',
-        authorId: 'u_kabir',
+        authorId: 'u_raj',
         change: { kind: 'add-day', theme: 'A slow day on the houseboat' },
         note: 'One more lazy day, please!',
-        votes: { u_zoya: 1 },
+        votes: { u_ananya: 1 },
         status: 'open',
         createdAt: hoursAgo(20),
       },
@@ -177,24 +177,24 @@ export function seedToliStore(): MockToliStore {
         ],
         multi: false,
         status: 'open',
-        votes: { u_kabir: ['o1'] },
+        votes: { u_raj: ['o1'] },
         createdAt: hoursAgo(18),
       },
     ],
-    toliBudgets: { 't_seed_kerala|u_kabir': [2500, 3500], 't_seed_kerala|u_zoya': [2000, 3000] },
+    toliBudgets: { 't_seed_kerala|u_raj': [2500, 3500], 't_seed_kerala|u_ananya': [2000, 3000] },
     messages: [
       { id: 'ms_seed_1', toliId: 't_seed_kerala', authorId: 'u_demo', text: 'Kerala it is! Dates are fixed — now let’s sort the travel.', mentions: [], photoIds: [], clientId: 'seed-1', createdAt: hoursAgo(19) },
       { id: 'ms_seed_2', toliId: 't_seed_kerala', authorId: 'u_demo', text: '', mentions: [], photoIds: [], card: { type: 'poll', id: 'pl_seed_1' }, clientId: 'card:poll:pl_seed_1', createdAt: hoursAgo(18) },
-      { id: 'ms_seed_3', toliId: 't_seed_kerala', authorId: 'u_kabir', text: '@demotraveller train please — the Kerala coast from the window!', mentions: ['u_demo'], photoIds: [], clientId: 'seed-3', createdAt: hoursAgo(4) },
-      { id: 'ms_seed_4', toliId: 't_seed_office', authorId: 'u_kabir', text: `Offsite on ${dayFromToday(25)}. Buses leave the office at 7 am sharp.`, mentions: [], photoIds: [], clientId: 'seed-4', createdAt: hoursAgo(28) },
+      { id: 'ms_seed_3', toliId: 't_seed_kerala', authorId: 'u_raj', text: '@demotraveller train please — the Kerala coast from the window!', mentions: ['u_demo'], photoIds: [], clientId: 'seed-3', createdAt: hoursAgo(4) },
+      { id: 'ms_seed_4', toliId: 't_seed_office', authorId: 'u_raj', text: `Offsite on ${dayFromToday(25)}. Buses leave the office at 7 am sharp.`, mentions: [], photoIds: [], clientId: 'seed-4', createdAt: hoursAgo(28) },
     ],
     anurodhs: [],
     toliEvents: [
       { id: 'ev_seed_1', toliId: 't_seed_kerala', actorId: 'u_demo', type: 'created', data: { name: 'Kerala Toli' }, at: hoursAgo(72) },
-      { id: 'ev_seed_2', toliId: 't_seed_kerala', actorId: 'u_kabir', type: 'joined', data: { via: 'link' }, at: hoursAgo(70) },
-      { id: 'ev_seed_3', toliId: 't_seed_kerala', actorId: 'u_zoya', type: 'joined', data: { via: 'link' }, at: hoursAgo(60) },
-      { id: 'ev_seed_4', toliId: 't_seed_kerala', actorId: 'u_kabir', type: 'suggested', data: { sujhavId: 'sj_seed_1', kind: 'add-day' }, at: hoursAgo(20) },
-      { id: 'ev_seed_5', toliId: 't_seed_office', actorId: 'u_kabir', type: 'created', data: { name: 'Office offsite' }, at: hoursAgo(48) },
+      { id: 'ev_seed_2', toliId: 't_seed_kerala', actorId: 'u_raj', type: 'joined', data: { via: 'link' }, at: hoursAgo(70) },
+      { id: 'ev_seed_3', toliId: 't_seed_kerala', actorId: 'u_ananya', type: 'joined', data: { via: 'link' }, at: hoursAgo(60) },
+      { id: 'ev_seed_4', toliId: 't_seed_kerala', actorId: 'u_raj', type: 'suggested', data: { sujhavId: 'sj_seed_1', kind: 'add-day' }, at: hoursAgo(20) },
+      { id: 'ev_seed_5', toliId: 't_seed_office', actorId: 'u_raj', type: 'created', data: { name: 'Office offsite' }, at: hoursAgo(48) },
     ],
   };
 }

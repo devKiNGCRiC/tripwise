@@ -28,53 +28,53 @@ const as = (token: string) => ({
   del: (path: string) => request(app).delete(`/api${path}`).set('Authorization', `Bearer ${token}`),
 });
 
-/** Asha's Toli with Kabir and Zoya. */
+/** Asha's Toli with Rohan and Priya. */
 async function setup() {
   const asha = await quickUser('Asha');
-  const kabir = await quickUser('Kabir');
-  const zoya = await quickUser('Zoya');
+  const rohan = await quickUser('Rohan');
+  const priya = await quickUser('Priya');
   const created = (await as(asha.token).post('/tolis', { name: 'Budget Toli', type: 'friends' })).body.toli;
   const token = (created.inviteUrl as string).split('/').pop();
-  for (const p of [kabir, zoya]) await as(p.token).post(`/toli-invites/${token}/join`);
-  return { asha, kabir, zoya, id: created.id as string };
+  for (const p of [rohan, priya]) await as(p.token).post(`/toli-invites/${token}/join`);
+  return { asha, rohan, priya, id: created.id as string };
 }
 
 describe('budget comfort', () => {
   it('shows everyone the shared range, and nobody else’s numbers', async () => {
-    const { asha, kabir, id } = await setup();
+    const { asha, rohan, id } = await setup();
     await as(asha.token).put(`/tolis/${id}/budget`, { low: 2000, high: 3100 });
-    const mine = await as(kabir.token).put(`/tolis/${id}/budget`, { low: 2600, high: 4000 });
+    const mine = await as(rohan.token).put(`/tolis/${id}/budget`, { low: 2600, high: 4000 });
     expect(mine.body.budget).toEqual({ mine: [2600, 4000], group: { answered: 2, members: 3, range: [2600, 3100] } });
     const ashaSees = await as(asha.token).get(`/tolis/${id}/budget`);
     expect(ashaSees.body.budget).toEqual({ mine: [2000, 3100], group: { answered: 2, members: 3, range: [2600, 3100] } });
-    // Kabir's own top (4000) appears nowhere in what Asha gets.
+    // Rohan's own top (4000) appears nowhere in what Asha gets.
     expect(JSON.stringify(ashaSees.body)).not.toContain('4000');
   });
 
   it('shows the gap when there is no overlap, and nothing before anyone answers', async () => {
-    const { asha, kabir, zoya, id } = await setup();
-    expect((await as(zoya.token).get(`/tolis/${id}/budget`)).body.budget).toEqual({ mine: null, group: { answered: 0, members: 3, range: null } });
+    const { asha, rohan, priya, id } = await setup();
+    expect((await as(priya.token).get(`/tolis/${id}/budget`)).body.budget).toEqual({ mine: null, group: { answered: 0, members: 3, range: null } });
     await as(asha.token).put(`/tolis/${id}/budget`, { low: 1000, high: 1500 });
-    await as(kabir.token).put(`/tolis/${id}/budget`, { low: 2500, high: 4000 });
-    expect((await as(zoya.token).get(`/tolis/${id}/budget`)).body.budget.group).toEqual({ answered: 2, members: 3, range: null, closest: [1500, 2500] });
+    await as(rohan.token).put(`/tolis/${id}/budget`, { low: 2500, high: 4000 });
+    expect((await as(priya.token).get(`/tolis/${id}/budget`)).body.budget.group).toEqual({ answered: 2, members: 3, range: null, closest: [1500, 2500] });
   });
 
   it('drops someone who left, and lets me clear mine', async () => {
-    const { asha, kabir, id } = await setup();
+    const { asha, rohan, id } = await setup();
     await as(asha.token).put(`/tolis/${id}/budget`, { low: 2000, high: 3000 });
-    await as(kabir.token).put(`/tolis/${id}/budget`, { low: 5000, high: 9000 });
-    await as(kabir.token).del(`/tolis/${id}/members/${kabir.id}`);
+    await as(rohan.token).put(`/tolis/${id}/budget`, { low: 5000, high: 9000 });
+    await as(rohan.token).del(`/tolis/${id}/members/${rohan.id}`);
     expect((await as(asha.token).get(`/tolis/${id}/budget`)).body.budget.group).toEqual({ answered: 1, members: 2, range: [2000, 3000] });
     // A leaver's private numbers are deleted, not just hidden.
-    expect(await ToliBudget.countDocuments({ toliId: id, userId: kabir.id })).toBe(0);
+    expect(await ToliBudget.countDocuments({ toliId: id, userId: rohan.id })).toBe(0);
     await as(asha.token).del(`/tolis/${id}/budget`);
     expect((await as(asha.token).get(`/tolis/${id}/budget`)).body.budget.mine).toBeNull();
   });
 
   it('suggests the top of the range for planning', async () => {
-    const { asha, kabir, id } = await setup();
+    const { asha, rohan, id } = await setup();
     await as(asha.token).put(`/tolis/${id}/budget`, { low: 2000, high: 3000 });
-    await as(kabir.token).put(`/tolis/${id}/budget`, { low: 2500, high: 4000 });
+    await as(rohan.token).put(`/tolis/${id}/budget`, { low: 2500, high: 4000 });
     expect((await as(asha.token).get(`/tolis/${id}`)).body.toli.planDefaults.budget).toBe(3000);
   });
 

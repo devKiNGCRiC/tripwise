@@ -29,16 +29,16 @@ const as = (token: string) => ({
   del: (path: string) => request(app).delete(`/api${path}`).set('Authorization', `Bearer ${token}`),
 });
 
-/** Asha's Toli with Kabir, and its Sahyatra (a Quick plan for Hampi). */
+/** Asha's Toli with Rohan, and its Sahyatra (a Quick plan for Hampi). */
 async function withSahyatra() {
   await seedDestinations();
   const asha = await quickUser('Asha');
-  const kabir = await quickUser('Kabir');
+  const rohan = await quickUser('Rohan');
   const created = await as(asha.token).post('/tolis', { name: 'Hampi Toli', type: 'friends' });
   const id = created.body.toli.id as string;
-  await as(kabir.token).post(`/toli-invites/${(created.body.toli.inviteUrl as string).split('/').pop()}/join`);
+  await as(rohan.token).post(`/toli-invites/${(created.body.toli.inviteUrl as string).split('/').pop()}/join`);
   const planned = await as(asha.token).post('/itineraries/quick', { ...tripRequest({ destination: 'Hampi' }), toliId: id });
-  return { asha, kabir, id, planned };
+  return { asha, rohan, id, planned };
 }
 
 describe('planning the Sahyatra', () => {
@@ -51,31 +51,31 @@ describe('planning the Sahyatra', () => {
   });
 
   it("doesn't let a Sahyatri plan it, or anyone outside the Toli", async () => {
-    const { kabir, id } = await withSahyatra();
-    const zoya = await quickUser('Zoya');
-    expect((await as(kabir.token).post('/itineraries/quick', { ...tripRequest({ destination: 'Hampi' }), toliId: id })).status).toBe(403);
-    expect((await as(zoya.token).post('/itineraries/quick', { ...tripRequest({ destination: 'Hampi' }), toliId: id })).status).toBe(404);
+    const { rohan, id } = await withSahyatra();
+    const priya = await quickUser('Priya');
+    expect((await as(rohan.token).post('/itineraries/quick', { ...tripRequest({ destination: 'Hampi' }), toliId: id })).status).toBe(403);
+    expect((await as(priya.token).post('/itineraries/quick', { ...tripRequest({ destination: 'Hampi' }), toliId: id })).status).toBe(404);
   });
 });
 
 describe('reading and changing it', () => {
   it('shows it to every Sahyatri, and lists it in their trips', async () => {
-    const { kabir, planned } = await withSahyatra();
+    const { rohan, planned } = await withSahyatra();
     const tripId = planned.body.itinerary.id;
-    expect((await as(kabir.token).get(`/itineraries/${tripId}`)).status).toBe(200);
-    expect((await as(kabir.token).get('/itineraries')).body.itineraries.map((t: { id: string }) => t.id)).toContain(tripId);
-    const zoya = await quickUser('Zoya');
-    expect((await as(zoya.token).get(`/itineraries/${tripId}`)).status).toBe(404);
+    expect((await as(rohan.token).get(`/itineraries/${tripId}`)).status).toBe(200);
+    expect((await as(rohan.token).get('/itineraries')).body.itineraries.map((t: { id: string }) => t.id)).toContain(tripId);
+    const priya = await quickUser('Priya');
+    expect((await as(priya.token).get(`/itineraries/${tripId}`)).status).toBe(404);
   });
 
   it('lets only leaders change it', async () => {
-    const { asha, kabir, id, planned } = await withSahyatra();
+    const { asha, rohan, id, planned } = await withSahyatra();
     const tripId = planned.body.itinerary.id;
-    expect((await as(kabir.token).post(`/itineraries/${tripId}/days/1/regenerate`)).status).toBe(403);
-    expect((await as(kabir.token).post(`/itineraries/${tripId}/share`)).status).toBe(403);
-    expect((await as(kabir.token).del(`/itineraries/${tripId}`)).status).toBe(403);
-    await request(app).patch(`/api/tolis/${id}/members/${kabir.id}`).set('Authorization', `Bearer ${asha.token}`).send({ role: 'sah' });
-    expect((await as(kabir.token).post(`/itineraries/${tripId}/days/1/regenerate`)).status).toBe(200);
+    expect((await as(rohan.token).post(`/itineraries/${tripId}/days/1/regenerate`)).status).toBe(403);
+    expect((await as(rohan.token).post(`/itineraries/${tripId}/share`)).status).toBe(403);
+    expect((await as(rohan.token).del(`/itineraries/${tripId}`)).status).toBe(403);
+    await request(app).patch(`/api/tolis/${id}/members/${rohan.id}`).set('Authorization', `Bearer ${asha.token}`).send({ role: 'sah' });
+    expect((await as(rohan.token).post(`/itineraries/${tripId}/days/1/regenerate`)).status).toBe(200);
   });
 });
 
@@ -83,9 +83,9 @@ describe('starting a Toli from a trip', () => {
   it("links the creator's own trip, never someone else's", async () => {
     await seedDestinations();
     const asha = await quickUser('Asha');
-    const kabir = await quickUser('Kabir');
+    const rohan = await quickUser('Rohan');
     const trip = (await as(asha.token).post('/itineraries/quick', tripRequest({ destination: 'Coorg' }))).body.itinerary;
-    expect((await as(kabir.token).post('/tolis', { name: 'Not mine', type: 'friends', tripId: trip.id })).status).toBe(404);
+    expect((await as(rohan.token).post('/tolis', { name: 'Not mine', type: 'friends', tripId: trip.id })).status).toBe(404);
     const toli = (await as(asha.token).post('/tolis', { name: 'Coorg Toli', type: 'friends', tripId: trip.id })).body.toli;
     expect(toli.tripId).toBe(trip.id);
     expect((await as(asha.token).get(`/itineraries/${trip.id}`)).body.itinerary.toliId).toBe(toli.id);
@@ -96,9 +96,9 @@ describe('starting a Toli from a trip', () => {
 
 describe('plan defaults', () => {
   it("suggests the members' favourite interests", async () => {
-    const { asha, kabir, id } = await withSahyatra();
+    const { asha, rohan, id } = await withSahyatra();
     await User.updateOne({ _id: asha.id }, { 'preferences.interests': ['history', 'food'] });
-    await User.updateOne({ _id: kabir.id }, { 'preferences.interests': ['food', 'nature'] });
-    expect((await as(kabir.token).get(`/tolis/${id}`)).body.toli.planDefaults.interests).toEqual(['food', 'history', 'nature']);
+    await User.updateOne({ _id: rohan.id }, { 'preferences.interests': ['food', 'nature'] });
+    expect((await as(rohan.token).get(`/tolis/${id}`)).body.toli.planDefaults.interests).toEqual(['food', 'history', 'nature']);
   });
 });

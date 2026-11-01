@@ -86,7 +86,7 @@ understand at once. ("Shakha" was rejected for its political association; "Kafil
    **UPI or cash**, optional day link ("Day 2 lunch").
 11. **Personal expenses**: private to the person; for their own tracking ("what did this trip cost *me*").
 12. **Balances & settle up**: each person's net position, and the **fewest payments** to settle everyone
-    ("Kabir pays Asha ₹640"). A **UPI pay link** (upi://pay with the payee's UPI ID, amount and note) when the
+    ("Raj pays Asha ₹640"). A **UPI pay link** (upi://pay with the payee's UPI ID, amount and note) when the
     payee has saved a UPI ID; anyone can **mark a payment settled** (cash). Settling is recorded, never deleted.
 13. **Offline entry**: expenses added without signal are kept on the phone and synced when it returns, without
     duplicates (each expense carries an id made on the phone).
@@ -113,7 +113,7 @@ understand at once. ("Shakha" was rejected for its political association; "Kafil
     the whole app is roadmap step 6; Toli builds on it.)
 19. **Notes**: per trip and per day, visible to the Toli ("Homestay owner: Ramesh, 98xxxx"; "Carry permits").
 20. **Potli (shared packing)**: group items ("first-aid kit", "speaker", "power bank") that someone claims
-    ("Kabir brings it"), next to each person's own list.
+    ("Raj brings it"), next to each person's own list.
 21. **Photos**: a Toli album (everyone adds, up to a cap per person), using the existing photo storage
     (MongoDB now, Cloudinary later — see deferred accounts), compressed in the browser as journals are.
 22. **Voice notes in Chaupal** (up to ~1 minute, compressed) — handy when typing is hard on a trek.
@@ -160,3 +160,12 @@ understand at once. ("Shakha" was rejected for its political association; "Kafil
 - Kushal links: random token per contact, revocable; show only the latest check-in (place name + time,
   rounded position), never a history.
 - Screen layouts follow the Seven Worlds design; a visual mockup is shown to the owner before Part 1's UI.
+
+## Decisions after the mockup (2026-11-01)
+- The owner approved `docs/design/toli-mockup.html`. The mockup stacks everything on one page for review;
+  the app shows **one tab at a time** on the Toli page (Sahyatra · Decide · Chaupal · Sahyatris · Activity),
+  with Your Tolis on its own page; on laptops leaders see raised hands beside Chaupal.
+- Demo and fake people use Hindu names only (the owner's own "Raj Roy" / "KiNG" may be used): the demo
+  friend is now Raj Roy (@king), the others Ananya Das, Dev Patel, Meera Iyer; the admin and blocked demo
+  accounts are Aditi Admin and Bhola Blocked. Places are not restricted — TripWise covers all of India and
+  the world.

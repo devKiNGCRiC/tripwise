@@ -31,7 +31,7 @@ describe('mock auth API', () => {
   });
 
   it('refuses to sign up an email that already exists', async () => {
-    await expect(authApi.signup({ name: 'Copy Cat', email: 'DEMO@tripwise.app', password: 'password123' })).rejects.toMatchObject({
+    await expect(authApi.signup({ name: 'Kopi Kumar', email: 'DEMO@tripwise.app', password: 'password123' })).rejects.toMatchObject({
       code: 'VALIDATION',
     });
   });

@@ -28,17 +28,17 @@ const as = (token: string) => ({
   put: (path: string, body: object) => request(app).put(`/api${path}`).set('Authorization', `Bearer ${token}`).send(body),
 });
 
-/** A Toli (Asha leads, Kabir and Zoya joined) with a planned Sahyatra; returns its first day's stops. */
+/** A Toli (Asha leads, Rohan and Priya joined) with a planned Sahyatra; returns its first day's stops. */
 async function setup({ plan = true } = {}) {
   await seedDestinations();
   const asha = await quickUser('Asha');
-  const kabir = await quickUser('Kabir');
-  const zoya = await quickUser('Zoya');
+  const rohan = await quickUser('Rohan');
+  const priya = await quickUser('Priya');
   const created = (await as(asha.token).post('/tolis', { name: 'Hampi Toli', type: 'friends' })).body.toli;
   const token = (created.inviteUrl as string).split('/').pop();
-  for (const p of [kabir, zoya]) await as(p.token).post(`/toli-invites/${token}/join`);
+  for (const p of [rohan, priya]) await as(p.token).post(`/toli-invites/${token}/join`);
   const trip = plan ? (await as(asha.token).post('/itineraries/quick', { ...tripRequest({ destination: 'Hampi' }), toliId: created.id })).body.itinerary : null;
-  return { asha, kabir, zoya, id: created.id as string, trip };
+  return { asha, rohan, priya, id: created.id as string, trip };
 }
 
 /** A new stop to suggest. */
@@ -46,40 +46,40 @@ const STOP = { time: 'afternoon', startTime: '15:00', title: 'Coracle ride', des
 
 describe('suggesting and voting', () => {
   it('lets any Sahyatri suggest, and everyone vote', async () => {
-    const { asha, kabir, zoya, id } = await setup();
-    const made = await as(kabir.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-stop', day: 1, at: 1, stop: STOP }, note: 'Must do!' });
+    const { asha, rohan, priya, id } = await setup();
+    const made = await as(rohan.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-stop', day: 1, at: 1, stop: STOP }, note: 'Must do!' });
     expect(made.status).toBe(201);
     const sid = made.body.sujhav.id;
     await as(asha.token).put(`/tolis/${id}/sujhavs/${sid}/vote`, { vote: 1 });
-    await as(zoya.token).put(`/tolis/${id}/sujhavs/${sid}/vote`, { vote: -1 });
-    await as(zoya.token).put(`/tolis/${id}/sujhavs/${sid}/vote`, { vote: 1 });
+    await as(priya.token).put(`/tolis/${id}/sujhavs/${sid}/vote`, { vote: -1 });
+    await as(priya.token).put(`/tolis/${id}/sujhavs/${sid}/vote`, { vote: 1 });
     const list = (await as(asha.token).get(`/tolis/${id}/sujhavs?status=open`)).body.sujhavs;
     expect(list).toHaveLength(1);
-    expect(list[0]).toMatchObject({ up: 2, down: 0, myVote: 1, status: 'open', note: 'Must do!', author: { name: 'Kabir' } });
+    expect(list[0]).toMatchObject({ up: 2, down: 0, myVote: 1, status: 'open', note: 'Must do!', author: { name: 'Rohan' } });
     await as(asha.token).put(`/tolis/${id}/sujhavs/${sid}/vote`, { vote: 0 });
     expect((await as(asha.token).get(`/tolis/${id}/sujhavs`)).body.sujhavs[0]).toMatchObject({ up: 1, myVote: 0 });
   });
 
   it('needs a Sahyatra first, and keeps outsiders out', async () => {
-    const { kabir, id } = await setup({ plan: false });
-    const res = await as(kabir.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-day', theme: 'Rest' } });
+    const { rohan, id } = await setup({ plan: false });
+    const res = await as(rohan.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-day', theme: 'Rest' } });
     expect(res.status).toBe(409);
     const stranger = await quickUser('Dev');
     expect((await as(stranger.token).get(`/tolis/${id}/sujhavs`)).status).toBe(404);
   });
 
   it('checks the suggestion', async () => {
-    const { kabir, id } = await setup();
-    expect((await as(kabir.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'teleport' } })).status).toBe(400);
-    expect((await as(kabir.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-day', theme: 'Rest' }, note: 'x'.repeat(281) })).status).toBe(400);
+    const { rohan, id } = await setup();
+    expect((await as(rohan.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'teleport' } })).status).toBe(400);
+    expect((await as(rohan.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-day', theme: 'Rest' }, note: 'x'.repeat(281) })).status).toBe(400);
   });
 });
 
 describe('deciding', () => {
   it('lets leaders approve — the change lands in the plan', async () => {
-    const { asha, kabir, id, trip } = await setup();
-    const sid = (await as(kabir.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-stop', day: 1, at: 1, stop: STOP } })).body.sujhav.id;
-    expect((await as(kabir.token).post(`/tolis/${id}/sujhavs/${sid}/approve`)).status).toBe(403);
+    const { asha, rohan, id, trip } = await setup();
+    const sid = (await as(rohan.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-stop', day: 1, at: 1, stop: STOP } })).body.sujhav.id;
+    expect((await as(rohan.token).post(`/tolis/${id}/sujhavs/${sid}/approve`)).status).toBe(403);
     const approved = await as(asha.token).post(`/tolis/${id}/sujhavs/${sid}/approve`);
     expect(approved.body.sujhav.status).toBe('approved');
     const saved = await Itinerary.findById(trip.id);
@@ -88,15 +88,15 @@ describe('deciding', () => {
   });
 
   it('approves a new stop even without a description', async () => {
-    const { asha, kabir, id, trip } = await setup();
-    const sid = (await as(kabir.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-stop', day: 2, at: 0, stop: { time: 'morning', title: 'Hampi Bazaar' } } })).body.sujhav.id;
+    const { asha, rohan, id, trip } = await setup();
+    const sid = (await as(rohan.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-stop', day: 2, at: 0, stop: { time: 'morning', title: 'Hampi Bazaar' } } })).body.sujhav.id;
     expect((await as(asha.token).post(`/tolis/${id}/sujhavs/${sid}/approve`)).status).toBe(200);
     expect((await Itinerary.findById(trip.id))!.days[1].activities[0]).toMatchObject({ title: 'Hampi Bazaar', description: 'Suggested by the Toli.' });
   });
 
   it('adds a day to the end of the trip', async () => {
-    const { asha, kabir, id, trip } = await setup();
-    const sid = (await as(kabir.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-day', theme: 'Rest day' } })).body.sujhav.id;
+    const { asha, rohan, id, trip } = await setup();
+    const sid = (await as(rohan.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-day', theme: 'Rest day' } })).body.sujhav.id;
     await as(asha.token).post(`/tolis/${id}/sujhavs/${sid}/approve`);
     const saved = await Itinerary.findById(trip.id);
     expect(saved!.days).toHaveLength(4);
@@ -104,10 +104,10 @@ describe('deciding', () => {
   });
 
   it('refuses a suggestion about a plan that changed since', async () => {
-    const { asha, kabir, zoya, id, trip } = await setup();
+    const { asha, rohan, priya, id, trip } = await setup();
     const first = trip.days[0].activities[0].title as string;
-    const remove = (await as(kabir.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'remove-stop', day: 1, index: 0, title: first } })).body.sujhav.id;
-    const swap = (await as(zoya.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'swap-stop', day: 1, index: 0, title: first, stop: STOP } })).body.sujhav.id;
+    const remove = (await as(rohan.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'remove-stop', day: 1, index: 0, title: first } })).body.sujhav.id;
+    const swap = (await as(priya.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'swap-stop', day: 1, index: 0, title: first, stop: STOP } })).body.sujhav.id;
     await as(asha.token).post(`/tolis/${id}/sujhavs/${remove}/approve`);
     const before = JSON.stringify((await Itinerary.findById(trip.id))!.days);
     const stale = await as(asha.token).post(`/tolis/${id}/sujhavs/${swap}/approve`);
@@ -118,12 +118,12 @@ describe('deciding', () => {
   });
 
   it('declines with a reason, keeps the plan, and takes no more votes', async () => {
-    const { asha, kabir, id, trip } = await setup();
-    const sid = (await as(kabir.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-stop', day: 1, at: 0, stop: STOP } })).body.sujhav.id;
+    const { asha, rohan, id, trip } = await setup();
+    const sid = (await as(rohan.token).post(`/tolis/${id}/sujhavs`, { change: { kind: 'add-stop', day: 1, at: 0, stop: STOP } })).body.sujhav.id;
     const declined = await as(asha.token).post(`/tolis/${id}/sujhavs/${sid}/decline`, { reason: 'Too far that day' });
     expect(declined.body.sujhav).toMatchObject({ status: 'declined', reason: 'Too far that day', decidedBy: { name: 'Asha' } });
     expect((await Itinerary.findById(trip.id))!.days[0].activities.map((a) => a.title)).toEqual(trip.days[0].activities.map((a: { title: string }) => a.title));
-    expect((await as(kabir.token).put(`/tolis/${id}/sujhavs/${sid}/vote`, { vote: 1 })).status).toBe(409);
+    expect((await as(rohan.token).put(`/tolis/${id}/sujhavs/${sid}/vote`, { vote: 1 })).status).toBe(409);
     expect((await as(asha.token).post(`/tolis/${id}/sujhavs/${sid}/approve`)).status).toBe(409);
   });
 });

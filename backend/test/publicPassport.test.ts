@@ -22,11 +22,11 @@ beforeEach(() => {
   app = createApp({ ai: fakeChain(), now: () => new Date('2026-10-19T10:00:00Z') });
 });
 
-/** Asha has one finished trip with a journal photo and one upcoming trip; Ravi is her friend; Zoya isn't. */
+/** Asha has one finished trip with a journal photo and one upcoming trip; Ravi is her friend; Priya isn't. */
 async function scene() {
   const asha = await signUp(app, 'asha@x.com', 'Asha');
   const ravi = await signUp(app, 'ravi@x.com', 'Ravi');
-  const zoya = await signUp(app, 'zoya@x.com', 'Zoya');
+  const priya = await signUp(app, 'priya@x.com', 'Priya');
   await befriend(app, ravi, asha);
   const trip = await saveTrip(asha.id);
   await saveTrip(asha.id, { startDate: '2026-11-10', endDate: '2026-11-12' });
@@ -34,7 +34,7 @@ async function scene() {
   await request(app).put(`/api/itineraries/${trip}/journal`).set(auth).send({ rating: 5, memory: 'Bliss.' });
   const photo = (await request(app).post(`/api/itineraries/${trip}/journal/photos?width=1&height=1`).set(auth).set('Content-Type', 'image/png').send(TINY_PNG)).body.journal.photos[0];
   // The plain photo address: who may see it then depends only on the login sent with it.
-  return { asha, ravi, zoya, photoUrl: (photo.url as string).split('?')[0] };
+  return { asha, ravi, priya, photoUrl: (photo.url as string).split('?')[0] };
 }
 
 /** GET someone's passport, as someone or logged out. */
@@ -45,7 +45,7 @@ const passportOf = (username: string, token?: string) => {
 
 describe('public passports', () => {
   it('with Friends privacy: friends see finished trips and journals, strangers and visitors see nothing', async () => {
-    const { asha, ravi, zoya, photoUrl } = await scene();
+    const { asha, ravi, priya, photoUrl } = await scene();
     const asFriend = await passportOf(asha.username, ravi.token);
     expect(asFriend.status).toBe(200);
     expect(asFriend.body.relation).toBe('friend');
@@ -54,11 +54,11 @@ describe('public passports', () => {
     expect(asFriend.body.passport.stamps[0].journal).toMatchObject({ rating: 5, photoCount: 1 });
     expect((await request(app).get(photoUrl).set('Authorization', `Bearer ${ravi.token}`)).status).toBe(200);
 
-    const stranger = await passportOf(asha.username, zoya.token);
+    const stranger = await passportOf(asha.username, priya.token);
     expect(stranger.status).toBe(404);
     expect(stranger.body.error.message).toBe('This passport is private');
     expect((await passportOf(asha.username)).status).toBe(404);
-    expect((await request(app).get(photoUrl).set('Authorization', `Bearer ${zoya.token}`)).status).toBe(404);
+    expect((await request(app).get(photoUrl).set('Authorization', `Bearer ${priya.token}`)).status).toBe(404);
   });
 
   it('with Everyone privacy: even logged-out visitors can look', async () => {
@@ -70,10 +70,10 @@ describe('public passports', () => {
   });
 
   it('with Only me: not even friends can see it or find the card', async () => {
-    const { asha, ravi, zoya } = await scene();
+    const { asha, ravi, priya } = await scene();
     await friendsAs(app, asha.token).setPrivacy({ passport: 'private' });
     expect((await passportOf(asha.username, ravi.token)).status).toBe(404);
-    expect((await friendsAs(app, zoya.token).card(asha.username)).status).toBe(404);
+    expect((await friendsAs(app, priya.token).card(asha.username)).status).toBe(404);
   });
 
   it('with journals hidden: friends see stamps but no ratings or photos', async () => {

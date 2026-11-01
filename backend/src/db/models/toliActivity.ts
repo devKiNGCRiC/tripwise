@@ -1,6 +1,6 @@
 /**
  * toliActivity.ts — what happened in a Toli, for its activity feed: who did what and when
- * ("Kabir joined", "Asha approved Zoya's suggestion"). `data` holds the details each kind
+ * ("Raj joined", "Asha approved Ananya's suggestion"). `data` holds the details each kind
  * of event needs (names, ids).
  */
 import { model, Schema } from 'mongoose';

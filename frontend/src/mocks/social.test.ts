@@ -32,20 +32,20 @@ describe('mock social API', () => {
   it('lists one friend, one incoming request and one sent request', async () => {
     await asDemo();
     const list = await friendsApi.list();
-    expect(list.friends.map((f) => f.username)).toEqual(['kabir']);
-    expect(list.incoming.map((r) => r.user.username)).toEqual(['zoya']);
+    expect(list.friends.map((f) => f.username)).toEqual(['king']);
+    expect(list.incoming.map((r) => r.user.username)).toEqual(['ananya']);
     expect(list.sent.map((r) => r.user.username)).toEqual(['dev']);
   });
 
-  it("shows Meera's public passport to anyone, but keeps Kabir's for friends", async () => {
+  it("shows Meera's public passport to anyone, but keeps Raj's for friends", async () => {
     const meera = await passportApi.of('meera');
     expect(meera.passport.cover.name).toBe('Meera Iyer');
     expect(meera.passport.stamps.every((s) => s.status === 'completed')).toBe(true);
-    const error = await passportApi.of('kabir').catch((e: unknown) => e);
+    const error = await passportApi.of('king').catch((e: unknown) => e);
     expect(error).toBeInstanceOf(ApiError);
     expect(error).toMatchObject({ code: 'NOT_FOUND', message: 'This passport is private' });
     await asDemo();
-    expect((await passportApi.of('kabir')).relation).toBe('friend');
+    expect((await passportApi.of('king')).relation).toBe('friend');
   });
 
   it('keeps usernames unique', async () => {
@@ -66,6 +66,6 @@ describe('mock social API', () => {
     await expect(usersApi.card('nobody')).rejects.toMatchObject({ code: 'NOT_FOUND', message: 'No traveller with that username' });
     const { friend } = await usersApi.acceptInvite('meeraJOIN1');
     expect(friend.username).toBe('meera');
-    expect((await friendsApi.list()).friends.map((f) => f.username).sort()).toEqual(['kabir', 'meera']);
+    expect((await friendsApi.list()).friends.map((f) => f.username).sort()).toEqual(['king', 'meera']);
   });
 });

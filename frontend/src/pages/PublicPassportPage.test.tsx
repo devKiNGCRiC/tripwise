@@ -30,14 +30,14 @@ describe('public passports', () => {
     expect(localStorage.getItem(TINT_STORAGE_KEY)).toBeNull();
   });
 
-  it("keeps Kabir's passport private from visitors", async () => {
-    renderApp('/u/kabir');
+  it("keeps Raj's passport private from visitors", async () => {
+    renderApp('/u/king');
     expect(await screen.findByRole('heading', { name: 'This passport is private' })).toBeInTheDocument();
   });
 
   it('lets friends see it, with a Friends badge', async () => {
     session.set('u_demo');
-    renderApp('/u/kabir');
+    renderApp('/u/king');
     const cover = await screen.findByRole('region', { name: 'Passport cover' });
     expect(within(cover).getByText('Friends ✓')).toBeInTheDocument();
   });
@@ -51,7 +51,7 @@ describe('public passports', () => {
         return HttpResponse.json({ accessToken: 'mock-access.u_demo' });
       }),
     );
-    renderApp('/u/kabir');
+    renderApp('/u/king');
     expect(await screen.findByRole('region', { name: 'Passport cover' })).toBeInTheDocument();
   });
 });

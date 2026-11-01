@@ -72,7 +72,7 @@ describe('Tolis (demo mock)', () => {
     expect(office.me.canPost).toBe(false);
     await expect(toliApi.send(office.id, { text: 'Hello?', clientId: 'mock-1-abcd' })).rejects.toMatchObject({ code: 'FORBIDDEN' });
     const { anurodh } = await toliApi.raiseHand(office.id, 'Bus timing');
-    await loginAs('u_kabir');
+    await loginAs('u_raj');
     await toliApi.decideHand(office.id, anurodh.id, 'one');
     await loginAs('u_demo');
     const message = { text: 'Bus 2 leaves 7:40', clientId: 'mock-2-abcd' };

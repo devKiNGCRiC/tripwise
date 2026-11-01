@@ -35,29 +35,29 @@ describe('activity', () => {
     now = new Date('2026-10-18T10:00:00Z');
     await seedDestinations();
     const asha = await quickUser('Asha');
-    const kabir = await quickUser('Kabir');
+    const rohan = await quickUser('Rohan');
     const toli = (await as(asha).post('/tolis', { name: 'Feed Toli', type: 'friends' })).body.toli;
     tick();
-    await as(kabir).post(`/toli-invites/${(toli.inviteUrl as string).split('/').pop()}/join`);
+    await as(rohan).post(`/toli-invites/${(toli.inviteUrl as string).split('/').pop()}/join`);
     tick();
     await as(asha).post('/itineraries/quick', { ...tripRequest({ destination: 'Hampi' }), toliId: toli.id });
     tick();
-    const sid = (await as(kabir).post(`/tolis/${toli.id}/sujhavs`, { change: { kind: 'add-day', theme: 'Rest' } })).body.sujhav.id;
+    const sid = (await as(rohan).post(`/tolis/${toli.id}/sujhavs`, { change: { kind: 'add-day', theme: 'Rest' } })).body.sujhav.id;
     tick();
     await as(asha).post(`/tolis/${toli.id}/sujhavs/${sid}/approve`);
     tick();
-    const poll = (await as(kabir).post(`/tolis/${toli.id}/polls`, { kind: 'transport', options: [{ mode: 'train' }, { mode: 'bus' }] })).body.poll;
+    const poll = (await as(rohan).post(`/tolis/${toli.id}/polls`, { kind: 'transport', options: [{ mode: 'train' }, { mode: 'bus' }] })).body.poll;
     tick();
     await as(asha).post(`/tolis/${toli.id}/polls/${poll.id}/close`, { winner: poll.options[0].id });
 
-    const feed = (await as(kabir).get(`/tolis/${toli.id}/activity`)).body.activity;
+    const feed = (await as(rohan).get(`/tolis/${toli.id}/activity`)).body.activity;
     expect(feed.map((a: { type: string; actor: { name: string } }) => `${a.actor.name} ${a.type}`)).toEqual([
       'Asha poll-closed',
-      'Kabir poll-created',
+      'Rohan poll-created',
       'Asha approved',
-      'Kabir suggested',
+      'Rohan suggested',
       'Asha planned',
-      'Kabir joined',
+      'Rohan joined',
       'Asha created',
     ]);
     expect(feed[0].data).toMatchObject({ winner: 'Train' });

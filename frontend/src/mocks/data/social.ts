@@ -63,7 +63,7 @@ export function seedTrips(): StoredItinerary[] {
     seedTrip('it_seed_kerala', 'u_demo', 'Kerala Backwaters', 12, 15, 'couple', ['nature', 'food'], 'chill'),
     seedTrip('it_seed_varanasi', 'u_meera', 'Varanasi', -60, -57, 'solo', ['spiritual', 'culture']),
     seedTrip('it_seed_manali', 'u_meera', 'Manali', -120, -114, 'friends', ['adventure', 'nature']),
-    seedTrip('it_seed_ladakh', 'u_kabir', 'Ladakh', -80, -73, 'friends', ['adventure', 'photography'], 'packed'),
+    seedTrip('it_seed_ladakh', 'u_raj', 'Ladakh', -80, -73, 'friends', ['adventure', 'photography'], 'packed'),
   ];
 }
 
@@ -102,12 +102,12 @@ export function seedPhotos(): Record<string, MockPhoto> {
   };
 }
 
-/** Seeded friendships: Demo ↔ Kabir, Zoya asked Demo, Demo asked Dev. */
+/** Seeded friendships: Demo ↔ Raj, Ananya asked Demo, Demo asked Dev. */
 export function seedFriendships(): MockFriendship[] {
   const at = (n: number) => new Date(Date.now() - n * 86_400_000).toISOString();
   return [
-    { id: 'fr_seed_kabir', requester: 'u_kabir', recipient: 'u_demo', status: 'accepted', createdAt: at(30) },
-    { id: 'fr_seed_zoya', requester: 'u_zoya', recipient: 'u_demo', status: 'pending', createdAt: at(2) },
+    { id: 'fr_seed_king', requester: 'u_raj', recipient: 'u_demo', status: 'accepted', createdAt: at(30) },
+    { id: 'fr_seed_ananya', requester: 'u_ananya', recipient: 'u_demo', status: 'pending', createdAt: at(2) },
     { id: 'fr_seed_dev', requester: 'u_demo', recipient: 'u_dev', status: 'pending', createdAt: at(1) },
   ];
 }
