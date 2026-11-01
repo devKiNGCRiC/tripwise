@@ -17,6 +17,7 @@
  *   GET    /api/tolis/:id/budget                             → { budget }     my range + the range that suits everyone
  *   PUT    /api/tolis/:id/budget            { low, high }    → { budget }     set my private range (INR a day)
  *   DELETE /api/tolis/:id/budget                             → { budget }     clear mine
+ *   GET    /api/tolis/:id/activity?before=<iso>              → { activity }   what happened, newest first (30 a page)
  *
  * Anyone who isn't a member gets 404 for everything, as if the Toli didn't exist; people
  * blocked by (or blocking) a member can't join or be added. College and office Tolis start
@@ -26,7 +27,7 @@ import { randomBytes } from 'node:crypto';
 import { Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 import { z } from 'zod';
-import { Itinerary, Toli, ToliBudget, User } from '../db/models/index.js';
+import { Itinerary, Toli, ToliActivity, ToliBudget, User } from '../db/models/index.js';
 import { clash, forbidden, notFound } from '../lib/errors.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
 import { unreadCount } from '../services/chaupal.js';
@@ -34,6 +35,9 @@ import { relation } from '../services/social.js';
 import { blockedWith, groupBudget, inviteUrlFor, loadMember, logActivity, MAX_MEMBERS, memberCards, requireLeader, TOLI_NOT_FOUND, toliView } from '../services/tolis.js';
 import { defaultsForType } from '../services/toliRules.js';
 import { normalizeUsername } from '../services/username.js';
+
+/** Events per page of the activity feed. */
+const ACTIVITY_PAGE = 30;
 
 /** A fresh secret for an invite link. */
 const newToken = () => randomBytes(18).toString('base64url');
@@ -267,6 +271,29 @@ export function tolisRoutes(deps: { now: () => Date; appUrl: string }): Router {
     const { toli } = await loadMember(String(req.params.id), me);
     await ToliBudget.deleteOne({ toliId: toli._id.toString(), userId: me });
     res.json({ budget: await budgetView(toli, me) });
+  });
+
+  // GET /tolis/:id/activity — what happened in the Toli, newest first, 30 at a time.
+  router.get('/tolis/:id/activity', auth, async (req, res) => {
+    const { toli } = await loadMember(String(req.params.id), currentUser(req).id);
+    const { before } = z.object({ before: z.coerce.date().optional() }).parse(req.query);
+    const events = await ToliActivity.find({ toliId: toli._id.toString(), ...(before ? { at: { $lt: before } } : {}) })
+      .sort({ at: -1, _id: -1 })
+      .limit(ACTIVITY_PAGE)
+      .lean();
+    const people = await User.find({ _id: { $in: [...new Set(events.map((e) => e.actorId))] } }, { name: 1, username: 1, avatar: 1 }).lean();
+    res.json({
+      activity: events.map((e) => {
+        const actor = people.find((p) => p._id.toString() === e.actorId);
+        return {
+          id: e._id.toString(),
+          actor: actor ? { id: actor._id.toString(), name: actor.name, username: actor.username ?? '' } : { id: e.actorId, name: 'Former Sahyatri', username: '' },
+          type: e.type,
+          data: e.data ?? {},
+          at: e.at.toISOString(),
+        };
+      }),
+    });
   });
 
   return router;
