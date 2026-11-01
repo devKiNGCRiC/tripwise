@@ -10,6 +10,7 @@ export { Journal } from './journal.js';
 export { PasswordReset } from './passwordReset.js';
 export { Place, type PlaceFields } from './place.js';
 export { Photo } from './photo.js';
+export { Poll } from './poll.js';
 export { PlanCache } from './planCache.js';
 export { Session } from './session.js';
 export { Sujhav } from './sujhav.js';
