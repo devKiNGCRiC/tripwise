@@ -1,6 +1,6 @@
 # Toli — planning and travelling together (design)
 
-**Date:** 2026-11-01 · **Status:** approved by the owner · Part 1 built (2026-11-01) · **Roadmap:** step 5 ("Crew mode")
+**Date:** 2026-11-01 · **Status:** approved by the owner · Part 1 built (2026-11-01) · Part 2 built (2026-11-02) · **Roadmap:** step 5 ("Crew mode")
 
 ## Why
 Group trips break down in the same places, in the owner's words: planning, dates, budget, getting everyone
@@ -30,6 +30,7 @@ TripWise's own knowledge (destinations, places, the month guide) on hand so nobo
 | The Toli's chat | **Chaupal** (चौपाल) | the village square where people gather to talk |
 | A request to speak | **Anurodh** (अनुरोध) | a request |
 | Date poll | **Tithi** (तिथि) | a date |
+| The Toli's money | **Lekha** (लेखा) | an account (from *lekha-jokha*, "the accounts") |
 Every name is shown with a plain-English line beside it ("Toli · plan trips together") so non-Hindi speakers
 understand at once. ("Shakha" was rejected for its political association; "Kafila" for being Urdu.)
 
@@ -160,6 +161,16 @@ understand at once. ("Shakha" was rejected for its political association; "Kafil
 - Kushal links: random token per contact, revocable; show only the latest check-in (place name + time,
   rounded position), never a history.
 - Screen layouts follow the Seven Worlds design; a visual mockup is shown to the owner before Part 1's UI.
+
+## Decisions while building Part 2 (2026-11-02)
+- Money is called **Lekha** ("Lekha · who paid, who owes"); Hisaab, Khata and Kharcha were avoided as Arabic/Persian.
+- **Indian or English names** (the owner's request): each person chooses how feature names read, saved on
+  the account. English uses plain words for everyone, older users and Gen Z alike: Toli → Group,
+  Sahyatri → Member, Sahyatra → Group trip, Sutradhar → Leader, Sah-Sutradhar → Co-leader, Sujhav →
+  Suggestion, Tithi → Dates, Chaupal → Group chat, Anurodh → Raise hand, Lekha → Money, Yatra marks →
+  Travel badges. In English mode the Devanagari ornaments beside Toli headings are hidden.
+- Builder's calls: nobody leaves (or is removed) while they owe or are owed money; expenses are deleted
+  (marked, logged), not edited; settlements are never deleted; TripWise's estimate is compared in paise.
 
 ## Decisions after the mockup (2026-11-01)
 - The owner approved `docs/design/toli-mockup.html`. The mockup stacks everything on one page for review;

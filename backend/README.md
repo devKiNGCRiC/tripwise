@@ -120,6 +120,11 @@ Limits are set in `src/config/plans.ts`. A new day starts at midnight India time
 | `GET`/`POST /tolis/:id/polls`, `PUT …/:pid/vote`, `POST …/:pid/close` | ✓ | Polls: Tithi (dates), destination, transport, free |
 | `GET`/`POST /tolis/:id/messages`, `POST …/messages/photos`, `POST /tolis/:id/read` | ✓ | Chaupal (chat): messages (`clientId` makes retries safe), photos, mark read |
 | `GET`/`POST /tolis/:id/anurodh`, `POST …/anurodh/:rid/decide` | ✓ | Raise a hand in announcement mode; leaders allow (1 message, 30 min, 1 hour, whole trip), reply privately or decline |
+| `GET`/`POST /tolis/:id/expenses`, `DELETE …/expenses/:eid` | ✓ | Lekha: group expenses split among those who shared (equal / amounts / shares, in paise) and personal ones only the owner sees; `clientId` makes offline retries safe; deleting marks it deleted |
+| `POST /tolis/:id/settlements`, `GET /tolis/:id/lekha` | ✓ | Record a payment back (never deleted); balances, the fewest payments to settle up (with a `upi://pay` link when the payee shared a UPI ID), totals and TripWise's estimate |
+
+`PATCH /tolis/:id/me` also takes `upi` (a UPI ID shared with that Toli only). Nobody leaves, or is removed,
+while they owe or are owed money (409 "Settle up first").
 
 Toli rules: someone who isn't in the Toli gets 404; a member acting above their role gets 403; a clash with
 the current state (e.g. voting in a closed poll) gets 409 `CONFLICT`.

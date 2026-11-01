@@ -8,8 +8,8 @@ You can then save it, download it as a PDF, or share it with your friends.
 
 > 🚧 **Status: in active development.** The website and the real backend both work: accounts, passports and
 > friends, saved trips, real AI itineraries (Gemini, with Groq as backup) grounded in a catalogue of 1,028 real
-> places, TripWise's own free Quick plan, and Tolis for planning together (polls, suggestions and a group
-> chat). Next: Toli money and on-trip tools, the "Ask TripWise" chat, then launch on Cloudflare Pages +
+> places, TripWise's own free Quick plan, and Tolis for planning together (polls, suggestions, a group
+> chat and fair money splitting). Next: Toli on-trip tools, the "Ask TripWise" chat, then launch on Cloudflare Pages +
 > Render. See the [roadmap](#-roadmap).
 
 ---
@@ -32,10 +32,12 @@ You can then save it, download it as a PDF, or share it with your friends.
 | ⚡ | Similar trips served instantly from a plan cache (free, doesn't use the daily allowance) | ✅ Done |
 | 🛂 | Passport: photo, bio and traveller type; India's seven worlds lighting up; 12 Yatra marks; visa-page stamps with trip journals (diya ratings, memories, photos) | ✅ Done |
 | 👥 | Friends by @username or invite link, public passports with privacy (Friends / Everyone / Only me), blocking | ✅ Done |
-| 🪔 | **Toli** (टोली): plan a trip together with your Sahyatris — invite on WhatsApp or by link, Sutradhar / Sah-Sutradhar / Sahyatri roles, friends / family / office / school / pilgrimage trips, no member limit | ✅ Done |
+| 🪔 | **Toli** (टोली): plan a trip together with your Sahyatris — invite on WhatsApp or by link, Sutradhar / Sah-Sutradhar / Sahyatri roles, friends / family / college / office trips, no member limit | ✅ Done |
 | 🗳️ | Deciding together: Sujhav (suggest changes to the Sahyatra, vote, the Sutradhar approves), polls for dates (Tithi), destination (compared on TripWise's facts), transport or anything, private budget comfort | ✅ Done |
 | 💬 | Chaupal, the Toli's chat: replies, @mentions, photos, live poll and suggestion cards, messages that wait for signal and send themselves; announcement mode where Sahyatris raise a hand (Anurodh); activity feed | ✅ Done |
-| 💰 | Toli money (shared and personal expenses, UPI and cash), groups within the Toli, "where is my Sahyatri", notes and an album | 📅 Next |
+| 💰 | **Lekha** (लेखा), the Toli's money: expenses split only among those who shared them (equally, by amounts or by shares, to the paisa), private personal expenses, who owes whom, the fewest payments to settle up with **Pay with UPI** or mark settled, totals against TripWise's estimate; works without signal | ✅ Done |
+| 🔤 | Indian or English names: Toli, Sahyatri, Chaupal… or Group, Member, Group chat — each person chooses (saved on the account) | ✅ Done |
+| 🧭 | On the trip: groups within the Toli, "where is my Sahyatri", family check-ins, notes, packing list and an album | 📅 Next |
 | 🔑 | Account: preferences that pre-fill the planner, change password, forgot password, sign out everywhere, delete my data | ✅ Done |
 | 📊 | Admin dashboard: analytics, destinations, users, moderation | 📅 Planned |
 | 📲 | React Native mobile app | 📅 Phase 2 |
@@ -159,7 +161,8 @@ Add their keys to `backend/.env` (names in `backend/.env.example`); TripWise swi
 - [ ] **"Ask TripWise" agent:** chat on each trip with weather, routes and places as tools
 - [x] **Profile, Passport & Friends:** account, journals, Yatra marks, friends and public passports
 - [x] **Toli, part 1:** plan trips together: invites, roles, suggestions, polls, budget comfort, Chaupal chat
-- [ ] **Toli, parts 2–3:** shared expenses, groups and "where is my Sahyatri", notes, album, offline tools
+- [x] **Toli, part 2 (Lekha):** fair expense splitting, settle up with UPI, totals; Indian or English names
+- [ ] **Toli, part 3:** groups and "where is my Sahyatri", family check-ins, notes, packing list, album
 - [ ] **Launch:** deploy to Cloudflare Pages + Render, installable PWA with offline trips
 - [ ] **Premium:** paid plan with Razorpay
 - [ ] **Phase 2:** React Native app, social sharing, AI chat assistant
