@@ -12,6 +12,8 @@ import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useToli } from '@/features/toli/hooks';
 import { TABS, type ToliTab } from '@/features/toli/labels';
+import { DecideTab } from '@/features/toli/DecideTab';
+import { SahyatraTab } from '@/features/toli/SahyatraTab';
 import { SahyatrisTab } from '@/features/toli/SahyatrisTab';
 import { ToliHeader } from '@/features/toli/ToliHeader';
 import { ApiError } from '@/lib/api/errors';
@@ -26,6 +28,8 @@ function Later({ title }: { title: string }) {
 /** The chosen tab's content. */
 function TabContent({ tab, toli }: { tab: ToliTab; toli: Toli }) {
   if (tab === 'sahyatris') return <SahyatrisTab toli={toli} />;
+  if (tab === 'sahyatra') return <SahyatraTab toli={toli} />;
+  if (tab === 'decide') return <DecideTab toli={toli} />;
   return <Later title={TABS.find((t) => t.key === tab)!.label} />;
 }
 

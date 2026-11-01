@@ -34,7 +34,7 @@ const STEPS: { title: string; prompt: string; fields: (keyof PlannerValues)[] }[
 ];
 
 /** The planner wizard, pre-filled from the page's address where possible. */
-export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) {
+export function PlannerWizard({ initial, toliId }: { initial: Partial<PlannerValues>; toliId?: string }) {
   const [step, setStep] = useState(0);
   const [quotaOpen, setQuotaOpen] = useState(false);
   const navigate = useNavigate();
@@ -56,7 +56,17 @@ export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) 
   /** The answers as a trip request. */
   function tripRequest() {
     const v = getValues();
-    return { destination: v.destination.trim(), startDate: v.startDate, endDate: v.endDate, budget: { amount: v.budget, currency: 'INR' }, travellers: v.travellers, interests: v.interests, pace: v.pace };
+    return {
+      destination: v.destination.trim(),
+      startDate: v.startDate,
+      endDate: v.endDate,
+      budget: { amount: v.budget, currency: 'INR' },
+      travellers: v.travellers,
+      interests: v.interests,
+      pace: v.pace,
+      // A Toli's plan becomes its Sahyatra.
+      ...(toliId ? { toliId } : {}),
+    };
   }
   /** Check every answer (sending the traveller back to the first step with a problem), then ask the AI. */
   async function submit() {
@@ -68,7 +78,8 @@ export function PlannerWizard({ initial }: { initial: Partial<PlannerValues> }) 
     generate.mutate(
       tripRequest(),
       {
-        onSuccess: ({ itinerary }) => navigate(`/trips/${itinerary.id}`),
+        // A Toli's plan opens back in the Toli; a solo trip opens its own page.
+        onSuccess: ({ itinerary }) => navigate(toliId ? `/tolis/${toliId}?tab=sahyatra` : `/trips/${itinerary.id}`),
         onError: (error) => {
           if (error instanceof ApiError && error.code === 'QUOTA_EXCEEDED') setQuotaOpen(true);
         },
