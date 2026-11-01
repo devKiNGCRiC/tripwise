@@ -152,6 +152,45 @@ function MyNumber({ toli }: { toli: Toli }) {
   );
 }
 
+/** Share or remove my UPI ID with this Toli (for "Pay with UPI"). */
+function MyUpi({ toli }: { toli: Toli }) {
+  const { w } = useWords();
+  const [upi, setUpi] = useState('');
+  const save = useToliAction(toli.id, (value: string | null) => toliApi.setMe(toli.id, { upi: value }));
+
+  /** Save the typed UPI ID. */
+  function onSubmit(event: FormEvent) {
+    event.preventDefault();
+    save.mutate(upi.trim(), { onSuccess: () => setUpi('') });
+  }
+
+  return toli.me.upi ? (
+    <div className="flex flex-wrap items-center gap-3 text-sm">
+      <span>
+        Your UPI ID <b>{toli.me.upi}</b> is shared with this {w.toli} (for Pay with UPI).
+      </span>
+      <Button size="sm" variant="ghost" loading={save.isPending} onClick={() => save.mutate(null)}>
+        Remove
+      </Button>
+    </div>
+  ) : (
+    <form onSubmit={onSubmit} className="flex flex-wrap items-end gap-2">
+      <label className="grid min-w-56 flex-1 gap-1.5">
+        <span className="text-sm font-semibold">Your UPI ID (only this {w.toli} sees it)</span>
+        <input value={upi} onChange={(e) => setUpi(e.target.value)} placeholder="name@bank" autoCapitalize="none" className="h-11 rounded-2xl border border-line bg-white/60 px-4 outline-none focus:border-accent dark:bg-white/5" />
+      </label>
+      <Button type="submit" variant="secondary" loading={save.isPending} disabled={!upi.trim()}>
+        Save UPI ID
+      </Button>
+      {save.isError && (
+        <p role="alert" className="w-full text-sm text-danger">
+          {save.error.message}
+        </p>
+      )}
+    </form>
+  );
+}
+
 /** The Sahyatris tab. */
 export function SahyatrisTab({ toli }: { toli: Toli }) {
   const { w, english } = useWords();
@@ -179,6 +218,7 @@ export function SahyatrisTab({ toli }: { toli: Toli }) {
       </ul>
       {toli.me.role !== 'sahyatri' && <AddFriend toli={toli} />}
       <MyNumber toli={toli} />
+      <MyUpi toli={toli} />
       {toli.me.role === 'sutradhar' ? (
         <p className="text-sm text-soft">To leave, pass the {w.sutradhar} role to someone first.</p>
       ) : (

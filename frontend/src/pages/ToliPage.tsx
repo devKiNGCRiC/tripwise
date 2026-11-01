@@ -77,7 +77,8 @@ export default function ToliPage() {
     <div className="page-wrap grid gap-5 pt-28 pb-20">
       <title>{`${toli.data.name} · ${w.toli} · TripWise`}</title>
       <ToliHeader toli={toli.data} />
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      {/* min-w-0: the tabs scroll sideways on phones instead of widening the whole page. */}
+      <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
         <nav aria-label={`${w.toli} sections`} className="glass flex max-w-full gap-1 justify-self-start overflow-x-auto rounded-full p-1 scrollbar-none">
           {tabsFor(w).map((t) => (
             <Link
