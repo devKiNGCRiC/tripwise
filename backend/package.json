@@ -15,7 +15,8 @@
     "typecheck": "tsc --noEmit",
     "seed": "tsx scripts/seed-destinations.ts",
     "import:catalogue": "tsx scripts/import-catalogue.ts",
-    "smoke:ai": "tsx scripts/smoke-ai.ts"
+    "smoke:ai": "tsx scripts/smoke-ai.ts",
+    "write:guides": "tsx scripts/write-guides.ts"
   },
   "dependencies": {
     "@google/genai": "^2.30.0",

@@ -24,3 +24,6 @@ Thumbs.db
 # Backend build output
 backend/dist/
 !.env.real
+
+# Cached source texts for writing destination guides (re-fetchable)
+backend/.cache/
