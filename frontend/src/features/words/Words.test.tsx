@@ -27,7 +27,7 @@ describe('Indian or English names', () => {
     await user.click(await screen.findByRole('button', { name: 'English names' }));
     expect(within(await nav()).getByRole('link', { name: /^Groups/ })).toBeInTheDocument();
     const sections = await tabs();
-    expect(within(sections).getAllByRole('link').map((l) => l.textContent)).toEqual(['Trip', 'Decide', 'Money', 'Chat', 'Members', 'Activity']);
+    expect(within(sections).getAllByRole('link').map((l) => l.textContent)).toEqual(['Trip', 'Decide', 'Money', 'Packing list', 'Chat', 'Members', 'Activity']);
     expect(screen.getByText(/You’re the Leader/)).toBeInTheDocument();
     await waitFor(() => expect(db.users.find((u) => u.id === 'u_demo')!.preferences.names).toBe('english'));
     unmount();
