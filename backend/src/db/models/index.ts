@@ -8,6 +8,7 @@ export { Destination } from './destination.js';
 export { Friendship } from './friendship.js';
 export { Itinerary, type ItineraryDoc, type ItineraryFields } from './itinerary.js';
 export { Journal } from './journal.js';
+export { KushalCheckIn, KushalContact } from './kushal.js';
 export { Message } from './message.js';
 export { PasswordReset } from './passwordReset.js';
 export { Place, type PlaceFields } from './place.js';

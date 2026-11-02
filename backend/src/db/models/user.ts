@@ -51,6 +51,8 @@ const userSchema = new Schema(
     },
     /** Colours read from trip photos that tint the app (null = the worlds' own colours). */
     theme: { type: Schema.Types.Mixed, default: null },
+    /** Kushal: send family check-ins by itself while TripWise is open. */
+    kushalAuto: { type: Boolean, default: false },
     /** Secret part of the personal invite link (/join/<code>); can be regenerated. */
     inviteCode: { type: String, unique: true, sparse: true },
   },
