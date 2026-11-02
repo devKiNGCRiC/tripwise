@@ -16,6 +16,7 @@ import { toliApi } from '@/lib/api/endpoints';
 import type { Toli, ToliMember, ToliRole } from '@/lib/api/types';
 import { useToliAction } from './hooks';
 import { roleLabel } from './labels';
+import { WhereAreWe } from './yatra/WhereAreWe';
 
 /** Small round action link/button styles. */
 const ROUND = 'grid size-9 place-items-center rounded-full border border-line hover:bg-ink/6';
@@ -217,6 +218,7 @@ export function SahyatrisTab({ toli }: { toli: Toli }) {
         ))}
       </ul>
       {toli.me.role !== 'sahyatri' && <AddFriend toli={toli} />}
+      <WhereAreWe toli={toli} />
       <MyNumber toli={toli} />
       <MyUpi toli={toli} />
       {toli.me.role === 'sutradhar' ? (
