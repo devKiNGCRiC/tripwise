@@ -2,6 +2,7 @@
  * index.ts — every mock API handler in one list.
  * Plan 3 appends the admin handlers here.
  */
+import { adminHandlers } from './admin';
 import { askHandlers } from './ask';
 import { authHandlers } from './auth';
 import { destinationHandlers } from './destinations';
@@ -12,4 +13,4 @@ import { socialHandlers } from './social';
 import { toliHandlers } from './tolis';
 import { yatraHandlers } from './yatra';
 
-export const handlers = [...authHandlers, ...destinationHandlers, ...itineraryHandlers, ...socialHandlers, ...toliHandlers, ...lekhaHandlers, ...yatraHandlers, ...kushalHandlers, ...askHandlers];
+export const handlers = [...authHandlers, ...destinationHandlers, ...itineraryHandlers, ...socialHandlers, ...toliHandlers, ...lekhaHandlers, ...yatraHandlers, ...kushalHandlers, ...askHandlers, ...adminHandlers];

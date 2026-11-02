@@ -25,6 +25,7 @@ export const destinationHandlers = [
 
     const destinations = db.destinations.filter(
       (d) =>
+        !db.hiddenDestinations.includes(d.slug) &&
         (!vibe || d.vibes.includes(vibe as (typeof d.vibes)[number])) &&
         (!budget || d.budgetTier === budget) &&
         (!month || d.bestMonths.includes(month)) &&
@@ -38,7 +39,7 @@ export const destinationHandlers = [
     await latency();
     const interest = new URL(request.url).searchParams.get('interest');
     if (interest && !INTERESTS.includes(interest as Interest)) return errorResponse(400, 'VALIDATION', 'Pick a known interest.');
-    if (!db.destinations.some((d) => d.slug === params.slug)) return errorResponse(404, 'NOT_FOUND', "We couldn't find that destination.");
+    if (!db.destinations.some((d) => d.slug === params.slug) || db.hiddenDestinations.includes(String(params.slug))) return errorResponse(404, 'NOT_FOUND', "We couldn't find that destination.");
     const places = seedPlaces
       .filter((p) => p.destination === params.slug && (!interest || p.interests.includes(interest as Interest)))
       .sort((a, b) => b.fame - a.fame || a.name.localeCompare(b.name));
@@ -48,7 +49,7 @@ export const destinationHandlers = [
   // GET /destinations/:slug — one destination or NOT_FOUND.
   http.get(apiUrl('/destinations/:slug'), async ({ params }) => {
     await latency();
-    const destination = db.destinations.find((d) => d.slug === params.slug);
+    const destination = db.destinations.find((d) => d.slug === params.slug && !db.hiddenDestinations.includes(d.slug));
     if (!destination) return errorResponse(404, 'NOT_FOUND', "We couldn't find that destination.");
     return HttpResponse.json({ destination });
   }),

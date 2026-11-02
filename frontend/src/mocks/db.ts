@@ -6,7 +6,7 @@
  * cookie) and the planned TRIPS with today's AI-plan counts. Tests never persist.
  * Profiles, journals, photos and friendships start from the seeds on every load.
  */
-import type { AskMessage, Destination, Itinerary, User } from '@/lib/api/types';
+import type { AskMessage, Destination, Itinerary, ReportReason, User } from '@/lib/api/types';
 import { seedDestinations } from './data/destinations';
 import { seedFriendships, seedJournals, seedPhotos, seedTrips, type MockFriendship, type MockJournal, type MockPhoto } from './data/social';
 import { seedToliStore, type MockToliStore } from './data/tolis';
@@ -38,6 +38,12 @@ interface MockDb extends MockToliStore {
   tripChats: Record<string, MockAskMessage[]>;
   /** Ask TripWise questions asked per user today. */
   asks: Record<string, { day: string; used: number }>;
+  /** Destinations an admin hid from Explore (by slug). */
+  hiddenDestinations: string[];
+  /** Reports of public passports. */
+  reports: { id: string; reporterId: string; targetId: string; reason: ReportReason; note?: string; status: 'open' | 'dismissed' | 'actioned'; action?: string; createdAt: string }[];
+  /** The admin audit log, newest first. */
+  adminActions: { id: string; adminId: string; action: string; targetType: 'user' | 'destination' | 'report'; target: string; detail: string; at: string }[];
 }
 
 /** A stored Ask TripWise message (place ids instead of place chips). */
@@ -99,6 +105,9 @@ function createDb(): MockDb {
     blocks: [],
     tripChats: {},
     asks: {},
+    hiddenDestinations: [],
+    reports: [],
+    adminActions: [],
     // Tolis (groups planning together); the Kerala trip is the seeded Toli's Sahyatra.
     ...seedToliStore(),
   };

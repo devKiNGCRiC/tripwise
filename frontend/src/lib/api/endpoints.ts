@@ -5,7 +5,7 @@
  */
 import { api } from './client';
 import { ApiError, friendlyMessage } from './errors';
-import type { Anurodh, AnurodhAction, AskMessage, AuthResponse, Card, ChaupalMessage, Destination, DestinationFilters, Interest, KushalContact, KushalLatest, KushalView, LekhaSummary, NewSplit, PotliItem, ShareFor, SharedLocation, ToliNote, ToliSplit, NewExpense, NewMessage, NewPoll, NewSettlement, Place, Poll, Settlement, SujhavChange, Sujhav, Toli, ToliBudget, ToliEvent, ToliExpense, ToliInvite, ToliRole, TripType, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
+import type { AdminDestination, AdminLogEntry, AdminOverview, AdminReport, AdminUser, Anurodh, AnurodhAction, AskMessage, ReportReason, AuthResponse, Card, ChaupalMessage, Destination, DestinationFilters, Interest, KushalContact, KushalLatest, KushalView, LekhaSummary, NewSplit, PotliItem, ShareFor, SharedLocation, ToliNote, ToliSplit, NewExpense, NewMessage, NewPoll, NewSettlement, Place, Poll, Settlement, SujhavChange, Sujhav, Toli, ToliBudget, ToliEvent, ToliExpense, ToliInvite, ToliRole, TripType, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
 
 /** Turn a filters object into "?a=1&b=2", skipping empty values. */
 function toQuery(params: Record<string, string | number | undefined>): string {
@@ -227,4 +227,21 @@ export const askApi = {
   history: (tripId: string) => api.request<{ messages: AskMessage[]; quota: Quota }>(`/itineraries/${tripId}/ask`),
   ask: (tripId: string, question: string) => api.request<{ reply: AskMessage; quota: Quota }>(`/itineraries/${tripId}/ask`, { method: 'POST', body: { question } }),
   clear: (tripId: string) => api.request<void>(`/itineraries/${tripId}/ask`, { method: 'DELETE' }),
+};
+
+/** The admin area (admins only). */
+export const adminApi = {
+  overview: () => api.request<{ overview: AdminOverview }>('/admin/overview'),
+  users: (q = '', page = 1) => api.request<{ users: AdminUser[]; total: number }>(`/admin/users${toQuery({ q: q || undefined, page: page > 1 ? page : undefined })}`),
+  updateUser: (id: string, change: { blocked?: boolean; plan?: 'free' | 'premium' }) => api.request<{ user: AdminUser }>(`/admin/users/${id}`, { method: 'PATCH', body: change }),
+  destinations: () => api.request<{ destinations: AdminDestination[] }>('/admin/destinations'),
+  updateDestination: (slug: string, change: { hidden: boolean }) => api.request<{ destination: AdminDestination }>(`/admin/destinations/${slug}`, { method: 'PATCH', body: change }),
+  reports: (status: AdminReport['status'] = 'open') => api.request<{ reports: AdminReport[] }>(`/admin/reports${toQuery({ status })}`),
+  decideReport: (id: string, action: 'dismiss' | 'remove-content' | 'block') => api.request<{ report: { id: string; status: AdminReport['status'] } }>(`/admin/reports/${id}`, { method: 'POST', body: { action } }),
+  actions: () => api.request<{ actions: AdminLogEntry[] }>('/admin/actions'),
+};
+
+/** Reporting a public passport. */
+export const reportsApi = {
+  report: (username: string, reason: ReportReason, note?: string) => api.request<{ report: { id: string } }>('/reports', { method: 'POST', body: { username, reason, ...(note ? { note } : {}) } }),
 };

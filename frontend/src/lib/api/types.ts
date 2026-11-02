@@ -686,6 +686,69 @@ export interface KushalView {
   latest: (KushalLatest & { position?: { lat: number; lon: number }; mapsLink?: string }) | null;
 }
 
+/* ── Admin ──────────────────────────────────────────────────────────── */
+
+/** How TripWise is being used (counts only). */
+export interface AdminOverview {
+  travellers: { total: number; newThisWeek: number };
+  trips7d: { ai: number; cache: number; local: number };
+  today: { plans: number; regens: number; asks: number };
+  tolis: number;
+  signups30d: { date: string; count: number }[];
+  topDestinations: { name: string; trips: number }[];
+}
+
+/** A traveller as admins see them (account basics only). */
+export interface AdminUser {
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+  role: 'user' | 'admin';
+  plan: 'free' | 'premium';
+  blocked: boolean;
+  joined: string;
+  trips: number;
+}
+
+/** A catalogue destination as admins see it. */
+export interface AdminDestination {
+  slug: string;
+  name: string;
+  region: string | null;
+  country: string;
+  bestMonths: number[];
+  places: number;
+  trips30d: number;
+  hidden: boolean;
+}
+
+/** Why a passport was reported. */
+export type ReportReason = 'spam' | 'offensive' | 'impersonation' | 'other';
+
+/** A report of a public passport. */
+export interface AdminReport {
+  id: string;
+  reason: ReportReason;
+  note?: string;
+  status: 'open' | 'dismissed' | 'actioned';
+  action?: 'dismiss' | 'remove-content' | 'block';
+  reporter: { id: string; name: string; username: string };
+  target: { id: string; name: string; username: string; bio: string; blocked: boolean };
+  createdAt: string;
+}
+
+/** One line of the admin audit log. */
+export interface AdminLogEntry {
+  id: string;
+  admin: { id: string; name: string };
+  action: string;
+  targetType: 'user' | 'destination' | 'report';
+  target: string;
+  detail: string;
+  at: string;
+}
+
 /* ── Ask TripWise ─────────────────────────────────────────────────────── */
 
 /** A message in my Ask TripWise conversation about a trip. */

@@ -275,6 +275,7 @@ export const socialHandlers = [
     db.potliItems = db.potliItems.filter((i) => !(i.mine && i.addedBy === user.id));
     for (const key of Object.keys(db.tripChats)) if (key.endsWith(`|${user.id}`)) delete db.tripChats[key];
     delete db.asks[user.id];
+    db.reports = db.reports.filter((r) => r.reporterId !== user.id && r.targetId !== user.id);
     saveTrips();
     session.clear();
     return new HttpResponse(null, { status: 204 });
