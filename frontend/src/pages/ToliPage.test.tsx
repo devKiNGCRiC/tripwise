@@ -50,26 +50,26 @@ describe('Tolis', () => {
 
   it('shows the Sahyatris with roles and Call buttons; leaders promote and remove', async () => {
     const { user } = renderApp('/tolis/t_seed_kerala?tab=sahyatris');
-    const raj = await screen.findByRole('listitem', { name: /Raj Roy/ });
+    const raj = await screen.findByRole('listitem', { name: /^Raj Roy,/ });
     expect(within(raj).getByRole('link', { name: 'Call Raj Roy' })).toHaveAttribute('href', 'tel:+919876543210');
     expect(within(raj).getByRole('link', { name: 'WhatsApp call Raj Roy' })).toHaveAttribute('href', 'https://wa.me/919876543210');
-    const ananya = screen.getByRole('listitem', { name: /Ananya Das/ });
+    const ananya = screen.getByRole('listitem', { name: /^Ananya Das,/ });
     expect(within(ananya).queryByRole('link', { name: /^Call/ })).not.toBeInTheDocument();
 
     await user.click(within(raj).getByRole('button', { name: 'Make Sah-Sutradhar' }));
-    expect(await within(screen.getByRole('listitem', { name: /Raj Roy/ })).findByText('Sah-Sutradhar')).toBeInTheDocument();
+    expect(await within(screen.getByRole('listitem', { name: /^Raj Roy,/ })).findByText('Sah-Sutradhar')).toBeInTheDocument();
     // Ananya still owes money in the Lekha: removing her is refused, and the screen says why.
-    await user.click(within(screen.getByRole('listitem', { name: /Ananya Das/ })).getByRole('button', { name: 'Remove Ananya Das' }));
-    expect(await within(screen.getByRole('listitem', { name: /Ananya Das/ })).findByRole('alert')).toHaveTextContent(/Settle up first/);
+    await user.click(within(screen.getByRole('listitem', { name: /^Ananya Das,/ })).getByRole('button', { name: 'Remove Ananya Das' }));
+    expect(await within(screen.getByRole('listitem', { name: /^Ananya Das,/ })).findByRole('alert')).toHaveTextContent(/Settle up first/);
     // Once she has paid Raj back, she can be removed.
     db.toliSettlements.push({ id: 'st_test', toliId: 't_seed_kerala', from: 'u_ananya', to: 'u_raj', amount: 132000, method: 'cash', recordedBy: 'u_demo', clientId: 'test', createdAt: new Date().toISOString() });
-    await user.click(within(screen.getByRole('listitem', { name: /Ananya Das/ })).getByRole('button', { name: 'Remove Ananya Das' }));
-    await waitFor(() => expect(screen.queryByRole('listitem', { name: /Ananya Das/ })).not.toBeInTheDocument());
+    await user.click(within(screen.getByRole('listitem', { name: /^Ananya Das,/ })).getByRole('button', { name: 'Remove Ananya Das' }));
+    await waitFor(() => expect(screen.queryByRole('listitem', { name: /^Ananya Das,/ })).not.toBeInTheDocument());
   });
 
   it('gives Sahyatris no leader buttons, but lets them share a number and leave', async () => {
     const { user, router } = renderApp('/tolis/t_seed_office?tab=sahyatris');
-    await screen.findByRole('listitem', { name: /Raj Roy/ });
+    await screen.findByRole('listitem', { name: /^Raj Roy,/ });
     expect(screen.queryByRole('button', { name: /^Make Sah-Sutradhar|^Remove/ })).not.toBeInTheDocument();
     await user.type(screen.getByLabelText('Your phone number (shared with this Toli only)'), '98765 43210');
     await user.click(screen.getByRole('button', { name: 'Share number' }));
