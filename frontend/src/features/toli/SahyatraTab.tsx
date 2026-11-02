@@ -2,7 +2,8 @@
  * SahyatraTab.tsx — the Toli's shared trip (Sahyatra): each day with its stops, where anyone
  * can suggest a change (a new stop, renaming a day, swapping, removing or moving a stop,
  * changing transport, or adding a day), then the open suggestions to vote on (leaders approve
- * or decline) and the decided ones. Without a plan yet, it points to the Decide tab.
+ * or decline) and the decided ones. Each day can split into Dharas that meet again at a
+ * Sangam, and the Toli keeps shared notes. Without a plan yet, it points to the Decide tab.
  */
 import { useState } from 'react';
 import { Lightbulb } from 'lucide-react';
@@ -16,6 +17,10 @@ import type { Toli } from '@/lib/api/types';
 import { TOLI_REFRESH_MS } from './hooks';
 import { SuggestForm, type SuggestTarget } from './SuggestForm';
 import { SujhavCard } from './SujhavCard';
+import { DayDharas, useSplits } from './yatra/DayDharas';
+import { FixedDharas } from './yatra/FixedDharas';
+import { Notes } from './yatra/Notes';
+import { dateOfDay } from './yatra/time';
 
 /** Which form is open (one at a time), by a key. */
 type OpenForm = { key: string; target: SuggestTarget } | null;
@@ -26,16 +31,23 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
   const trip = useTrip(toli.tripId ?? '');
   const sujhavs = useQuery({ queryKey: ['sujhavs', toli.id], queryFn: () => toliApi.sujhavs(toli.id), select: (d) => d.sujhavs, refetchInterval: TOLI_REFRESH_MS, enabled: !!toli.tripId });
   const [form, setForm] = useState<OpenForm>(null);
+  const splits = useSplits(toli.id);
+
+  // College and office Tolis can have groups fixed for the whole trip.
+  const fixed = ['college', 'office'].includes(toli.type) ? <FixedDharas toli={toli} /> : null;
 
   if (!toli.tripId) {
     return (
-      <section className="glass-strong grid gap-3 rounded-card p-6">
-        <h2 className="text-2xl">No {w.sahyatra} yet</h2>
-        <p className="text-soft">Decide where and when together in the Decide tab, then plan the shared trip with TripWise.</p>
-        <Link to="?tab=decide" replace className="justify-self-start font-semibold underline decoration-accent decoration-2 underline-offset-4">
-          Go to Decide
-        </Link>
-      </section>
+      <div className="grid gap-5">
+        {fixed}
+        <section className="glass-strong grid gap-3 rounded-card p-6">
+          <h2 className="text-2xl">No {w.sahyatra} yet</h2>
+          <p className="text-soft">Decide where and when together in the Decide tab, then plan the shared trip with TripWise.</p>
+          <Link to="?tab=decide" replace className="justify-self-start font-semibold underline decoration-accent decoration-2 underline-offset-4">
+            Go to Decide
+          </Link>
+        </section>
+      </div>
     );
   }
 
@@ -54,6 +66,7 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
     <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1.4fr)_minmax(320px,1fr)]">
       {/* The plan */}
       <div className="grid gap-4">
+        {fixed}
         {trip.isPending && <Skeleton className="h-64 rounded-card" />}
         {trip.data && (
           <>
@@ -90,6 +103,7 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
                     </li>
                   ))}
                 </ul>
+                <DayDharas toli={toli} day={day.dayNumber} date={dateOfDay(trip.data.request.startDate, day.dayNumber)} splits={splits.data?.filter((s) => s.day === day.dayNumber) ?? []} />
               </section>
             ))}
             <div className="flex flex-wrap items-center gap-3">
@@ -100,7 +114,7 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
         )}
       </div>
 
-      {/* Suggestions */}
+      {/* Suggestions and notes */}
       <aside className="grid gap-4 lg:sticky lg:top-28">
         <section className="glass-strong grid gap-3 rounded-card p-5">
           <h2 className="text-xl">
@@ -140,6 +154,7 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
             </ul>
           </section>
         )}
+        <Notes toli={toli} days={trip.data?.days.length ?? 0} />
       </aside>
     </div>
   );
