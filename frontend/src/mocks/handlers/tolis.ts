@@ -389,6 +389,7 @@ export const toliHandlers = [
       if ((toliNet(toli.id)[target.userId] ?? 0) !== 0) return clash('Settle up first — this Sahyatri still owes or is owed money in the Lekha.');
       toli.members = toli.members.filter((m) => m !== target);
       delete db.toliBudgets[`${toli.id}|${target.userId}`];
+      db.toliLocations = db.toliLocations.filter((l) => !(l.toliId === toli.id && l.userId === target.userId));
       logEvent(toli.id, user.id, target.userId === user.id ? 'left' : 'removed', target.userId === user.id ? {} : { userId: target.userId });
       return new HttpResponse(null, { status: 204 });
     }),

@@ -3,7 +3,9 @@
  *   Kerala Toli    Demo is the Sutradhar, with Raj and Ananya; its Sahyatra is Demo's upcoming
  *                  Kerala trip; one open suggestion, one Tithi poll, a few chat messages, and a
  *                  Lekha: Raj paid the houseboat deposit for all three, Demo a lunch for Demo and
- *                  Ananya, Ananya an auto for all three; Demo's banana chips are personal
+ *                  Ananya, Ananya an auto for all three; Demo's banana chips are personal; on day 2
+ *                  two Dharas meet at the Boat jetty; Raj shares where he is; notes, a Potli, and
+ *                  Demo's Kushal contact "Maa"
  *   Office offsite Raj leads an office Toli in announcement mode; Demo and Ananya are Sahyatris
  * Stored records mirror the real API's collections (members inside the Toli; suggestions,
  * polls, budgets, messages, raised hands and events alongside).
@@ -136,6 +138,59 @@ export interface MockSettlement {
   createdAt: string;
 }
 
+/** A day's Dharas and Sangam (or fixed Dharas when `day` is null). */
+export interface MockSplit {
+  id: string;
+  toliId: string;
+  day: number | null;
+  dharas: { id: string; name: string; stops: string[]; memberIds: string[]; leadId?: string }[];
+  sangam: { place: string; at: string } | null;
+  here: string[];
+  status: 'proposed' | 'active';
+  createdBy: string;
+  createdAt: string;
+}
+
+/** Someone sharing where they are (the last point only). */
+export interface MockLocation {
+  toliId: string;
+  userId: string;
+  lat: number;
+  lon: number;
+  at: string;
+  until: string;
+}
+
+/** A Toli note. */
+export interface MockNote {
+  id: string;
+  toliId: string;
+  authorId: string;
+  day: number | null;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** A Potli item. */
+export interface MockPotliItem {
+  id: string;
+  toliId: string;
+  addedBy: string;
+  text: string;
+  mine: boolean;
+  claimedBy: string | null;
+  packed: boolean;
+  createdAt: string;
+}
+
+/** Kushal: family contacts, the latest check-ins and who turned automatic check-ins on. */
+export interface MockKushal {
+  contacts: { id: string; userId: string; name: string; token: string; createdAt: string }[];
+  checkIns: Record<string, { place: string; lat?: number; lon?: number; note?: string; at: string }>;
+  auto: Record<string, boolean>;
+}
+
 /** Everything Toli-related the mock stores. */
 export interface MockToliStore {
   tolis: MockToli[];
@@ -148,6 +203,11 @@ export interface MockToliStore {
   toliEvents: MockToliEvent[];
   toliExpenses: MockExpense[];
   toliSettlements: MockSettlement[];
+  toliSplits: MockSplit[];
+  toliLocations: MockLocation[];
+  toliNotes: MockNote[];
+  potliItems: MockPotliItem[];
+  kushal: MockKushal;
 }
 
 /** A time some hours ago, as ISO text. */
@@ -232,6 +292,34 @@ export function seedToliStore(): MockToliStore {
       { id: 'ex_seed_4', toliId: 't_seed_kerala', addedBy: 'u_demo', clientId: 'seed-ex-4', personal: true, title: 'Banana chips', amount: 25000, category: 'shopping', method: 'cash', paidBy: 'u_demo', parts: { u_demo: 25000 }, createdAt: hoursAgo(24) },
     ],
     toliSettlements: [],
+    toliSplits: [
+      {
+        id: 'sp_seed_1',
+        toliId: 't_seed_kerala',
+        day: 2,
+        dharas: [
+          { id: 'dh_seed_1', name: 'Backwater walk', stops: ['Village canals by canoe'], memberIds: ['u_demo', 'u_ananya'] },
+          { id: 'dh_seed_2', name: 'Fort Kochi', stops: ['Chinese fishing nets', 'Jew Town spice market'], memberIds: ['u_raj'] },
+        ],
+        // 5 pm India time on day 2 of the Sahyatra (which starts 12 days from today).
+        sangam: { place: 'Boat jetty', at: `${dayFromToday(13)}T11:30:00.000Z` },
+        here: [],
+        status: 'active',
+        createdBy: 'u_demo',
+        createdAt: hoursAgo(10),
+      },
+    ],
+    toliLocations: [{ toliId: 't_seed_kerala', userId: 'u_raj', lat: 9.4935, lon: 76.319, at: hoursAgo(0.05), until: new Date(Date.now() + 3_600_000).toISOString() }],
+    toliNotes: [
+      { id: 'nt_seed_1', toliId: 't_seed_kerala', authorId: 'u_demo', day: null, text: 'Homestay owner: Ramesh (ask at the gate)', createdAt: hoursAgo(9), updatedAt: hoursAgo(9) },
+      { id: 'nt_seed_2', toliId: 't_seed_kerala', authorId: 'u_ananya', day: 1, text: 'Carry sunscreen — the houseboat deck gets hot', createdAt: hoursAgo(8), updatedAt: hoursAgo(8) },
+    ],
+    potliItems: [
+      { id: 'po_seed_1', toliId: 't_seed_kerala', addedBy: 'u_demo', text: 'First-aid kit', mine: false, claimedBy: 'u_raj', packed: false, createdAt: hoursAgo(7) },
+      { id: 'po_seed_2', toliId: 't_seed_kerala', addedBy: 'u_ananya', text: 'Speaker', mine: false, claimedBy: null, packed: false, createdAt: hoursAgo(6) },
+      { id: 'po_seed_3', toliId: 't_seed_kerala', addedBy: 'u_demo', text: 'Charger', mine: true, claimedBy: null, packed: false, createdAt: hoursAgo(5) },
+    ],
+    kushal: { contacts: [{ id: 'ku_seed_1', userId: 'u_demo', name: 'Maa', token: 'maaKUSHALdemo2026xxxxxx', createdAt: hoursAgo(30) }], checkIns: {}, auto: {} },
     toliEvents: [
       { id: 'ev_seed_1', toliId: 't_seed_kerala', actorId: 'u_demo', type: 'created', data: { name: 'Kerala Toli' }, at: hoursAgo(72) },
       { id: 'ev_seed_2', toliId: 't_seed_kerala', actorId: 'u_raj', type: 'joined', data: { via: 'link' }, at: hoursAgo(70) },

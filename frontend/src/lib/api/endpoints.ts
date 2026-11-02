@@ -5,7 +5,7 @@
  */
 import { api } from './client';
 import { ApiError, friendlyMessage } from './errors';
-import type { Anurodh, AnurodhAction, AuthResponse, Card, ChaupalMessage, Destination, DestinationFilters, Interest, LekhaSummary, NewExpense, NewMessage, NewPoll, NewSettlement, Place, Poll, Settlement, SujhavChange, Sujhav, Toli, ToliBudget, ToliEvent, ToliExpense, ToliInvite, ToliRole, TripType, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
+import type { Anurodh, AnurodhAction, AuthResponse, Card, ChaupalMessage, Destination, DestinationFilters, Interest, KushalContact, KushalLatest, KushalView, LekhaSummary, NewSplit, PotliItem, ShareFor, SharedLocation, ToliNote, ToliSplit, NewExpense, NewMessage, NewPoll, NewSettlement, Place, Poll, Settlement, SujhavChange, Sujhav, Toli, ToliBudget, ToliEvent, ToliExpense, ToliInvite, ToliRole, TripType, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
 
 /** Turn a filters object into "?a=1&b=2", skipping empty values. */
 function toQuery(params: Record<string, string | number | undefined>): string {
@@ -180,9 +180,44 @@ export const toliApi = {
   deleteExpense: (id: string, eid: string) => api.request<void>(toliPath(id, `/expenses/${eid}`), { method: 'DELETE' }),
   lekha: (id: string) => api.request<{ lekha: LekhaSummary }>(toliPath(id, '/lekha')),
   settle: (id: string, settlement: NewSettlement) => api.request<{ settlement: Settlement }>(toliPath(id, '/settlements'), { method: 'POST', body: settlement }),
+  // Dharas and Sangam.
+  splits: (id: string, day?: number) => api.request<{ splits: ToliSplit[] }>(toliPath(id, `/splits${toQuery({ day })}`)),
+  createSplit: (id: string, split: NewSplit) => api.request<{ split: ToliSplit }>(toliPath(id, '/splits'), { method: 'POST', body: split }),
+  approveSplit: (id: string, sid: string) => api.request<{ split: ToliSplit }>(toliPath(id, `/splits/${sid}/approve`), { method: 'POST' }),
+  deleteSplit: (id: string, sid: string) => api.request<void>(toliPath(id, `/splits/${sid}`), { method: 'DELETE' }),
+  joinDhara: (id: string, sid: string, did: string) => api.request<{ split: ToliSplit }>(toliPath(id, `/splits/${sid}/dharas/${did}/join`), { method: 'POST' }),
+  leaveDhara: (id: string, sid: string, did: string) => api.request<{ split: ToliSplit }>(toliPath(id, `/splits/${sid}/dharas/${did}/leave`), { method: 'POST' }),
+  here: (id: string, sid: string) => api.request<{ split: ToliSplit }>(toliPath(id, `/splits/${sid}/here`), { method: 'POST' }),
+  notHere: (id: string, sid: string) => api.request<{ split: ToliSplit }>(toliPath(id, `/splits/${sid}/here`), { method: 'DELETE' }),
+  // Where are my Sahyatris.
+  locations: (id: string) => api.request<{ me: { until: string } | null; locations: SharedLocation[] }>(toliPath(id, '/locations')),
+  shareLocation: (id: string, point: { lat: number; lon: number; accuracy?: number; for?: ShareFor }) => api.request<{ sharing: { until: string } }>(toliPath(id, '/location'), { method: 'PUT', body: point }),
+  stopSharing: (id: string) => api.request<void>(toliPath(id, '/location'), { method: 'DELETE' }),
+  // Notes.
+  notes: (id: string) => api.request<{ notes: ToliNote[] }>(toliPath(id, '/notes')),
+  addNote: (id: string, text: string, day?: number | null) => api.request<{ note: ToliNote }>(toliPath(id, '/notes'), { method: 'POST', body: { text, ...(day ? { day } : {}) } }),
+  editNote: (id: string, nid: string, text: string) => api.request<{ note: ToliNote }>(toliPath(id, `/notes/${nid}`), { method: 'PATCH', body: { text } }),
+  deleteNote: (id: string, nid: string) => api.request<void>(toliPath(id, `/notes/${nid}`), { method: 'DELETE' }),
+  // Potli (packing).
+  potli: (id: string) => api.request<{ group: PotliItem[]; mine: PotliItem[] }>(toliPath(id, '/potli')),
+  addPotli: (id: string, text: string, mine = false) => api.request<{ item: PotliItem }>(toliPath(id, '/potli'), { method: 'POST', body: { text, mine } }),
+  claim: (id: string, pid: string) => api.request<{ item: PotliItem }>(toliPath(id, `/potli/${pid}/claim`), { method: 'POST' }),
+  unclaim: (id: string, pid: string) => api.request<{ item: PotliItem }>(toliPath(id, `/potli/${pid}/claim`), { method: 'DELETE' }),
+  setPacked: (id: string, pid: string, packed: boolean) => api.request<{ item: PotliItem }>(toliPath(id, `/potli/${pid}`), { method: 'PATCH', body: { packed } }),
+  deletePotli: (id: string, pid: string) => api.request<void>(toliPath(id, `/potli/${pid}`), { method: 'DELETE' }),
   // Anurodh (raise your hand).
   raiseHand: (id: string, about: string) => api.request<{ anurodh: Anurodh }>(toliPath(id, '/anurodh'), { method: 'POST', body: { about } }),
   hands: (id: string) => api.request<{ requests: Anurodh[]; mine: Anurodh | null }>(toliPath(id, '/anurodh')),
   decideHand: (id: string, rid: string, action: AnurodhAction, reply?: string) =>
     api.request<{ anurodh: Anurodh }>(toliPath(id, `/anurodh/${rid}/decide`), { method: 'POST', body: { action, ...(reply ? { reply } : {}) } }),
+};
+
+/** Kushal — family check-ins (my contacts and check-ins; the family's public view needs no login). */
+export const kushalApi = {
+  mine: () => api.request<{ contacts: KushalContact[]; auto: boolean; latest: KushalLatest | null }>('/me/kushal'),
+  addContact: (name: string) => api.request<{ contact: KushalContact }>('/me/kushal/contacts', { method: 'POST', body: { name } }),
+  revoke: (cid: string) => api.request<void>(`/me/kushal/contacts/${cid}`, { method: 'DELETE' }),
+  setAuto: (auto: boolean) => api.request<{ auto: boolean }>('/me/kushal', { method: 'PATCH', body: { auto } }),
+  checkIn: (checkIn: { lat?: number; lon?: number; note?: string }) => api.request<{ latest: KushalLatest }>('/me/kushal/checkin', { method: 'POST', body: checkIn }),
+  view: (token: string) => api.request<{ kushal: KushalView }>(`/kushal/${token}`),
 };

@@ -27,6 +27,11 @@ export interface Words {
   anurodh: string;
   lekha: string;
   yatraMarks: string;
+  dhara: string;
+  dharas: string;
+  sangam: string;
+  kushal: string;
+  potli: string;
 }
 
 /** Both sets of names. */
@@ -48,6 +53,11 @@ export const WORDS: Record<NameStyle, Words> = {
     anurodh: 'Anurodh',
     lekha: 'Lekha',
     yatraMarks: 'Yatra marks',
+    dhara: 'Dhara',
+    dharas: 'Dharas',
+    sangam: 'Sangam',
+    kushal: 'Kushal',
+    potli: 'Potli',
   },
   english: {
     toli: 'Group',
@@ -66,6 +76,11 @@ export const WORDS: Record<NameStyle, Words> = {
     anurodh: 'Raise hand',
     lekha: 'Money',
     yatraMarks: 'Travel badges',
+    dhara: 'Split group',
+    dharas: 'Split groups',
+    sangam: 'Meet-up',
+    kushal: 'Family check-in',
+    potli: 'Packing list',
   },
 };
 

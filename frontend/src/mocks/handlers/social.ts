@@ -254,6 +254,15 @@ export const socialHandlers = [
     delete db.avatars[user.id];
     db.friendships = db.friendships.filter((f) => f.requester !== user.id && f.recipient !== user.id);
     db.blocks = db.blocks.filter((b) => b.blocker !== user.id && b.blocked !== user.id);
+    // Their private trip data: family links and check-ins, shared locations, budgets, personal
+    // expenses and own packing lists.
+    db.kushal.contacts = db.kushal.contacts.filter((c) => c.userId !== user.id);
+    delete db.kushal.checkIns[user.id];
+    delete db.kushal.auto[user.id];
+    db.toliLocations = db.toliLocations.filter((l) => l.userId !== user.id);
+    for (const key of Object.keys(db.toliBudgets)) if (key.endsWith(`|${user.id}`)) delete db.toliBudgets[key];
+    db.toliExpenses = db.toliExpenses.filter((e) => !(e.personal && e.addedBy === user.id));
+    db.potliItems = db.potliItems.filter((i) => !(i.mine && i.addedBy === user.id));
     saveTrips();
     session.clear();
     return new HttpResponse(null, { status: 204 });

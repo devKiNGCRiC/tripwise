@@ -17,7 +17,7 @@ export default defineConfig({
 
   // `@/` points at `src/`; `@catalogue/` at the backend's catalogue files (destinations and
   // places), `@planner` at TripWise's own planner, `@toli-rules` at the Toli rules and `@lekha-rules` at the
-  // Toli's money maths, so the
+  // Toli's money maths and `@yatra-rules` at the on-the-trip rules, so the
   // mock API serves exactly the real data and follows exactly the same rules. All must match "paths" in tsconfig.json.
   resolve: {
     alias: {
@@ -26,6 +26,7 @@ export default defineConfig({
       '@planner': fileURLToPath(new URL('../backend/src/services/localPlanner.ts', import.meta.url)),
       '@toli-rules': fileURLToPath(new URL('../backend/src/services/toliRules.ts', import.meta.url)),
       '@lekha-rules': fileURLToPath(new URL('../backend/src/services/lekhaRules.ts', import.meta.url)),
+      '@yatra-rules': fileURLToPath(new URL('../backend/src/services/yatraRules.ts', import.meta.url)),
     },
   },
 

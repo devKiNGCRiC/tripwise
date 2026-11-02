@@ -612,6 +612,80 @@ export interface LekhaSummary {
   settlements: Settlement[];
 }
 
+/* ── On the trip (Dharas, locations, notes, Potli, Kushal) ──────────── */
+
+export type { ShareFor } from '@yatra-rules';
+
+/** A Toli splitting up: Dharas that meet again at a Sangam (or fixed Dharas for the whole trip). */
+export interface ToliSplit {
+  id: string;
+  /** A day of the Sahyatra, or null for fixed Dharas (Bus 1, Section A). */
+  day: number | null;
+  status: 'proposed' | 'active';
+  dharas: { id: string; name: string; stops: string[]; members: ToliPerson[]; lead?: ToliPerson }[];
+  sangam: { place: string; at: string } | null;
+  headcount: { here: ToliPerson[]; missing: ToliPerson[] };
+  createdBy: ToliPerson;
+}
+
+/** A new split. */
+export interface NewSplit {
+  day: number | null;
+  dharas: { name: string; stops?: string[]; leadId?: string }[];
+  sangam?: { place: string; at: string };
+}
+
+/** Where a Sahyatri is, as the Toli sees it. */
+export interface SharedLocation {
+  person: ToliPerson;
+  near: { name: string; km: number } | null;
+  at: string;
+  until: string;
+  mapsLink: string;
+}
+
+/** A note the Toli keeps (whole trip, or one day). */
+export interface ToliNote {
+  id: string;
+  text: string;
+  day: number | null;
+  author: ToliPerson;
+  canEdit: boolean;
+  updatedAt: string;
+}
+
+/** A Potli (packing list) item. */
+export interface PotliItem {
+  id: string;
+  text: string;
+  /** On my own private list. */
+  mine: boolean;
+  claimedBy: ToliPerson | null;
+  packed: boolean;
+  canDelete: boolean;
+}
+
+/** A Kushal (family) contact. */
+export interface KushalContact {
+  id: string;
+  name: string;
+  link: string;
+  createdAt: string;
+}
+
+/** My latest check-in, as I see it. */
+export interface KushalLatest {
+  place: string;
+  at: string;
+  note?: string;
+}
+
+/** What a family sees on a Kushal link. */
+export interface KushalView {
+  traveller: string;
+  latest: (KushalLatest & { position?: { lat: number; lon: number }; mapsLink?: string }) | null;
+}
+
 /** One event in a Toli's activity feed. */
 export interface ToliEvent {
   id: string;
