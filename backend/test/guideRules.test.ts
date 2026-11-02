@@ -56,6 +56,13 @@ describe('checkGuide', () => {
     expect(thukpa).not.toMatch(/₹|\d{5}/);
   });
 
+  it('keeps year ranges (they are not phone numbers)', () => {
+    const result = checkGuide({ ...draft(), history: `${draft().history} Surveyed in 1816-1817, built 1909 - 1910.` }, SOURCE, meta);
+    if (!result.ok) throw new Error(result.reasons.join('; '));
+    expect(result.guide.history).toContain('1816-1817');
+    expect(result.guide.history).toContain('1909 - 1910');
+  });
+
   it('rejects a guide with too few grounded items, or missing and over-long sections', () => {
     const fewFoods = { ...draft(), food: [{ name: 'Momos', detail: 'x' }, { name: 'Pizza', detail: 'x' }, { name: 'Sushi', detail: 'x' }] };
     expect(checkGuide(fewFoods, SOURCE, meta)).toMatchObject({ ok: false, reasons: [expect.stringMatching(/food/)] });

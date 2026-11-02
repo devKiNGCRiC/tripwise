@@ -67,7 +67,8 @@ function canon(text: string): string {
 function clean(text: string): string {
   return text
     .replace(/(?:₹|\brs\.?|\binr)\s?[\d,]+(?:\s?(?:a|per)\s\w+)?/gi, '')
-    .replace(/\+?\d[\d\s-]{7,}\d/g, '')
+    // Phone numbers have 10+ digits ("+91 98765 43210"); year ranges ("1816-1817") have 8.
+    .replace(/\+?\d[\d\s-]{7,}\d/g, (match) => (match.replace(/\D/g, '').length >= 10 ? '' : match))
     .replace(/\s+([,.;:])/g, '$1')
     .replace(/[—–-]\s*(?:about|call|costs?)?\s*[,.]?\s*$/i, '.')
     .replace(/\s{2,}/g, ' ')

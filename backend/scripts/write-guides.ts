@@ -26,7 +26,7 @@ const USER_AGENT = 'TripWise/1.0 (+https://github.com/devKiNGCRiC/tripwise)';
 /** Wait a little between requests (be gentle with the free services). */
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/** A page's plain text from Wikivoyage or Wikipedia (cached), or null if there's no such page. */
+/** A page's plain text from Wikivoyage or Wikipedia (cached), or null if there's no such page (or only a disambiguation page). */
 const fetchSource: FetchSource = async (wiki, title) => {
   const cacheFile = new URL(`${wiki}-${encodeURIComponent(title)}.json`, CACHE_DIR);
   try {
@@ -34,12 +34,12 @@ const fetchSource: FetchSource = async (wiki, title) => {
   } catch {
     // Not cached yet.
   }
-  const url = `https://en.${wiki}.org/w/api.php?action=query&prop=extracts&explaintext=1&redirects=1&format=json&formatversion=2&titles=${encodeURIComponent(title)}`;
+  const url = `https://en.${wiki}.org/w/api.php?action=query&prop=extracts|pageprops&ppprop=disambiguation&explaintext=1&redirects=1&format=json&formatversion=2&titles=${encodeURIComponent(title)}`;
   const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
   if (!res.ok) throw new Error(`${wiki} ${title}: HTTP ${res.status}`);
-  const body = (await res.json()) as { query?: { pages?: { title: string; missing?: boolean; extract?: string }[] } };
+  const body = (await res.json()) as { query?: { pages?: { title: string; missing?: boolean; extract?: string; pageprops?: object }[] } };
   const page = body.query?.pages?.[0];
-  const result = page && !page.missing && page.extract && page.extract.length > 300 ? { title: page.title, text: page.extract, url: `https://en.${wiki}.org/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}` } : null;
+  const result = page && !page.missing && !page.pageprops && page.extract && page.extract.length > 300 ? { title: page.title, text: page.extract, url: `https://en.${wiki}.org/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}` } : null;
   await mkdir(CACHE_DIR, { recursive: true });
   await writeFile(cacheFile, JSON.stringify(result));
   await sleep(500);

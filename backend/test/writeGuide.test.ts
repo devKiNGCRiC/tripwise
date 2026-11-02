@@ -58,6 +58,7 @@ describe('writeGuide', () => {
     expect(prompts[0].user).toContain('Rumtek Monastery');
     expect(prompts[0].user).toContain('1894');
     expect(prompts[0].system).toMatch(/only/i);
+    expect(prompts[0].system).toMatch(/never name businesses/i);
   });
 
   it('tries once more with the reasons, then gives up', async () => {
@@ -75,6 +76,19 @@ describe('writeGuide', () => {
     expect(result.ok).toBe(true);
     if (result.ok) expect(result.guide.sources.map((s) => s.title)).toEqual(['Gangtok — Wikipedia']);
     expect(prompts[0].user).not.toContain('Wikivoyage text');
+  });
+
+  it('reads a cuisine page too for places whose own pages barely mention food', async () => {
+    // Cherrapunji's pages are about falls and rain; its dishes come from Meghalayan cuisine.
+    const fetchSource = async (wiki: 'wikivoyage' | 'wikipedia', title: string) => {
+      if (title === 'Meghalayan cuisine') return { title, text: 'Meghalayan cuisine. Eat: momos, thukpa, phagshapa, sel roti.', url: 'https://en.wikipedia.org/wiki/Meghalayan_cuisine' };
+      return { title: 'Cherrapunji', text: VOYAGE.replace(/Eat:.*$/, ''), url: `https://en.${wiki}.org/wiki/Cherrapunji` };
+    };
+    const { ai, prompts } = model(good);
+    const result = await writeGuide({ slug: 'cherrapunji', name: 'Cherrapunji' }, { ai, fetchSource, today: '2026-11-03' });
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.guide.sources.map((s) => s.title)).toContain('Meghalayan cuisine — Wikipedia');
+    expect(prompts[0].user).toContain('Meghalayan cuisine. Eat:');
   });
 
   it('says so when there are no sources at all', async () => {
@@ -100,5 +114,17 @@ describe('sourceTitles', () => {
   it('uses the main name, with overrides for tricky ones', () => {
     expect(sourceTitles({ slug: 'dharamshala', name: 'Dharamshala & McLeod Ganj' })).toEqual({ wikivoyage: 'Dharamshala', wikipedia: 'Dharamshala' });
     expect(sourceTitles({ slug: 'kerala', name: 'Kerala Backwaters' }).wikipedia).toBe('Kerala backwaters');
+  });
+
+  it('skips Wikivoyage for places whose name there only leads to a whole state', async () => {
+    // Wikivoyage's "Munsiyari" redirects to Uttarakhand — the wrong page to write from.
+    expect(sourceTitles({ slug: 'munsiyari', name: 'Munsiyari' }).wikivoyage).toBeNull();
+    const asked: string[] = [];
+    const fetchSource = async (wiki: 'wikivoyage' | 'wikipedia', title: string) => {
+      asked.push(`${wiki}:${title}`);
+      return null;
+    };
+    await writeGuide({ slug: 'munsiyari', name: 'Munsiyari' }, { ai: model(good).ai, fetchSource, today: '2026-11-03' });
+    expect(asked.some((a) => a.startsWith('wikivoyage'))).toBe(false);
   });
 });

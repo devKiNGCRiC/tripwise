@@ -21,15 +21,40 @@ export interface SourceText {
 /** Fetches a wiki page's plain text (null when there's no such page). */
 export type FetchSource = (wiki: 'wikivoyage' | 'wikipedia', title: string) => Promise<SourceText | null>;
 
-/** Pages whose titles differ from the destination's name. */
-const OVERRIDES: Record<string, { wikivoyage?: string; wikipedia?: string }> = {
+/**
+ * Pages whose titles differ from the destination's name — and, for places whose own pages barely
+ * mention food (caves, waterfalls, big cities split into districts), a Wikipedia cuisine page.
+ * wikivoyage: null means Wikivoyage has no page of its own (its title only leads to a whole state).
+ */
+const OVERRIDES: Record<string, { wikivoyage?: string | null; wikipedia?: string; cuisine?: string }> = {
   kerala: { wikivoyage: 'Kerala backwaters', wikipedia: 'Kerala backwaters' },
   ladakh: { wikipedia: 'Ladakh' },
   spiti: { wikivoyage: 'Spiti', wikipedia: 'Spiti Valley' },
   coorg: { wikivoyage: 'Kodagu', wikipedia: 'Kodagu district' },
   ooty: { wikivoyage: 'Ooty', wikipedia: 'Ooty' },
-  majuli: { wikipedia: 'Majuli' },
-  kaziranga: { wikivoyage: 'Kaziranga National Park', wikipedia: 'Kaziranga National Park' },
+  majuli: { wikipedia: 'Majuli', cuisine: 'Assamese cuisine' },
+  kaziranga: { wikivoyage: 'Kaziranga National Park', wikipedia: 'Kaziranga National Park', cuisine: 'Assamese cuisine' },
+  delhi: { cuisine: 'Mughlai cuisine' },
+  ellora: { cuisine: 'Maharashtrian cuisine' },
+  bijapur: { cuisine: 'Karnataka cuisine' },
+  cherrapunji: { cuisine: 'Meghalayan cuisine' },
+  // Batch 1 — Himalaya
+  gulmarg: { cuisine: 'Kashmiri cuisine' },
+  pahalgam: { cuisine: 'Kashmiri cuisine' },
+  sonamarg: { cuisine: 'Kashmiri cuisine' },
+  katra: { wikipedia: 'Vaishno Devi Temple' },
+  kasol: { wikivoyage: 'Parvati Valley' },
+  dalhousie: { wikivoyage: 'Dalhousie (India)', wikipedia: 'Dalhousie, India' },
+  bir: { wikipedia: 'Bir, Himachal Pradesh' },
+  kinnaur: { wikivoyage: 'Kalpa', wikipedia: 'Kinnaur district' },
+  auli: { wikipedia: 'Auli, India', cuisine: 'Uttarakhandi cuisine' },
+  kedarnath: { cuisine: 'Uttarakhandi cuisine' },
+  'valley-of-flowers': { wikivoyage: 'Ghangaria', wikipedia: 'Valley of Flowers National Park', cuisine: 'Uttarakhandi cuisine' },
+  corbett: { cuisine: 'Kumaoni cuisine' },
+  chopta: { wikivoyage: null, wikipedia: 'Chopta', cuisine: 'Uttarakhandi cuisine' },
+  munsiyari: { wikivoyage: null, wikipedia: 'Munsiari', cuisine: 'Kumaoni cuisine' },
+  kausani: { cuisine: 'Kumaoni cuisine' },
+  almora: { cuisine: 'Kumaoni cuisine' },
 };
 
 /** The useful sections of each source, and how much of each to keep (characters). */
@@ -37,6 +62,8 @@ const VOYAGE_SECTIONS = { Understand: 2500, See: 4500, Do: 3000, Eat: 3000, Drin
 const PEDIA_SECTIONS = { History: 3000, Culture: 2000, Cuisine: 2000, Religion: 1500, Tourism: 2000, 'Flora and fauna': 1500 };
 /** How much of a page's opening (before its first section) to keep. */
 const LEAD = 2500;
+/** How much of a cuisine page to keep (its sections are named after dishes, so take its start). */
+const CUISINE = 5000;
 
 /**
  * The opening and the wanted top-level sections ("== See ==") of a plain-text wiki page, each
@@ -55,10 +82,11 @@ export function pickSections(text: string, wanted: string[] | Record<string, num
   return out.join('\n');
 }
 
-/** The source pages for a destination: its main name ("Dharamshala & McLeod Ganj" → "Dharamshala"). */
-export function sourceTitles(d: { slug: string; name: string }): { wikivoyage: string; wikipedia: string } {
+/** The source pages for a destination: its main name ("Dharamshala & McLeod Ganj" → "Dharamshala"), plus a cuisine page for some. */
+export function sourceTitles(d: { slug: string; name: string }): { wikivoyage: string | null; wikipedia: string; cuisine?: string } {
   const main = d.name.split(/\s*(?:&|,|\(|—)\s*/)[0].trim();
-  return { wikivoyage: OVERRIDES[d.slug]?.wikivoyage ?? main, wikipedia: OVERRIDES[d.slug]?.wikipedia ?? main };
+  const o = OVERRIDES[d.slug];
+  return { wikivoyage: o?.wikivoyage === undefined ? main : o.wikivoyage, wikipedia: o?.wikipedia ?? main, ...(o?.cuisine ? { cuisine: o.cuisine } : {}) };
 }
 
 /** The rules for writing. */
@@ -69,9 +97,11 @@ Rules:
 - "about": 2–3 short paragraphs (under 900 characters) on what the place is like and why people go.
 - "history": the main history in under 700 characters, with dates only if the sources give them.
 - "significance": why it matters (religious, cultural, natural or historical) in under 400 characters.
-- "thingsToDo": 6–10 items; each title must use the real name of a place or activity from the sources; one-line detail.
-- "food": 4–8 local dishes or drinks named in the sources (dishes, never restaurants), with a one-line description.
-- No prices, phone numbers, opening hours or business names.
+- "thingsToDo": 6–10 items; each title must use the real name of a sight, natural place, temple, museum, market, festival or activity from the sources; one-line detail.
+- "food": 4–8 local dishes or drinks named in the sources, with a one-line description. Name the dish itself, never the place that serves it.
+- Never name businesses: no tour companies, guides, shops, hotels, cafés or restaurants.
+- Keep history in the order it happened; don't link events the sources don't link.
+- No prices, phone numbers or opening hours.
 - Answer with JSON only, matching the schema.`;
 
 /** The JSON shape of a draft. */
@@ -97,14 +127,20 @@ function guidePrompt(name: string, texts: { label: string; text: string }[], pre
 /** Write one destination's guide. */
 export async function writeGuide(d: { slug: string; name: string }, deps: { ai: AiChain; fetchSource: FetchSource; today: string }): Promise<{ ok: true; guide: Guide } | { ok: false; reasons: string[] }> {
   const titles = sourceTitles(d);
-  const [voyage, pedia] = await Promise.all([deps.fetchSource('wikivoyage', titles.wikivoyage), deps.fetchSource('wikipedia', titles.wikipedia)]);
+  const [voyage, pedia, cuisine] = await Promise.all([
+    titles.wikivoyage ? deps.fetchSource('wikivoyage', titles.wikivoyage) : null,
+    deps.fetchSource('wikipedia', titles.wikipedia),
+    titles.cuisine ? deps.fetchSource('wikipedia', titles.cuisine) : null,
+  ]);
   const found = [
-    ...(voyage ? [{ label: 'Wikivoyage text', page: voyage, name: 'Wikivoyage' }] : []),
-    ...(pedia ? [{ label: 'Wikipedia text', page: pedia, name: 'Wikipedia' }] : []),
+    ...(voyage ? [{ label: 'Wikivoyage text', page: voyage, name: 'Wikivoyage', text: pickSections(voyage.text, VOYAGE_SECTIONS) }] : []),
+    ...(pedia ? [{ label: 'Wikipedia text', page: pedia, name: 'Wikipedia', text: pickSections(pedia.text, PEDIA_SECTIONS) }] : []),
   ];
   if (!found.length) return { ok: false, reasons: ['no sources found'] };
+  // The cuisine page only adds to a place's own pages (for its food).
+  if (cuisine) found.push({ label: 'Wikipedia cuisine text', page: cuisine, name: 'Wikipedia', text: cuisine.text.slice(0, CUISINE) });
 
-  const texts = found.map((f) => ({ label: f.label, text: pickSections(f.page.text, f.name === 'Wikivoyage' ? VOYAGE_SECTIONS : PEDIA_SECTIONS) }));
+  const texts = found.map((f) => ({ label: f.label, text: f.text }));
   // Checked against the same text the AI was given.
   const sourceText = texts.map((t) => t.text).join('\n');
   const sources: GuideSource[] = found.map((f) => ({ title: `${f.page.title} — ${f.name}`, url: f.page.url, licence: 'CC BY-SA 4.0' }));
