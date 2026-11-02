@@ -154,11 +154,14 @@ describe('PlannerWizard', () => {
     const { user } = renderApp('/plan?destination=Goa');
     await screen.findByLabelText('Destination');
     await next(user);
+    // Wait for each step to show before touching it (busy machines render a moment later).
+    await screen.findByLabelText('Start date');
     setDate('Start date', inDays(10));
     setDate('End date', inDays(11));
     await next(user);
-    await user.clear(screen.getByLabelText('Budget per person per day (₹)'));
+    await user.clear(await screen.findByLabelText('Budget per person per day (₹)'));
     await user.click(screen.getByRole('button', { name: 'Back' }));
+    await screen.findByLabelText('Start date');
     setDate('Start date', '2020-01-01');
     await next(user);
     expect(await screen.findByText("Start date can't be in the past")).toBeInTheDocument();
