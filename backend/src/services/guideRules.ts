@@ -58,6 +58,11 @@ export function normalise(text: string): string {
     .trim();
 }
 
+/** Text for matching dish names however they're spelt in English: "ee"→"i", "oo"→"u", doubled letters once (baati = bati, kheer = khir, laddoo = laddu). */
+function canon(text: string): string {
+  return normalise(text).replace(/ee/g, 'i').replace(/oo/g, 'u').replace(/([a-z])\1+/g, '$1');
+}
+
 /** Text without prices or phone numbers (and the gaps they leave). */
 function clean(text: string): string {
   return text
@@ -69,8 +74,8 @@ function clean(text: string): string {
     .trim();
 }
 
-/** Is a dish named in the sources (as whole words)? */
-const dishInSources = (name: string, source: string) => !!normalise(name) && ` ${source} `.includes(` ${normalise(name)} `);
+/** Is a dish named in the sources (as whole words, however it's spelt)? */
+const dishInSources = (name: string, source: string) => !!canon(name) && ` ${source} `.includes(` ${canon(name)} `);
 
 /** Do most of a title's key words appear in the sources? */
 function thingInSources(title: string, sourceWords: Set<string>) {
@@ -97,6 +102,7 @@ export function checkGuide(draft: unknown, sourceText: string, meta: { sources: 
   const d = (draft && typeof draft === 'object' ? draft : {}) as Record<string, unknown>;
   const source = normalise(sourceText);
   const sourceWords = new Set(source.split(' '));
+  const sourceForDishes = canon(sourceText);
   const reasons: string[] = [];
 
   const sections = { about: text(d.about), history: text(d.history), significance: text(d.significance) };
@@ -109,7 +115,7 @@ export function checkGuide(draft: unknown, sourceText: string, meta: { sources: 
   const seen = new Set<string>();
   const once = (key: string) => !seen.has(key) && !!seen.add(key);
   const thingsToDo = (pairs(d.thingsToDo, 'title', 'detail') as unknown as GuideThing[]).filter((t) => thingInSources(t.title, sourceWords) && once(`t:${normalise(t.title)}`)).slice(0, THINGS[1]);
-  const food = (pairs(d.food, 'name', 'detail') as unknown as GuideFood[]).filter((f) => dishInSources(f.name, source) && once(`f:${normalise(f.name)}`)).slice(0, FOOD[1]);
+  const food = (pairs(d.food, 'name', 'detail') as unknown as GuideFood[]).filter((f) => dishInSources(f.name, sourceForDishes) && once(`f:${normalise(f.name)}`)).slice(0, FOOD[1]);
   if (thingsToDo.length < THINGS[0]) reasons.push(`thingsToDo: only ${thingsToDo.length} found in the sources (needs ${THINGS[0]})`);
   if (food.length < FOOD[0]) reasons.push(`food: only ${food.length} dishes found in the sources (needs ${FOOD[0]})`);
 

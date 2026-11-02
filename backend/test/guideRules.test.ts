@@ -75,6 +75,17 @@ describe('checkGuide', () => {
   });
 });
 
+describe('spelling', () => {
+  it('matches dishes written with doubled vowels either way (baati / bati, kheer / khir)', () => {
+    const source = `${SOURCE}
+Eat: dal bati churma, khir, laddu and ghevar.`;
+    const spelled = { ...draft(), food: ['Dal Baati Churma', 'Kheer', 'Laddoo', 'Ghevar'].map((name) => ({ name, detail: 'Rajasthani sweet or staple.' })) };
+    const result = checkGuide(spelled, source, meta);
+    if (!result.ok) throw new Error(result.reasons.join('; '));
+    expect(result.guide.food.map((f) => f.name)).toEqual(['Dal Baati Churma', 'Kheer', 'Laddoo', 'Ghevar']);
+  });
+});
+
 describe('normalise', () => {
   it('compares words without case, accents or punctuation', () => {
     expect(normalise('Tsomgo  Lake!')).toBe('tsomgo lake');

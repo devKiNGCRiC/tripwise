@@ -7,7 +7,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import type { Prompt } from '../src/services/ai/prompt.js';
-import { sourceTitles, writeGuide } from '../scripts/guides/writeGuide.js';
+import { pickSections, sourceTitles, writeGuide } from '../scripts/guides/writeGuide.js';
 import { fakeAiChain } from './helpers/fakeAi.js';
 
 const VOYAGE = 'Gangtok. See: Rumtek Monastery, Do Drul Chorten, Tsomgo Lake, Nathu La, Namgyal Institute of Tibetology. Do: Gangtok Ropeway, MG Marg, Banjhakri Falls. Eat: momos, thukpa, phagshapa, sel roti.';
@@ -80,6 +80,19 @@ describe('writeGuide', () => {
   it('says so when there are no sources at all', async () => {
     const { ai } = model(good);
     expect(await writeGuide(destination, { ai, fetchSource: sources(null, null), today: '2026-11-03' })).toMatchObject({ ok: false, reasons: ['no sources found'] });
+  });
+});
+
+describe('pickSections', () => {
+  it('keeps the useful sections of a long page, even when they come late', () => {
+    const page = ['Jaipur is the Pink City.', '== Understand ==', 'Founded in 1727.', '== Get in ==', 'x'.repeat(20000), '== See ==', 'Amber Fort. Hawa Mahal.', '== Eat ==', 'Try dal bati churma and ghevar.', '== Stay safe ==', 'Touts.'].join(String.fromCharCode(10));
+    const picked = pickSections(page, ['Understand', 'See', 'Eat']);
+    expect(picked).toContain('Jaipur is the Pink City.');
+    expect(picked).toContain('Founded in 1727.');
+    expect(picked).toContain('Hawa Mahal');
+    expect(picked).toContain('dal bati churma');
+    expect(picked).not.toContain('xxxxx');
+    expect(picked).not.toContain('Touts');
   });
 });
 
