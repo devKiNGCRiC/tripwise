@@ -8,7 +8,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { balances } from '@lekha-rules';
 import { session } from '@/mocks/db';
 import { api } from './client';
-import { toliApi } from './endpoints';
+import { accountApi, toliApi } from './endpoints';
 
 /** Log in as someone (mock session). */
 async function loginAs(userId: string) {
@@ -58,6 +58,14 @@ describe('Lekha (demo mock)', () => {
     const { lekha } = await toliApi.lekha(KERALA);
     expect(lekha.settleUp.map((p) => p.from.id)).toEqual(['u_ananya']);
     expect(lekha.settlements[0]).toMatchObject({ from: { id: 'u_demo' }, to: { id: 'u_raj' }, amount: 93000, method: 'upi' });
+  });
+
+  it('refuses to delete an account until its owner settles up and hands over the Sutradhar role', async () => {
+    // Demo leads "Kerala Toli" (and owes Raj): the Sutradhar role comes first.
+    await expect(accountApi.deleteAccount('password123')).rejects.toMatchObject({ code: 'CONFLICT', message: expect.stringMatching(/Sutradhar.*Kerala Toli|Kerala Toli.*Sutradhar/) });
+    // Ananya owes Raj ₹1,320 in Kerala Toli.
+    await loginAs('u_ananya');
+    await expect(accountApi.deleteAccount('password123')).rejects.toMatchObject({ code: 'CONFLICT', message: expect.stringMatching(/Settle up first/) });
   });
 
   it('keeps someone who still owes from leaving, and saves a UPI ID', async () => {

@@ -16,9 +16,9 @@ import { Router } from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { z } from 'zod';
 import { PasswordReset, User } from '../db/models/index.js';
-import { badRequest, unauthorized } from '../lib/errors.js';
+import { badRequest, clash, unauthorized } from '../lib/errors.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
-import { deleteAccountData } from '../services/accountDeletion.js';
+import { deleteAccountData, tolisBlockingDeletion } from '../services/accountDeletion.js';
 import type { Mailer } from '../services/mailer.js';
 import type { PhotoStore } from '../services/photos.js';
 import { createSession, revokeAllSessions } from '../services/sessions.js';
@@ -80,6 +80,9 @@ export function accountRoutes(deps: { now: () => Date; mailer: Mailer; appUrl: s
     const user = await User.findById(currentUser(req).id);
     if (!user) throw unauthorized();
     if (!(await bcrypt.compare(password, user.passwordHash))) throw badRequest("That password isn't right");
+    // Like leaving a Toli: settle up and hand over the Sutradhar role first.
+    const blocker = await tolisBlockingDeletion(user._id.toString());
+    if (blocker) throw clash(blocker);
     await deleteAccountData(user._id.toString(), deps.photos);
     clearRefreshCookie(res);
     res.status(204).end();

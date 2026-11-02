@@ -16,7 +16,7 @@ import { dayFromToday, type MockJournal } from '../data/social';
 import type { MockUser } from '../data/users';
 import { db, mockInviteCode, publicUser, saveTrips, session } from '../db';
 import { currentUser, errorResponse, latency } from './shared';
-import { canSeeChatPhoto } from './tolis';
+import { canSeeChatPhoto, toliNet } from './tolis';
 
 /** Words nobody may take as a username. */
 const RESERVED = new Set(['admin', 'tripwise', 'passport', 'join', 'api', 'login', 'signup', 'u', 'me', 'help', 'support']);
@@ -246,6 +246,16 @@ export const socialHandlers = [
     if (!user) return needLogin();
     const body = (await request.json().catch(() => ({}))) as { password?: string };
     if (body.password !== user.password) return errorResponse(400, 'VALIDATION', "That password isn't right");
+    // Like leaving a Toli: settle up and hand over the Sutradhar role first.
+    const mine = db.tolis.filter((t) => t.members.some((m) => m.userId === user.id));
+    for (const t of mine) {
+      if (t.members.find((m) => m.userId === user.id)!.role === 'sutradhar' && t.members.length > 1) return errorResponse(409, 'CONFLICT', `Pass the Sutradhar role in “${t.name}” to someone first.`);
+      if ((toliNet(t.id)[user.id] ?? 0) !== 0) return errorResponse(409, 'CONFLICT', `Settle up first in “${t.name}” — you still owe or are owed money there.`);
+    }
+    // Then they leave every Toli; one where they were the only member goes with them.
+    const alone = new Set(mine.filter((t) => t.members.length === 1).map((t) => t.id));
+    db.tolis = db.tolis.filter((t) => !alone.has(t.id));
+    for (const t of db.tolis) t.members = t.members.filter((m) => m.userId !== user.id);
     // Everything that was theirs goes.
     db.users = db.users.filter((u) => u.id !== user.id);
     db.itineraries = db.itineraries.filter((t) => t.ownerId !== user.id);

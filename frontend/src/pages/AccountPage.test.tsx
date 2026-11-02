@@ -6,7 +6,7 @@ import { screen, waitFor, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { profileApi } from '@/lib/api/endpoints';
 import { MOTION_STORAGE_KEY } from '@/lib/motionPreference';
-import { session } from '@/mocks/db';
+import { db, session } from '@/mocks/db';
 import { renderApp } from '@/test/render';
 
 describe('AccountPage', () => {
@@ -63,8 +63,15 @@ describe('AccountPage', () => {
     await user.click(within(await screen.findByRole('dialog')).getByRole('button', { name: 'Delete forever' }));
     expect(await within(danger).findByRole('alert')).toHaveTextContent("That password isn't right");
 
+    // Demo leads "Kerala Toli": like leaving it, the Sutradhar role must be passed on first.
     await user.clear(within(danger).getByLabelText('Your password'));
     await user.type(within(danger).getByLabelText('Your password'), 'password123');
+    await user.click(within(danger).getByRole('button', { name: 'Delete my account' }));
+    await user.click(within(await screen.findByRole('dialog')).getByRole('button', { name: 'Delete forever' }));
+    expect(await within(danger).findByRole('alert')).toHaveTextContent(/Pass the Sutradhar role in “Kerala Toli”/);
+
+    // With that Toli handed over (and settled), the account can go.
+    db.tolis = db.tolis.filter((t) => t.id !== 't_seed_kerala');
     await user.click(within(danger).getByRole('button', { name: 'Delete my account' }));
     await user.click(within(await screen.findByRole('dialog')).getByRole('button', { name: 'Delete forever' }));
     await waitFor(() => expect(router.state.location.pathname).toBe('/'));

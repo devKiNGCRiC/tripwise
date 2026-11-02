@@ -170,8 +170,10 @@ understand at once. ("Shakha" was rejected for its political association; "Kafil
   TripWise's catalogue places>" with an **Open in Maps** link to the phone's own maps app.
 - A Sahyatri's split is proposed and waits for a leader (the spec's "via Sujhav").
 - Deleting an account now also wipes its private trip data: Kushal contacts and check-ins, shared locations,
-  budget ranges, personal expenses and own Potli items. Open question for the owner: what happens to a
-  deleted account's Toli memberships (Sutradhar role, money owed).
+  budget ranges, personal expenses and own Potli items.
+- **Deleting an account while in Tolis** (the owner's decision): refused, like leaving a Toli, until its
+  owner has settled up and passed on the Sutradhar role in every Toli; then they leave every Toli, and a
+  Toli where they were the only member is removed with everything in it.
 
 ## Decisions while building Part 2 (2026-11-02)
 - Money is called **Lekha** ("Lekha · who paid, who owes"); Hisaab, Khata and Kharcha were avoided as Arabic/Persian.
