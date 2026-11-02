@@ -6,7 +6,7 @@
  * (next trip, friends, latest memory, AI plans today). Settings live on the Account tab.
  */
 import { useState } from 'react';
-import { Settings, Users } from 'lucide-react';
+import { HeartHandshake, Settings, Users } from 'lucide-react';
 import { Link } from 'react-router';
 import { LoadError } from '@/components/layout/LoadError';
 import { Skeleton } from '@/components/ui/Skeleton';
@@ -15,10 +15,12 @@ import { usePassport } from '@/features/passport/hooks';
 import { JournalSheet } from '@/features/passport/JournalSheet';
 import { PassportView } from '@/features/passport/PassportView';
 import { FriendsPanel, LatestMemoryPanel, NextTripPanel, QuotaPanel } from '@/features/passport/SidePanels';
+import { useWords } from '@/features/words/WordsProvider';
 import type { Stamp } from '@/lib/api/types';
 
-/** The two buttons on your own cover. */
+/** The buttons on your own cover: profile, friends and Kushal (family check-in). */
 function CoverActions() {
+  const { w } = useWords();
   const friends = useFriends();
   const waiting = friends.data?.incoming.length ?? 0;
   const count = friends.data?.friends.length;
@@ -36,6 +38,10 @@ function CoverActions() {
             {waiting}
           </span>
         )}
+      </Link>
+      <Link to="/kushal" className="inline-flex items-center gap-1.5 rounded-full bg-white/12 px-4 py-2 text-sm font-semibold text-white hover:bg-white/20">
+        <HeartHandshake aria-hidden className="size-4" />
+        {w.kushal}
       </Link>
     </>
   );

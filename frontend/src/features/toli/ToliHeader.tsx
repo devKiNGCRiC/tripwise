@@ -3,7 +3,8 @@
  * Sahyatris' faces, and (for leaders) the invite: "Invite on WhatsApp" opens WhatsApp with
  * the message and link already written; "Copy link" copies it.
  */
-import { Copy, Megaphone } from 'lucide-react';
+import { Copy, HeartHandshake, Megaphone } from 'lucide-react';
+import { Link } from 'react-router';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
@@ -59,6 +60,10 @@ export function ToliHeader({ toli }: { toli: Toli }) {
               </span>
             )}
             <span className="text-soft">You’re the {roleLabel(w, toli.me.role)}</span>
+            {/* Tell family you're well (Kushal), right from the trip. */}
+            <Link to="/kushal" className="inline-flex items-center gap-1 rounded-full bg-accent/12 px-3 py-1 font-semibold">
+              <HeartHandshake aria-hidden className="size-3.5" /> {w.kushal}
+            </Link>
           </div>
         </div>
         {toli.inviteUrl && (

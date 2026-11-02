@@ -32,6 +32,7 @@ export const routes: RouteObject[] = [
       { path: 't/:shareId', lazy: lazyPage(() => import('@/pages/SharedTripPage')) },
       { path: 'reset-password/:token', lazy: lazyPage(() => import('@/pages/ResetPasswordPage')) },
       { path: 'u/:username', lazy: lazyPage(() => import('@/pages/PublicPassportPage')) },
+      { path: 'kushal/:token', lazy: lazyPage(() => import('@/pages/KushalViewPage')) },
 
       // Only for logged-out visitors
       {
@@ -57,6 +58,7 @@ export const routes: RouteObject[] = [
           { path: 'tolis', lazy: lazyPage(() => import('@/pages/TolisPage')) },
           { path: 'tolis/:id', lazy: lazyPage(() => import('@/pages/ToliPage')) },
           { path: 'toli/join/:token', lazy: lazyPage(() => import('@/pages/ToliJoinPage')) },
+          { path: 'kushal', lazy: lazyPage(() => import('@/pages/KushalPage')) },
         ],
       },
 

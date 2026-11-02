@@ -8,6 +8,7 @@ import { Footer } from './Footer';
 import { MobileTabBar } from './MobileTabBar';
 import { Navbar } from './Navbar';
 import { ServerWakingBanner } from './ServerWakingBanner';
+import { KushalSync } from '@/features/kushal/KushalSync';
 import { WordsProvider } from '@/features/words/WordsProvider';
 import { AccountThemeSync } from '@/world/AccountThemeSync';
 
@@ -30,6 +31,7 @@ export function RootLayout() {
         <Navbar />
         <main id="main" className="flex-1">
           <AccountThemeSync />
+          <KushalSync />
           <Outlet />
         </main>
         <Footer />
