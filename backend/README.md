@@ -122,6 +122,12 @@ Limits are set in `src/config/plans.ts`. A new day starts at midnight India time
 | `GET`/`POST /tolis/:id/anurodh`, `POST …/anurodh/:rid/decide` | ✓ | Raise a hand in announcement mode; leaders allow (1 message, 30 min, 1 hour, whole trip), reply privately or decline |
 | `GET`/`POST /tolis/:id/expenses`, `DELETE …/expenses/:eid` | ✓ | Lekha: group expenses split among those who shared (equal / amounts / shares, in paise) and personal ones only the owner sees; `clientId` makes offline retries safe; deleting marks it deleted |
 | `POST /tolis/:id/settlements`, `GET /tolis/:id/lekha` | ✓ | Record a payment back (never deleted); balances, the fewest payments to settle up (with a `upi://pay` link when the payee shared a UPI ID), totals and TripWise's estimate |
+| `GET`/`POST /tolis/:id/splits`, `POST …/splits/:sid/approve`, `DELETE …/splits/:sid` | ✓ | Dharas: split a day (or fixed groups for college/office) meeting at a Sangam; a Sahyatri's split waits for a leader |
+| `POST …/splits/:sid/dharas/:did/join` \| `leave`, `POST`/`DELETE …/splits/:sid/here` | ✓ | Move between Dharas (one per split); "I'm here" at the Sangam and the headcount |
+| `PUT`/`DELETE /tolis/:id/location`, `GET /tolis/:id/locations` | ✓ | Share where you are for 1 hour / until the Sangam / until the trip ends (last point only, removed when it ends); who is near which catalogue place |
+| `GET`/`POST /tolis/:id/notes`, `PATCH`/`DELETE …/notes/:nid` | ✓ | Notes for the whole trip or a day (the author or leaders edit) |
+| `GET`/`POST /tolis/:id/potli`, `POST`/`DELETE …/potli/:pid/claim`, `PATCH`/`DELETE …/potli/:pid` | ✓ | Potli: group items someone claims and packs; my own list only I see |
+| `GET`/`PATCH /me/kushal`, `POST`/`DELETE /me/kushal/contacts…`, `POST /me/kushal/checkin`, `GET /kushal/:token` | ✓ / | Kushal: family contacts with private links, automatic check-ins on/off, check in; the family's page (no login) shows only the first name and the latest check-in, rounded |
 
 `PATCH /tolis/:id/me` also takes `upi` (a UPI ID shared with that Toli only). Nobody leaves, or is removed,
 while they owe or are owed money (409 "Settle up first").

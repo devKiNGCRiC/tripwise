@@ -1,6 +1,6 @@
 # Toli — planning and travelling together (design)
 
-**Date:** 2026-11-01 · **Status:** approved by the owner · Part 1 built (2026-11-01) · Part 2 built (2026-11-02) · **Roadmap:** step 5 ("Crew mode")
+**Date:** 2026-11-01 · **Status:** approved by the owner · Part 1 built (2026-11-01) · Part 2 built (2026-11-02) · Part 3a built (2026-11-02) · **Roadmap:** step 5 ("Crew mode")
 
 ## Why
 Group trips break down in the same places, in the owner's words: planning, dates, budget, getting everyone
@@ -161,6 +161,17 @@ understand at once. ("Shakha" was rejected for its political association; "Kafil
 - Kushal links: random token per contact, revocable; show only the latest check-in (place name + time,
   rounded position), never a history.
 - Screen layouts follow the Seven Worlds design; a visual mockup is shown to the owner before Part 1's UI.
+
+## Decisions while building Part 3a (2026-11-02)
+- Part 3 is split: **3a** (Dharas and Sangam, where are my Sahyatris, Kushal, notes, Potli) is built; **3b**
+  (album, voice notes, offline trip) follows.
+- English names: Dhara → Split group, Sangam → Meet-up, Kushal → Family check-in, Potli → Packing list.
+- No map drawn in the page (would need a map library and tile service): positions read "near <the nearest of
+  TripWise's catalogue places>" with an **Open in Maps** link to the phone's own maps app.
+- A Sahyatri's split is proposed and waits for a leader (the spec's "via Sujhav").
+- Deleting an account now also wipes its private trip data: Kushal contacts and check-ins, shared locations,
+  budget ranges, personal expenses and own Potli items. Open question for the owner: what happens to a
+  deleted account's Toli memberships (Sutradhar role, money owed).
 
 ## Decisions while building Part 2 (2026-11-02)
 - Money is called **Lekha** ("Lekha · who paid, who owes"); Hisaab, Khata and Kharcha were avoided as Arabic/Persian.

@@ -9,7 +9,7 @@ You can then save it, download it as a PDF, or share it with your friends.
 > 🚧 **Status: in active development.** The website and the real backend both work: accounts, passports and
 > friends, saved trips, real AI itineraries (Gemini, with Groq as backup) grounded in a catalogue of 1,028 real
 > places, TripWise's own free Quick plan, and Tolis for planning together (polls, suggestions, a group
-> chat and fair money splitting). Next: Toli on-trip tools, the "Ask TripWise" chat, then launch on Cloudflare Pages +
+> chat, fair money splitting and on-the-trip tools). Next: the Toli album and offline trip, the "Ask TripWise" chat, then launch on Cloudflare Pages +
 > Render. See the [roadmap](#-roadmap).
 
 ---
@@ -37,7 +37,9 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 💬 | Chaupal, the Toli's chat: replies, @mentions, photos, live poll and suggestion cards, messages that wait for signal and send themselves; announcement mode where Sahyatris raise a hand (Anurodh); activity feed | ✅ Done |
 | 💰 | **Lekha** (लेखा), the Toli's money: expenses split only among those who shared them (equally, by amounts or by shares, to the paisa), private personal expenses, who owes whom, the fewest payments to settle up with **Pay with UPI** or mark settled, totals against TripWise's estimate; works without signal | ✅ Done |
 | 🔤 | Indian or English names: Toli, Sahyatri, Chaupal… or Group, Member, Group chat — each person chooses (saved on the account) | ✅ Done |
-| 🧭 | On the trip: groups within the Toli, "where is my Sahyatri", family check-ins, notes, packing list and an album | 📅 Next |
+| 🧭 | On the trip: split a day into **Dharas** that meet again at a **Sangam** ("I'm here" headcount; fixed groups for college and office trips), **"Where are my Sahyatris?"** (opt-in, time-limited, Toli only, "near <place>" + Open in Maps), shared notes and the **Potli** packing list | ✅ Done |
+| 💌 | **Kushal** (कुशल), family check-in for Toli and solo trips: private links for family (no account), latest check-in only (rounded to ~1 km), Send on WhatsApp, automatic check-ins while TripWise is open | ✅ Done |
+| 📸 | Toli album, voice notes in Chaupal, and the trip offline on the phone | 📅 Next |
 | 🔑 | Account: preferences that pre-fill the planner, change password, forgot password, sign out everywhere, delete my data | ✅ Done |
 | 📊 | Admin dashboard: analytics, destinations, users, moderation | 📅 Planned |
 | 📲 | React Native mobile app | 📅 Phase 2 |
@@ -162,7 +164,8 @@ Add their keys to `backend/.env` (names in `backend/.env.example`); TripWise swi
 - [x] **Profile, Passport & Friends:** account, journals, Yatra marks, friends and public passports
 - [x] **Toli, part 1:** plan trips together: invites, roles, suggestions, polls, budget comfort, Chaupal chat
 - [x] **Toli, part 2 (Lekha):** fair expense splitting, settle up with UPI, totals; Indian or English names
-- [ ] **Toli, part 3:** groups and "where is my Sahyatri", family check-ins, notes, packing list, album
+- [x] **Toli, part 3a:** Dharas and Sangam, where are my Sahyatris, Kushal family check-ins, notes, Potli
+- [ ] **Toli, part 3b:** Toli album, voice notes, offline trip
 - [ ] **Launch:** deploy to Cloudflare Pages + Render, installable PWA with offline trips
 - [ ] **Premium:** paid plan with Razorpay
 - [ ] **Phase 2:** React Native app, social sharing, AI chat assistant
