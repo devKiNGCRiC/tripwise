@@ -49,13 +49,16 @@ function readable(tripId: unknown, userId: string) {
   return trip && toliAccess(trip, userId).read ? trip : null;
 }
 
+/** "a", "a and b", "a, b and c". */
+const listOf = (names: string[]) => (names.length <= 1 ? (names[0] ?? '') : `${names.slice(0, -1).join(', ')} and ${names.at(-1)}`);
+
 /** A demo answer from the trip and the catalogue. */
 function demoAnswer(destinationText: string): Stored {
   const text = destinationText.toLowerCase();
   const destination = seedDestinations.find((d) => text.includes(d.name.toLowerCase()) || d.name.toLowerCase().includes(text.split(',')[0].trim()));
   const top = destination ? seedPlaces.filter((p) => p.destination === destination.slug).sort((a, b) => b.fame - a.fame).slice(0, 3) : [];
   const parts = [
-    top.length ? `Near your plan in ${destination!.name}, ${top.map((p) => p.name).join(', ')} are well worth a stop.` : `For ${destinationText}, start early and keep the afternoons light.`,
+    top.length ? `Near your plan in ${destination!.name}, ${listOf(top.map((p) => p.name))} ${top.length > 1 ? 'are' : 'is'} well worth a stop.` : `For ${destinationText}, start early and keep the afternoons light.`,
     destination?.bestMonths.length ? `The best months here are ${destination.bestMonths.map((m) => MONTHS[m - 1]).join(', ')}.` : '',
     destination ? `Plan on about ₹${destination.avgDailyCost.amount.toLocaleString('en-IN')} a day per person.` : '',
     '(This is the demo — the real app asks TripWise’s AI with your whole trip and the forecast.)',

@@ -14,6 +14,7 @@ import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useToast } from '@/components/ui/Toast';
+import { AskTripWise } from '@/features/ask/AskTripWise';
 import { useDeleteTrip, useRegenerateDay, useTrip } from '@/features/trips/hooks';
 import { ItineraryView } from '@/features/trips/ItineraryView';
 import { TripActions } from '@/features/trips/TripActions';
@@ -78,6 +79,8 @@ export default function TripPage() {
           </>
         }
       />
+      {/* Questions about this trip, answered from the plan, nearby places and the forecast. */}
+      <AskTripWise tripId={itinerary.id} />
       {confirming && (
         <ConfirmDialog
           title="Delete this trip?"

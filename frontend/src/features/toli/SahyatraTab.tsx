@@ -10,6 +10,7 @@ import { Lightbulb } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import { Skeleton } from '@/components/ui/Skeleton';
+import { AskTripWise } from '@/features/ask/AskTripWise';
 import { useTrip } from '@/features/trips/hooks';
 import { useWords } from '@/features/words/WordsProvider';
 import { toliApi } from '@/lib/api/endpoints';
@@ -155,6 +156,7 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
           </section>
         )}
         <Notes toli={toli} days={trip.data?.days.length ?? 0} />
+        {toli.tripId && <AskTripWise tripId={toli.tripId} />}
       </aside>
     </div>
   );
