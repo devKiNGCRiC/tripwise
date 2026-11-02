@@ -13,6 +13,7 @@ import { seedDestinations } from '../scripts/seed-destinations.js';
 import type { AiChain } from '../src/services/ai/chain.js';
 import type { Prompt } from '../src/services/ai/prompt.js';
 import type { DayForecast } from '../src/services/ask/prompt.js';
+import { TripChat } from '../src/db/models/index.js';
 import { quickUser } from './helpers/auth.js';
 import { clearTestDb, startTestDb, stopTestDb } from './helpers/db.js';
 import { failingChain, fakeAiChain, tripRequest } from './helpers/fakeAi.js';
@@ -139,6 +140,16 @@ describe('Ask TripWise', () => {
     expect(over.body.error.code).toBe('QUOTA_EXCEEDED');
     expect((await as(app, asha.token).post(`/itineraries/${tripId}/ask`, { question: ' ' })).status).toBe(400);
     expect((await as(app, asha.token).post(`/itineraries/${tripId}/ask`, { question: 'x'.repeat(301) })).status).toBe(400);
+  });
+
+  it('forgets the conversations when the trip is deleted', async () => {
+    const { chain } = askingModel();
+    const app = appWith(chain);
+    const { asha, tripId } = await hampiTrip(app);
+    await as(app, asha.token).post(`/itineraries/${tripId}/ask`, { question: 'Anything nice?' });
+    expect(await TripChat.countDocuments()).toBe(1);
+    expect((await as(app, asha.token).del(`/itineraries/${tripId}`)).status).toBe(204);
+    expect(await TripChat.countDocuments()).toBe(0);
   });
 
   it('gives the question back when every AI model fails', async () => {

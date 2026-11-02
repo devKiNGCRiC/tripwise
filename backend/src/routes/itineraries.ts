@@ -22,7 +22,7 @@ import { randomBytes } from 'node:crypto';
 import { Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 import { PLANS } from '../config/plans.js';
-import { Itinerary, Journal, Toli, type ItineraryDoc, type ToliDoc } from '../db/models/index.js';
+import { Itinerary, Journal, Toli, TripChat, type ItineraryDoc, type ToliDoc } from '../db/models/index.js';
 import { publicItinerary } from '../db/toPublic.js';
 import { AppError, forbidden, noCatalogue, notFound, quotaExceeded } from '../lib/errors.js';
 import { tripDates } from '../lib/dates.js';
@@ -344,7 +344,8 @@ export function itineraryRoutes(deps: { ai: AiChain; now: () => Date; photos: Ph
     const trip = await findChangeable(String(req.params.id), currentUser(req));
     // A deleted Sahyatra leaves its Toli without a plan.
     if (trip.toliId) await Toli.updateOne({ _id: trip.toliId, tripId: trip._id.toString() }, { tripId: null });
-    // Its journal and photos go with it.
+    // Its journal and photos, and everyone's Ask TripWise conversations about it, go with it.
+    await TripChat.deleteMany({ tripId: trip._id.toString() });
     const journal = await Journal.findOneAndDelete({ itineraryId: trip._id }).lean();
     await Promise.all((journal?.photos ?? []).map((p) => deps.photos.remove(p.id)));
     await trip.deleteOne();

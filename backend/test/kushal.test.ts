@@ -10,7 +10,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 import request from 'supertest';
 import { createApp } from '../src/app.js';
 import { seedDestinations } from '../scripts/seed-destinations.js';
-import { KushalCheckIn, KushalContact, PotliItem, ToliBudget, ToliExpense, ToliLocation } from '../src/db/models/index.js';
+import { KushalCheckIn, KushalContact, PotliItem, ToliBudget, ToliExpense, ToliLocation, TripChat } from '../src/db/models/index.js';
 import { quickUser, signUp } from './helpers/auth.js';
 import { clearTestDb, startTestDb, stopTestDb } from './helpers/db.js';
 import { fakeChain } from './helpers/fakeAi.js';
@@ -116,10 +116,11 @@ describe('Kushal', () => {
     await request(app).put(`/api/tolis/${toli.id}/budget`).set('Authorization', `Bearer ${asha.token}`).send({ low: 1000, high: 2000 });
     await as(asha.token).post(`/tolis/${toli.id}/potli`, { text: 'Inhaler', mine: true });
     await as(asha.token).post(`/tolis/${toli.id}/expenses`, { clientId: 'p', title: 'Chai', amount: 2000, category: 'food', method: 'cash', personal: true });
+    await TripChat.create({ tripId: 'some-trip', userId: asha.id, messages: [{ role: 'user', text: 'Hi', at: new Date() }] });
 
     expect((await request(app).delete('/api/me').set('Authorization', `Bearer ${asha.token}`).send({ password: 'password123' })).status).toBe(204);
     expect((await view(tokenOf(link))).status).toBe(404);
-    for (const model of [KushalContact, KushalCheckIn, ToliLocation, ToliBudget, PotliItem]) expect(await model.countDocuments()).toBe(0);
+    for (const model of [KushalContact, KushalCheckIn, ToliLocation, ToliBudget, PotliItem, TripChat]) expect(await model.countDocuments()).toBe(0);
     expect(await ToliExpense.countDocuments({ personal: true })).toBe(0);
   });
 

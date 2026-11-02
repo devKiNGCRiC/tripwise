@@ -273,6 +273,8 @@ export const socialHandlers = [
     for (const key of Object.keys(db.toliBudgets)) if (key.endsWith(`|${user.id}`)) delete db.toliBudgets[key];
     db.toliExpenses = db.toliExpenses.filter((e) => !(e.personal && e.addedBy === user.id));
     db.potliItems = db.potliItems.filter((i) => !(i.mine && i.addedBy === user.id));
+    for (const key of Object.keys(db.tripChats)) if (key.endsWith(`|${user.id}`)) delete db.tripChats[key];
+    delete db.asks[user.id];
     saveTrips();
     session.clear();
     return new HttpResponse(null, { status: 204 });

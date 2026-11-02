@@ -209,7 +209,8 @@ export const itineraryHandlers = [
     db.itineraries = db.itineraries.filter((t) => t !== trip);
     // A deleted Sahyatra leaves its Toli without a plan.
     for (const toli of db.tolis) if (toli.tripId === trip.id) toli.tripId = null;
-    // Its journal and photos go with it.
+    // Its journal and photos, and Ask TripWise conversations about it, go with it.
+    for (const key of Object.keys(db.tripChats)) if (key.startsWith(`${trip.id}|`)) delete db.tripChats[key];
     const journal = db.journals.find((j) => j.itineraryId === trip.id);
     for (const photo of journal?.photos ?? []) delete db.photos[photo.id];
     db.journals = db.journals.filter((j) => j !== journal);

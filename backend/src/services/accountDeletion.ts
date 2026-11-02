@@ -3,7 +3,8 @@
  * Everything that belongs to the traveller goes: trips, journals and their photos, daily
  * usage, logins, reset links, the profile photo, friendships, requests and blocks — and their
  * private trip data: Kushal contacts (their family links stop working) and check-ins, any
- * location they were sharing, their budget ranges, personal expenses and own packing lists.
+ * location they were sharing, their budget ranges, personal expenses and own packing lists, and
+ * their Ask TripWise conversations.
  *
  * Tolis (the owner's rule, the same as leaving one): an account can't be deleted while its owner
  * owes or is owed money in a Toli, or is the Sutradhar of a Toli others are in — they settle up
@@ -33,6 +34,7 @@ import {
   ToliNote,
   ToliSettlement,
   ToliSplit,
+  TripChat,
   Usage,
   User,
 } from '../db/models/index.js';
@@ -71,6 +73,9 @@ async function leaveTolis(userId: string): Promise<void> {
 export async function deleteAccountData(userId: string, photos: PhotoStore): Promise<void> {
   // Out of their Tolis first (the caller has checked nothing is owed and no Toli is left leaderless).
   await leaveTolis(userId);
+  // Their Ask TripWise conversations, and any about their own trips (which go below).
+  const ownTrips = (await Itinerary.find({ ownerId: userId }, { _id: 1 }).lean()).map((t) => t._id.toString());
+  await TripChat.deleteMany({ $or: [{ userId }, { tripId: { $in: ownTrips } }] });
   // Photos next: they may live outside MongoDB.
   await photos.removeAllOf(userId);
   await Promise.all([
