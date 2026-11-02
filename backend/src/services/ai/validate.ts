@@ -24,7 +24,7 @@ export class InvalidAiOutput extends Error {
 const CLOCK = /^([01]\d|2[0-3]):[0-5]\d$/;
 
 /** Read JSON, tolerating a ```json … ``` fence some models wrap around it. */
-function readJson(text: string): unknown {
+export function readJson(text: string): unknown {
   const cleaned = text
     .trim()
     .replace(/^```(?:json)?\s*/i, '')
