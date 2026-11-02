@@ -29,7 +29,7 @@ describe('routing', () => {
   it('lets admins into /admin', async () => {
     session.set('u_admin');
     renderApp('/admin');
-    expect(await screen.findByRole('heading', { name: 'Admin dashboard' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Admin' })).toBeInTheDocument();
   });
 
   it('redirects logged-in users away from /login', async () => {

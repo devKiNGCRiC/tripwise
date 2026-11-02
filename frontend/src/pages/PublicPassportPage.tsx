@@ -8,6 +8,7 @@ import { Lock, UserPlus } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 import { buttonClasses } from '@/components/ui/Button';
 import { Skeleton } from '@/components/ui/Skeleton';
+import { ReportPassport } from '@/features/admin/ReportPassport';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { useFriendAction } from '@/features/friends/hooks';
 import { usePublicPassport } from '@/features/passport/hooks';
@@ -42,6 +43,12 @@ function RelationButton({ username, relation }: { username: string; relation: Re
 }
 
 /** Route "/u/:username". */
+/** Report — for signed-in visitors on someone else's passport. */
+function ReportIfAllowed({ username }: { username: string }) {
+  const { status, user } = useAuth();
+  return status === 'authenticated' && user?.username !== username ? <ReportPassport username={username} /> : null;
+}
+
 export default function PublicPassportPage() {
   const { username = '' } = useParams();
   const passport = usePublicPassport(username);
@@ -75,7 +82,12 @@ export default function PublicPassportPage() {
           </div>
         </div>
       )}
-      {passport.data && <PassportView passport={passport.data.passport} mine={false} coverActions={<RelationButton username={passport.data.passport.cover.username} relation={passport.data.relation} />} />}
+      {passport.data && <PassportView passport={passport.data.passport} mine={false} coverActions={
+            <>
+              <RelationButton username={passport.data.passport.cover.username} relation={passport.data.relation} />
+              <ReportIfAllowed username={passport.data.passport.cover.username} />
+            </>
+          } />}
     </div>
   );
 }

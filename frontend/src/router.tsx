@@ -67,7 +67,7 @@ export const routes: RouteObject[] = [
         path: 'admin',
         Component: AdminRoute,
         children: [
-          { index: true, element: <ComingSoonPage title="Admin dashboard" /> },
+          { index: true, lazy: lazyPage(() => import('@/pages/AdminPage')) },
           { path: '*', element: <ComingSoonPage title="Admin" /> },
         ],
       },
