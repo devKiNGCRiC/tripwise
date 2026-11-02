@@ -10,17 +10,25 @@
  *   POST   /api/tolis/:id/splits/:sid/dharas/:did/leave  → { split }
  *   POST   /api/tolis/:id/splits/:sid/here               → { split }  "I'm here" at the Sangam
  *   DELETE /api/tolis/:id/splits/:sid/here               → { split }
+ *
+ *   PUT    /api/tolis/:id/location   { lat, lon, accuracy?, for? } → { sharing: { until } }
+ *            `for` ('1h' | 'sangam' | 'trip') starts sharing; without it, only updates an active share
+ *   DELETE /api/tolis/:id/location   → 204   stop sharing (the point is deleted)
+ *   GET    /api/tolis/:id/locations  → { me, locations }   who is sharing, near which place, and when
+ * Sharing is the sharer's own choice, ends by itself, keeps only the last point and is seen
+ * only by the Toli's current members.
  */
 import { Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 import { z } from 'zod';
-import { ToliSplit } from '../db/models/index.js';
-import { badRequest, forbidden, notFound } from '../lib/errors.js';
+import { ToliLocation, ToliSplit } from '../db/models/index.js';
+import { badRequest, clash, forbidden, notFound } from '../lib/errors.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
 import { peopleOf } from '../services/lekha.js';
 import { loadMember, logActivity, requireLeader } from '../services/tolis.js';
 import { isLeader, type ToliRole } from '../services/toliRules.js';
-import { headcount } from '../services/yatraRules.js';
+import { nearbyPlace, nextSangamOf, tripEndOf } from '../services/yatra.js';
+import { headcount, isValidPosition, mapsLink, sharingUntil } from '../services/yatraRules.js';
 
 /** A new split. */
 const splitSchema = z.object({
@@ -37,6 +45,16 @@ const splitSchema = z.object({
     .max(6, 'At most six Dharas.'),
   sangam: z.object({ place: z.string().trim().min(1, 'Say where to meet.').max(120), at: z.iso.datetime() }).optional(),
 });
+
+/** A position from the phone (and, to start sharing, for how long). */
+const locationSchema = z
+  .object({
+    lat: z.number(),
+    lon: z.number(),
+    accuracy: z.number().min(0).max(100_000).optional(),
+    for: z.enum(['1h', 'sangam', 'trip']).optional(),
+  })
+  .refine((p) => isValidPosition(p.lat, p.lon), 'That isn’t a real position.');
 
 /** A stored split. */
 type SplitDoc = InstanceType<typeof ToliSplit>;
@@ -163,6 +181,62 @@ export function yatraRoutes(now: () => Date): Router {
     split.here = split.here.filter((id) => id !== me);
     await split.save();
     res.json({ split: await splitView(split, memberIds) });
+  });
+
+  // PUT /tolis/:id/location — start sharing (with `for`) or update my point.
+  router.put('/tolis/:id/location', auth, async (req, res) => {
+    const me = currentUser(req).id;
+    const { toli } = await loadMember(String(req.params.id), me);
+    const input = locationSchema.parse(req.body);
+    const toliId = toli._id.toString();
+    const at = now();
+    let until: string | null;
+    if (input.for) {
+      until = sharingUntil(input.for, at.toISOString(), await nextSangamOf(toliId, at), await tripEndOf(toli));
+      if (!until) throw clash(input.for === 'sangam' ? 'There’s no Sangam coming up to share until.' : 'This Toli has no trip dates to share until.');
+    } else {
+      const current = await ToliLocation.findOne({ toliId, userId: me, until: { $gt: at } });
+      if (!current) throw clash('You aren’t sharing where you are — choose for how long first.');
+      until = current.until.toISOString();
+    }
+    await ToliLocation.updateOne(
+      { toliId, userId: me },
+      { $set: { lat: input.lat, lon: input.lon, at, until: new Date(until), ...(input.accuracy !== undefined ? { accuracy: input.accuracy } : {}) } },
+      { upsert: true },
+    );
+    res.json({ sharing: { until } });
+  });
+
+  // DELETE /tolis/:id/location — stop sharing now.
+  router.delete('/tolis/:id/location', auth, async (req, res) => {
+    const me = currentUser(req).id;
+    const { toli } = await loadMember(String(req.params.id), me);
+    await ToliLocation.deleteOne({ toliId: toli._id.toString(), userId: me });
+    res.status(204).end();
+  });
+
+  // GET /tolis/:id/locations — who is sharing (current members only; ended shares never shown).
+  router.get('/tolis/:id/locations', auth, async (req, res) => {
+    const me = currentUser(req).id;
+    const { toli } = await loadMember(String(req.params.id), me);
+    const memberIds = toli.members.map((m) => m.userId.toString());
+    // The TTL clean-up runs about once a minute, so ended shares are also filtered here.
+    const points = await ToliLocation.find({ toliId: toli._id.toString(), userId: { $in: memberIds }, until: { $gt: now() } }).lean();
+    const person = await peopleOf(points.map((p) => p.userId));
+    const mine = points.find((p) => p.userId === me);
+    const others = points.filter((p) => p.userId !== me);
+    res.json({
+      me: mine ? { until: mine.until.toISOString() } : null,
+      locations: await Promise.all(
+        others.map(async (p) => ({
+          person: person(p.userId),
+          near: await nearbyPlace(p.lat, p.lon),
+          at: p.at.toISOString(),
+          until: p.until.toISOString(),
+          mapsLink: mapsLink(p.lat, p.lon),
+        })),
+      ),
+    });
   });
 
   return router;

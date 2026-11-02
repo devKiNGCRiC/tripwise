@@ -28,7 +28,7 @@ import { randomBytes } from 'node:crypto';
 import { Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 import { z } from 'zod';
-import { Itinerary, Toli, ToliActivity, ToliBudget, User } from '../db/models/index.js';
+import { Itinerary, Toli, ToliActivity, ToliBudget, ToliLocation, User } from '../db/models/index.js';
 import { clash, forbidden, notFound } from '../lib/errors.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
 import { unreadCount } from '../services/chaupal.js';
@@ -242,8 +242,9 @@ export function tolisRoutes(deps: { now: () => Date; appUrl: string }): Router {
     if ((await memberBalance(toli._id.toString(), targetId)) !== 0) throw clash('Settle up first — this Sahyatri still owes or is owed money in the Lekha.');
     toli.members.pull({ userId: target.userId });
     await toli.save();
-    // Their private budget range goes with them.
+    // Their private budget range and any shared location go with them.
     await ToliBudget.deleteOne({ toliId: toli._id.toString(), userId: targetId });
+    await ToliLocation.deleteOne({ toliId: toli._id.toString(), userId: targetId });
     await logActivity(toli._id.toString(), me, targetId === me ? 'left' : 'removed', targetId === me ? {} : { userId: targetId }, deps.now());
     res.status(204).end();
   });
