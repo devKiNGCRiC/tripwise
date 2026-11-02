@@ -1,6 +1,6 @@
 # Ask TripWise — a question box on every trip (design)
 
-**Date:** 2026-11-02 · **Status:** decided by the builder at the owner's request ("do the best and what you
+**Date:** 2026-11-02 · **Status:** built (2026-11-02) · decided by the builder at the owner's request ("do the best and what you
 recommended") · **Roadmap:** step 4
 
 ## Why

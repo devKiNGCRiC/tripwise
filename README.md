@@ -9,7 +9,7 @@ You can then save it, download it as a PDF, or share it with your friends.
 > 🚧 **Status: in active development.** The website and the real backend both work: accounts, passports and
 > friends, saved trips, real AI itineraries (Gemini, with Groq as backup) grounded in a catalogue of 1,028 real
 > places, TripWise's own free Quick plan, and Tolis for planning together (polls, suggestions, a group
-> chat, fair money splitting and on-the-trip tools). Next: the Toli album and offline trip, the "Ask TripWise" chat, then launch on Cloudflare Pages +
+> chat, fair money splitting and on-the-trip tools). Next: the admin dashboard, then launch on Cloudflare Pages +
 > Render. See the [roadmap](#-roadmap).
 
 ---
@@ -27,6 +27,7 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 🧭 | Explore 50 destinations (44 in India across all seven worlds, 6 abroad) by world, vibe, budget and best month; destination guides with their top places | ✅ Done |
 | 📍 | Places catalogue: 1,028 real places across 44 Indian destinations in all seven worlds (Wikidata, credited Commons photos) | ✅ Done |
 | 🧠 | AI plans grounded in real places; TripWise's own planner as a free, unlimited Quick plan and when the AI is down | ✅ Done |
+| 💬 | **Ask TripWise**: ask anything about a trip — answered from your plan, real places nearby (with chips) and the MET Norway forecast; follow-up questions; private per person, also on a Toli's trip (20 questions a day free) | ✅ Done |
 | 🪄 | Trip planner wizard + real AI itineraries that appear day by day (5 free plans a day) | ✅ Done |
 | 🎟️ | Day-by-day itinerary (timed stops, transfers, costs), regenerate a day, PDF, share link | ✅ Done |
 | ⚡ | Similar trips served instantly from a plan cache (free, doesn't use the daily allowance) | ✅ Done |
@@ -160,7 +161,7 @@ Add their keys to `backend/.env` (names in `backend/.env.example`); TripWise swi
 - [ ] **Admin:** dashboard and management tools, plus end-to-end tests
 - [x] **Backend:** Express API, MongoDB models, JWT auth, Gemini + Groq integration, streaming, caching and quotas
 - [x] **Own planner:** places catalogue (Wikidata) + grounded AI plans, free unlimited Quick plans
-- [ ] **"Ask TripWise" agent:** chat on each trip with weather, routes and places as tools
+- [x] **"Ask TripWise":** questions on each trip, grounded in the plan, nearby catalogue places and the forecast
 - [x] **Profile, Passport & Friends:** account, journals, Yatra marks, friends and public passports
 - [x] **Toli, part 1:** plan trips together: invites, roles, suggestions, polls, budget comfort, Chaupal chat
 - [x] **Toli, part 2 (Lekha):** fair expense splitting, settle up with UPI, totals; Indian or English names

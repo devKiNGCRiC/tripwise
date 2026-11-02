@@ -101,6 +101,7 @@ Limits are set in `src/config/plans.ts`. A new day starts at midnight India time
 | `POST /itineraries/quick` | ✓ | TripWise's own plan from the catalogue: no AI, no quota (404 `NO_CATALOGUE` elsewhere) |
 | `GET /itineraries`, `/itineraries/:id`, `DELETE /itineraries/:id` | ✓ | My trips |
 | `POST /itineraries/:id/days/:n/regenerate` | ✓ | A fresh idea for one day |
+| `GET`/`POST`/`DELETE /itineraries/:id/ask` | ✓ | Ask TripWise: my conversation about a trip (owner or Toli members), ask a question → `{ reply, quota }` (20 a day free; given back if the AI is down), start over |
 | `POST /itineraries/:id/share`, `GET /share/:shareId` | ✓ / | Share link / open a shared trip |
 | `GET /me/quota` | ✓ | Today's AI plans used, limit and reset time |
 | `GET`/`PATCH /me/profile`, `PUT`/`DELETE /me/avatar` | ✓ | Profile, preferences, privacy, theme; profile photo |
