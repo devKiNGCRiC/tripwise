@@ -10,6 +10,10 @@
  *   GET   /api/admin/actions        → { actions }  the audit log (last 100)
  *   GET   /api/admin/destinations   → { destinations }  the catalogue with places and trips (30 days)
  *   PATCH /api/admin/destinations/:slug { hidden } → { destination }  hide from Explore (or show again)
+ *   GET   /api/admin/reports?status=open|dismissed|actioned → { reports }  reported public passports
+ *   POST  /api/admin/reports/:id   { action: dismiss | remove-content | block } → { report }
+ *                                   remove-content clears the bio and photo and makes the passport
+ *                                   friends-only; block blocks the account (its sessions end)
  *
  * Privacy first: admins see counts and account basics only — never anyone's trips, journals,
  * Toli chats, money, budgets, locations, Kushal links or Ask TripWise questions.
@@ -17,7 +21,7 @@
 import { Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 import { z } from 'zod';
-import { AdminAction, Destination, Itinerary, Place, Toli, Usage, User, type UserDoc } from '../db/models/index.js';
+import { AdminAction, Avatar, Destination, Itinerary, Place, Report, Toli, Usage, User, type UserDoc } from '../db/models/index.js';
 import { clash, notFound } from '../lib/errors.js';
 import { requireAdmin } from '../middleware/admin.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
@@ -178,6 +182,62 @@ export function adminRoutes(now: () => Date): Router {
     if (!destination) throw notFound('That destination isn’t in the catalogue.');
     await logAdmin(currentUser(req).id, hidden ? 'hide' : 'show', 'destination', slug, destination.name, hidden ? 'hidden from Explore' : 'shown in Explore', now());
     res.json({ destination: (await adminDestinations([slug]))[0] });
+  });
+
+  // GET /admin/reports — reported passports (open ones by default), newest first.
+  router.get('/admin/reports', ...guard, async (req, res) => {
+    const status = z.enum(['open', 'dismissed', 'actioned']).catch('open').parse(req.query.status);
+    const reports = await Report.find({ status }).sort({ createdAt: -1, _id: -1 }).limit(100).lean();
+    const people = await User.find({ _id: { $in: [...new Set(reports.flatMap((r) => [r.reporterId, r.targetId]))] } }, { name: 1, username: 1, bio: 1, blocked: 1 }).lean();
+    const byId = new Map(people.map((p) => [p._id.toString(), p]));
+    // Who reported (account basics) and the reported passport's public bio — nothing else.
+    const card = (id: string) => {
+      const p = byId.get(id);
+      return p ? { id, name: p.name, username: p.username ?? '', bio: p.bio ?? '', blocked: !!p.blocked } : { id, name: 'Deleted account', username: '', bio: '', blocked: false };
+    };
+    res.json({
+      reports: reports.map((r) => ({
+        id: r._id.toString(),
+        reason: r.reason,
+        ...(r.note ? { note: r.note } : {}),
+        status: r.status,
+        ...(r.action ? { action: r.action } : {}),
+        reporter: (({ id, name, username }) => ({ id, name, username }))(card(r.reporterId)),
+        target: card(r.targetId),
+        createdAt: r.createdAt.toISOString(),
+      })),
+    });
+  });
+
+  // POST /admin/reports/:id — decide a report.
+  router.post('/admin/reports/:id', ...guard, async (req, res) => {
+    const me = currentUser(req).id;
+    const { action } = z.object({ action: z.enum(['dismiss', 'remove-content', 'block']) }).parse(req.body);
+    const id = String(req.params.id);
+    const report = isValidObjectId(id) ? await Report.findById(id) : null;
+    if (!report) throw notFound('That report isn’t here.');
+    const target = await User.findById(report.targetId);
+    const at = now();
+    if (target && action !== 'dismiss') {
+      if (target.role === 'admin') throw clash('Admins can’t be changed here.');
+      if (action === 'remove-content') {
+        target.bio = '';
+        target.set('avatar', null);
+        target.set('privacy.passport', 'friends');
+        await Avatar.deleteOne({ userId: target._id });
+      } else {
+        target.blocked = true;
+        await revokeAllSessions(target._id.toString(), at);
+      }
+      await target.save();
+    }
+    report.status = action === 'dismiss' ? 'dismissed' : 'actioned';
+    report.action = action;
+    report.decidedBy = me;
+    report.decidedAt = at;
+    await report.save();
+    await logAdmin(me, 'report', 'report', id, target?.name ?? 'Deleted account', action === 'dismiss' ? 'dismissed' : action === 'block' ? 'blocked the account' : 'removed content', at);
+    res.json({ report: { id, status: report.status, action } });
   });
 
   // GET /admin/actions — the audit log, newest first.

@@ -17,6 +17,7 @@ export { Photo } from './photo.js';
 export { Poll } from './poll.js';
 export { PlanCache } from './planCache.js';
 export { PotliItem } from './potliItem.js';
+export { Report, REPORT_REASONS } from './report.js';
 export { Session } from './session.js';
 export { Sujhav } from './sujhav.js';
 export { Toli, type ToliDoc, type ToliFields } from './toli.js';
