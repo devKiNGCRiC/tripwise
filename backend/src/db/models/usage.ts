@@ -11,6 +11,8 @@ const usageSchema = new Schema({
   day: { type: String, required: true },
   plans: { type: Number, default: 0 },
   regens: { type: Number, default: 0 },
+  /** Ask TripWise questions. */
+  asks: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now, expires: 3 * 24 * 60 * 60 },
 });
 

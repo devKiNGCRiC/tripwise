@@ -19,6 +19,7 @@ export { PotliItem } from './potliItem.js';
 export { Session } from './session.js';
 export { Sujhav } from './sujhav.js';
 export { Toli, type ToliDoc, type ToliFields } from './toli.js';
+export { TripChat } from './tripChat.js';
 export { ToliActivity } from './toliActivity.js';
 export { ToliBudget } from './toliBudget.js';
 export { ToliExpense } from './toliExpense.js';

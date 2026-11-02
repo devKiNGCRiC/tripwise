@@ -19,7 +19,7 @@ const PLACES = [
 
 /** A two-day Hampi trip. */
 const input = {
-  request: { destination: 'Hampi', startDate: '2026-11-04', endDate: '2026-11-05', travellers: 'friends', pace: 'balanced', interests: ['history'], budget: 3000 },
+  request: { destination: 'Hampi', startDate: '2026-11-04', endDate: '2026-11-05', travellers: 'friends', pace: 'balanced', interests: ['history'], budget: { amount: 3000, currency: 'INR' } },
   days: [
     {
       dayNumber: 1,

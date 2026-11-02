@@ -12,12 +12,14 @@ export interface PlanLimits {
   plansPerDay: number;
   /** "New idea" single-day regenerations per day. */
   regensPerDay: number;
+  /** Ask TripWise questions per day. */
+  asksPerDay: number;
   /** Longest trip that can be planned. */
   maxDays: number;
 }
 
 /** Every plan's limits. */
 export const PLANS: Record<PlanName, PlanLimits> = {
-  free: { plansPerDay: 5, regensPerDay: 15, maxDays: 14 },
-  premium: { plansPerDay: 50, regensPerDay: 150, maxDays: 14 },
+  free: { plansPerDay: 5, regensPerDay: 15, asksPerDay: 20, maxDays: 14 },
+  premium: { plansPerDay: 50, regensPerDay: 150, asksPerDay: 200, maxDays: 14 },
 };

@@ -11,7 +11,7 @@ import { PLANS, type PlanName } from '../config/plans.js';
 import type { Quota } from '../types/api.js';
 
 /** What can be counted. */
-export type QuotaKind = 'plans' | 'regens';
+export type QuotaKind = 'plans' | 'regens' | 'asks';
 
 /** India is UTC+5:30 all year (no daylight saving). */
 const IST_OFFSET_MS = 330 * 60 * 1000;
@@ -29,13 +29,13 @@ export function nextIstMidnight(now: Date): Date {
 
 /** The daily limit for a plan and kind. */
 function limitFor(plan: PlanName, kind: QuotaKind): number {
-  return kind === 'plans' ? PLANS[plan].plansPerDay : PLANS[plan].regensPerDay;
+  return kind === 'plans' ? PLANS[plan].plansPerDay : kind === 'regens' ? PLANS[plan].regensPerDay : PLANS[plan].asksPerDay;
 }
 
-/** Today's AI-plan allowance for a traveller (what the website shows). */
-export async function getQuota(userId: string, plan: PlanName, now: Date): Promise<Quota> {
+/** Today's allowance of one kind (AI plans by default) for a traveller (what the website shows). */
+export async function getQuota(userId: string, plan: PlanName, now: Date, kind: QuotaKind = 'plans'): Promise<Quota> {
   const usage = await Usage.findOne({ userId, day: istDay(now) }).lean();
-  return { used: usage?.plans ?? 0, limit: PLANS[plan].plansPerDay, resetsAt: nextIstMidnight(now).toISOString() };
+  return { used: usage?.[kind] ?? 0, limit: limitFor(plan, kind), resetsAt: nextIstMidnight(now).toISOString() };
 }
 
 /** Is this a MongoDB "duplicate key" error? */

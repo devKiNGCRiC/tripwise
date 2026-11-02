@@ -55,7 +55,7 @@ type Access = { trip: ItineraryDoc; canChange: boolean };
  * A trip the user may see: their own, or the Sahyatra of a Toli they're in (leaders may
  * change it; Sahyatris may only read). Null for bad ids, missing trips and everyone else's.
  */
-async function findTrip(id: string, user: AuthUser): Promise<Access | null> {
+export async function findTrip(id: string, user: AuthUser): Promise<Access | null> {
   if (!isValidObjectId(id)) return null;
   const trip = await Itinerary.findById(id);
   if (!trip) return null;

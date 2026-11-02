@@ -19,6 +19,7 @@ import { avatarRoutes } from './routes/avatars.js';
 import { destinationRoutes } from './routes/destinations.js';
 import { chaupalRoutes } from './routes/chaupal.js';
 import { kushalRoutes } from './routes/kushal.js';
+import { askRoutes } from './routes/ask.js';
 import { lekhaRoutes } from './routes/lekha.js';
 import { notesPotliRoutes } from './routes/notesPotli.js';
 import { yatraRoutes } from './routes/yatra.js';
@@ -37,6 +38,7 @@ import { userRoutes } from './routes/users.js';
 import type { AiChain } from './services/ai/chain.js';
 import { createMailer, type Mailer } from './services/mailer.js';
 import { createPhotoStore, type PhotoStore } from './services/photos.js';
+import { createWeather, type Weather } from './services/ask/weather.js';
 import { canSeeChatPhoto } from './services/chaupal.js';
 import { canSeeJournalOf } from './services/social.js';
 
@@ -54,6 +56,8 @@ export interface AppDeps {
   mailer?: Mailer;
   /** Where journal photos are kept (MongoDB unless Cloudinary is set up). */
   photos?: PhotoStore;
+  /** The weather forecast for Ask TripWise (MET Norway unless a test passes a fake). */
+  weather?: Weather;
 }
 
 /** Build the Express app. `extra` lets tests mount throw-away routes under /api. */
@@ -92,6 +96,7 @@ export function createApp(deps: AppDeps, extra?: (router: Router) => void): expr
   api.use(friendsRoutes(now));
   api.use(userRoutes(now));
   api.use(itineraryRoutes({ ai: deps.ai, now, photos }));
+  api.use(askRoutes({ ai: deps.ai, now, weather: deps.weather ?? createWeather() }));
   api.use(tolisRoutes({ now, appUrl: deps.appUrl ?? 'http://localhost:5173' }));
   api.use(sujhavRoutes(now));
   api.use(pollRoutes(now));

@@ -32,7 +32,7 @@ export interface BriefPlace {
 
 /** Everything the brief is built from. */
 export interface BriefInput {
-  request: { destination: string; startDate: string; endDate: string; travellers: string; pace: string; interests: string[]; budget?: number };
+  request: { destination: string; startDate: string; endDate: string; travellers: string; pace: string; interests: string[]; budget?: { amount: number; currency?: string } };
   days: { dayNumber: number; date?: string; theme: string; activities: { title: string; startTime?: string; estCost?: number; place?: { id: string; lat: number; lon: number } }[] }[];
   destination?: { name: string; bestMonths: number[]; avgDailyCost?: number; region?: string } | null;
   places: BriefPlace[];
@@ -62,7 +62,7 @@ export function tripBrief(input: BriefInput): { text: string; placeIds: string[]
   const mentioned = new Set<string>();
   const lines: string[] = [];
 
-  lines.push(`Trip: ${r.destination}, ${r.startDate} to ${r.endDate}; ${r.travellers}; ${r.pace} pace; interests: ${r.interests.join(', ') || 'none given'}${r.budget ? `; budget about ₹${r.budget} per person per day` : ''}.`);
+  lines.push(`Trip: ${r.destination}, ${r.startDate} to ${r.endDate}; ${r.travellers}; ${r.pace} pace; interests: ${r.interests.join(', ') || 'none given'}${r.budget ? `; budget about ₹${r.budget.amount} per person per day` : ''}.`);
   if (destination) {
     lines.push(
       `Destination facts (TripWise catalogue): ${destination.name}${destination.region ? `, region ${destination.region}` : ''}. Best months: ${destination.bestMonths.map((m) => MONTHS[m - 1]).join(', ') || 'not listed'}${destination.avgDailyCost ? `; typical cost ₹${destination.avgDailyCost} per person per day` : ''}.`,
