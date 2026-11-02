@@ -8,6 +8,8 @@
  *   PATCH /api/admin/users/:id      { blocked?, plan? } → { user }  blocking ends their sessions at once;
  *                                   admins (and yourself) can't be changed here (409)
  *   GET   /api/admin/actions        → { actions }  the audit log (last 100)
+ *   GET   /api/admin/destinations   → { destinations }  the catalogue with places and trips (30 days)
+ *   PATCH /api/admin/destinations/:slug { hidden } → { destination }  hide from Explore (or show again)
  *
  * Privacy first: admins see counts and account basics only — never anyone's trips, journals,
  * Toli chats, money, budgets, locations, Kushal links or Ask TripWise questions.
@@ -15,7 +17,7 @@
 import { Router } from 'express';
 import { isValidObjectId } from 'mongoose';
 import { z } from 'zod';
-import { AdminAction, Itinerary, Toli, Usage, User, type UserDoc } from '../db/models/index.js';
+import { AdminAction, Destination, Itinerary, Place, Toli, Usage, User, type UserDoc } from '../db/models/index.js';
 import { clash, notFound } from '../lib/errors.js';
 import { requireAdmin } from '../middleware/admin.js';
 import { currentUser, requireAuth } from '../middleware/auth.js';
@@ -139,6 +141,43 @@ export function adminRoutes(now: () => Date): Router {
     }
     await user.save();
     res.json({ user: (await adminUsers([user]))[0] });
+  });
+
+  /** Destinations as admins see them. */
+  async function adminDestinations(slugs?: string[]) {
+    const monthAgo = new Date(now().getTime() - 30 * DAY_MS);
+    const [destinations, places, trips] = await Promise.all([
+      Destination.find(slugs ? { slug: { $in: slugs } } : {}, { _id: 0, slug: 1, name: 1, region: 1, country: 1, bestMonths: 1, hidden: 1 }).sort({ order: 1 }).lean(),
+      Place.aggregate<{ _id: string; n: number }>([{ $group: { _id: '$destination', n: { $sum: 1 } } }]),
+      Itinerary.aggregate<{ _id: string; n: number }>([{ $match: { createdAt: { $gte: monthAgo } } }, { $group: { _id: { $toLower: '$request.destination' }, n: { $sum: 1 } } }]),
+    ]);
+    const placeCount = new Map(places.map((p) => [p._id, p.n]));
+    const tripCount = new Map(trips.map((t) => [t._id, t.n]));
+    return destinations.map((d) => ({
+      slug: d.slug,
+      name: d.name,
+      region: d.region ?? null,
+      country: d.country,
+      bestMonths: d.bestMonths,
+      places: placeCount.get(d.slug) ?? 0,
+      trips30d: tripCount.get(d.name.toLowerCase()) ?? 0,
+      hidden: !!d.hidden,
+    }));
+  }
+
+  // GET /admin/destinations — the catalogue.
+  router.get('/admin/destinations', ...guard, async (_req, res) => {
+    res.json({ destinations: await adminDestinations() });
+  });
+
+  // PATCH /admin/destinations/:slug — hide from Explore, or show again.
+  router.patch('/admin/destinations/:slug', ...guard, async (req, res) => {
+    const { hidden } = z.object({ hidden: z.boolean() }).parse(req.body);
+    const slug = String(req.params.slug).toLowerCase();
+    const destination = await Destination.findOneAndUpdate({ slug }, { $set: { hidden } }, { new: true });
+    if (!destination) throw notFound('That destination isn’t in the catalogue.');
+    await logAdmin(currentUser(req).id, hidden ? 'hide' : 'show', 'destination', slug, destination.name, hidden ? 'hidden from Explore' : 'shown in Explore', now());
+    res.json({ destination: (await adminDestinations([slug]))[0] });
   });
 
   // GET /admin/actions — the audit log, newest first.

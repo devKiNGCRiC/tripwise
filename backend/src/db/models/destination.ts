@@ -23,6 +23,8 @@ const destinationSchema = new Schema(
     image: { url: { type: String, required: true }, credit: String, creditUrl: String },
     /** Position in the catalogue (Explore lists places in this order). */
     order: { type: Number, default: 0 },
+    /** Hidden by an admin: not in Explore, its page answers 404 (kept on re-import: not in the catalogue file). */
+    hidden: { type: Boolean, default: false },
   },
   { versionKey: false },
 );

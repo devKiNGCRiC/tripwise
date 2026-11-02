@@ -26,7 +26,9 @@ const filtersSchema = z.object({
 const placesSchema = z.object({ interest: z.enum(INTERESTS, { error: 'Pick a known interest.' }).optional() });
 
 /** Fields never sent to the website. */
-const HIDDEN = { _id: 0, order: 0 } as const;
+const HIDDEN = { _id: 0, order: 0, hidden: 0 } as const;
+/** Only destinations an admin hasn't hidden. */
+const SHOWN = { hidden: { $ne: true } } as const;
 
 /** "a.b(" → "a\.b\(" so user text is matched literally. */
 const escapeRegex = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -38,7 +40,7 @@ export function destinationRoutes(): Router {
   // GET /destinations — the filtered catalogue, in catalogue order.
   router.get('/destinations', async (req, res) => {
     const { vibe, budget, month, q } = filtersSchema.parse(req.query);
-    const query: Record<string, unknown> = {};
+    const query: Record<string, unknown> = { ...SHOWN };
     if (vibe) query.vibes = vibe;
     if (budget) query.budgetTier = budget;
     if (month) query.bestMonths = month;
@@ -52,7 +54,7 @@ export function destinationRoutes(): Router {
 
   // GET /destinations/:slug — one place.
   router.get('/destinations/:slug', async (req, res) => {
-    const destination = await Destination.findOne({ slug: String(req.params.slug).toLowerCase() }, HIDDEN).lean();
+    const destination = await Destination.findOne({ slug: String(req.params.slug).toLowerCase(), ...SHOWN }, HIDDEN).lean();
     if (!destination) throw notFound("We couldn't find that destination.");
     res.json({ destination });
   });
@@ -61,7 +63,7 @@ export function destinationRoutes(): Router {
   router.get('/destinations/:slug/places', async (req, res) => {
     const { interest } = placesSchema.parse(req.query);
     const slug = String(req.params.slug).toLowerCase();
-    if (!(await Destination.exists({ slug }))) throw notFound("We couldn't find that destination.");
+    if (!(await Destination.exists({ slug, ...SHOWN }))) throw notFound("We couldn't find that destination.");
     const places = await Place.find({ destination: slug, ...(interest ? { interests: interest } : {}) }, { _id: 0 })
       .sort({ fame: -1, name: 1 })
       .lean();
