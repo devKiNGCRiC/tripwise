@@ -686,6 +686,21 @@ export interface KushalView {
   latest: (KushalLatest & { position?: { lat: number; lon: number }; mapsLink?: string }) | null;
 }
 
+/* ── Ask TripWise ─────────────────────────────────────────────────────── */
+
+/** A message in my Ask TripWise conversation about a trip. */
+export interface AskMessage {
+  role: 'user' | 'assistant';
+  text: string;
+  /** Real catalogue places the answer mentions. */
+  places?: { id: string; name: string; destination: string }[];
+  /** Questions to tap next. */
+  followUps?: string[];
+  /** The answer used MET Norway's forecast (show the credit). */
+  weatherCredit?: boolean;
+  at: string;
+}
+
 /** One event in a Toli's activity feed. */
 export interface ToliEvent {
   id: string;

@@ -5,7 +5,7 @@
  */
 import { api } from './client';
 import { ApiError, friendlyMessage } from './errors';
-import type { Anurodh, AnurodhAction, AuthResponse, Card, ChaupalMessage, Destination, DestinationFilters, Interest, KushalContact, KushalLatest, KushalView, LekhaSummary, NewSplit, PotliItem, ShareFor, SharedLocation, ToliNote, ToliSplit, NewExpense, NewMessage, NewPoll, NewSettlement, Place, Poll, Settlement, SujhavChange, Sujhav, Toli, ToliBudget, ToliEvent, ToliExpense, ToliInvite, ToliRole, TripType, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
+import type { Anurodh, AnurodhAction, AskMessage, AuthResponse, Card, ChaupalMessage, Destination, DestinationFilters, Interest, KushalContact, KushalLatest, KushalView, LekhaSummary, NewSplit, PotliItem, ShareFor, SharedLocation, ToliNote, ToliSplit, NewExpense, NewMessage, NewPoll, NewSettlement, Place, Poll, Settlement, SujhavChange, Sujhav, Toli, ToliBudget, ToliEvent, ToliExpense, ToliInvite, ToliRole, TripType, FriendsList, GenerateEvent, GenerateResponse, Journal, Passport, Profile, ProfilePatch, Relation, Itinerary, LoginInput, Quota, SignupInput, TripRequest, User } from './types';
 
 /** Turn a filters object into "?a=1&b=2", skipping empty values. */
 function toQuery(params: Record<string, string | number | undefined>): string {
@@ -220,4 +220,11 @@ export const kushalApi = {
   setAuto: (auto: boolean) => api.request<{ auto: boolean }>('/me/kushal', { method: 'PATCH', body: { auto } }),
   checkIn: (checkIn: { lat?: number; lon?: number; note?: string }) => api.request<{ latest: KushalLatest }>('/me/kushal/checkin', { method: 'POST', body: checkIn }),
   view: (token: string) => api.request<{ kushal: KushalView }>(`/kushal/${token}`),
+};
+
+/** Ask TripWise — my questions and answers about a trip (owner or Toli members). */
+export const askApi = {
+  history: (tripId: string) => api.request<{ messages: AskMessage[]; quota: Quota }>(`/itineraries/${tripId}/ask`),
+  ask: (tripId: string, question: string) => api.request<{ reply: AskMessage; quota: Quota }>(`/itineraries/${tripId}/ask`, { method: 'POST', body: { question } }),
+  clear: (tripId: string) => api.request<void>(`/itineraries/${tripId}/ask`, { method: 'DELETE' }),
 };

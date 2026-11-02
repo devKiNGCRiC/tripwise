@@ -6,7 +6,7 @@
  * cookie) and the planned TRIPS with today's AI-plan counts. Tests never persist.
  * Profiles, journals, photos and friendships start from the seeds on every load.
  */
-import type { Destination, Itinerary, User } from '@/lib/api/types';
+import type { AskMessage, Destination, Itinerary, User } from '@/lib/api/types';
 import { seedDestinations } from './data/destinations';
 import { seedFriendships, seedJournals, seedPhotos, seedTrips, type MockFriendship, type MockJournal, type MockPhoto } from './data/social';
 import { seedToliStore, type MockToliStore } from './data/tolis';
@@ -34,7 +34,14 @@ interface MockDb extends MockToliStore {
   friendships: MockFriendship[];
   /** Who has blocked whom. */
   blocks: { blocker: string; blocked: string }[];
+  /** Ask TripWise conversations by "tripId|userId". */
+  tripChats: Record<string, MockAskMessage[]>;
+  /** Ask TripWise questions asked per user today. */
+  asks: Record<string, { day: string; used: number }>;
 }
+
+/** A stored Ask TripWise message (place ids instead of place chips). */
+export type MockAskMessage = Omit<AskMessage, 'places'> & { placeIds?: string[] };
 
 /** localStorage key for saved trips and AI-plan counts. */
 const TRIPS_KEY = 'tw_mock_trips';
@@ -90,6 +97,8 @@ function createDb(): MockDb {
     avatars: {},
     friendships: seedFriendships(),
     blocks: [],
+    tripChats: {},
+    asks: {},
     // Tolis (groups planning together); the Kerala trip is the seeded Toli's Sahyatra.
     ...seedToliStore(),
   };
