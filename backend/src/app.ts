@@ -19,6 +19,7 @@ import { avatarRoutes } from './routes/avatars.js';
 import { destinationRoutes } from './routes/destinations.js';
 import { chaupalRoutes } from './routes/chaupal.js';
 import { lekhaRoutes } from './routes/lekha.js';
+import { yatraRoutes } from './routes/yatra.js';
 import { pollRoutes } from './routes/polls.js';
 import { sujhavRoutes } from './routes/sujhavs.js';
 import { tolisRoutes } from './routes/tolis.js';
@@ -94,6 +95,7 @@ export function createApp(deps: AppDeps, extra?: (router: Router) => void): expr
   api.use(pollRoutes(now));
   api.use(chaupalRoutes({ now, photos }));
   api.use(lekhaRoutes(now));
+  api.use(yatraRoutes(now));
   api.use(shareRoutes());
   extra?.(api);
   app.use('/api', api);
