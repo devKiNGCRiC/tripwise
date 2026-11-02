@@ -4,11 +4,15 @@
  * and errors as the real API.
  */
 import { http, HttpResponse } from 'msw';
+import guidesFile from '@catalogue/guides.json';
 import { apiUrl } from '@/lib/api/config';
-import type { Interest } from '@/lib/api/types';
+import type { DestinationGuide, Interest } from '@/lib/api/types';
 import { seedPlaces } from '../data/destinations';
 import { db } from '../db';
 import { errorResponse, latency } from './shared';
+
+/** Written guides by destination slug. */
+const guides = guidesFile.guides as Record<string, DestinationGuide>;
 
 /** Interests a place can be filtered by (same list as the real API). */
 const INTERESTS: Interest[] = ['food', 'culture', 'adventure', 'nightlife', 'nature', 'shopping', 'history', 'relaxation', 'photography', 'spiritual'];
@@ -51,6 +55,7 @@ export const destinationHandlers = [
     await latency();
     const destination = db.destinations.find((d) => d.slug === params.slug && !db.hiddenDestinations.includes(d.slug));
     if (!destination) return errorResponse(404, 'NOT_FOUND', "We couldn't find that destination.");
-    return HttpResponse.json({ destination });
+    // Its page gets the written guide (the same catalogue file the API seeds from).
+    return HttpResponse.json({ destination: { ...destination, guide: guides[destination.slug] ?? null } });
   }),
 ];

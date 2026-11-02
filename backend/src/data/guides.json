@@ -1,0 +1,3463 @@
+{
+  "licence": "Text adapted from Wikivoyage and Wikipedia, CC BY-SA 4.0 (each guide lists its sources)",
+  "guides": {
+    "rishikesh": {
+      "about": "Rishikesh is a scenic pilgrimage town in Uttarakhand, located where the Ganges flows down from the Himalayas. Known as the yoga capital of the world, it has long served as a haven for yogis, saints, and spiritual seekers. Pilgrims and tourists visit to study yoga, explore temples, and rest before traveling further into the Himalayas. The town gained international fame in 1968 when the Beatles visited Maharishi Mahesh Yogi's ashram to study transcendental meditation and compose music. It operates as a vegetarian-only and alcohol-free city where visitors can take holy dips in the Ganges, attend evening prayer rituals, and experience ashram life.",
+      "history": "Rishikesh is part of Kedarkhand from the Skanda Purana, which notes that Rama performed penance here and Lakshmana crossed the Ganges using jute ropes. An iron-rope suspension bridge built in 1889 was destroyed by floods in 1924 and replaced in 1927. The sale of meat, fish, and eggs was banned in 1956, and the Supreme Court upheld the ban on eggs in 2004. In February 1968, the Beatles visited the Maharishi Mahesh Yogi ashram, boosting global tourism. A noted suspension bridge named Ram Jhula was built in 1986, and Lakshman Jhula was closed in 2019 due to safety concerns.",
+      "significance": "Rishikesh holds immense religious significance as a sacred Hindu pilgrimage town and the gateway to the Char Dham pilgrimage sites in the Himalayas. Culturally, it is celebrated globally as the yoga capital of the world, offering ancient spiritual traditions, ashrams, and sacred river ghats.",
+      "thingsToDo": [
+        {
+          "title": "Bharat Mandir",
+          "detail": "Visit a 12th-century temple dedicated to Vishnu with an idol carved from a single piece of Saligram."
+        },
+        {
+          "title": "Chaurasi Kutia",
+          "detail": "Explore the historic ashram where the Beatles stayed, featuring graffiti art in meditation caves."
+        },
+        {
+          "title": "Gita Bhavan",
+          "detail": "Attend gatherings where people come together to read the Ramayana."
+        },
+        {
+          "title": "Janki Setu",
+          "detail": "Walk across a modern 346-meter suspension bridge with dedicated pedestrian and two-wheeler lanes."
+        },
+        {
+          "title": "Neelkanth Mahadev Mela",
+          "detail": "Visit a sacred hilltop temple and experience its religious fair held during July and August."
+        },
+        {
+          "title": "Parmarth Niketan Ashram",
+          "detail": "Watch children receive Vedic education and attend the evening Ganga Aarti."
+        },
+        {
+          "title": "Swarg Ashram",
+          "detail": "Walk through the spiritual ground zero of Rishikesh, lined with ashrams and temples at the foot of the Himalayas."
+        },
+        {
+          "title": "Trayambakeshwar Temple",
+          "detail": "Explore a 13-story temple featuring different deities throughout its floors near Laxman Jhula."
+        },
+        {
+          "title": "Triveni Ghats",
+          "detail": "Bathe in the clean river waters and experience the soothing evening Maha Aarti."
+        }
+      ],
+      "food": [
+        {
+          "name": "Thali",
+          "detail": "A traditional platter featuring various regional Indian dishes and special variations."
+        },
+        {
+          "name": "Jalebis",
+          "detail": "Sweet, deep-fried Indian snack soaked in syrup."
+        },
+        {
+          "name": "Imartis",
+          "detail": "A sweet, pretzel-like Indian snack made from lentil flour batter."
+        },
+        {
+          "name": "Samosas",
+          "detail": "Savory fried pastries with fillings, including sweet dessert varieties."
+        },
+        {
+          "name": "Daal",
+          "detail": "A traditional lentil preparation served as part of local Garhwali cuisine."
+        },
+        {
+          "name": "Gahat",
+          "detail": "A traditional Garhwali dish prepared using local lentils and select spices."
+        },
+        {
+          "name": "Phaanu",
+          "detail": "A traditional lentil-based dish common in local Garhwali cooking."
+        },
+        {
+          "name": "Masala Chai",
+          "detail": "A spiced Indian tea commonly served in local dhabas and cafes."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Rishikesh — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Rishikesh",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Rishikesh — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Rishikesh",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "gangtok": {
+      "about": "Gangtok is a bustling hill station and the capital of the Indian state of Sikkim, set in the eastern Himalayan range. The city features a mild temperate climate, winding side alleys, and the pedestrianized MG Marg. It is a popular destination for tourists heading on treks, offering clean streets and beautiful views of the surrounding valleys and the Kanchenjunga ranges.",
+      "history": "The earliest records of Gangtok date from the construction of a hermitic monastery in 1716. It became a Buddhist pilgrimage centre after the construction of the Enchey Monastery in 1840. The capital of Sikkim was shifted to Gangtok in 1894 by the Chogyal Thutob Namgyal. After Indian independence in 1947, Sikkim remained an independent monarchy with Gangtok as its capital. Following political uncertainty and riots, the monarchy was abrogated in 1975, and Sikkim became India's twenty-second state with Gangtok continuing as the capital.",
+      "significance": "Gangtok is the capital of Sikkim and the central hub of its tourism industry. It serves as an important Buddhist pilgrimage site and cultural center, bringing together indigenous Sikkimese, Nepali, and Tibetan populations.",
+      "thingsToDo": [
+        {
+          "title": "Mahatma Gandhi Marg (MG Marg)",
+          "detail": "Stroll down this pedestrian-only avenue which forms the main shopping and dining district."
+        },
+        {
+          "title": "Enchey Monastery",
+          "detail": "Visit this 200-year-old Nyingma monastery of Tibetan Buddhism located above Gangtok."
+        },
+        {
+          "title": "Do-drul Chorten",
+          "detail": "Explore this Buddhist stupa complex constructed in 1945 in the Deorali district."
+        },
+        {
+          "title": "Namgyal Institute of Tibetology",
+          "detail": "View authentic artifacts, thankas, and statues at this museum dedicated to Tibetan culture."
+        },
+        {
+          "title": "Gangtok Ropeway",
+          "detail": "Ride this cable car connecting Deorali to a hill above the city for scenic views."
+        },
+        {
+          "title": "Banjhakri Falls",
+          "detail": "Walk along landscaped pathways and bridges around streams leading up to the waterfall."
+        },
+        {
+          "title": "Rumtek Monastery",
+          "detail": "Travel just outside the city to see one of the most famous monasteries in the area."
+        },
+        {
+          "title": "Lake Tsomgo",
+          "detail": "Take a trip to this scenic high-altitude lake located about 40 km from Gangtok."
+        }
+      ],
+      "food": [
+        {
+          "name": "Momo",
+          "detail": "Steamed dumplings filled with pork, beef, or vegetables in a doughy wrapping."
+        },
+        {
+          "name": "Thukpa",
+          "detail": "A popular noodle dish served in a warm soup form."
+        },
+        {
+          "name": "Thenthuk",
+          "detail": "A comforting noodle-based soup dish available with beef, pork, or chicken."
+        },
+        {
+          "name": "Shah-phaley",
+          "detail": "Sikkimese patties made with spiced minced meat inside a crisp, samosa-like case."
+        },
+        {
+          "name": "Chhang",
+          "detail": "A local frothy millet beer served in bamboo tankards and drunk through straws."
+        },
+        {
+          "name": "Churpee",
+          "detail": "A hard cheese made from cow's or yak's milk that is sometimes chewed."
+        },
+        {
+          "name": "Wai-Wai",
+          "detail": "A packaged snack of noodles eaten either dry or in soup form."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Gangtok — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Gangtok",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Gangtok — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Gangtok",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "goa": {
+      "about": "Goa is a state on India's west coast, known as a former Portuguese colony with a rich history and a unique mix of Indian and European cultures. Spread across a small area, it features a scenic coastline of sandy beaches alongside waterfalls, ghats, and quiet villages. Visitors are drawn to its relaxed atmosphere, vibrant beach life, and cultural heritage, making it a popular destination for holidaymakers. The heart of Goa lies in its villages, which offer charm and a slower pace of life compared to urban areas. The local population consists of a harmonious mix of Hindus, Roman Catholics, and Muslims. With its distinctive architecture, local festivals, and seafood-based cuisine, Goa provides an environment unlike the rest of India, attracting millions of tourists each year.",
+      "history": "In the 3rd century BC, Goa was part of the Maurya Empire. It was subsequently ruled by the Bhojas, Chalukyas, Rashtrakutas, and Kadambas. In 1312, it came under the Delhi Sultanate, later passing to the Vijayanagara Empire and the Bahmani Sultanate, before falling to the Bijapur Sultanate. In 1510, the Portuguese defeated the Bijapur ruler with the help of a local ally and established colonial rule. Goa remained an overseas territory of Portugal for approximately 451 years until the Indian army took control during Operation Vijay in December 1961.",
+      "significance": "Goa matters as a unique cultural bridge between Eastern and Western traditions, shaped by over four centuries of Portuguese rule. It boasts high quality of life, infrastructure, and a World Heritage Site at Old Goa containing important Christian relics and architecture. Its rich biodiversity near the Western Ghats and peaceful multi-religious society add to its distinct cultural identity.",
+      "thingsToDo": [
+        {
+          "title": "Naval Aviation Museum",
+          "detail": "View vintage aircraft on display in Vasco da Gama."
+        },
+        {
+          "title": "Christian Art Museum",
+          "detail": "See examples of Christian religious art and secular works in Old Goa."
+        },
+        {
+          "title": "Goa Chitra Museum",
+          "detail": "Explore a large collection of ethnographic artifacts in Benaulim."
+        },
+        {
+          "title": "Houses of Goa",
+          "detail": "Visit the architectural museum in Benaulim created by Gerard da Cunha."
+        },
+        {
+          "title": "Big Foot",
+          "detail": "Discover the ancestral site in Loutolim that recreates Goa's traditional past."
+        },
+        {
+          "title": "Ashvek Vintage World",
+          "detail": "Browse a collection of vintage cars located in Nuvem."
+        },
+        {
+          "title": "Chapora Fort",
+          "detail": "Climb up the damaged hilltop fort for mesmerizing sea views."
+        },
+        {
+          "title": "Bom Jesus Basilica",
+          "detail": "Visit the World Heritage Site holding the mortal remains of Saint Francis Xavier."
+        }
+      ],
+      "food": [
+        {
+          "name": "Fish curry and rice",
+          "detail": "The staple diet of Goa, commonly served across local eateries and beach shacks."
+        },
+        {
+          "name": "Prawn balchao",
+          "detail": "A seafood dish featuring a distinct Portuguese flavor."
+        },
+        {
+          "name": "Kingfish in garlic",
+          "detail": "A popular local fish preparation with rich seasonings."
+        },
+        {
+          "name": "Vindaloo",
+          "detail": "A traditional Goan curry, typically prepared with pork locally."
+        },
+        {
+          "name": "Xacuti",
+          "detail": "A classic spiced Goan curry dish."
+        },
+        {
+          "name": "Cafreal",
+          "detail": "A flavorful traditional Goan meat dish."
+        },
+        {
+          "name": "Bebinca",
+          "detail": "A traditional layered Goan pudding."
+        },
+        {
+          "name": "Serradura",
+          "detail": "A Portuguese dessert found exclusively in Goa."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Goa — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Goa",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Goa — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Goa",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "kerala": {
+      "about": "The Kerala Backwaters are a 1,500 km network of canals, lagoons, rivers, and lakes extending across the state. This natural phenomenon features a unique ecosystem where freshwater from rivers meets seawater from the Arabian Sea, creating a rich habitat for aquatic life and water birds.",
+      "history": "Traditionally, Kettuvallams served as grain barges to transport rice harvested in fertile fields alongside the backwaters. At some point in time, these boats were also used as living quarters by royalty. Nowadays, many of these traditional boats have been converted into houseboats for tourism.",
+      "significance": "The backwaters serve as one of the largest freshwater sources and are rich in marine habitat. They form a unique ecosystem and support local agriculture, transportation, and a major tourism industry.",
+      "thingsToDo": [
+        {
+          "title": "Vembanad Lake",
+          "detail": "Explore the longest lake in South Asia with rich biodiversity and a network of canals."
+        },
+        {
+          "title": "Ashtamudi Lake",
+          "detail": "Visit one of the largest freshwater lakes in India featuring numerous navigable canals."
+        },
+        {
+          "title": "Kuttanad",
+          "detail": "Witness the unique practice of farming below sea-level using mud bars and lagoon strips."
+        },
+        {
+          "title": "Kumarakom Bird Sanctuary",
+          "detail": "Observe rare migratory birds in a habitat surrounded by expansive backwaters and lagoons."
+        },
+        {
+          "title": "Thiruvallam backwaters",
+          "detail": "Enjoy breathtaking views along this scenic backwater stretch."
+        },
+        {
+          "title": "Beypore",
+          "detail": "See a traditional boatbuilding centre with a 1,500-year history of shipwright skills."
+        },
+        {
+          "title": "Wellingdon Island",
+          "detail": "Explore the island that houses the Port of Cochin and the Southern Naval Command."
+        }
+      ],
+      "food": [
+        {
+          "name": "Karimeen Fry",
+          "detail": "Pearlspot fish which is shallow fried in coconut oil."
+        },
+        {
+          "name": "Varal Roast",
+          "detail": "Grilled meat in banana leaf in a semi-masala gravy."
+        },
+        {
+          "name": "Kochjnu Pollichatu",
+          "detail": "Grilled shrimp cooked in dry tomato gravy."
+        },
+        {
+          "name": "Chemmeen Thoran",
+          "detail": "Shallow fried tiger prawn strips cooked with fried vegetables and grated coconut powder."
+        },
+        {
+          "name": "Panni Ullathiyathu",
+          "detail": "Baked pork cooked in heavily spiced tomato masala gravy."
+        },
+        {
+          "name": "Tharavu Roast",
+          "detail": "Duck curry in semi-dry masala gravy."
+        },
+        {
+          "name": "Kappa and Fish Curry",
+          "detail": "Mashed baked tapioca flavored in turmeric and spices, served with fish curry."
+        },
+        {
+          "name": "Kallu",
+          "detail": "Fresh palm toddy derived from coconut trees."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kerala Backwaters — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kerala_Backwaters",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kerala backwaters — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kerala_backwaters",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "ladakh": {
+      "about": "Ladakh is a mountainous region in northern South Asia. Settled populations live between 2,700 m and 4,500 m, with nomads camping even higher. Known as Little Tibet due to cultural and geographical similarities with Tibet, it features stunning, barren high-altitude landscapes and river valleys like the Indus and Nubra. Travelers visit Ladakh for its rich Tibetan Buddhist heritage, visible in numerous gompas and ancient monasteries. People also come to explore its dramatic geography, engage in trekking and motorbiking across high mountain passes, and experience vibrant local festivals.",
+      "history": "Archaeological finds show human presence in Ladakh since Neolithic times, with early nomads and settlers adapting to the harsh climate. By the first millennium CE, the region became a trade corridor along the Silk Road, bringing merchants and Buddhist influences. From the 9th century, Ladakh developed as a Himalayan kingdom with strong ties to Tibet after the Tibetan Empire fragmented. In the 15th century, the Namgyal dynasty brought political power, expanding territory and building iconic structures. Ladakh was part of Jammu and Kashmir until 2019, when it became a union territory.",
+      "significance": "Ladakh is significant for its unique blend of Indo-Tibetan culture, ancient Buddhist monasteries preserving philosophy and art, and its historical role as a vital crossroads along the ancient Silk Road connecting Central Asia, Tibet, and India.",
+      "thingsToDo": [
+        {
+          "title": "Thiksey monastery",
+          "detail": "Visit an impressive and important Buddhist monastery located near Leh."
+        },
+        {
+          "title": "Pangong Lake",
+          "detail": "Travel to a 64 km long soda lake known for its attractive color."
+        },
+        {
+          "title": "Nubra Valley",
+          "detail": "Take a popular trip across mountain passes to explore this scenic valley."
+        },
+        {
+          "title": "Lamayuru",
+          "detail": "Drive along the Indus River to see the Moon-land-view and the oldest monastery in the region."
+        },
+        {
+          "title": "Hemis",
+          "detail": "Attend vibrant monastic festivals featuring masked dances and religious icons."
+        },
+        {
+          "title": "Panamik",
+          "detail": "Soak in natural hot springs good for bathing."
+        },
+        {
+          "title": "Tso Moriri",
+          "detail": "Explore picturesque high-altitude lakes and surrounding landscapes."
+        },
+        {
+          "title": "Leh Palace",
+          "detail": "View historical royal architecture inspired by the Potala Palace in Lhasa."
+        }
+      ],
+      "food": [
+        {
+          "name": "Momos",
+          "detail": "Popular dumplings served with a spicy chutney."
+        },
+        {
+          "name": "Thukpa",
+          "detail": "A staple noodle soup dish served with pieces of mutton and boiled vegetables."
+        },
+        {
+          "name": "Tsampa",
+          "detail": "Roasted barley flour that is edible without cooking and useful for trekking."
+        },
+        {
+          "name": "Skyu",
+          "detail": "A heavy pasta dish made with root vegetables and meat."
+        },
+        {
+          "name": "Ladakhi Pulao",
+          "detail": "Rice cooked with mutton stock, layered with caramelized onions, carrots, and nuts."
+        },
+        {
+          "name": "Tigmo",
+          "detail": "A flavored stew with vegetables served with bread."
+        },
+        {
+          "name": "Chutagi",
+          "detail": "A rich soup pasta dish made with leafy greens and vegetables."
+        },
+        {
+          "name": "Chang",
+          "detail": "An alcoholic beverage traditionally brewed from surplus barley."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Ladakh — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Ladakh",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Ladakh — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Ladakh",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "dharamshala": {
+      "about": "Dharamshala is a hill station in Himachal Pradesh located in the Kangra Valley, in the shadow of the Dhauladhar range of the Himalayas. The town features Lower Dharamshala as a bustling commercial hub, and Upper Dharamshala, home to suburbs like McLeod Ganj and Forsyth Ganj, which reflect a British-era colonial character and serve as a center for a large Tibetan community. It is a major hill station and spiritual center, attracting visitors, students of Buddhism, and tourists.",
+      "history": "The region's Tibetan Buddhist roots date to the 8th century, with ancient references in the Rig Veda and Mahabharata. Mughal and Sikh rulers governed the area before the East India Company captured it after the First Anglo-Sikh War of 1846. The British moved regiments here, and it became a popular hill station. A massive earthquake struck on April 4, 1905, causing widespread destruction and loss of life. In 1960, the 14th Dalai Lama and the Tibetan government-in-exile settled in McLeod Ganj.",
+      "significance": "Dharamshala is significant as a major spiritual center and hill station, serving as the winter capital of Himachal Pradesh and the administrative headquarters of the Kangra district. It is globally renowned as the home of the 14th Dalai Lama and the headquarters of the Central Tibetan Administration.",
+      "thingsToDo": [
+        {
+          "title": "HPCA Cricket Stadium",
+          "detail": "Visit the picturesque cricket stadium situated at an altitude of 1,457 m with snow-capped Himalayan mountains in the background."
+        },
+        {
+          "title": "Kunal Pathari",
+          "detail": "Visit the temple where people come every day to pray to the Goddess."
+        },
+        {
+          "title": "Dal Lake",
+          "detail": "See the sacred pond located below Naddi."
+        },
+        {
+          "title": "Naddi View Point",
+          "detail": "Enjoy a complete scenic view of the snow-covered Dhauladhar range using manned telescopes."
+        },
+        {
+          "title": "St. John Cathedral in the Wilderness",
+          "detail": "Explore the picturesque cathedral situated in the middle of greenery."
+        },
+        {
+          "title": "Tibetan Institute of Performing Arts",
+          "detail": "Watch stage performances of traditional Tibetan dance, music, and theatre."
+        },
+        {
+          "title": "Tibet Museum",
+          "detail": "Explore the small museum on the history of Tibet and its people."
+        },
+        {
+          "title": "Tsuglagkhang Complex",
+          "detail": "Visit the largest Tibetan temple outside Tibet, which features a meditation hall, statues, thangkas, and a large prayer wheel."
+        },
+        {
+          "title": "Bhagsu Waterfall",
+          "detail": "Take an easy walk along the stone trail to reach the waterfall and fresh water spring."
+        },
+        {
+          "title": "Triund",
+          "detail": "Climb the hill beyond Dharamkot for a popular trek offering wide views over the plains and Himalayan peaks."
+        }
+      ],
+      "food": [
+        {
+          "name": "Momos",
+          "detail": "Dumplings filled with meat or vegetables, served steamed or fried."
+        },
+        {
+          "name": "Thukpa",
+          "detail": "A hearty noodle soup with vegetables or meat."
+        },
+        {
+          "name": "Thenthuk",
+          "detail": "Thukpa prepared with handmade flat rectangular-shaped noodles."
+        },
+        {
+          "name": "Pocha",
+          "detail": "A salty Tibetan tea churned with butter."
+        },
+        {
+          "name": "Tingmo",
+          "detail": "Steamed bread often served with vegetables."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Dharamsala — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Dharamsala",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Dharamshala — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Dharamshala",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "spiti": {
+      "about": "Spiti Valley is a high-altitude cold desert region located in the north-eastern part of Himachal Pradesh. Its name means The middle land, referring to the area between Tibet and India. The stark high desert relies on water collected from glaciers and is home to a Bhoti-speaking population that follows Tibetan Buddhism. People visit Spiti for its remote atmosphere, old monasteries, photography, snow leopard spotting, and adventure tourism.",
+      "history": "Pre-Buddhist Khasa rock art shows early human habitation dating back nearly 3,000 years. Spiti was part of the Zhang Zhung kingdom until the mid-7th century CE. In the 10th century, it became part of Ngari Khorsum. Tabo monastery was built in 996 CE. After the Tibet–Ladakh–Mughal War of 1679–1683, Spiti became free, leading to an invasion by the Raja of Kullu. Control later passed to Ladakh. Spiti came under Dogra rule between 1842 and 1846, and was annexed to the British Empire in 1846 under the Treaty of Amritsar.",
+      "significance": "Spiti matters for its unique high-altitude cold desert ecosystem and its deep Tibetan Buddhist heritage. The region preserves ancient rock art from various historical periods and houses old monasteries that safeguard cultural and religious treasures in a remote landscape.",
+      "thingsToDo": [
+        {
+          "title": "Pin valley",
+          "detail": "Explore this prominent side-valley of Spiti."
+        },
+        {
+          "title": "Lingti valley",
+          "detail": "Visit this side-valley feeding into the Spiti River."
+        },
+        {
+          "title": "Tabo monastery",
+          "detail": "See this historic monastery built in 996 CE."
+        },
+        {
+          "title": "Kaza",
+          "detail": "Explore the main hub providing infrastructure for travelers in the valley."
+        },
+        {
+          "title": "Rohtang pass",
+          "detail": "Travel across the northern slope on the route to Spiti."
+        }
+      ],
+      "food": [
+        {
+          "name": "Sea-buckthorn",
+          "detail": "A wild-growing berry also called Leh berry."
+        },
+        {
+          "name": "Tibetan food",
+          "detail": "Ethnic dishes available at a few restaurants with advance notice."
+        },
+        {
+          "name": "Aarakh",
+          "detail": "A local wine available in and around Kaza."
+        },
+        {
+          "name": "Chang",
+          "detail": "A local beer available in and around Kaza."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Eastern Himachal Pradesh — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Eastern_Himachal_Pradesh",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Spiti — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Spiti",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "jaisalmer": {
+      "about": "Jaisalmer, known as the Golden City, sits in the heart of the Thar Desert on the westernmost frontier of Rajasthan. The city is built on a ridge of yellowish sandstone and stands close to the border with Pakistan. It is a former medieval trading center and the historic capital of the kingdom of Jaisalmer. The city is dominated by the sprawling Jaisalmer Fort, a UNESCO World Heritage site and a living fort where people still reside and work within its walls. Visitors come to explore its magnificent architecture, ornate Jain temples, grand havelis, and to experience desert safaris in the surrounding sand dunes.",
+      "history": "The state of Jaisalmer grew from the remains of the Bhati dynasty empire, which shifted south after invasions from Central Asia. Rawal Jaisal founded the new capital of Jaisalmer in 1156. In 1818, it became a British protectorate. The economy declined when sea trade replaced traditional land routes, followed by a severe drought and famine from 1895 to 1900. Jawahir Singh later attempted modernization and signed an Instrument of Accession to the Union of India in 1947.",
+      "significance": "Jaisalmer is significant as a former medieval trading center and the historic capital of the Bhati Rajput kingdom. It holds cultural and architectural importance through its UNESCO World Heritage Jaisalmer Fort, which is a rare living fort, and its unique collection of intricately carved yellow sandstone havelis and ancient Jain temples.",
+      "thingsToDo": [
+        {
+          "title": "Jaisalmer Fort",
+          "detail": "Explore the living fort built from yellow sandstone that contains homes, temples, and palaces within its walls."
+        },
+        {
+          "title": "Gadisar Lake",
+          "detail": "Visit the rainwater lake surrounded by temples and tombs of saints, which offers boat rides and catfish feeding."
+        },
+        {
+          "title": "Patwon-ki-Haveli",
+          "detail": "Walk through a collection of five grand houses built for a wealthy trader's sons, featuring a government museum."
+        },
+        {
+          "title": "Baa Ri haveli",
+          "detail": "View the 450-year-old Brahman haveli inside the fort featuring antique collections and fort views."
+        },
+        {
+          "title": "Jaisalmer War Museum",
+          "detail": "View displays on India's modern military history, including a hall dedicated to the Battle of Longewala."
+        },
+        {
+          "title": "Jaisalmer Folklore Museum",
+          "detail": "Showcase Rajasthan's folk heritage and watch traditional puppet shows."
+        },
+        {
+          "title": "Desert safari",
+          "detail": "Go on a camel or jeep safari into the Thar Desert sand dunes to watch the sunset."
+        }
+      ],
+      "food": [
+        {
+          "name": "Kachori",
+          "detail": "Fresh fried snack served in the main market."
+        },
+        {
+          "name": "Samosa",
+          "detail": "Crispy fried pastry filled with savory ingredients."
+        },
+        {
+          "name": "Thukpa",
+          "detail": "Tibetan noodle soup popular at rooftop eateries."
+        },
+        {
+          "name": "Lemon cake",
+          "detail": "Baked western-style sweet treat."
+        },
+        {
+          "name": "Croissants",
+          "detail": "Flaky baked pastry served during western-style breakfasts."
+        },
+        {
+          "name": "Almond cookies",
+          "detail": "Sweet baked biscuits."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Jaisalmer — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Jaisalmer",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Jaisalmer — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Jaisalmer",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "jodhpur": {
+      "about": "Jodhpur is the second-largest city in Rajasthan and serves as the historic capital of the Kingdom of Marwar. Located on the edge of the Thar Desert, it is known as the Sun City because the sun shines almost every day of the year. It is also called the Blue City because most houses in the old city are painted in shades of blue. Travelers visit to see its massive forts, palaces, temples, and markets.",
+      "history": "In 1459, Rao Jodha founded Jodhpur as the new capital of Marwar, replacing Mandore. In 1581, the kingdom was annexed by Mughal Emperor Akbar, becoming a Mughal vassal. Aurangzeb briefly sequestrated the state around 1679, but Maharaja Ajit Singh was restored to the throne in 1707. Later, Marwar invited Maratha intervention. On August 11, 1947, Maharaja Hanwant Singh signed the Instrument of Accession, merging the state into the Union of India.",
+      "significance": "Jodhpur matters as the historic capital of the Kingdom of Marwar and a vital cultural hub in the Thar Desert. It is renowned for its strategic trade history, distinct architecture, vibrant handicrafts, and architectural masterpieces like Mehrangarh Fort.",
+      "thingsToDo": [
+        {
+          "title": "Mehrangarh Fort",
+          "detail": "Dominates the city as the largest fort in Rajasthan, featuring palaces, temples, and museums."
+        },
+        {
+          "title": "Jaswant Thada",
+          "detail": "Royal white marble cenotaphs located next to a natural desert lake."
+        },
+        {
+          "title": "Mandore",
+          "detail": "The ancient capital of Marwar with ruins and gardens located outside the city."
+        },
+        {
+          "title": "Umaid Bhawan Palace",
+          "detail": "The last great palace built in India, housing a small museum and a 5-star hotel."
+        },
+        {
+          "title": "Ghanta Ghar",
+          "detail": "An architectural clock tower built by Maharaja Sardar Singhji in Sardar Market."
+        },
+        {
+          "title": "Balsamand Lake",
+          "detail": "A scenic lake site that has been converted into a resort."
+        },
+        {
+          "title": "Kailana Lake",
+          "detail": "A popular picnic spot and main drinking water source for the city."
+        },
+        {
+          "title": "Mahamandir Temple",
+          "detail": "A temple consecrated to Sri Jalandharnath known for its murals showing ascetics in yoga poses."
+        }
+      ],
+      "food": [
+        {
+          "name": "Mirchi Vada",
+          "detail": "A famous Jodhpuri spicy fried snack."
+        },
+        {
+          "name": "Samosa",
+          "detail": "A popular stand-up street food snack with savory stuffing."
+        },
+        {
+          "name": "Makhaniya Lassi",
+          "detail": "Yoghurt drink spiced up with cardamom and butter."
+        },
+        {
+          "name": "Mawa Kachori",
+          "detail": "A sweet pastry filled with rich mawa."
+        },
+        {
+          "name": "Dal Bati Churma",
+          "detail": "A traditional Rajasthani delicacy."
+        },
+        {
+          "name": "Kabuli",
+          "detail": "A traditional rice speciality."
+        },
+        {
+          "name": "Gulab Jamun ki Sabji",
+          "detail": "A traditional Jodhpur style savory dish made of raw, non-sweet gulab jamun."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Jodhpur — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Jodhpur",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Jodhpur — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Jodhpur",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "pushkar": {
+      "about": "Pushkar is an ancient temple town in Rajasthan, India, set around a sacred lake and surrounded by hills. Known as a holy pilgrimage destination, it features dozens of temples and traditional ghats where visitors and pilgrims gather for ritual bathing and evening prayers. The town attracts a unique mix of Hindu pilgrims, tourists, and backpackers, and is also called the rose garden of Rajasthan due to its local rose cultivation and exported essences.",
+      "history": "Microliths near Khera and Kaderi and early Brahmi script inscriptions indicate ancient settlements. The region is mentioned in the Ramayana, the Mahabharata, and the Puranas. Islamic conquest records mention Pushkar from Mohammad Ghori's 1192 CE conquest and subsequent Delhi Sultanate rule. Mughal control lasted until 1712 CE, during which Aurangzeb's armies destroyed Hindu temples. Following the collapse of the Mughal Empire, Hindus regained Pushkar, and rulers from Jodhpur State along with the Marathas rebuilt the temples and ghats. In 1801, Pushkar came under British rule until 1947.",
+      "significance": "Pushkar is regarded as Tirtha Raj, the king of pilgrimage sites, and is one of the oldest existing cities in India. It holds immense religious importance in Hinduism as the creation site of Lord Brahma and is home to one of the rarest temples dedicated to him. The city also features sacred Sikh Gurdwaras and is celebrated for its spiritual atmosphere.",
+      "thingsToDo": [
+        {
+          "title": "Pushkar Lake",
+          "detail": "Visit the central sanctified lake surrounded by 52 ghats used for ritual bathing."
+        },
+        {
+          "title": "Brahma Temple",
+          "detail": "Explore the rare red-spired temple dedicated to Lord Brahma and listen to the daily chanting ceremonies."
+        },
+        {
+          "title": "Savitri Temple",
+          "detail": "Climb 650 steps to reach the hilltop shrine dedicated to Lord Brahma's wife for sweeping views of the lake."
+        },
+        {
+          "title": "Rangji Temple",
+          "detail": "View the Vishnu temple built in a distinct South Indian architectural style."
+        },
+        {
+          "title": "Varaha Temple",
+          "detail": "See the oldest temple in Pushkar, dedicated to Lord Vishnu."
+        },
+        {
+          "title": "Aptaeshwar Temple",
+          "detail": "Discover the underground component of this temple dedicated to Shiva."
+        },
+        {
+          "title": "Atmeshwar Temple",
+          "detail": "Admire this beautiful Shiva temple located near the lake."
+        },
+        {
+          "title": "Pushkar Camel Fair",
+          "detail": "Experience the vibrant annual autumn event featuring a massive cattle and camel trading fete."
+        }
+      ],
+      "food": [
+        {
+          "name": "malpuas",
+          "detail": "Sweet traditional pancakes enjoyed across the city."
+        },
+        {
+          "name": "paranthas",
+          "detail": "Popular flatbreads served vegetarian style."
+        },
+        {
+          "name": "vegetarian thali",
+          "detail": "A complete meal consisting of various vegetarian dishes."
+        },
+        {
+          "name": "bhang lassis",
+          "detail": "Traditional yogurt-based drinks available in local cafes."
+        },
+        {
+          "name": "Dahl curry",
+          "detail": "A local lentil preparation sold by street food stalls."
+        },
+        {
+          "name": "samosa",
+          "detail": "Crispy fried pastries filled with savory fillings."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Pushkar — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Pushkar",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Pushkar — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Pushkar",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "bikaner": {
+      "about": "Bikaner is a city in north-west Rajasthan, India, situated in the Thar Desert region. It serves as the administrative headquarters of the Bikaner District and was formerly the capital of the princely Bikaner State. Developed as an oasis on the trade route between Central Asia and the Gujarat coast, it is known for its royal heritage, historic forts, and palaces. The city is famous for its savoury snacks, unique architecture, and cultural landmarks. Visitors come to explore ancient forts, ornate temples, and traditional havelis, and to experience desert safaris.",
+      "history": "Prior to the mid-15th century, the region was a barren wilderness called Jangladesh. In 1488, Rao Bika, a Rajput chief of the Rathore dynasty and the first son of Maharaja Rao Jodha, established the city and kingdom of Bikaner. Bika built a fort in 1478, which is now in ruins, and a new fort was built about a century later. Fortunes flourished under the sixth Raja, Rai Singhji, who ruled from 1571 to 1612 and built the Junagarh Fort. Later rulers added palaces and halls. During the 18th century, an internecine war occurred between rulers and thakurs, which was put down by British troops. In 1818, Bikaner came under British suzerainty.",
+      "significance": "Bikaner matters for its rich Rajputana heritage, unique desert architecture, and royal history. It preserves ancient forts never defeated in battle, ornate centuries-old havelis, and sacred temples, alongside cultural culinary traditions like Bikaneri bhujia.",
+      "thingsToDo": [
+        {
+          "title": "Gajner Palace",
+          "detail": "Explore the Grand Heritage property built on a lake embankment in the Thar Desert."
+        },
+        {
+          "title": "Jain Temple Bhandasar",
+          "detail": "View the ornate two-storied Jain temple featuring gold leaf paintings and marble pillars."
+        },
+        {
+          "title": "Junagarh Fort",
+          "detail": "Visit the historic fort built by Raja Rai Singh with a museum displaying weapons and ornaments."
+        },
+        {
+          "title": "Karni Mata Temple",
+          "detail": "See the temple located in Deshnok known for its population of holy rats."
+        },
+        {
+          "title": "Laxmi Niwas Palace",
+          "detail": "Admire the former residential palace of Maharajah Ganga Singh designed in the Indo-Saracenic style."
+        },
+        {
+          "title": "Lalgarh",
+          "detail": "Discover another fort of the Rajputana family showcasing the royal story."
+        },
+        {
+          "title": "Rampuriya Haveli",
+          "detail": "Marvel at the red sandstone carvings on homes that are more than 400 years old."
+        },
+        {
+          "title": "Shivbari Temple",
+          "detail": "Walk through the centuries-old Shiva temple featuring two huge water reservoirs."
+        }
+      ],
+      "food": [
+        {
+          "name": "Bikaneri bhujia",
+          "detail": "A famous savoury snack with a geographical indication tag."
+        },
+        {
+          "name": "Bajre ki Roti",
+          "detail": "Chapati made up of pearl millet flour."
+        },
+        {
+          "name": "Dal baati Churma",
+          "detail": "A traditional regional dish."
+        },
+        {
+          "name": "Ghevar",
+          "detail": "A traditional sweet treat."
+        },
+        {
+          "name": "Rasgulla",
+          "detail": "A popular sweet confection."
+        },
+        {
+          "name": "Kachori",
+          "detail": "A popular fried snack."
+        },
+        {
+          "name": "Samosa",
+          "detail": "A savoury fried pastry."
+        },
+        {
+          "name": "Kesar kulfi",
+          "detail": "A refreshingly cool Indian sweet dessert."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Bikaner — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Bikaner",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Bikaner — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Bikaner",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "agra": {
+      "about": "Agra is a city on the banks of the Yamuna river in Uttar Pradesh, located about 200 km from Delhi. It is home to UNESCO World Heritage Sites including the Taj Mahal and Agra Fort, along with the nearby abandoned city of Fatehpur Sikri. During the Mughal era, it served as the foremost city and capital of the Mughal Empire. Visitors come from around the world to see its famous monuments and explore local markets in the old city area. The city is part of the Golden Triangle tourist circuit and features a blend of Mughal and local Braj flavours in its cuisine, alongside a booming tourism industry and manufacturing sector.",
+      "history": "Agra's recorded history begins around the 11th century. In 1506, Sultan Sikandar Lodi moved his capital from Delhi to Agra. In 1526, Babur defeated Ibrahim Lodi in the first battle of Panipat, making Agra the Mughal capital. Mughal rule was briefly interrupted in 1540 when Sher Shah Suri overthrew Humayun, but the Mughals regained Agra after Hemu was defeated in the second battle of Panipat in 1556. The Mughal court remained in Agra until 1658, when Aurangzeb shifted it to Delhi.",
+      "significance": "Agra is culturally and historically significant as a major centre of the Mughal Empire, serving as a hub for learning, arts, commerce, and religion. It houses architectural masterpieces like the Taj Mahal, Agra Fort, and Fatehpur Sikri, which are UNESCO World Heritage Sites reflecting the rich heritage of India.",
+      "thingsToDo": [
+        {
+          "title": "Taj Mahal",
+          "detail": "World-famous white marble mausoleum built by Shah Jahan for Mumtaz Mahal."
+        },
+        {
+          "title": "Agra Fort",
+          "detail": "Historic fort refurbished by Akbar, featuring buildings from the Mughal era."
+        },
+        {
+          "title": "Fatehpur Sikri",
+          "detail": "An abandoned Mughal city located on the outskirts of Agra."
+        },
+        {
+          "title": "Aram Bagh",
+          "detail": "Garden of relaxation built by Babur, modelled after the garden of paradise."
+        },
+        {
+          "title": "Tomb of Mariam-uz-Zamani",
+          "detail": "Originally built as a red sandstone Baradari in Sikandra and later converted into a tomb."
+        },
+        {
+          "title": "Sikandra",
+          "detail": "Northern suburb of the city known for historic structures and proximity to food stalls."
+        },
+        {
+          "title": "Taj Mahotsav",
+          "detail": "Annual cultural festival and craft fair held at Shilpgram to encourage artisans."
+        },
+        {
+          "title": "Sadar Bazaar",
+          "detail": "Popular area known for shopping, sweet shops, and local street food."
+        },
+        {
+          "title": "Hari Parwat",
+          "detail": "Area located a short distance from Agra Fort known for traditional sweet shops."
+        }
+      ],
+      "food": [
+        {
+          "name": "Petha",
+          "detail": "A very sweet candy made using ash gourd, available in plain or angoori varieties."
+        },
+        {
+          "name": "Dal Moth",
+          "detail": "A dry, spicy snack made with fried lentils, nuts, and raisins."
+        },
+        {
+          "name": "Bedai",
+          "detail": "A puffy, deep-fried kachori with a spicy filling, typically served with aloo bhaaji and curd."
+        },
+        {
+          "name": "Jalebies",
+          "detail": "Sweet fried treats often paired with spicy breakfast dishes."
+        },
+        {
+          "name": "Paratha",
+          "detail": "Pan-fried flat wheat bread stuffed with potatoes, cauliflower, carrots, or chhena."
+        },
+        {
+          "name": "Paneer Tikka",
+          "detail": "Cubes of cottage cheese baked in a tandoor with spices."
+        },
+        {
+          "name": "Joda",
+          "detail": "A traditional pair of pan unique to the city."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Agra — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Agra",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Agra — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Agra",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "bodh-gaya": {
+      "about": "Bodh Gaya is a city in Bihar that holds immense spiritual significance as the site where Buddha Shakyamuni attained enlightenment. It is the most revered of all Buddhist sacred sites and forms a key part of the Buddhist Circuit. At its heart lies the Mahabodhi Temple complex, featuring the iconic Mahabodhi stupa and a sacred Bodhi Tree. The town attracts pilgrims and tourists from across the Buddhist world. Surrounding the complex are temples and monasteries established by global Buddhist communities.",
+      "history": "Known as Uruvela in the Buddha's time, the site was visited by disciples during Vaisakha. The first temple was built by Maurya Emperor Ashoka, and archaeological finds show the site was used since the Maurya period. Chinese pilgrims Faxian and Xuanzang documented the area in the 5th and 7th centuries. From the 11th to 13th centuries, it was controlled by Pithipatis of Magadha. In the 12th century, Muslim Turk armies invaded and destroyed Bodh Gaya and nearby regions.",
+      "significance": "Bodh Gaya is the holiest site in Buddhism and the most important of the four main pilgrimage sites related to the life of Gautama Buddha. It is the place where Siddhartha attained enlightenment beneath the Bodhi Tree, and the Mahabodhi Temple is a UNESCO World Heritage Site.",
+      "thingsToDo": [
+        {
+          "title": "Mahabodhi Temple",
+          "detail": "Visit the large complex containing major attractions where Gautama Buddha attained enlightenment."
+        },
+        {
+          "title": "Bodhi Tree",
+          "detail": "See the descendant of the original tree where the Buddha spent his first week meditating."
+        },
+        {
+          "title": "Animeshlocha Stupa",
+          "detail": "View the unblinking stupa where a statue of Buddha sits staring at the tree."
+        },
+        {
+          "title": "Ratnachakrama",
+          "detail": "Walk the path marked by raised stone lotuses where the Buddha paced back and forth."
+        },
+        {
+          "title": "Ajapala Nigrodh Pillar",
+          "detail": "See the pillar commemorating the spot where the Buddha spent the fifth week answering questions."
+        },
+        {
+          "title": "The Great Buddha Statue",
+          "detail": "View the impressive 25-metre height statue constructed by the Daijokyo Buddhist Temple."
+        },
+        {
+          "title": "Japanese Temple",
+          "detail": "Relax and meditate in the calm garden of this beautiful temple."
+        },
+        {
+          "title": "Tibetan Refugee Market",
+          "detail": "Buy inexpensive souvenirs like prayer beads, singing bowls, and Thangka paintings."
+        }
+      ],
+      "food": [
+        {
+          "name": "Compassion meals",
+          "detail": "Special meals where extra money goes towards helping the poor."
+        },
+        {
+          "name": "thin crust pizzas",
+          "detail": "Specialty item baked fresh at a cosy local cafe."
+        },
+        {
+          "name": "Italian pastas",
+          "detail": "Freshly prepared pasta dishes served in a garden setting."
+        },
+        {
+          "name": "homemade granola",
+          "detail": "Freshly made breakfast option served with various coffees."
+        },
+        {
+          "name": "pastries",
+          "detail": "Excellent baked goods with a specialty in Tibetan dishes."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Bodh Gaya — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Bodh_Gaya",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Bodh Gaya — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Bodh_Gaya",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "manali": {
+      "about": "Manali is a hill station at the northern end of the Kullu Valley in Himachal Pradesh, located on the Beas River at a height of 2,050 meters. It is a popular tourist spot for Indians seeking summer relief and a magical, snow-covered destination in winter. The city serves as a key staging point for treks, adventure sports, and the road to Ladakh via Rohtang Pass.",
+      "history": "The ancient Hidimba Temple structure in Manali was built in the year 1553. In later times, Jagatsukh served as the former capital of Manali.",
+      "significance": "Manali holds significance as a major adventure and tourist hub in the Himalayas, serving as the gateway to high-altitude passes like Rohtang Pass, the source of the Beas River, and important pilgrimage and cultural sites such as ancient cave temples and traditional Buddhist monasteries.",
+      "thingsToDo": [
+        {
+          "title": "Rohtang Pass",
+          "detail": "Visit the high adventure tourist site offering panoramic mountain views and nearby lakes."
+        },
+        {
+          "title": "Beas Kund",
+          "detail": "See the igloo-shaped temple and spring that serves as the origin of the River Beas."
+        },
+        {
+          "title": "Hidimba Temple",
+          "detail": "Explore the ancient 1553 cave temple dedicated to Hidimbi Devi, set within a cedar forest."
+        },
+        {
+          "title": "Museum of Himachal Culture & Folk Art",
+          "detail": "Discover rare antiques and exhibits displaying the traditional art and heritage of the state."
+        },
+        {
+          "title": "Old Manali",
+          "detail": "Wander through the northwest area famous for its orchards, old guesthouses, and ruined fort."
+        },
+        {
+          "title": "Solang Valley",
+          "detail": "Enjoy skiing, paragliding, and splendid views of glaciers and snow-capped mountains."
+        },
+        {
+          "title": "Vashist Hot Water Springs and Temple",
+          "detail": "Relax at the hot water springs located across the Beas River."
+        },
+        {
+          "title": "Hampta Pass Trek",
+          "detail": "Hike through lush forests and terrain on one of the region's most famous trekking trails."
+        }
+      ],
+      "food": [
+        {
+          "name": "Sidu",
+          "detail": "A local Himachali dish available at the municipal market tea shop."
+        },
+        {
+          "name": "Lugdi",
+          "detail": "A crude local beer made from fermented rice or barley."
+        },
+        {
+          "name": "Arak",
+          "detail": "A traditional alcoholic drink distilled from lugdi, jaggery, or local fruits."
+        },
+        {
+          "name": "Momos",
+          "detail": "Savory steamed dumplings served at local mountain eateries."
+        },
+        {
+          "name": "Apple Cider",
+          "detail": "A refreshing beverage made from the apples grown in the surrounding orchards."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Manali — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Manali",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Manali — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Manali",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "jaipur": {
+      "about": "Jaipur, also known as the Pink City, is the capital and largest city of Rajasthan and serves as India's first planned city. It is a picturesque destination known for its splendid palaces, massive Rajput forts, and historical monuments, forming part of the famous tourist Golden Triangle along with Delhi and Agra. The city's distinctive earthy red and pink buildings were originally painted to imitate Mughal architecture and to welcome the Prince of Wales in 1876.",
+      "history": "Jaipur was founded on November 18, 1727, by Maharaja Jai Singh II, the Kachhwaha Rajput ruler who moved his capital from Amer due to population growth and water scarcity. Chief architect Vidyadhar Bhattacharya designed the city according to ancient architectural manuals. Following Jai Singh's death, sons squabbled for power, leading to invasions and Maratha incursions, though the core remained. During British times, the state remained loyal during the 1857 revolt, but the British gradually exerted administrative control. In 1876, Maharaja Ram Singh painted the city pink for the Prince of Wales. The historic city center became a UNESCO World Heritage site in 2019.",
+      "significance": "Jaipur matters as India's first planned city, designed on scientific and ancient architectural principles. Its rich royal heritage is preserved through UNESCO World Heritage sites including the historic city center, Jantar Mantar, and Amer Fort. It stands as a vibrant cultural hub and a major gateway to Rajasthan.",
+      "thingsToDo": [
+        {
+          "title": "Amber Fort",
+          "detail": "Explore the massive UNESCO World Heritage fort-palace complex built in a hybrid Hindu-Muslim style."
+        },
+        {
+          "title": "Jaigarh Fort",
+          "detail": "Visit the unconquered fortress known for housing the world's largest cannon on wheels, the Jaivana."
+        },
+        {
+          "title": "Nahargarh Fort",
+          "detail": "Take in excellent views over Man Sagar lake and the city from this hilltop fort built in 1734."
+        },
+        {
+          "title": "Amber Fort Sound and Light Show",
+          "detail": "Experience an evening show detailing the history and culture of Amber narrated by Amitabh Bachchan."
+        },
+        {
+          "title": "Sawai Mansingh Stadium",
+          "detail": "Catch a cricket match at this 30,000-capacity stadium hosting the Rajasthan team and IPL games."
+        },
+        {
+          "title": "B.M. Birla Auditorium and Conference Hall",
+          "detail": "Explore the complex which features a planetarium and interactive science museum."
+        },
+        {
+          "title": "Rajmandir Cinema",
+          "detail": "Watch a film in an iconic theatre offering an overwhelming and vibrant insight into local culture."
+        },
+        {
+          "title": "Central Park",
+          "detail": "Walk through the largest lush green park located at the middle of the city."
+        }
+      ],
+      "food": [
+        {
+          "name": "chamcham",
+          "detail": "A sweet confection available at local sweet establishments."
+        },
+        {
+          "name": "samosas",
+          "detail": "Crispy fried snacks often enjoyed with local fillings."
+        },
+        {
+          "name": "Pyaz ki Kachori",
+          "detail": "A famous spicy onion-stuffed pastry dish."
+        },
+        {
+          "name": "ghewar",
+          "detail": "A traditional sweet delicacy popular in the region."
+        },
+        {
+          "name": "mawa kachori",
+          "detail": "A sweet variant of the traditional kachori filled with rich mawa."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Jaipur — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Jaipur",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Jaipur — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Jaipur",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "varanasi": {
+      "about": "Varanasi, also known as Banaras or Kashi, is a holy city on the banks of the Ganges River in Uttar Pradesh. It is one of the oldest continually inhabited cities in the world and serves as a major pilgrimage destination for Hindus, Jains, and Buddhists. Visitors come to experience the vibrant spectacle of life and death along the continuous stretch of ghats. Pilgrims gather at sunrise to bathe and perform devotions, creating an impressive and memorable scene against centuries-old temples.",
+      "history": "Varanasi's history spans thousands of years, with settlements dating to the 11th century BCE. Sarnath marks the site of the Buddha's first sermon in the 6th century BCE. The city grew as a center of trade under the Mauryan Empire in the 3rd century BCE and flourished as a seat of Sanskrit learning during the Gupta period. Following medieval Islamic incursions, it regained prominence by the 16th century. In 1775, the East India Company acquired the city, which later became part of British India.",
+      "significance": "Varanasi is the most sacred city in Hinduism and Jainism, and holds great historical importance in Buddhism. Hindus believe dying here brings salvation. The riverfront ghats and temples form a living expression of ancient spiritual traditions and rituals.",
+      "thingsToDo": [
+        {
+          "title": "Jantar Mantar (Man Mandir Observatory)",
+          "detail": "An observatory on Man Singh Ghat housing astronomical instruments and a virtual experiential museum."
+        },
+        {
+          "title": "Rajghat",
+          "detail": "An archaeological site featuring scattered brick structures and antiquities dating back centuries."
+        },
+        {
+          "title": "Rani Laxmibai Janmasthali",
+          "detail": "The birthplace and gallery dedicated to the life of Rani Laxmibai."
+        },
+        {
+          "title": "Panchganga Ghat",
+          "detail": "A prominent riverfront ghat known as the meeting point of five rivers."
+        },
+        {
+          "title": "Manikarnika Ghat",
+          "detail": "The main cremation ghat along the river, featuring the leaning Ratneshwar Temple."
+        },
+        {
+          "title": "Dashashwamedh Ghat",
+          "detail": "The main ghat hosting the large evening aarti ceremony right after sunset."
+        },
+        {
+          "title": "Kedar Ghat",
+          "detail": "A brightly painted and busy ghat that is very popular for photography and bathing."
+        },
+        {
+          "title": "Harishchandra Ghat",
+          "detail": "A traditional cremation place associated with Raja Harishchandra."
+        }
+      ],
+      "food": [
+        {
+          "name": "Benares Dum Aloo",
+          "detail": "Potatoes stuffed and cooked in a rich gravy that includes jaggery, fennel, and chilli paste."
+        },
+        {
+          "name": "Aloo chaat",
+          "detail": "A popular local street food dish offered by various vendors in the city."
+        },
+        {
+          "name": "Varanasi Paan",
+          "detail": "An assortment of flavours wrapped in a betel leaf, available in tobacco and sweet versions."
+        },
+        {
+          "name": "Malaiyyo",
+          "detail": "An age-old local sweet delicacy served at traditional sweet shops."
+        },
+        {
+          "name": "Rabri",
+          "detail": "A rich dairy-based sweet preparation served with layers of cream."
+        },
+        {
+          "name": "Rabri Malai Balai",
+          "detail": "A popular dessert made with milk, sugar, almonds, and pistachio nuts."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Varanasi — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Varanasi",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Varanasi — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Varanasi",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "shimla": {
+      "about": "Shimla is the capital and largest city of the northern Indian state of Himachal Pradesh, built across seven spurs in the southwestern Himalayas. Perched above the searing plains, it is a popular summer holiday retreat and honeymoon destination. The city features a distinctive blend of Victorian, Tudorbethan, and neo-Gothic architecture from its time as the summer capital of British India.",
+      "history": "In the 18th century, the area was dense forest with the Jakhu Temple and scattered houses. Gurkhas captured the region in 1806, and the British East India Company took control after the Anglo-Nepalese War of 1814-16. British officers began building cottages, and Lieutenant Ross set up a wood cottage in 1819, followed by Charles Pratt Kennedy's pucca house in 1822. By 1863, Shimla was designated the summer capital of the British Raj until 1947, hosting major political meetings like the 1945 Simla Conference. After independence, Himachal Pradesh was created in 1948, and Shimla continued to serve as an important political centre, hosting the Shimla Agreement in 1972.",
+      "significance": "Shimla is culturally and historically significant as the former summer capital of British India, preserving major colonial-era architecture and hosting key historical negotiations. It serves as a major tourist hub, educational centre, and a site of religious devotion with numerous temples and churches set within the Himalayan forests.",
+      "thingsToDo": [
+        {
+          "title": "Christ Church",
+          "detail": "Visit the second oldest church in North India on The Ridge, constructed in 1846 and featuring impressive stained-glass windows."
+        },
+        {
+          "title": "Viceregal Lodge",
+          "detail": "Explore the imposing British-raj mansion built in 1888 with manicured gardens and a teak-paneled interior."
+        },
+        {
+          "title": "The Mall",
+          "detail": "Stroll along the historic central thoroughfare featuring Victorian architecture, shops, restaurants, and a calm pedestrian atmosphere."
+        },
+        {
+          "title": "The Ridge",
+          "detail": "Enjoy mountain views and cultural events at the center of Shimla's social life."
+        },
+        {
+          "title": "Jakhu Temple",
+          "detail": "Ascend Jakhoo Hill to visit the temple dedicated to the Hindu god Hanuman."
+        },
+        {
+          "title": "State Museum",
+          "detail": "View a collection of regional paintings, jewellery, and textiles."
+        },
+        {
+          "title": "Lakkar Bazaar",
+          "detail": "Shop for souvenirs and crafts made of wood."
+        },
+        {
+          "title": "Shimla Water Catchment Sanctuary",
+          "detail": "Walk through a well-preserved mixed Himalayan forest home to diverse wildlife and bird species."
+        },
+        {
+          "title": "Chadwick Falls",
+          "detail": "Visit the waterfall located 7 km away from Shimla, which is most beautiful just after the monsoon."
+        }
+      ],
+      "food": [
+        {
+          "name": "Uradh Dal with rice",
+          "detail": "A traditional dish tried in the city's lower bazaar."
+        },
+        {
+          "name": "Shepherd's Pie",
+          "detail": "A classic comfort dish available at local eateries."
+        },
+        {
+          "name": "Chang",
+          "detail": "A rice wine popular in predominantly Tibetan areas."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Shimla — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Shimla",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Shimla — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Shimla",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "darjeeling": {
+      "about": "Darjeeling is a hill station in the northern region of West Bengal, built among the Himalayan foothills. It features Victorian town remnants around the Chowrasta and is known for its cultural diversity with Tibetan and Nepali populations. Famous as the Queen of the Hills, the area is well-suited for tea plantations that produce world-renowned Darjeeling tea. The town serves as a jumping-off point for travellers heading to Sikkim and features sights like mountain views of Kangchenjunga. The economy relies heavily on the tea industry and tourism.",
+      "history": "In the 18th century, Darjeeling was part of a boundary region asserted by the Chogyal-ruler of Sikkim and later expanded into by the Gurkha kingdom of Nepal. After the Anglo-Nepalese War, the region returned to Sikkim under the Treaty of Sugauli and Treaty of Titalia. In 1835, the East India Company leased the land to build a sanitorium for the British. Archibald Campbell started tea experimentation in 1840, and the British annexed the area in 1849. The Darjeeling Himalayan Railway opened in 1881.",
+      "significance": "Darjeeling matters historically as a British-established Himalayan hill station and tea producer, and culturally for its distinct blend of Tibetan and Nepali heritage. It holds spiritual importance through pilgrimage sites like the Mahakal Temple and various Buddhist monasteries, and features the Darjeeling Himalayan Railway, a UNESCO World Heritage Site.",
+      "thingsToDo": [
+        {
+          "title": "Happy Valley Tea Estate",
+          "detail": "Visit Darjeeling's second oldest tea estate for a guided tour of tea production and tasting."
+        },
+        {
+          "title": "Observatory Hill",
+          "detail": "Explore the oldest site of Darjeeling, home to the Mahakal Temple."
+        },
+        {
+          "title": "Tibetan Refugee Self Help Centre",
+          "detail": "See a rehabilitation centre containing a monastery, a museum, and displays of traditional crafts."
+        },
+        {
+          "title": "Tiger Hill",
+          "detail": "Catch an early morning view of the sunrise lighting up the Kangchenjunga mountain."
+        },
+        {
+          "title": "Lloyd's Botanical Garden",
+          "detail": "Walk through the greenhouse to view a collection of common and rare plants and flowers."
+        },
+        {
+          "title": "Padmaja Naidu Himalayan Zoological Park",
+          "detail": "View charismatic Himalayan animals including leopards, a Bengal tiger, and red pandas."
+        },
+        {
+          "title": "Rock Garden",
+          "detail": "Enjoy landscaped flowers among rocks and small waterfalls."
+        },
+        {
+          "title": "Shrubbery Nightingale Park",
+          "detail": "Relax in a park featuring a giant Statue of Lord Shiva, a temple, and cultural programmes."
+        },
+        {
+          "title": "Batasia Loop",
+          "detail": "View the spiral railway track and the Gorkha War Memorial where the toy train makes a loop."
+        },
+        {
+          "title": "Darjeeling Ropeway",
+          "detail": "Ride the aerial lift running between North Point and Singla."
+        }
+      ],
+      "food": [
+        {
+          "name": "Momos",
+          "detail": "Steamed Tibetan delicacies that are a staple food offered across the town."
+        },
+        {
+          "name": "Darjeeling Tea",
+          "detail": "World-renowned tea available in black, green, oolong, white, and various flavored varieties."
+        },
+        {
+          "name": "Tongba",
+          "detail": "Local home-brewed beer."
+        },
+        {
+          "name": "Thupka",
+          "detail": "Soupy noodles served in local eateries."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Darjeeling — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Darjeeling",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Darjeeling — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Darjeeling",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "udaipur": {
+      "about": "Udaipur is the historic capital of the kingdom of Mewar in Rajasthan, nestled in the southern part of the state near the Aravalli Range. Often called the Venice of the East or the City of Lakes, the area is surrounded by major artificial lakes including Fateh Sagar Lake and Lake Pichola. Visitors come to experience its rich cultural heritage, romantic backdrops, scenic locations, and Rajput-era architecture. The city offers a moderate climate with pleasant winters from September to March, making it ideal for sightseeing and tourist activities. While summers are hot, the monsoon season brings lush green environs and fills the lakes with rainwater. People here enjoy bright-colored clothing, vibrant folk dances, and traditional music during colorful local festivals and fairs.",
+      "history": "Maharana Udai Singh II, father of Maharana Pratap, founded Udaipur in 1559 beside Lake Pichola as a safer capital for Mewar than the exposed fort of Chittorgarh. After the Mughal emperor Akbar took Chittor in November 1567, Udai Singh ringed the new city with a wall and seven gates. By the mid-18th century the city came under Maratha influence, and it became a British princely state in 1818. After India's independence in 1947, Mewar was merged into Rajasthan.",
+      "significance": "Udaipur matters for its deeply preserved Rajput-era history, stunning architecture, and unique geographical position surrounded by major lakes and the Aravalli Range. It serves as a cultural hub for traditional Rajasthani folk dances, miniature paintings, and historical palaces that reflect centuries of Mewar dynastic rule.",
+      "thingsToDo": [
+        {
+          "title": "Udaipur City Palace",
+          "detail": "Explore a magnificent architectural complex of palaces, museums, and gardens established in 1559 by Maharana Udai Singh II."
+        },
+        {
+          "title": "Jagdish Temple",
+          "detail": "Visit an Indo-Aryan temple dedicated to Lord Vishnu, featuring intricate wall carvings and a prominent tower."
+        },
+        {
+          "title": "Dharohar Dance Show @ Bagore-ki-Haveli",
+          "detail": "Watch a 60-minute Rajasthani folk dance and puppet show featuring live music near Gangaur Ghat."
+        },
+        {
+          "title": "Puppet Show @ Bharatiya Lok Kala Mandal",
+          "detail": "Enjoy a daily 60-minute puppet show located north of Chetak Circle."
+        },
+        {
+          "title": "Shilpgram",
+          "detail": "Experience a rural arts and crafts complex that hosts evening plays, dance performances, and an annual fair."
+        },
+        {
+          "title": "Udaipur Ropeway",
+          "detail": "Take a high-altitude ride from Deen Dayal Park to enjoy evening views of the city lights."
+        }
+      ],
+      "food": [
+        {
+          "name": "Mirchi bada",
+          "detail": "A spicy and flavorful local snack popular throughout the city."
+        },
+        {
+          "name": "Kachori",
+          "detail": "A traditional, crispy fried snack often enjoyed across local eateries."
+        },
+        {
+          "name": "Dal Baati Churma",
+          "detail": "A classic regional dish consisting of lentils, baked wheat balls, and sweetened crushed wheat."
+        },
+        {
+          "name": "Pyaz Kachori",
+          "detail": "Crispy flour balls stuffed with a savory onion filling."
+        },
+        {
+          "name": "Gatte Ki Sabzi",
+          "detail": "Gram flour dumplings served in a spiced yogurt or tomato curry."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Udaipur — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Udaipur",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Udaipur — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Udaipur",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "amritsar": {
+      "about": "Amritsar is a major city in the Indian state of Punjab and serves as the spiritual and cultural center of the Sikh religion. It is famously home to the Golden Temple, the holiest place of worship in Sikhism. The city gets its name from the holy pool around the Golden Temple, which means holy pool of nectar. People visit Amritsar to experience its rich religious heritage, unique architecture, and vibrant local culture.",
+      "history": "In 1574, Guru Ram Das founded the city, which was initially named Ramdaspur. His successor, Guru Arjan Dev Ji, completed the Golden Temple in 1601. In 1762 and 1766 to 1767, Ahmad Shah invaded and destroyed the city. Later, Maharaja Ranjit Singh fortified the city in 1822. In 1919, the Jallianwala Bagh massacre occurred when British troops fired on a crowd, which subsequently sparked the Non-cooperation movement during the Indian independence struggle.",
+      "significance": "Amritsar holds immense religious significance as the holiest city in Sikhism and home to the Golden Temple. It is also culturally vital as a major pilgrimage and tourist destination, and historically significant for its role in the Indian independence movement following the 1919 massacre.",
+      "thingsToDo": [
+        {
+          "title": "Golden Temple",
+          "detail": "Visit the holiest gurdwara in Sikhism, featuring the sacred pool and unique architecture."
+        },
+        {
+          "title": "Jallianwala Bagh",
+          "detail": "Walk through the historic park memorial that preserves the site of the 1919 massacre, including visible bullet holes and the memorial well."
+        },
+        {
+          "title": "Gobindgarh Fort",
+          "detail": "Explore a restored 1760 fort featuring museums, Punjabi clothing exhibitions, weaponry, and live performances."
+        },
+        {
+          "title": "Ram Bagh",
+          "detail": "Stroll through a beautiful garden that once served as a summer palace and now houses a museum of Sikh history and weapons."
+        },
+        {
+          "title": "Maharaja Ranjith Singh Museum",
+          "detail": "View paintings, coins, and weapons from the Sikh period."
+        },
+        {
+          "title": "Baba Atal Rai Tower",
+          "detail": "Climb up to enjoy great viewpoints over the city and the nearby Golden Temple."
+        },
+        {
+          "title": "Mata Temple",
+          "detail": "Walk through a labyrinth-like Hindu cave temple devoted to the female saint Lal Devi."
+        },
+        {
+          "title": "Flag lowering ceremony",
+          "detail": "Watch the daily nationalistic ceremony and closing of international gates at the Wagah border."
+        }
+      ],
+      "food": [
+        {
+          "name": "Amritsari Kulcha",
+          "detail": "A flatbread cooked in a tandoor and usually eaten with chickpeas."
+        },
+        {
+          "name": "Pindi Chhole",
+          "detail": "Spiced chickpeas traditionally served for breakfast alongside flatbread."
+        },
+        {
+          "name": "Daal Makhni",
+          "detail": "A rich lentil dish made in pure ghee."
+        },
+        {
+          "name": "Lassi",
+          "detail": "A traditional yogurt-based drink blended with water, spices, sugar, or fruit."
+        },
+        {
+          "name": "Butter Chicken",
+          "detail": "A popular chicken dish served with naan."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Amritsar — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Amritsar",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Amritsar — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Amritsar",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "lucknow": {
+      "about": "Lucknow, the capital of Uttar Pradesh, thrives along the banks of the Gomti River. Known as the City of the Nawabs, it is a historically important metropolis at the heart of North Indian culture. The city is famous for its refined manners, intricate shadow-work embroidery on fine muslin, beautiful gardens, and elaborate Awadhi and Mughlai cuisine. Visitors come to explore its rich cultural past, stunning architecture, and vibrant local traditions.",
+      "history": "In the 6th century BCE, Lucknow was part of Kosala. From 1350 onwards, it was ruled by the Delhi Sultanate, Sharqi Sultanate, and Mughal Empire. The Nawabs of Awadh later made Lucknow their capital, bringing a golden age of arts and monuments. The British East India Company annexed Awadh in 1856, and Lucknow became a major center of the Indian Rebellion of 1857. In 1916, it hosted the historic Congress session.",
+      "significance": "Lucknow is a key cultural hub representing the syncretic Hindu-Muslim heritage known as Ganga-Jamuni Tehzeeb. Designated as a UNESCO City of Gastronomy, it is celebrated for its literature, poetry, architecture, and traditional crafts.",
+      "thingsToDo": [
+        {
+          "title": "Bara Imambara",
+          "detail": "Explore the large and impressive tomb complex featuring the intricate Bhool Bhulaiya labyrinth."
+        },
+        {
+          "title": "Rumi Darwaza",
+          "detail": "Admire the imposing gateway built by Nawab Asaf-Ud-Daula in the late 18th century."
+        },
+        {
+          "title": "Chota Imambara",
+          "detail": "Visit the imposing mausoleum built by the third Nawab of Awadh."
+        },
+        {
+          "title": "Dilkusha Kothi",
+          "detail": "Walk through the ruins and extensive gardens of an 18th-century English baroque-style house."
+        },
+        {
+          "title": "Nawab Wajid Ali Shah Prani Udyan",
+          "detail": "Discover the central zoo housing a wide variety of animals and a toy train."
+        },
+        {
+          "title": "Janeshwar Mishra Park",
+          "detail": "Enjoy the vast urban park featuring a human-made lake, jogging tracks, and gondola rides."
+        },
+        {
+          "title": "Husainabad Clock Tower",
+          "detail": "View the British landmark set in a park near a lake during sunset."
+        },
+        {
+          "title": "Indira Gandhi Planetarium",
+          "detail": "Attend a show inside a striking building shaped like the planet Saturn."
+        }
+      ],
+      "food": [
+        {
+          "name": "Galawati Kababs",
+          "detail": "Famous, tender minced meat kebabs originating from royal kitchens."
+        },
+        {
+          "name": "Nihari",
+          "detail": "Juicy slow-cooked lamb shanks served in a rich, flavorful gravy."
+        },
+        {
+          "name": "Kulchha",
+          "detail": "Traditional flatbread often paired alongside meat dishes like nihari."
+        },
+        {
+          "name": "Makhan Malai",
+          "detail": "A saffron-flavored local dessert made by aerating unsalted butter kept in dew."
+        },
+        {
+          "name": "Faloodha Kulfi",
+          "detail": "A traditional frozen dairy dessert served with vermicelli noodles."
+        },
+        {
+          "name": "Kashmiri Tea",
+          "detail": "A hot, red-colored tea enjoyed with cream during the winter months."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Lucknow — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Lucknow",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Lucknow — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Lucknow",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "hampi": {
+      "about": "Hampi is located in Karnataka, India, and is a UNESCO World Heritage site known for the magnificent ruins of the Vijayanagara Empire. The landscape is visually stunning, featuring millions of giant boulders surrounding the area alongside lush palm, banana, and mango trees, and rice paddies near the river. Visitors come to discover the rich history, explore the ancient temples and monuments, and enjoy activities like bouldering and rock climbing. The area offers a stark contrast of rocky hills and historical architecture, making it a popular destination for travelers interested in history and nature.",
+      "history": "Hampi predates the Vijayanagara Empire and is mentioned in Hindu texts like the Ramayana. It served as the capital of the Vijayanagara Empire from 1336 to 1565, growing into a wealthy and prosperous fortified city. In 1565, the empire was defeated by a coalition of Muslim sultanates, and the capital was conquered, pillaged, and destroyed, leaving Hampi in ruins.",
+      "significance": "Hampi is the site of the last great Hindu kingdom in South India and features thousands of surviving remains including temples, royal complexes, and shrines. It continues to be an active religious center today.",
+      "thingsToDo": [
+        {
+          "title": "Virupaksha Temple",
+          "detail": "An active sacred temple complex where visitors must deposit their shoes before entering."
+        },
+        {
+          "title": "Vithala Temple",
+          "detail": "Home to the famous Stone Chariot and musical pillars, dedicated to an avatar of Vishnu and Krishna."
+        },
+        {
+          "title": "Matanga Hill",
+          "detail": "A popular hilltop viewpoint known for offering the most beautiful sunsets over Hampi."
+        },
+        {
+          "title": "Lotus Mahal",
+          "detail": "An architectural structure located within the Zanana Enclosure."
+        },
+        {
+          "title": "Elephant Stables",
+          "detail": "Historical arched chambers for royal elephants located near the Zanana Enclosure."
+        },
+        {
+          "title": "Hemakuta Hill temples",
+          "detail": "A collection of ancient shrines and temples located on a rocky hill."
+        },
+        {
+          "title": "Achyutaraya temple",
+          "detail": "The last temple built in the city before the fall of the empire."
+        },
+        {
+          "title": "Badavilinga Temple",
+          "detail": "Features the largest monolithic Shiva linga shrine in Hampi."
+        },
+        {
+          "title": "Hanuman Temple",
+          "detail": "Located on Anjaneya Hill and believed to be the birthplace of Hanuman, reached by climbing numerous steps."
+        },
+        {
+          "title": "Royal Enclosures",
+          "detail": "An area featuring the Mahanavmi Dibba, Pushkarani step well, and the Queen's bath."
+        }
+      ],
+      "food": [
+        {
+          "name": "Nargis Kofta",
+          "detail": "A divine dish offered at local restaurants in Hampi."
+        },
+        {
+          "name": "Idli",
+          "detail": "Delicious and cheap traditional steamed rice cakes made fresh under thatched roofs."
+        },
+        {
+          "name": "Dosa",
+          "detail": "Crispy South Indian crepes served hot by local street-side cooks."
+        },
+        {
+          "name": "Gunta Ponganalu",
+          "detail": "Tasty traditional pan-fried dumplings prepared by local cooks."
+        },
+        {
+          "name": "Indian chai",
+          "detail": "Traditional spiced tea served at traveller hangout coffee shops."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Hampi — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Hampi",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Hampi — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Hampi",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "hyderabad": {
+      "about": "Hyderabad is the capital of Telangana and is known as the Pearl City. It stands on the Deccan Plateau along the Musi River and features a blend of history, traditions, palaces, mosques, and bazaars. Founded in the late 16th century, the metropolis spans both a historic old city and modern commercial areas. Visitors come to explore its rich heritage, architectural monuments, and famous cuisine. The city combines influences from the Qutb Shahi and Nizam eras with a bustling contemporary culture, making it a prominent destination for travellers seeking both history and urban life.",
+      "history": "In the 10th century, the Kakatiya dynasty built the Golconda fortress. The fort came under Quli Qutb-ul-Mulk in 1463, who declared independence in 1518 to establish the Qutb Shahi dynasty. In 1589, Muhammad Quli Qutb Shah moved his capital to Hyderabad and built the Charminar in 1591. The Golconda Sultanate fell to Mughal emperor Aurangzeb in 1687. In 1724, Asaf Jah I founded the Asaf Jahi dynasty of Nizams, whose capital it remained until it was annexed by the Indian Union in 1948.",
+      "significance": "Hyderabad holds deep cultural and historical importance as a major seat of the Qutb Shahi and Nizam rulers. It is globally recognized for its unique blend of Hindu and Muslim traditions, distinct literature, and a UNESCO-listed creative culinary heritage that includes the famous Hyderabadi biryani and historic pearl and diamond trade links.",
+      "thingsToDo": [
+        {
+          "title": "Charminar",
+          "detail": "Marvel at the iconic 16th-century monument located in the heart of the Old City."
+        },
+        {
+          "title": "Golconda Fort",
+          "detail": "Explore the historic hilltop fortress known for its past diamond trade and acoustic architecture."
+        },
+        {
+          "title": "Qutb Shahi Tombs",
+          "detail": "Visit the majestic mausoleums of the ruling Qutb Shahi dynasty."
+        },
+        {
+          "title": "Hussain Sagar Lake",
+          "detail": "See the massive Buddha Statue situated on an island in the middle of this artificial lake."
+        },
+        {
+          "title": "Salar Jung Museum",
+          "detail": "Browse through extensive historical objects and artefacts collected by the Nizams and their aristocrats."
+        },
+        {
+          "title": "Chowmahalla Palace",
+          "detail": "Walk through the opulent palace displaying memorabilia from the time of the Nizams."
+        },
+        {
+          "title": "Nehru Zoological Park",
+          "detail": "View a diverse collection of animals and birds in South Hyderabad."
+        },
+        {
+          "title": "Ramoji Film City",
+          "detail": "Tour the world's largest film studio and theme park complex."
+        }
+      ],
+      "food": [
+        {
+          "name": "Hyderabadi dum biryani",
+          "detail": "Basmati rice and meat or vegetables mixed in a pot and slow-cooked with spices."
+        },
+        {
+          "name": "Double Ka Meetha",
+          "detail": "A traditional dessert made from bread, milk, and dry fruits."
+        },
+        {
+          "name": "Falooda",
+          "detail": "A favourite sweet drink of Hyderabad."
+        },
+        {
+          "name": "Gosht",
+          "detail": "Tender meat dish prized in local culinary traditions."
+        },
+        {
+          "name": "Hyderabadi Haleem",
+          "detail": "A rich, slow-cooked meat and lentil dish available during the month of Ramadaan."
+        },
+        {
+          "name": "Irani chai",
+          "detail": "The popular local tea served across traditional cafes."
+        },
+        {
+          "name": "Khubani ka meetha",
+          "detail": "A sweet dessert prepared from apricots boiled in sugar syrup."
+        },
+        {
+          "name": "Mirchi ka salan",
+          "detail": "A flavorful pepper accompaniment often served alongside rice dishes."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Hyderabad — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Hyderabad",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Hyderabad — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Hyderabad",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "mysuru": {
+      "about": "Mysore, officially known as Mysuru, is the second-largest city in Karnataka and serves as its cultural capital. Positioned at the foothills of the Chamundi Hills, the city is celebrated as the City of Palaces due to its magnificent heritage structures. It strikes a balance between its royal past and modern transformation.",
+      "history": "Mysore's recorded history spans over a thousand years. Chamaraja Wodeyar III constructed the Mahishūru Fort in 1524, and the Wodeyar dynasty ruled the region as a vassal state of the Vijayanagara Empire before gaining independence. In 1610, the capital was shifted to Srirangapatna. Hyder Ali and Tipu Sultan held power in the late 18th century, fighting four wars against the British. After Tipu Sultan's death in 1799, the British restored the Wodeyars and moved the capital back to Mysore. Following independence, the kingdom merged into the Indian Union.",
+      "significance": "Mysore is culturally significant as the traditional seat of the Wadiyar dynasty and the cultural capital of Karnataka. It holds immense importance for its grand Dasara celebrations, heritage architecture, traditional arts, and as a renowned centre for yoga-related health tourism.",
+      "thingsToDo": [
+        {
+          "title": "Mysore Zoo",
+          "detail": "Explore one of the oldest zoos in the world, established under royal patronage in 1892."
+        },
+        {
+          "title": "Mysore Palace",
+          "detail": "Marvel at the intricately carved doors, opulent interiors, and evening illumination of this iconic landmark."
+        },
+        {
+          "title": "Jayalakshmi Vilas",
+          "detail": "Visit the large mansion built for a princess, now a museum storing artifacts of local folk and performing arts."
+        },
+        {
+          "title": "Lalitha Mahal Palace",
+          "detail": "Experience antique-style grandeur and enjoy afternoon tea at this former royal summer residence."
+        },
+        {
+          "title": "Chamundeshwari Temple",
+          "detail": "Admire the marvellous architecture of this temple dedicated to Goddess Chamundeshwari atop Chamundi Hills."
+        },
+        {
+          "title": "Brindavan Gardens",
+          "detail": "Stroll through the gardens and view the musical fountain show held every evening."
+        }
+      ],
+      "food": [
+        {
+          "name": "Mysore Pak",
+          "detail": "A traditional sweet made from gram flour, sugar, and plenty of ghee."
+        },
+        {
+          "name": "Mysore Masala Dosa",
+          "detail": "A fermented crepe made from rice batter, black lentils, potato, and onions."
+        },
+        {
+          "name": "Bisibele Baath",
+          "detail": "A popular dish made of rice and lentils with local spices."
+        },
+        {
+          "name": "Idli Sambar",
+          "detail": "Steaming idlis served in a bowl with hot, aromatic sambar poured over them."
+        },
+        {
+          "name": "Masala Poori",
+          "detail": "Crispy puris served with multiple spices mixed in a hot water base."
+        },
+        {
+          "name": "Raagi Mudde",
+          "detail": "Thick balls made by cooking ragi flour in water, typically dipped in ghee and sambar."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Mysore — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Mysore",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Mysore — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Mysore",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "badami": {
+      "about": "Badami, formerly known as Vatapi, is a historical city and taluk headquarters located in the Bagalkot district of Northern Karnataka. Nestled in a ravine at the foot of a rugged, red sandstone outcrop surrounding Agastya Lake, it serves as a renowned regional centre of art and architecture. Travelers visit to explore its ancient rock-cut monuments, structural temples, and scenic cliffs.",
+      "history": "Pulakeshin I founded the Badami Chalukya dynasty in 540 CE and fortified the hill above Vatapi in 544 CE. His son Kirtivarman I and brother Mangalesha constructed the cave temples, and the man-made Agastya Lake was completed in the 7th century. Pulakeshin II came to power in 610 CE and expanded the kingdom before being defeated by the Pallava king Narasimhavarman in 642 CE, leading to the ransacking of the city.",
+      "significance": "Badami matters as the regal capital of the Early Chalukyas from the 6th to 8th centuries. It is a vital cradle of Hindu and Jain temple architecture, showcasing both Dravida and Nagara styles that are key to understanding the mid-1st-millennium CE Karnata tradition of arts.",
+      "thingsToDo": [
+        {
+          "title": "Badami cave temples",
+          "detail": "Explore the four main rock-cut caves featuring dedications to Shiva, Vishnu, and Jain representations."
+        },
+        {
+          "title": "Bhutanatha Temples",
+          "detail": "Visit the cluster of sandstone shrines dedicated to the deity Bhutanatha situated around the eastern side of the tank."
+        },
+        {
+          "title": "Archaeological Museum of Badami",
+          "detail": "View sculptures from various eras of the region housed near the base of the hill."
+        },
+        {
+          "title": "Shivalaya Temples",
+          "detail": "Climb the 300 stairs past the granaries to reach the plateau for ruins and sunset views."
+        },
+        {
+          "title": "Malegitti Shivalaya Temple",
+          "detail": "Observe the oldest temple in town built on a flat rock offering panoramic views."
+        },
+        {
+          "title": "Dattatreya temple",
+          "detail": "Visit this temple located on the western side of Agastya Tank."
+        },
+        {
+          "title": "Rope-climbing",
+          "detail": "Climb the surrounding sandstone cliffs across multiple sectors like Ganesh Plateau, Deluxe Area, and Temple Area."
+        }
+      ],
+      "food": [
+        {
+          "name": "Tandoori chicken",
+          "detail": "Roasted chicken dish prepared in a tandoor oven."
+        },
+        {
+          "name": "Buttermilk",
+          "detail": "Refreshing drink made from cow's or buffalo milk."
+        },
+        {
+          "name": "Tea",
+          "detail": "Popular hot beverage available at roadside shacks and restaurants."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Badami — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Badami",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Badami — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Badami",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "munnar": {
+      "about": "Munnar is a hill station in the Indian state of Kerala, situated at an elevation of 1,600 metres in the Western Ghats mountain range. The region gets its name from three rivers that flow through the town: Madupetti, Nallathanni, and Periavaru. It is known for its pleasant temperatures, rolling hills, and vast tea plantations.",
+      "history": "Hunter-gatherer tribals inhabited the region for thousands of years. Benjamin Swayne Ward surveyed the terrain in 1816–1817. John Daniel Munro and others obtained ownership of the Cardamom Hills in 1879, leading to European tea plantations in the 1880s. The Kannan Devan Hills Corporation was registered in 1897. A ropeway was built in 1900, a railway opened in 1909, and a major flood in 1924 destroyed the rail track, leading to the construction of a modern road in 1930.",
+      "significance": "Munnar is an ancient plantation settlement dominated by the tea industry and serves as a major hill station. Its protected areas are crucial for survival of threatened and endemic species such as the Nilgiri Tahr and the Neelakurinji flower, which blooms every twelve years.",
+      "thingsToDo": [
+        {
+          "title": "Eravikulam National Park",
+          "detail": "Spot endangered Nilgiri Tahr and see the Neelakurinji flowering areas."
+        },
+        {
+          "title": "Mattupetty Dam",
+          "detail": "Enjoy speed boat rides, horse riding, and a popular picnic spot."
+        },
+        {
+          "title": "Kundala Lake",
+          "detail": "Hire a pedal boat and explore the lake amidst lush jungles."
+        },
+        {
+          "title": "Atukkad Waterfalls",
+          "detail": "View scenic waterfalls amidst hills and jungles."
+        },
+        {
+          "title": "Blossom Park",
+          "detail": "Visit the well-known hydel park located close to Munnar town."
+        },
+        {
+          "title": "Top Station",
+          "detail": "Experience great views of the Western Ghats from above the clouds."
+        },
+        {
+          "title": "Munnar Echo Point",
+          "detail": "Listen to loud calls returned manifold by echoes from surrounding hills."
+        },
+        {
+          "title": "Lockhart Tea Museum",
+          "detail": "Take a guided factory tour about orthodox tea manufacturing."
+        }
+      ],
+      "food": [
+        {
+          "name": "Fish Curry",
+          "detail": "A famous regional curry from Kerala."
+        },
+        {
+          "name": "Spicy cashew nut",
+          "detail": "A traditional local snack that goes well with hot tea in cold weather."
+        },
+        {
+          "name": "Chilly bhaji",
+          "detail": "A traditional hot snack enjoyed with tea."
+        },
+        {
+          "name": "Gobi noodles",
+          "detail": "A cheap and delicious street food found around the bus stand area."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Munnar — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Munnar",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Munnar — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Munnar",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "coorg": {
+      "about": "Coorg, also known as Kodagu, is a district in Karnataka State known for its beautiful scenery and the hospitability of its people. Fondly called the Scotland of India or the Switzerland of India, the region features endless mountain ranges, wooded slopes, undulating landscapes, and quaint villages. Tourists flock here to experience lush green valleys, rich coffee and spice plantations, and popular outdoor activities like mountain biking, trekking, and white water rafting.",
+      "history": "The Kodavas were the earliest inhabitants and agriculturists in Kodagu for centuries. The earliest mention of Coorg appears in Sangam period works from 300 BCE to 300 CE. The Haleri dynasty ruled Kodagu between 1600 and 1834. The British ruled Kodagu after the Coorg War in 1834 until India's independence in 1947. Kodagu was a separate state until 1956, when it was merged into Mysore State.",
+      "significance": "Coorg is culturally and naturally significant as a historic warrior homeland, a premier hill station in India, and the sacred origin point of the River Kaveri in the Brahmagiri hills. It holds importance for its unique Kodava heritage, diverse wildlife reserves, and ancient temples.",
+      "thingsToDo": [
+        {
+          "title": "Abbey falls",
+          "detail": "View the roaring waterfall situated amidst coffee and cardamom plantations."
+        },
+        {
+          "title": "Nagarahole Tiger Reserve",
+          "detail": "Spot wildlife such as elephants, bison, deer, and birds in the country's first bio-sphere reserve."
+        },
+        {
+          "title": "Honnamana Kere",
+          "detail": "Enjoy boating, fishing, trekking, and rock climbing around the scenic lake."
+        },
+        {
+          "title": "Pushpagiri Wildlife Sanctuary",
+          "detail": "Trek through the wilderness of the Western Ghats and spot diverse wild species."
+        },
+        {
+          "title": "Mallalli Falls",
+          "detail": "Witness the River Kumaradhara gushing through the valley into a gorge."
+        },
+        {
+          "title": "Madikeri Fort",
+          "detail": "Explore the historic fort featuring a palace, life-size masonry elephants, and a church."
+        },
+        {
+          "title": "Raja's Seat",
+          "detail": "Watch spectacular sunsets and enjoy the musical fountain and toy train ride."
+        },
+        {
+          "title": "Talakaveri",
+          "detail": "Visit the sacred spring where the River Kaveri originates in the Brahmagiri hills."
+        }
+      ],
+      "food": [
+        {
+          "name": "Kadubu",
+          "detail": "Steamed rice balls served with chutney, chana curry, and toasted buttered bread."
+        },
+        {
+          "name": "Pandi curry",
+          "detail": "A traditional spicy pork dish reflecting the rich meat-based culinary heritage of Coorg."
+        },
+        {
+          "name": "Akki roti",
+          "detail": "A traditional local bread commonly enjoyed with spicy Coorgi preparations."
+        },
+        {
+          "name": "Pork pepper dry",
+          "detail": "A flavorful preparation combining local meat with hot Indian pepper."
+        },
+        {
+          "name": "Traditional Coorgi oranges",
+          "detail": "Fresh local citrus fruit harvested in the region's plantation areas."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kodagu — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kodagu",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kodagu district — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kodagu_district",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "ooty": {
+      "about": "Ooty, officially known as Udhagamandalam, is a popular hill resort in the Nilgiri Mountains of Tamil Nadu. Standing at an altitude of 2,240 meters above sea level, it features a pleasant climate all year round, making it a great escape from regional heat. The landscape is characterized by rolling hills, dense vegetation, plateaus covered with tea gardens, and eucalyptus trees. The town draws swarms of tourists every year to enjoy its natural beauty, scenic lakes, and historic charm. Visitors come to explore the surrounding countryside, walk among rare plants, and experience the local culture rooted in indigenous tribal communities. Although it has faced challenges with overcrowding, it remains a central hub for exploring the broader Nilgiri region.",
+      "history": "The earliest reference to the Nilgiri Mountains appears in Tamil Sangam literature from the 5th or 6th century CE. The region was originally occupied by various tribes and ruled by multiple South Indian kingdoms over the centuries. Tipu Sultan captured the Nilgiris in the 18th century before the British took possession in 1799. In the early 19th century, British officials developed the area as a summer retreat and sanatorium. Ooty was made a municipality in 1866 and served as the summer capital of the Madras Presidency. Following Indian independence, it evolved into a prominent recreational resort and tourist destination.",
+      "significance": "Ooty holds major geographical and cultural significance as part of the Nilgiri Biosphere Reserve, India's largest protected forest area. It preserves a rich heritage linked to original indigenous tribal communities like the Todas and serves as an important ecological zone with unique montane rain forests, grasslands, and thousands of native plant and animal species.",
+      "thingsToDo": [
+        {
+          "title": "Doddabetta Peak",
+          "detail": "Visit the highest peak in the Nilgiris to enjoy panoramic views of the surrounding area from the telescope house."
+        },
+        {
+          "title": "Ooty Botanical Gardens",
+          "detail": "Walk through picturesque gardens featuring hundreds of plant species, rare ferns, and a 20-million-year-old tree fossil."
+        },
+        {
+          "title": "Ooty Rose gardens",
+          "detail": "Stroll across terraced pathways housing thousands of varieties of roses in a massive landscaped setting."
+        },
+        {
+          "title": "Boat House",
+          "detail": "Enjoy paddle and speed boat rides on the lake along with family-friendly amusement activities."
+        },
+        {
+          "title": "Nilgiri Mountain Railway",
+          "detail": "Take a journey on the historic blue and cream train known as a marvel of engineering."
+        },
+        {
+          "title": "Municipal Market",
+          "detail": "Browse the stalls to shop for fresh local fruits and regional produce."
+        },
+        {
+          "title": "Fern Hills Palace",
+          "detail": "Visit the historic estate and former residence of the Mysore Maharaja."
+        },
+        {
+          "title": "Toda Temple",
+          "detail": "Observe the unique inverted U-shaped bamboo structure reflecting indigenous tribal heritage."
+        }
+      ],
+      "food": [
+        {
+          "name": "Biriyani",
+          "detail": "A flavorful spiced rice dish served at longstanding local dining spots."
+        },
+        {
+          "name": "Maggi",
+          "detail": "A quick and popular hot noodle dish served at local roadside cafes."
+        },
+        {
+          "name": "Tea",
+          "detail": "Freshly brewed regional beverage produced from the surrounding Nilgiri plantations."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Ooty — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Ooty",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Ooty — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Ooty",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "wayanad": {
+      "about": "Wayanad is a mountainous district in Kerala located on the western ghats. Most of the land is covered with forests and lush green cultivation. It is a popular weekend destination known for hill tourism, wildlife sanctuaries, rivers, dams, and tea estates. The district is set high in the Western Ghats with altitudes ranging from 700 to 2,100 meters. Visitors come to enjoy the hill stations, trekking opportunities, serene villages, and nature.",
+      "history": "Human settlements existed from at least 1,000 BCE, with Neolithic rock engravings in Edakkal Caves. In ancient times, the land was ruled by Veda tribe Rajas and the Nannans of the Ezhimala Kingdom. Later, it was ruled by dynasties like the Kadambas, Chalukyas, and Hoysalas. In the 18th century, it saw conflict between Hyder Ali, Tipu Sultan, Pazhassi Raja, and the British. Wayanad later became part of the Malabar district under the British and part of Kerala after independence.",
+      "significance": "Wayanad is the only plateau in Kerala and forms a continuation of the Mysore Plateau. It features ancient Neolithic rock engravings, important historical conflict sites, indigenous tribes, and hosts the Wayanad Literature Festival, the largest rurally held literature festival in India.",
+      "thingsToDo": [
+        {
+          "title": "Banasura Sagar Dam",
+          "detail": "Visit this scenic dam located in the Kalpetta area."
+        },
+        {
+          "title": "Chembra Hills",
+          "detail": "Explore the hill station and enjoy hiking in the hills."
+        },
+        {
+          "title": "Edakkal Caves",
+          "detail": "See the historically important caves featuring ancient rock engravings."
+        },
+        {
+          "title": "Tholpetty Sanctuary",
+          "detail": "Go wildlife watching in this protected sanctuary area."
+        },
+        {
+          "title": "Kuruva Islands",
+          "detail": "Discover the island attractions in the Mananthavady area."
+        },
+        {
+          "title": "Pookode Lake",
+          "detail": "Enjoy the lake waters and surrounding natural scenery."
+        },
+        {
+          "title": "Thirunelli Temple",
+          "detail": "Visit this notable temple located in the region."
+        }
+      ],
+      "food": [
+        {
+          "name": "Bamboo rice",
+          "detail": "Seeds of the bamboo plant that taste like rice and are richer in protein than rice and wheat."
+        },
+        {
+          "name": "Bamboo rice payasam",
+          "detail": "A sweet local dessert preparation found near the Edakkal caves."
+        },
+        {
+          "name": "Home-made chocolates",
+          "detail": "Sweet treats sold by local vendors in various spots."
+        },
+        {
+          "name": "Wayanad tea",
+          "detail": "Locally grown tea available in spiced and regular versions."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Wayanad — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Wayanad",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Wayanad district — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Wayanad_district",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "kodaikanal": {
+      "about": "Kodaikanal is a hill station located in the Palani Hill Range of the Western Ghats in Tamil Nadu. Sitting high above sea level, it offers surrounding nature and cooler temperatures, earning it the title of the Princess of Hill Stations. Agriculture and tourism form the major parts of the local economy. Visitors come to experience its scenic landscapes, lakes, and waterfalls. A unique feature of the region is the Kurinji flower, which blooms in full bloom once every twelve years, turning the valley into a sea of blue.",
+      "history": "Early references to the Palani Hills appear in Tamil Sangam literature. In 1821, British Lieutenant B.S. Ward surveyed the area. In 1834, J.C. Wroughten and C.R. Cotton climbed the hills, followed by botanist Robert Wight in 1836. Kodaikanal was established in 1845 as a refuge from the summer heat and tropical diseases of the plains. Major J.M. Partridge built a house in 1852 and imported Australian eucalyptus and wattle trees in 1867. An artificial lake was formed in 1863, and Lt. Coaker cut a path along the ridge in 1872. It grew into a summer retreat during the British Raj and developed into a small town by 1909, with the ghat road completed in 1914.",
+      "significance": "Kodaikanal matters culturally and naturally as a historic summer retreat and a biodiversity hub of the Western Ghats. It is famed for the rare Kurinji flower, which blooms once every twelve years, and its landscape holds deep roots in ancient Tamil Sangam literature associated with the god Murugan.",
+      "thingsToDo": [
+        {
+          "title": "Kodai Lake",
+          "detail": "Go boating through the evening fog or take a night walk around this star-shaped lake."
+        },
+        {
+          "title": "Berijam Lake",
+          "detail": "Visit this pristine, plastic-free lake located within a reserved forest region."
+        },
+        {
+          "title": "Silver Cascade",
+          "detail": "Stop by this roadside waterfall to enjoy the cold water and surrounding eucalyptus trees."
+        },
+        {
+          "title": "Guna Caves",
+          "detail": "View these deep, steep caves that gained wide fame after a movie release."
+        },
+        {
+          "title": "Kurinjiandavar Temple",
+          "detail": "Visit the temple dedicated to Lord Murugan, featuring flowers that bloom once every twelve years and views of the Palani Hills."
+        },
+        {
+          "title": "Bryant Park",
+          "detail": "Stroll through this botanical garden featuring hundreds of tree species and a large rose section."
+        },
+        {
+          "title": "Coakers Walk",
+          "detail": "Walk along the ridge to catch scenic valley views, sunrises, or sea-like clouds in winter."
+        },
+        {
+          "title": "Dolphins Nose",
+          "detail": "Trek to this flat rock projecting over a deep chasm for expansive views of the rocky escarpment."
+        }
+      ],
+      "food": [
+        {
+          "name": "Barbeque chicken sizzlers",
+          "detail": "Savory grilled chicken dishes served hot on a metal plate."
+        },
+        {
+          "name": "Lemon cake",
+          "detail": "A sweet baked pastry infused with citrus flavor."
+        },
+        {
+          "name": "Chola batora",
+          "detail": "A spiced chickpea dish served with fluffy fried bread."
+        },
+        {
+          "name": "Alu paratha",
+          "detail": "An Indian flatbread stuffed with spiced potatoes."
+        },
+        {
+          "name": "Potato cheese momo",
+          "detail": "Steamed dumplings filled with a mixture of potato and cheese."
+        },
+        {
+          "name": "Thukpa",
+          "detail": "A warm, comforting noodle soup of Tibetan origin."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kodaikanal — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kodaikanal",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kodaikanal — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kodaikanal",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "mahabaleshwar": {
+      "about": "Mahabaleshwar is the largest hill station in the Western Ghats of Maharashtra. Located at a high altitude, it features a cool climate, towering cliffs, waterfalls, and meandering rivers. It attracts many visitors for its scenic lookout points and strawberry cultivation. Tourists come here to enjoy boat rides, horse riding, trekking, and local foods. The area is a natural paradise with ancient temples and vibrant festivals.",
+      "history": "In the 13th century, a Yadava ruler built a temple and water tank at the Krishna river source. The area was ruled by the More clan under the Bijapur sultanate until Chhatrapati Shivaji seized it in 1656 and built Pratapgad fort. In 1819, the British gained the hills, developing it as a sanatorium and later the summer capital of the Bombay Presidency. Venna Lake was built in 1842, and European flora like strawberries were introduced.",
+      "significance": "Mahabaleshwar is religiously significant because it is the sacred origin of the Krishna River and five tributaries. Historically, it served as the Maratha stronghold of Pratapgad and the British summer capital.",
+      "thingsToDo": [
+        {
+          "title": "Arthur's Seat",
+          "detail": "A popular viewpoint at a dead end offering magnificent views of the surrounding hills."
+        },
+        {
+          "title": "Elphinston Point",
+          "detail": "A scenic viewpoint providing beautiful vistas of the deep valleys."
+        },
+        {
+          "title": "Wilson Point",
+          "detail": "The highest point in Mahabaleshwar, ideal for watching sunrises and sunsets."
+        },
+        {
+          "title": "Kate's Point",
+          "detail": "A high-altitude viewpoint offering bird-eye views of Dhoom Lake and the Krishna River."
+        },
+        {
+          "title": "Lodwick Point",
+          "detail": "A scenic spot featuring a 25-foot column and views of Pratapgad Fort."
+        },
+        {
+          "title": "Venna Lake",
+          "detail": "A popular man-made lake offering paddle and rowing boat rides."
+        },
+        {
+          "title": "Lingmala Falls",
+          "detail": "A waterfall with upper and lower parts reachable via a short trek."
+        },
+        {
+          "title": "Pratapgad",
+          "detail": "A historic hilltop fort featuring towering walls, bastions, and temples."
+        }
+      ],
+      "food": [
+        {
+          "name": "Strawberry Cream",
+          "detail": "A dessert made with fresh cream, strawberry slices, and strawberry ice cream."
+        },
+        {
+          "name": "Corn Patties",
+          "detail": "Delicious patties made from locally grown corn."
+        },
+        {
+          "name": "Vada Pav",
+          "detail": "A staple street food of Maharashtra."
+        },
+        {
+          "name": "Strawberry Wine",
+          "detail": "A popular local alcoholic beverage and souvenir of the region."
+        },
+        {
+          "name": "Mulberries",
+          "detail": "Fresh local seasonal fruit grown in the region."
+        },
+        {
+          "name": "Strawberry Milk Shake",
+          "detail": "A popular cold beverage often served with a blob of strawberry ice cream."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Mahabaleshwar — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Mahabaleshwar",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Mahabaleshwar — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Mahabaleshwar",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "kochi": {
+      "about": "Kochi, formerly known as Cochin, is a cosmopolitan port city and the financial and commercial capital of Kerala. Nicknamed the Queen of the Arabian Sea, it is situated along the Malabar Coast and borders the Laccadive Sea. Born after the Great Floods of the Periyar River in 1341, the city grew into a bustling hub shaped by centuries of spice trade and European colonization. Visitors are drawn to Kochi for its rich cultural heritage, scenic backwaters, and diverse multicultural community. The city blends ancient traditions with modern developments, housing historical quarters like Fort Kochi alongside modern infrastructure such as the Kochi Water Metro. Travelers come to experience its vibrant festivals, explore unique coastal landscapes, and enjoy a distinct culinary tradition shaped by global influences.",
+      "history": "The precursor state to the Kingdom of Kochi emerged after the Chera Kerala Empire partitioned in the 14th century, following the devastating floods of 1341 that destroyed the port of Muziris. Merchants had traded spices here for over 600 years, and Kochi subsequently became the first major battleground for European colonial powers. Portugal established the first base, followed by the Dutch and later the British under the Anglo-Dutch treaty of 1814. In 1928, Willingdon Island was reclaimed to house the Cochin Port. In 1947, Cochin and Travancore merged, and the region joined the Indian Union in 1948 before the formation of Kerala state in 1957.",
+      "significance": "Kochi matters as the commercial and financial capital of Kerala and a historic gateway to India's spice trade. It represents a unique melting pot of cultures resulting from centuries of global maritime contact with Arab, Chinese, and European traders, and it hosts a diverse religious and multi-ethnic community.",
+      "thingsToDo": [
+        {
+          "title": "Cochin Carnival",
+          "detail": "Experience colourful rallies, beach games, music, and the ceremonial burning of a Papanai effigy on New Year's Eve."
+        },
+        {
+          "title": "Maradu Kottaram Devi Temple",
+          "detail": "Witness a massive temple festival finale featuring one of India's largest mega fireworks displays."
+        },
+        {
+          "title": "Onam Festival",
+          "detail": "Celebrate Kerala's state festival, featuring the Athachamayam parade and cultural events linked to the Thrikakkara Temple."
+        },
+        {
+          "title": "Shiva Temple Festival",
+          "detail": "Observe the traditional ten-elephant parade, cultural performances, and a grand percussion ensemble."
+        },
+        {
+          "title": "Thripunithura Vrischikolsavam",
+          "detail": "Enjoy traditional Kathakali performances at the historic Thripunithura Poornathrayeesa Temple."
+        },
+        {
+          "title": "Fort Kochi Beach",
+          "detail": "Play beach volleyball and football, or buy fresh fish from local mongers to have it cooked at nearby food stalls."
+        },
+        {
+          "title": "Thrikakkara Temple",
+          "detail": "Visit the believed mythical capital of King Mahabali where the ten-day Onam festivities conclude."
+        }
+      ],
+      "food": [
+        {
+          "name": "Meen Molagitta Curry",
+          "detail": "Smoked freshwater fish cooked with chili and coconut milk."
+        },
+        {
+          "name": "Kurukku Kalan",
+          "detail": "A traditional thick yogurt curry prepared with toasted banana."
+        },
+        {
+          "name": "Palada",
+          "detail": "A sweet dessert made with rice flakes and milk."
+        },
+        {
+          "name": "Fish molly",
+          "detail": "A coconut milk sauce-based fish curry resembling a stew."
+        },
+        {
+          "name": "Alleppey fish curry",
+          "detail": "A traditional regional curry made with tomato sauce and fish tamarind."
+        },
+        {
+          "name": "Fish Peera",
+          "detail": "Chunks of fish toasted with grated coconut and fish tamarind sauce."
+        },
+        {
+          "name": "Varatharacha Kozhi curry",
+          "detail": "Semi-fried chicken toasted with coconut and chili."
+        },
+        {
+          "name": "Appam and stew",
+          "detail": "Traditional rice-based breakfast items served with a flavorful stew."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kochi — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kochi",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kochi — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kochi",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "mumbai": {
+      "about": "Mumbai, formerly known as Bombay, is the capital of Maharashtra and India's commercial capital. Built on an archipelago of seven islands along the Konkan coastline, the city is a bustling, diverse metropolis with a population of over 20 million. Often called the New York of India, it is a cosmopolitan hub featuring a pulsing pace of life, grand colonial architecture, and the globally influential Bollywood film industry. Visitors are drawn to Mumbai for its eclectic blend of historic sites, vibrant culture, and unique urban energy. From the iconic waterfront monuments and rock-cut cave temples to art galleries, beaches, and lively street food markets, the city offers a sharp contrast to the rest of India through its entrepreneurial spirit and rich multi-ethnic heritage.",
+      "history": "Human occupation dates back to the Stone Age. The islands were ruled by the Maurya Empire in the 3rd century BCE, followed by dynasties like the Satavahanas, Chalukyas, and Shilaharas. The Delhi Sultanate annexed the islands in 1347, later passing to the Gujarat Sultanate. In 1535, the islands were ceded to the Portuguese. They were transferred to England in 1661 as part of Catherine of Braganza's dowry and leased to the East India Company in 1668. Land reclamation joined the seven islands into a single landmass by 1845, fostering rapid economic growth. The city was a major center for the Indian independence movement, and became the capital of Maharashtra in 1960.",
+      "significance": "Mumbai is the financial capital of India and a premier port city on the Arabian Sea. It holds deep cultural importance as the birthplace of Indian cinema, a center for contemporary art and theatre, and a historic melting pot where diverse communities, religions, and architectural styles converge.",
+      "thingsToDo": [
+        {
+          "title": "Gateway of India",
+          "detail": "View the iconic waterfront monument built during the British Raj."
+        },
+        {
+          "title": "Chhatrapati Shivaji Maharaj Terminus",
+          "detail": "Admire the magnificent Gothic revival railway station architecture."
+        },
+        {
+          "title": "Elephanta Caves",
+          "detail": "Explore the ancient rock-cut cave temples located within city limits."
+        },
+        {
+          "title": "Marine Drive",
+          "detail": "Stroll along the sweeping coastal road featuring numerous Art Deco buildings."
+        },
+        {
+          "title": "Chhatrapati Shivaji Maharaj Vastu Sangrahalaya",
+          "detail": "Browse renowned collections of rare ancient exhibits of Indian history."
+        },
+        {
+          "title": "Girgaon Chowpatty",
+          "detail": "Visit the popular beach to watch the sunset and sample local street food."
+        },
+        {
+          "title": "Sanjay Gandhi National Park",
+          "detail": "Escape the bustle of the city within a protected expanse of greenery."
+        },
+        {
+          "title": "Kanheri Caves",
+          "detail": "Discover the ancient rock-carved Buddhist complex dating back thousands of years."
+        }
+      ],
+      "food": [
+        {
+          "name": "Bhel Puri",
+          "detail": "A popular local street food snack enjoyed by visitors at the beach."
+        },
+        {
+          "name": "Pav Bhaji",
+          "detail": "A bustling street food meal of thick vegetable curry served with soft bread rolls."
+        },
+        {
+          "name": "Dosa",
+          "detail": "A savory South Indian fermented crepe served across various eateries."
+        },
+        {
+          "name": "Idli",
+          "detail": "Steamed savory rice cakes traditionally eaten as a light snack."
+        },
+        {
+          "name": "Malai Kulfi",
+          "detail": "A rich, dense traditional frozen dairy dessert."
+        },
+        {
+          "name": "Falooda",
+          "detail": "A sweet, layered beverage dessert containing vermicelli and milk."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Mumbai — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Mumbai",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Mumbai — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Mumbai",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "gokarna": {
+      "about": "Gokarna is a small pilgrimage town on the coast in the Karnataka state of India. It is a conservative Hindu pilgrimage town, full of locals and priests, home to several temples and festivals. Most foreign tourists come to stay on one of the four beaches just south of town, which get more remote and less populated as you head south.",
+      "history": "According to Hindu epics, the aatmalimga of the God Shiva is in the shape of a cow's ear in the Mahabaleshwar temple. The town gets its name, Gokarna, which means cow's ear in Sanskrit, from this legend.",
+      "significance": "Gokarna is a conservative Hindu pilgrimage town centered around sacred temples like the Mahabaleshvara Temple and the Maha Ganapati Temple, and hosts thousands of pilgrims during the annual Shiva Ratri festival.",
+      "thingsToDo": [
+        {
+          "title": "Mahabaleshvara Temple",
+          "detail": "Visit one of the largest temples in town, located at the western end towards the beach."
+        },
+        {
+          "title": "Maha Ganapati Temple",
+          "detail": "See the temple dedicated to Lord Ganesha, located meters away from the Shiva Temple."
+        },
+        {
+          "title": "Gokarna Beach",
+          "detail": "Walk along the coast starting about a kilometre from the bus stand."
+        },
+        {
+          "title": "Kudle Beach",
+          "detail": "Relax on the first beach south of town, popular with visitors and dotted with hippies in season."
+        },
+        {
+          "title": "Om Beach",
+          "detail": "Visit the famous beach shaped like the Hindu religious symbol Om."
+        },
+        {
+          "title": "Half Moon Beach",
+          "detail": "Explore one of the secluded beaches south of town."
+        },
+        {
+          "title": "Paradise Beach",
+          "detail": "Head to the most remote and less populated beach further south."
+        },
+        {
+          "title": "Shiva Ratri",
+          "detail": "Witness the 4-day festival when giant chariots are pulled down the main street."
+        }
+      ],
+      "food": [
+        {
+          "name": "thalis",
+          "detail": "Incredibly cheap all-you-can-eat local meals served in town."
+        },
+        {
+          "name": "fried pies",
+          "detail": "Delicious small street food items available in the town."
+        },
+        {
+          "name": "bhel puri",
+          "detail": "Popular street food snack."
+        },
+        {
+          "name": "pomfret",
+          "detail": "Local fish served fried, roasted, or curried."
+        },
+        {
+          "name": "kingfish",
+          "detail": "Fresh fish prepared fried, roasted, or curried."
+        },
+        {
+          "name": "seer",
+          "detail": "Popular local fish option."
+        },
+        {
+          "name": "Prawn Masala",
+          "detail": "Delicious seafood dish available at beach cafés."
+        },
+        {
+          "name": "King Fish Sizzler",
+          "detail": "Hearty seafood main course served near the beach."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Gokarna — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Gokarna",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Gokarna — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Gokarna",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "varkala": {
+      "about": "Varkala is a town in the Indian state of Kerala, located about 50 km north of Thiruvananthapuram. It is known for its popular Papanasam Beach, where laterite cliffs drop sharply into the sea next to a strip of sandy coastline. Visitors come for relaxing beach holidays, cliffside dining, and cultural attractions. The town offers a mellow, relaxed atmosphere during the off-season, while the main tourist season runs from December through March. Travelers can enjoy scenic walks along the tourism department promenade, explore nearby backwaters, or visit religious landmarks and ashrams.",
+      "history": "The Janardhana Swamy Temple is two thousand years old, and Varkala has been a Hindu pilgrimage site since the 12th century, with the temple built during this period. In the modern era, saint and social reformer Sree Narayana Guru made Varkala his headquarters and established the Sivagiri Mutt. The British built a fort in Anjengo and constructed the Varkala Tunnel in 1880. The unique coastal cliff formation was later declared a National Geological Monument.",
+      "significance": "Varkala is a leading pilgrim centre in Kerala, featuring the Samadhi of Sree Narayana Guru and the ancient Janardhana Swamy Temple dedicated to Vishnu and Hanuman, earning the region the sobriquet Southern Kasi. Its unique Miocene-Pliocene cliff formation is recognized as a National Geological Monument by the Geological Survey of India.",
+      "thingsToDo": [
+        {
+          "title": "Varkala beach",
+          "detail": "Relax on the sandy strip at the base of the laterite cliffs."
+        },
+        {
+          "title": "Shree Janardhana Swamy temple",
+          "detail": "Visit the 2000-year-old hilltop Hindu pilgrimage site dedicated to Vishnu and Hanuman."
+        },
+        {
+          "title": "Edava Beach",
+          "detail": "Bask in the sun and explore the serene, lesser-known coastal areas."
+        },
+        {
+          "title": "Varkala Tunnel",
+          "detail": "View the historical tunnel built by the British."
+        },
+        {
+          "title": "Fishing Hamlets of Anjengo and its British Fort",
+          "detail": "Explore the historical fort and local fishing settlement area."
+        },
+        {
+          "title": "Sivagiri Mutt",
+          "detail": "Visit the religious retreat and headquarters founded by Sree Narayana Guru."
+        },
+        {
+          "title": "Odayam beach",
+          "detail": "Walk the cliff pathway to the least crowded beach in the area."
+        },
+        {
+          "title": "Kathakali",
+          "detail": "Watch daily evening shows of the traditional Kerala temple dance drama."
+        }
+      ],
+      "food": [
+        {
+          "name": "Momos",
+          "detail": "Tibetan dumplings served with a warm soup."
+        },
+        {
+          "name": "Chapati Roll",
+          "detail": "Rolled flatbread wrap with a vegetable filling."
+        },
+        {
+          "name": "Traditional Kerala Thali",
+          "detail": "An assortment of traditional vegetarian and non-vegetarian dishes."
+        },
+        {
+          "name": "Panini sandwiches",
+          "detail": "Grilled Italian-style pressed sandwiches."
+        },
+        {
+          "name": "American pancakes",
+          "detail": "Fluffy stacked breakfast pancakes."
+        },
+        {
+          "name": "Masala chai",
+          "detail": "Spiced Indian tea."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Varkala — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Varkala",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Varkala — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Varkala",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "shillong": {
+      "about": "Shillong is a hill station and the capital of Meghalaya, known as the Scotland of the East due to its rolling pine-covered hills. Located at an altitude of 1,496 metres, the city features British legacy architecture such as Assam-style houses with slanting roofs and wooden floors. Most of the population belongs to the Khasi tribe, a matrilineal society where children take the mother's surname and the youngest daughter owns all property. The city has a milder climate than tropical India and receives heavy rainfall during the monsoon season. Travelers visit Shillong to experience its natural beauty, explore the surrounding hills and waterfalls, and enjoy cultural attractions ranging from large museums to historic churches and lively markets.",
+      "history": "During the First Anglo-Burmese War, the British wanted a road connecting Assam to Sylhet across the Khasi and Jaintia Hills. In 1829, the British negotiated with the Syiem of Sohra for a sanatorium. A Khasis confederation rose against British occupation, and their leader Tirot Sing surrendered in 1833. The British later moved from Sohra to Shillong, which was named after the nearby Shillong Peak. In 1874, Shillong became the capital of the North-East Frontier province. An earthquake struck in 1897 and destroyed much of the town. Shillong remained Assam's capital until Meghalaya was formed in 1972, making Shillong its capital.",
+      "significance": "Shillong matters as the historic and administrative capital of Meghalaya and the former capital of undivided Assam. It serves as the cultural heart of the Khasi people, showcasing a unique matrilineal society and preserving extensive indigenous heritage of the Northeast.",
+      "thingsToDo": [
+        {
+          "title": "Butterfly Museum",
+          "detail": "View a huge collection of rare and colorful butterfly species."
+        },
+        {
+          "title": "Cathedral of Mary Help of Christians",
+          "detail": "Visit the principal place of worship for Catholics perched on a hill in Laitumkhrah."
+        },
+        {
+          "title": "Don Bosco Museum of Indigenous North East Culture",
+          "detail": "Explore the large cultural museum shaped like a spiral with exhibits on the Northeast."
+        },
+        {
+          "title": "Golf course",
+          "detail": "Play on India's first 18-hole golf course located at an altitude of around 5,200 feet."
+        },
+        {
+          "title": "Lady Hydari Park",
+          "detail": "Stroll through local flowering plants, orchids, and a mini zoo."
+        },
+        {
+          "title": "Lok Bhavan",
+          "detail": "See the earthquake-proof English country cottage style official residence of the Governor."
+        },
+        {
+          "title": "Madina Mosque",
+          "detail": "View India's only glass mosque."
+        },
+        {
+          "title": "Shillong Peak",
+          "detail": "Get breathtaking views of the city from the highest point in Meghalaya."
+        },
+        {
+          "title": "Umiam Lake",
+          "detail": "Enjoy water sports like kayaking and boating at this large man-made lake."
+        },
+        {
+          "title": "Wards Lake",
+          "detail": "Walk across the wooden bridge and around the horseshoe-shaped artificial lake."
+        }
+      ],
+      "food": [
+        {
+          "name": "Momos",
+          "detail": "Steamed Tibetan dumplings filled with cabbage and pork or chicken."
+        },
+        {
+          "name": "Jalebis",
+          "detail": "Freshly made sweet Indian snacks."
+        },
+        {
+          "name": "Jaintia thali",
+          "detail": "Traditional tribal food offering regional flavors."
+        },
+        {
+          "name": "Marwari thali",
+          "detail": "Decent vegetarian food option."
+        },
+        {
+          "name": "Idlis",
+          "detail": "Authentic South Indian savory cakes."
+        },
+        {
+          "name": "Dosas",
+          "detail": "Crispy and hot South Indian pancakes."
+        },
+        {
+          "name": "Vada",
+          "detail": "Traditional South Indian fried snack."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Shillong — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Shillong",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Shillong — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Shillong",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "tawang": {
+      "about": "Tawang is a town in the Himalayas in the far west of Arunachal Pradesh. It sits at an elevation of approximately 3,000 meters, lying north of the Tawang Chu river valley and south of the Line of Actual Control with China. The town serves as the administrative headquarters of the Tawang district and is inhabited by the Monpa people. Visitors come to explore the stunning Himalayan mountain landscape, high-altitude passes, and glacier lakes. It is widely known as a major tourist destination and a trekker's paradise, offering challenging mountain routes and scenic valleys. The area is home to the second-largest Buddhist monastery in the world, along with numerous other gompas managed by monks and nuns. Travelers also visit to experience unique Tibetan and Monpa cultures, historical war memorials, and scenic local spots.",
+      "history": "From 500 BC to 600 AD, the Lhomon or Monyul kingdom ruled the area, which later fell under Bhutanese and Tibetan control. The Tawang Monastery was founded in 1681 by Merak Lama Lodre Gyatso following the wishes of the 5th Dalai Lama. During the 1914 Simla Conference, Tibet and British India signed an agreement establishing the McMahon Line, which transferred Tawang to the British, though China did not recognize it. India occupied Tawang in February 1951, removing Tibetan administration. In 1962, a Chinese invasion led to a temporary capture of the region before forces withdrew.",
+      "significance": "Tawang is historically and culturally significant as a major center of Tibetan Buddhism and home to the world's second-largest Buddhist monastery. It holds deep strategic importance in the Himalayas, carrying a legacy of cross-border diplomacy, sovereignty shifts, and memorials honoring soldiers from the 1962 war.",
+      "thingsToDo": [
+        {
+          "title": "Sela Pass",
+          "detail": "Cross a high-mountain pass at over 4,000 meters elevation featuring snow-covered views and an often-frozen lake."
+        },
+        {
+          "title": "Tawang Monastery",
+          "detail": "Visit the world's second-largest Tibetan Buddhist gompa, constructed in 1681 and home to over 500 lamas."
+        },
+        {
+          "title": "Tawang War Memorial",
+          "detail": "Walk through the impressive Indian Army memorial dedicated to soldiers who fought in the 1962 war."
+        },
+        {
+          "title": "Jaswantgarh War Memorial",
+          "detail": "See the site of an Indian victory along the main highway commemorating a brave soldier."
+        },
+        {
+          "title": "Nuranang Falls",
+          "detail": "View the spectacular waterfall located near the town of Jang between Tawang and the Sela Pass."
+        },
+        {
+          "title": "P.T.Tso Lake",
+          "detail": "Enjoy the splendid views from a high-altitude lake that remains frozen for months of the year."
+        },
+        {
+          "title": "Anni Gompa",
+          "detail": "Explore the Buddhist monastery located outside of town that is managed by nuns."
+        },
+        {
+          "title": "Madhuri Lake",
+          "detail": "Visit the scenic high-altitude lake named after a famous Bollywood actress."
+        },
+        {
+          "title": "Bum La Pass",
+          "detail": "Travel to the high-elevation India-China border area requiring special army permits."
+        },
+        {
+          "title": "Tibetan Medical Dispensary",
+          "detail": "Consult a doctor of Tibetan medicine and receive traditional prescriptions a short distance from town."
+        }
+      ],
+      "food": [
+        {
+          "name": "Thupka",
+          "detail": "A warm noodle soup filled with minced meat and vegetables."
+        },
+        {
+          "name": "Momos",
+          "detail": "Steamed or fried dough parcels stuffed with minced pork and onions."
+        },
+        {
+          "name": "Paratha-sabzi",
+          "detail": "Simple and delicious hot flatbread with vegetable side dishes enjoyed on cold days."
+        },
+        {
+          "name": "Zan",
+          "detail": "The staple Monpa dish made of millet flour combined with vegetables or meat, fermented cheese, soybeans, and herbs."
+        },
+        {
+          "name": "Khura",
+          "detail": "A traditional local pancake served alongside tea."
+        },
+        {
+          "name": "Gyapa khazi",
+          "detail": "A spiced rice pulao containing fermented cheese, small dried fish or shrimp, chillies, and ginger."
+        },
+        {
+          "name": "Ashum thukpa",
+          "detail": "A hearty soup variation prepared using maize, beans, and meat."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Tawang — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Tawang",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Tawang — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Tawang",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "kohima": {
+      "about": "Kohima is the capital city of Nagaland in North-Eastern India, situated on the foothills of the Barail Range. Known as the Switzerland of Asia, it is a breathtakingly beautiful place characterized by friendly people and vibrant traditions. Visitors come to explore its rich tribal heritage, scenic mountain landscapes, and significant historical sites.",
+      "history": "In 1832, King Raja Gambhir Singh recaptured the region, marking Manipuri supremacy with the Kohima Stone Inscription. The British established their headquarters here in 1878. During World War II in 1944, Kohima was the site of a fierce battle that served as a turning point in the Burma Campaign. When Nagaland became a full state in 1963, Kohima was named its capital.",
+      "significance": "Kohima is culturally and historically significant as the capital of Nagaland and the site of the Battle of World War II known as the Stalingrad of the East. It preserves ancient Angami Naga traditions, serves as a major center for Christian denominations, and hosts the grand Hornbill Festival.",
+      "thingsToDo": [
+        {
+          "title": "Bara Basti",
+          "detail": "Explore the traditional Angami way of life in what is supposedly the second largest village in Asia."
+        },
+        {
+          "title": "Cathedral Church",
+          "detail": "Visit the biggest church of its kind in the region on Aradhurah Hill to enjoy outstanding views of the town."
+        },
+        {
+          "title": "Kohima War Cemetery",
+          "detail": "Walk the slopes of Garrison Hill where the intense Battle of the Tennis Court took place."
+        },
+        {
+          "title": "Nagaland State Museum",
+          "detail": "View rare Naga artifacts, archaeological finds, traditional sports equipment models, and ancient sculptures."
+        },
+        {
+          "title": "Kohima Zoo",
+          "detail": "See the rare Tragopan bird and the Mithun."
+        },
+        {
+          "title": "Naga Bazaar",
+          "detail": "Browse the market offering a wide-ranging local cuisine and diverse goods."
+        },
+        {
+          "title": "Dzüko Valley",
+          "detail": "Trek through forest trails to reach a high-altitude mountain valley featuring rivers and waterfalls."
+        },
+        {
+          "title": "Japfü Peak",
+          "detail": "Climb to the top of the second highest peak in Nagaland for out-of-this-world views."
+        }
+      ],
+      "food": [
+        {
+          "name": "Pork cooked with fermented bamboo shoots",
+          "detail": "Tender pork prepared in the traditional Naga style with fermented bamboo."
+        },
+        {
+          "name": "Naga chutney",
+          "detail": "A very spicy condiment made with green chillies."
+        },
+        {
+          "name": "Spicy beef pickle",
+          "detail": "A fiery pickle prepared using the world's hottest chilli, Rajha Mircha."
+        },
+        {
+          "name": "Zutho",
+          "detail": "A traditional local rice beer."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kohima — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kohima",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kohima — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kohima",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "delhi": {
+      "about": "Delhi is a bustling megacity in northern India that serves as the country's thriving political and cultural melting pot. Straddling the Yamuna River, it contains New Delhi, the modern capital, alongside historical capitals from several ancient and medieval empires. Visitors will find a striking array of historic sites, museums, and religious monuments alongside vibrant markets and diverse food options. Though the city can feel crowded and polluted, it rewards travelers with a rich mix of traditional and modern Indian culture.",
+      "history": "Delhi's recorded history begins with the 8th-century Tomar Rajput dynasty, who built Lal Kot. In 1192, Prithviraj Chauhan was defeated, leading to the establishment of the Delhi Sultanate in 1206 by Qutb-ud-din Aibak. Successive dynasties built various fortified settlements known as the Seven Cities of Delhi. From the early 13th to mid-19th centuries, it served as the capital for the Delhi Sultanate and the Mughal Empire. After the Indian Rebellion of 1857 and subsequent British rule, the capital shifted to newly built New Delhi in 1911. India gained independence in 1947, and Delhi became a union territory in 1956.",
+      "significance": "Delhi matters as a major historical and political center that hosted several great empires for over a millennium. It preserves three UNESCO World Heritage Sites, hundreds of national heritage monuments, and stands as a vital crossroads of Indian history, government, religion, and cultural fusion.",
+      "thingsToDo": [
+        {
+          "title": "Red Fort",
+          "detail": "Explore the 17th-century palace built by the Mughal emperor."
+        },
+        {
+          "title": "Jama Masjid",
+          "detail": "Visit India's largest mosque, constructed in the 17th century."
+        },
+        {
+          "title": "Qutb Minar",
+          "detail": "View the 73-meter high historical tower featuring intricate carvings."
+        },
+        {
+          "title": "Humayun's Tomb",
+          "detail": "Walk through the vast 16th-century tomb of the Mughal emperor."
+        },
+        {
+          "title": "Purana Qila",
+          "detail": "Tour the medieval fortress situated on the banks of the Yamuna River."
+        },
+        {
+          "title": "India Gate",
+          "detail": "See the prominent war memorial located along the Kartavya Path."
+        },
+        {
+          "title": "Lotus Temple",
+          "detail": "Admire the modern Bahá'í House of Worship built in a flower-like shape."
+        },
+        {
+          "title": "Paranthe Wali Gali",
+          "detail": "Sample traditional stuffed Indian flatbreads in Chandni Chowk."
+        }
+      ],
+      "food": [
+        {
+          "name": "biryani",
+          "detail": "A spiced rice dish combining South Asian rice preparations with Persian pilau styles."
+        },
+        {
+          "name": "falooda",
+          "detail": "A cold dessert made with vermicelli in syrup."
+        },
+        {
+          "name": "halva",
+          "detail": "A sweet, warm pudding enjoyed since the Mughal era."
+        },
+        {
+          "name": "phirni",
+          "detail": "A traditional rice and milk pudding."
+        },
+        {
+          "name": "paneer",
+          "detail": "Indian curd cheese used in various regional preparations."
+        },
+        {
+          "name": "samosa",
+          "detail": "A fried snack often filled with spiced ingredients."
+        },
+        {
+          "name": "laddu",
+          "detail": "Spherical traditional sweetmeats."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Delhi — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Delhi",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Delhi — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Delhi",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Mughlai cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Mughlai_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "ellora": {
+      "about": "The Ellora Caves are a large rock-cut cave complex located near Aurangabad in Maharashtra. This UNESCO World Heritage Site features over one hundred caves excavated from basalt cliffs in the Charanandri Hills, with thirty-four caves open to the public. Visitors come to see remarkable Indian rock-cut architecture representing Hindu, Buddhist, and Jain faiths.",
+      "history": "The caves were created between the 5th and 13th centuries CE. Artwork dates from AD 600 to 1000. Monuments were built during the Rashtrakuta dynasty, which ruled from 753 to 982 AD and constructed part of the Hindu and Buddhist caves. Later, the Yadava dynasty constructed a number of the Jain caves around 1187 to 1317.",
+      "significance": "The site is a leading example of Indian rock-cut architecture. The close positioning of Hindu, Buddhist, and Jain monuments illustrates the religious harmony that existed in ancient India. It also served as a rest stop for pilgrims and a commercial center on an ancient South Asian trade route.",
+      "thingsToDo": [
+        {
+          "title": "Kailasanatha temple",
+          "detail": "Explore the chariot-shaped Cave 16 dedicated to Shiva, featuring the world's largest single monolithic rock excavation."
+        },
+        {
+          "title": "Cave 1",
+          "detail": "View the southernmost cave housing well-preserved wall paintings and impressive Bodhisattvas."
+        },
+        {
+          "title": "Chota Kailash",
+          "detail": "Visit Cave 30 located next to the Jain Group."
+        },
+        {
+          "title": "Dhumar Lena",
+          "detail": "See Cave 29, which is dedicated to Lord Shiva and resembles the famous cave temple of Elephanta."
+        },
+        {
+          "title": "Dashawatara",
+          "detail": "Examine Cave 15, which contains notable ancient inscriptions."
+        },
+        {
+          "title": "Grishneshwar temple",
+          "detail": "Visit the 18th-century temple in Verul that forms one of the five Jyotirlinga sites in Maharashtra."
+        },
+        {
+          "title": "Jain Group of Ellora Caves",
+          "detail": "Tour caves 31 through 34 located north of Dhumar Lena to see fine carvings and grand statues."
+        },
+        {
+          "title": "Waterfall",
+          "detail": "View the natural waterfall located next to Dhumar Lena."
+        }
+      ],
+      "food": [
+        {
+          "name": "ukdiche modak",
+          "detail": "A traditional Maharashtrian sweet dish."
+        },
+        {
+          "name": "aluchi patal bhaji",
+          "detail": "A regional vegetable preparation included in Marathi cuisine."
+        },
+        {
+          "name": "kanda pohe",
+          "detail": "A popular flatened rice dish flavored with onions and spices."
+        },
+        {
+          "name": "thalipeeth",
+          "detail": "A savory multigrain flatbread eaten in Maharashtra."
+        },
+        {
+          "name": "bhakri",
+          "detail": "An unleavened flatbread made from sorghum, bajri, or ragi."
+        },
+        {
+          "name": "jhunka",
+          "detail": "A traditional gram flour preparation often paired with bhakri."
+        },
+        {
+          "name": "puran poli",
+          "detail": "A sweet stuffed flatbread made with wheat."
+        },
+        {
+          "name": "varan bhaat",
+          "detail": "Steamed rice mixed with plain dal prepared with pigeon peas, lemon juice, salt, and ghee."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Ellora — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Ellora",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Ellora Caves — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Ellora_Caves",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Maharashtrian cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Maharashtrian_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "bijapur": {
+      "about": "Bijapur, officially known as Vijayapura, is a city in Northwestern Karnataka and the district headquarters of Bijapur District. It was once the capital of the Bijapur Sultanate and is known for its medieval heritage, featuring magnificent palaces, tombs, mosques, darghas, and portions of a fortified citadel. Heritage and history lovers visit the city to explore its medieval wonders, including the Gol Gumbaz which houses the second-largest dome in the world.",
+      "history": "After the fall of the Bahamni Sultanate in 1490, Bijapur came under the control of the Adil Shahi dynasty and served as their capital from 1490 to 1686. During this time, the city was converted into a fortified citadel with towering walls, massive bastions, and gateways. Ali Adil Shah I built the Jumma Masjid over 300 years ago. Upali Buruj was built in 1584, and Malik E Maidan helped defeat the Vijayanagar empire in 1565. Ibrahim Adil Shah II built Taj Bawdi in 1620 and constructed Ibrahim Rauza in 1626. Ali Adil Shah II began building Bara Kaman in 1627, and Mohammed Adil Shah built Gol Gumbaz in 1659.",
+      "significance": "Bijapur matters as a medieval wonder of the Deccan, preserving architectural achievements from the Adil Shahi dynasty like massive cannons, stepwells, grand mosques, and massive unsupported domes that attract history enthusiasts.",
+      "thingsToDo": [
+        {
+          "title": "Gol Gumbaz",
+          "detail": "Visit the mausoleum of Mohammed Adil Shah featuring the second-largest dome in the world and a whispering gallery."
+        },
+        {
+          "title": "Gol Gumbaz Mosque",
+          "detail": "View the mosque located on the western end of the Gol Gumbaz complex."
+        },
+        {
+          "title": "Gol Gumbaz Site Museum",
+          "detail": "Explore the eight galleries housed inside the Maqar Khana."
+        },
+        {
+          "title": "Jumma Masjid",
+          "detail": "See the public gathering mosque built by Ali Adil Shah I with gold Kuran inscriptions and an intricately carved mihrab."
+        },
+        {
+          "title": "Taj Bawdi",
+          "detail": "Walk through the large arched gateway to view the stepwell and hammam built in honour of Queen Taj Sultana."
+        },
+        {
+          "title": "Jod Gumbaz",
+          "detail": "Visit the twin tombs functioning as an active dargah housing the remains of Khan Muhammad and Abdul Razzaq Qadiri."
+        },
+        {
+          "title": "Bara Kaman",
+          "detail": "See the unfinished structure of Ali Adil Shah II intended to feature twelve arches in twelve rows."
+        },
+        {
+          "title": "Upali Buruj",
+          "detail": "Climb the long flight of stairs of the large structure to view two cannons and get a 360-degree view of Bijapur town."
+        },
+        {
+          "title": "Malik E Maidan",
+          "detail": "View the huge fifty-five ton cannon made of five metals resting atop a bastion."
+        },
+        {
+          "title": "Ibrahim Rauza mausoleum",
+          "detail": "Explore the mausoleum and mosque complex built on an elevated platform with a central water cistern."
+        }
+      ],
+      "food": [
+        {
+          "name": "Idli",
+          "detail": "Popular South Indian dish that originated in Karnataka."
+        },
+        {
+          "name": "Rava idli",
+          "detail": "A variation of idli popular outside the state."
+        },
+        {
+          "name": "Mysore masala dosa",
+          "detail": "A well-known dosa variety originating from Karnataka."
+        },
+        {
+          "name": "Avalakki",
+          "detail": "Flattened parboiled rice cooked with spices, often eaten with majjige or gojju."
+        },
+        {
+          "name": "Chitranna",
+          "detail": "Rice prepared using onion, green chili, lemon or raw mango peel, coriander leaves, and turmeric."
+        },
+        {
+          "name": "Bisi bele bath",
+          "detail": "A spicy rice-based dish that originated in Mysore."
+        },
+        {
+          "name": "Jolada rotti",
+          "detail": "The staple diet of most of North Karnataka, eaten with pulse curries, ennegayi, or chutneys."
+        },
+        {
+          "name": "Mysore pak",
+          "detail": "A sweet dish prepared using gram flour and ghee."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Bijapur (Karnataka) — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Bijapur_(Karnataka)",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Vijayapura, town — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Vijayapura%2C_town",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Karnataka cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Karnataka_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "cherrapunji": {
+      "about": "Cherrapunji, locally called Sohra, is a town in Meghalaya located on a plateau above lush valleys. It is famous for its heavy rainfall and dramatic natural surroundings. Visitors come to explore its unique landscapes, waterfalls, and living root bridges. While the monsoon season brings heavy rains and rushing waterfalls, the dry season offers clear conditions for trekking and caving. The town sits on a flat area that can look desolate in dry months, but the surrounding valleys remain full of diverse vegetation.",
+      "history": "The town was originally named Sohra and served as the capital of a local tribal kingdom and chieftainship. The British pronounced the name Churra before it became Cherrapunji. A monument to British administrator David Scott stands in the local cemetery. In July 1861 and the preceding year, the area set all-time records for the most rainfall in a calendar month and in a year.",
+      "significance": "Cherrapunji is culturally and naturally significant for holding all-time rainfall records and serving as the historic capital of the Khasi tribal kingdom. It is home to remarkable bio-engineering feats like the living root bridges created by the Khasi tribe.",
+      "thingsToDo": [
+        {
+          "title": "Living Root Bridges",
+          "detail": "Amazing bio-engineering examples created by guiding tree roots over years."
+        },
+        {
+          "title": "Mawlynnong Village",
+          "detail": "Asia's cleanest village known for its harmony between humans and nature."
+        },
+        {
+          "title": "Seven Sister Falls",
+          "detail": "A multi-stream waterfall that is dry in the winter season."
+        },
+        {
+          "title": "Nohkalikai Falls",
+          "detail": "A spectacularly long-drop waterfall that thins out during the winter."
+        },
+        {
+          "title": "Mawsmai Cave",
+          "detail": "An exciting cave for adventure seekers to explore damp limestone passages."
+        },
+        {
+          "title": "Nongriat",
+          "detail": "A village featuring popular double-decker living root bridges reached by a trek."
+        },
+        {
+          "title": "Wahrew Bridge",
+          "detail": "A bridge located near a clear-water river close to the Bangladesh border."
+        }
+      ],
+      "food": [
+        {
+          "name": "Jadoh",
+          "detail": "A traditional rice and meat preparation."
+        },
+        {
+          "name": "Tungrymbai",
+          "detail": "A dish made from fermented soybeans."
+        },
+        {
+          "name": "Dohkhlieh",
+          "detail": "A traditional pork salad."
+        },
+        {
+          "name": "Tungtap",
+          "detail": "A dish prepared using fermented fish."
+        },
+        {
+          "name": "Dohjem",
+          "detail": "Pork cooked with sesame seeds."
+        },
+        {
+          "name": "Syrwa Tit Tung",
+          "detail": "A wild mushroom soup."
+        },
+        {
+          "name": "Syiar Nei-iong",
+          "detail": "Chicken curry cooked with black sesame."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Cherrapunji — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Cherrapunji",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Cherrapunji — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Cherrapunji",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Meghalayan cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Meghalayan_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "kaziranga": {
+      "about": "Kaziranga National Park is located along the south bank of the Brahmaputra River in Upper Assam. It is famous as the home of the Indian one-horned rhinoceros and contains a large population of these endangered animals. Visitors travel to the park to experience its scenic landscape and view diverse wildlife.",
+      "history": "In 1904 Lady Curzon visited the region and urged her husband to protect the one-horned rhino. A notification to declare the area as a reserve forest was issued in 1905, and it was declared a reserve forest in 1908. It was established as a national park in 1974. The park celebrated its centennial in 2005.",
+      "significance": "Kaziranga is a UNESCO World Heritage Site and the largest habitat for the Indian single-horned rhino. It protects several species at risk and serves as an important refuge for elephants, tigers, swamp deer, and numerous bird species.",
+      "thingsToDo": [
+        {
+          "title": "Elephant Ride",
+          "detail": "Take an elephant ride into the grassland very early in the morning for up-close encounters with the famous one-horned rhinoceros."
+        },
+        {
+          "title": "Terrain Vehicle Tour",
+          "detail": "Take a terrain vehicle tour of the park to see wildlife such as storks, fish-eagles, and barasingha."
+        },
+        {
+          "title": "Bird Watching",
+          "detail": "Watch migratory birds during the cool and dry winter months."
+        },
+        {
+          "title": "Wildlife Viewing from Elephant Back",
+          "detail": "Easily view rhinos, wild buffalo, and hog deer from an elephant's back while navigating through tall elephant grass."
+        },
+        {
+          "title": "Evening Music and Food",
+          "detail": "Enjoy an evening of music and food at local lodges rounding off the day."
+        }
+      ],
+      "food": [
+        {
+          "name": "Khar",
+          "detail": "A traditional class of dishes named after its main ingredient."
+        },
+        {
+          "name": "Mas Tenga",
+          "detail": "A signature sour fish dish commonly eaten by most communities."
+        },
+        {
+          "name": "Poita",
+          "detail": "Cooked rice soaked overnight and accompanied with salt, mustard oil, and onions."
+        },
+        {
+          "name": "Sunga Saul",
+          "detail": "A special preparation where sticky rice is cooked in bamboo hollows."
+        },
+        {
+          "name": "Pithas",
+          "detail": "Special preparations made with soaked and ground glutinous rice usually enjoyed on special occasions."
+        },
+        {
+          "name": "Chira",
+          "detail": "Flattened boiled rice eaten as a snack or breakfast with yogurt and jaggery."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kaziranga National Park — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kaziranga_National_Park",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kaziranga National Park — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kaziranga_National_Park",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Assamese cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Assamese_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "majuli": {
+      "about": "Majuli is a scenic river island located in the Brahmaputra River in Assam. It is well known as a cultural capital of Assamese civilization, featuring traditional Vaishnavite monasteries called satras that date back to the 16th century. These monastic centres are vibrant hubs for traditional performing arts and culture. Visitors are drawn to the island to experience its unique mix of tradition, folklore, and natural beauty. The landscape is characterized by meandering rivers, wetlands, and lush green paddy fields. It is inhabited by several tribes, including the Mising, Deori, and Sonowal Kachari communities.",
+      "history": "Majuli developed through geomorphological shifts caused by floods and changing river courses. Between 1661 and 1696, earthquakes set the stage for a massive flood in 1750 that reshaped the region. Originally part of the Chutia kingdom, the land saw battles during the Ahom invasion before becoming a province of the Ahom kingdom in 1525. In the 16th century, the social reformer Srimanta Sankardev visited and established monasteries, turning the island into a religious and cultural hub. In 2016, Majuli became the first island in India designated as a district.",
+      "significance": "Majuli is culturally and historically significant as the heart of Assam's neo-Vaishnavite movement and home to historic satras. It has been listed on the UNESCO Tentative List under the Cultural category and is widely recognized for its unique tribal heritage, arts, and being a major river island.",
+      "thingsToDo": [
+        {
+          "title": "Auniati Satra",
+          "detail": "Visit this monastery known for its extensive assortment of ancient artefacts, utensils, jewellery, and handicrafts."
+        },
+        {
+          "title": "Kamalabari Satra",
+          "detail": "Explore a renowned centre of art, culture, literature, and classical studies where fine boats are made."
+        },
+        {
+          "title": "Benegenaati Satra",
+          "detail": "View preserved royal robes and a gold umbrella belonging to the Ahom king Swargadeo Gadadhar Singha."
+        },
+        {
+          "title": "Garamurh Satra",
+          "detail": "See a collection of large cannons and visit during late autumn to experience the Rassleela celebrations."
+        },
+        {
+          "title": "Samaguri Satra",
+          "detail": "Observe the traditional craft of mask making practiced at this cultural monastery."
+        },
+        {
+          "title": "Dakhinpat Satra",
+          "detail": "Tour this northern riverbank monastery that hosts traditional festival celebrations."
+        },
+        {
+          "title": "Kamalabari Ghat",
+          "detail": "Take in panoramic views of the meandering Brahmaputra River and endless island scenery."
+        },
+        {
+          "title": "Ali-ai-ligang festival",
+          "detail": "Watch and experience the vibrant cultural festival held during February and March."
+        }
+      ],
+      "food": [
+        {
+          "name": "thalis",
+          "detail": "Authentic Assamese meal platters served at local eateries."
+        },
+        {
+          "name": "khar",
+          "detail": "A traditional class of Assamese dishes named after its distinct main ingredient."
+        },
+        {
+          "name": "tenga",
+          "detail": "A popular sour dish typically prepared with tomatoes or citrus."
+        },
+        {
+          "name": "joha",
+          "detail": "A staple variety of fragrant, scented rice grown in the region."
+        },
+        {
+          "name": "kumol saul",
+          "detail": "A light meal of precooked rice that can be simply soaked in warm water."
+        },
+        {
+          "name": "pitha",
+          "detail": "Special occasion rice preparations made using soaked and ground glutinous rice with various fillings."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Majuli — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Majuli",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Majuli — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Majuli",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Assamese cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Assamese_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    }
+  }
+}

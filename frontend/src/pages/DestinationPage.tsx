@@ -1,7 +1,8 @@
 /**
  * DestinationPage.tsx — route "/destinations/:slug": one place in depth. A large photo with
  * its names, the summary, a 12-month best-time chart, highlights, the typical daily cost,
- * and "Plan a trip here" (pre-fills the planner), then its top places from the catalogue
+ * and "Plan a trip here" (pre-fills the planner), then its written guide (features/explore/
+ * DestinationGuide.tsx) and its top places from the catalogue
  * (features/explore/TopPlaces.tsx). India's places show their own world on the living
  * landscape behind the page.
  */
@@ -12,6 +13,7 @@ import { WorldStage } from '@/components/layout/WorldStage';
 import { buttonClasses } from '@/components/ui/Button';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Skeleton } from '@/components/ui/Skeleton';
+import { DestinationGuide } from '@/features/explore/DestinationGuide';
 import { useDestination } from '@/features/explore/hooks';
 import { TopPlaces } from '@/features/explore/TopPlaces';
 import { cn } from '@/lib/utils/cn';
@@ -128,6 +130,7 @@ export default function DestinationPage() {
           </Link>
         </GlassPanel>
       </div>
+      <DestinationGuide guide={destination.guide} name={destination.name} />
       <TopPlaces slug={destination.slug} name={destination.name} />
     </article>
   );

@@ -14,9 +14,13 @@ import mongoose from 'mongoose';
 import { Destination, Place, type PlaceFields } from '../src/db/models/index.js';
 import destinations from '../src/data/destinations.json' with { type: 'json' };
 import placesFile from '../src/data/places.json' with { type: 'json' };
+import guidesFile from '../src/data/guides.json' with { type: 'json' };
 
 /** The catalogue (JSON gives plain strings; the model checks the allowed values on save). */
 const catalogue = destinations as unknown as Array<{ slug: string } & Record<string, unknown>>;
+
+/** Written guides by destination slug (not every destination has one yet). */
+const guides = guidesFile.guides as Record<string, unknown>;
 
 /** Every place (plain JSON). */
 const places = placesFile.places as PlaceFields[];
@@ -25,7 +29,7 @@ const places = placesFile.places as PlaceFields[];
 export async function seedDestinations(): Promise<number> {
   await Destination.bulkWrite(
     catalogue.map((destination, order) => ({
-      updateOne: { filter: { slug: destination.slug }, update: { $set: { ...destination, order } }, upsert: true },
+      updateOne: { filter: { slug: destination.slug }, update: { $set: { ...destination, order, guide: guides[destination.slug] ?? null } }, upsert: true },
     })),
   );
   await Place.bulkWrite(places.map((place) => ({ replaceOne: { filter: { id: place.id }, replacement: place, upsert: true } })));

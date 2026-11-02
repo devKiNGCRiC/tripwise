@@ -6,6 +6,7 @@ import request from 'supertest';
 import { createApp } from '../src/app.js';
 import { seedDestinations } from '../scripts/seed-destinations.js';
 import catalogue from '../src/data/destinations.json' with { type: 'json' };
+import guidesFile from '../src/data/guides.json' with { type: 'json' };
 import { startTestDb, stopTestDb } from './helpers/db.js';
 import { fakeChain } from './helpers/fakeAi.js';
 
@@ -61,6 +62,14 @@ describe('destinations', () => {
     const res = await list('?month=13');
     expect(res.status).toBe(400);
     expect(res.body.error.code).toBe('VALIDATION');
+  });
+
+  it('gives a destination’s page its guide, and keeps guides out of the Explore list', async () => {
+    const gangtok = (await request(app).get('/api/destinations/gangtok')).body.destination;
+    expect(gangtok.guide).toEqual(guidesFile.guides.gangtok);
+    expect(gangtok.guide.sources[0].licence).toBe('CC BY-SA 4.0');
+    const list = (await request(app).get('/api/destinations')).body.destinations;
+    expect(list.some((d: { guide?: unknown }) => 'guide' in d)).toBe(false);
   });
 
   it('returns one destination by slug, or NOT_FOUND', async () => {

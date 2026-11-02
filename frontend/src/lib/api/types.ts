@@ -74,6 +74,19 @@ export interface Destination {
   highlights: string[];
   avgDailyCost: Money;
   image: { url: string; credit: string; creditUrl: string };
+  /** The written guide — on a destination's own page only (not in the Explore list). */
+  guide?: DestinationGuide | null;
+}
+
+/** A destination's guide, written from Wikivoyage and Wikipedia (credited) and checked against them. */
+export interface DestinationGuide {
+  about: string;
+  history: string;
+  significance: string;
+  thingsToDo: { title: string; detail: string }[];
+  food: { name: string; detail: string }[];
+  sources: { title: string; url: string; licence: string }[];
+  checked: string;
 }
 
 /** What kind of place it is (backend services/placeKinds.ts). */

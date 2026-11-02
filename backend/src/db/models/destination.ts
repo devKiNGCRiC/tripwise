@@ -25,6 +25,8 @@ const destinationSchema = new Schema(
     order: { type: Number, default: 0 },
     /** Hidden by an admin: not in Explore, its page answers 404 (kept on re-import: not in the catalogue file). */
     hidden: { type: Boolean, default: false },
+    /** The written guide (about, history, significance, things to do, food, sources) — from src/data/guides.json. */
+    guide: { type: Schema.Types.Mixed, default: null },
   },
   { versionKey: false },
 );

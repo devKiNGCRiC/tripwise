@@ -43,4 +43,13 @@ describe('destination places', () => {
     expect(itinerary.days[0].activities[0].place?.id).toMatch(/^p_Q/);
     await expect(itinerariesApi.quick({ ...req, destination: 'Atlantis' })).rejects.toMatchObject({ code: 'NO_CATALOGUE' });
   });
+
+  // A destination's page carries its written guide (sources credited); the Explore list doesn't.
+  it('gives a destination its guide, not the Explore list', async () => {
+    const { destination } = await destinationsApi.get('gangtok');
+    expect(destination.guide?.food.length).toBeGreaterThan(2);
+    expect(destination.guide?.sources[0]).toMatchObject({ licence: 'CC BY-SA 4.0' });
+    const { destinations } = await destinationsApi.list();
+    expect(destinations.some((d) => 'guide' in d)).toBe(false);
+  });
 });

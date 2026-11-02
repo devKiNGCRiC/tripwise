@@ -27,6 +27,8 @@ const placesSchema = z.object({ interest: z.enum(INTERESTS, { error: 'Pick a kno
 
 /** Fields never sent to the website. */
 const HIDDEN = { _id: 0, order: 0, hidden: 0 } as const;
+/** The Explore list leaves the long guides out (each destination's page has its own). */
+const LIST_HIDDEN = { ...HIDDEN, guide: 0 } as const;
 /** Only destinations an admin hasn't hidden. */
 const SHOWN = { hidden: { $ne: true } } as const;
 
@@ -48,7 +50,7 @@ export function destinationRoutes(): Router {
       const pattern = new RegExp(escapeRegex(q), 'i');
       query.$or = [{ name: pattern }, { country: pattern }, { localName: pattern }];
     }
-    const destinations = await Destination.find(query, HIDDEN).sort({ order: 1 }).lean();
+    const destinations = await Destination.find(query, LIST_HIDDEN).sort({ order: 1 }).lean();
     res.json({ destinations });
   });
 
