@@ -9,7 +9,7 @@ You can then save it, download it as a PDF, or share it with your friends.
 > 🚧 **Status: in active development.** The website and the real backend both work: accounts, passports and
 > friends, saved trips, real AI itineraries (Gemini, with Groq as backup) grounded in a catalogue of 1,028 real
 > places, TripWise's own free Quick plan, and Tolis for planning together (polls, suggestions, a group
-> chat, fair money splitting and on-the-trip tools). Next: the admin dashboard, then launch on Cloudflare Pages +
+> chat, fair money splitting and on-the-trip tools). Next: launch on Cloudflare Pages +
 > Render. See the [roadmap](#-roadmap).
 
 ---
@@ -42,7 +42,8 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 💌 | **Kushal** (कुशल), family check-in for Toli and solo trips: private links for family (no account), latest check-in only (rounded to ~1 km), Send on WhatsApp, automatic check-ins while TripWise is open | ✅ Done |
 | 📸 | Toli album, voice notes in Chaupal, and the trip offline on the phone | 📅 Next |
 | 🔑 | Account: preferences that pre-fill the planner, change password, forgot password, sign out everywhere, delete my data | ✅ Done |
-| 📊 | Admin dashboard: analytics, destinations, users, moderation | 📅 Planned |
+| 📊 | Admin dashboard: overview counts, find / block travellers and change plans, hide destinations from Explore, reports of public passports (dismiss, remove content, block), an audit log — never anyone's private trips | ✅ Done |
+| 🧪 | End-to-end browser tests (Playwright) for a traveller's day and an admin | ✅ Done |
 | 📲 | React Native mobile app | 📅 Phase 2 |
 
 ## 🎨 Design: "Seven Worlds"
@@ -135,6 +136,7 @@ npm run dev                            # API on :4000 + website on :5173, talkin
 | `npm run dev` | Website + real API together (logs labelled `api` / `web`) |
 | `npm run dev:mock` | Website only, on the in-browser demo API (no keys needed) |
 | `npm test` | Backend and frontend tests |
+| `npm --prefix frontend run e2e` | End-to-end tests in a real browser (uses Edge on Windows; `PW_CHANNEL=chrome` for Chrome) |
 
 Useful scripts (run inside `frontend/`):
 
@@ -158,7 +160,7 @@ Add their keys to `backend/.env` (names in `backend/.env.example`); TripWise swi
 
 - [x] **Frontend foundation:** theme, UI kit, auth pages, routing and guards, mock API, landing page
 - [x] **Traveller features:** explore, trip planner, AI itinerary view, PDF, sharing, passport stamps
-- [ ] **Admin:** dashboard and management tools, plus end-to-end tests
+- [x] **Admin:** dashboard and management tools, plus end-to-end tests
 - [x] **Backend:** Express API, MongoDB models, JWT auth, Gemini + Groq integration, streaming, caching and quotas
 - [x] **Own planner:** places catalogue (Wikidata) + grounded AI plans, free unlimited Quick plans
 - [x] **"Ask TripWise":** questions on each trip, grounded in the plan, nearby catalogue places and the forecast

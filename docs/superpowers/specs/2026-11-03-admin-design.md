@@ -1,6 +1,6 @@
 # Admin dashboard (design)
 
-**Date:** 2026-11-03 · **Status:** decided by the builder at the owner's request ("do the best and what you
+**Date:** 2026-11-03 · **Status:** built (2026-11-03) · decided by the builder at the owner's request ("do the best and what you
 recommended") · **Roadmap:** the Admin step (dashboard, management tools, end-to-end tests)
 
 ## Why
