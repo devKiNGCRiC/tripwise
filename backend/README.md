@@ -18,9 +18,14 @@ website ──/api──► Express API ──► MongoDB Atlas (users, trips, d
   broken or wrong answer passes the request to the next model. If every model fails, the traveller sees
   "our planners are busy" and the attempt doesn't count against their daily plans.
 - **Streaming.** `POST /api/itineraries/generate/stream` sends the trip day by day while the AI writes it.
-- **Places catalogue.** `src/data/destinations.json` and `src/data/places.json` hold 50 destinations and
-  1,028 places at 44 Indian ones (all seven worlds), built by `npm run import:catalogue` from Wikidata (CC0)
-  with credited Wikimedia Commons photos. The website's demo mode reads the same two files.
+- **Places catalogue.** `src/data/destinations.json` and `src/data/places.json` hold 94 destinations and
+  1,763 places at 88 Indian ones (all seven worlds), built by `npm run import:catalogue` from Wikidata (CC0)
+  with credited Wikimedia Commons photos. The website's demo mode reads the same files.
+- **Destination guides.** `src/data/guides.json` holds a guide for every Indian destination (about, history,
+  why it matters, things to do, food), written once by `npm run write:guides -- --missing` (or
+  `--only slug,slug`): the AI writes from the destination's Wikivoyage and Wikipedia text (plus a regional
+  cuisine page where those lack food) and `services/guideRules.ts` keeps only dishes and places the sources
+  name. Text is CC BY-SA 4.0 and each page credits its sources. `GET /destinations/:slug` returns the guide.
 - **Grounded plans.** For a catalogue destination (found however it's typed: "Hampi, Karnataka", "Leh",
   "Alleppey"), the AI gets a shortlist of real places that suit the traveller's interests, and stops that
   name a catalogue place are saved with its id and coordinates.

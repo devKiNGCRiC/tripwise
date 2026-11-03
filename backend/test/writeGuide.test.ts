@@ -101,6 +101,16 @@ describe('writeGuide', () => {
     expect(prompts[0].user).not.toContain('Cricket');
   });
 
+  it('finds a Cuisine subsection too ("=== Cuisine ===" under Culture, as on Ladakh)', async () => {
+    const ladakh = ['Ladakh is a region.', 'z'.repeat(6000), '== Culture ==', 'Festivals.', '=== Cuisine ===', 'Thukpa, skyu and butter tea.', '== Education ==', 'Schools.'].join(String.fromCharCode(10));
+    const fetchSource = async (wiki: 'wikivoyage' | 'wikipedia', title: string) =>
+      title === 'Ladakh' ? { title, text: ladakh, url: 'https://en.wikipedia.org/wiki/Ladakh' } : { title: 'Nubra Valley', text: VOYAGE, url: `https://en.${wiki}.org/wiki/Nubra_Valley` };
+    const { ai, prompts } = model(good);
+    await writeGuide({ slug: 'nubra', name: 'Nubra Valley' }, { ai, fetchSource, today: '2026-11-03' });
+    expect(prompts[0].user).toContain('skyu and butter tea');
+    expect(prompts[0].user).not.toContain('Schools');
+  });
+
   it('says so when there are no sources at all', async () => {
     const { ai } = model(good);
     expect(await writeGuide(destination, { ai, fetchSource: sources(null, null), today: '2026-11-03' })).toMatchObject({ ok: false, reasons: ['no sources found'] });

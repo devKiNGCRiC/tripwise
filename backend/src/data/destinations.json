@@ -630,7 +630,7 @@
       "Kashmir Valley",
       "Dal Lake",
       "Hazratbal Shrine",
-      "Jamia Masjid"
+      "Shalimar Bagh"
     ],
     "avgDailyCost": {
       "amount": 3500,
@@ -821,8 +821,8 @@
     ],
     "summary": "The pine-lined Parvati river, Manikaran’s hot springs and the trek up to Kheerganga.",
     "highlights": [
-      "Deo Tibba",
       "Parvati Valley",
+      "Deo Tibba",
       "Kullu Valley",
       "Khirganga National Park"
     ],
@@ -1175,7 +1175,7 @@
       "Kedarnath Temple",
       "Triyuginarayan Temple",
       "Kharchakund",
-      "Sumeru Parbat"
+      "Kedarnath Glacier"
     ],
     "avgDailyCost": {
       "amount": 2500,
@@ -1406,9 +1406,9 @@
     "summary": "An old Kumaoni hill town of temples and bal mithai, with the oak forests of Binsar above.",
     "highlights": [
       "Crank's Ridge",
-      "Mrityunjaya Temple",
       "Gajār",
-      "Kilraur"
+      "Kilraur",
+      "Mrityunjaya Temple"
     ],
     "avgDailyCost": {
       "amount": 2200,
@@ -1418,6 +1418,43 @@
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/54/2024-03-19_Crank%27s_Ridge_1.jpg/1280px-2024-03-19_Crank%27s_Ridge_1.jpg",
       "credit": "Alexkom000 · CC BY 4.0",
       "creditUrl": "https://commons.wikimedia.org/wiki/File:2024-03-19_Crank%27s_Ridge_1.jpg"
+    }
+  },
+  {
+    "id": "d_nubra",
+    "slug": "nubra",
+    "region": "himalaya",
+    "localName": "नुब्रा",
+    "name": "Nubra Valley",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "adventure",
+      "nature"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "summary": "Over Khardung La to sand dunes, double-humped camels and Diskit’s giant Maitreya Buddha.",
+    "highlights": [
+      "Saser Kangri",
+      "Saser Muztagh",
+      "Diskit Monastery",
+      "Argan Kangri"
+    ],
+    "avgDailyCost": {
+      "amount": 3500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/96/Saser_Kangri_III_and_II.jpg",
+      "credit": "Saser_Muztagh_from_Khardung_La_2.jpg : Vyacheslav Argenberg… · CC BY 2.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Saser_Kangri_III_and_II.jpg"
     }
   },
   {
@@ -2256,6 +2293,124 @@
     }
   },
   {
+    "id": "d_chikmagalur",
+    "slug": "chikmagalur",
+    "region": "ghats",
+    "localName": "चिकमगलूर",
+    "name": "Chikkamagaluru",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "mountains",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      9,
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "summary": "Where Indian coffee began: estates under Mullayanagiri, Karnataka’s highest peak, and Baba Budangiri.",
+    "highlights": [
+      "Chennakesava Temple",
+      "Mullayanagiri",
+      "Baba Budangiri",
+      "Jhari Falls"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Chennakeshava_Temple_at_Belur.jpg/1280px-Chennakeshava_Temple_at_Belur.jpg",
+      "credit": "Dineshkannambadi ( talk ) · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Chennakeshava_Temple_at_Belur.jpg"
+    }
+  },
+  {
+    "id": "d_coonoor",
+    "slug": "coonoor",
+    "region": "ghats",
+    "localName": "कुन्नूर",
+    "name": "Coonoor",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "mountains",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11
+    ],
+    "summary": "Tea estates, Sim’s Park and Dolphin’s Nose — a quieter stop on the Nilgiri toy train.",
+    "highlights": [
+      "Nilgiri Mountains",
+      "Nilgiri Mountain Railway",
+      "Doddabetta",
+      "Government Botanical Garden"
+    ],
+    "avgDailyCost": {
+      "amount": 2800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Nilgiris_Range_Bokkapuram_Sep22_R16_06380.jpg/1280px-Nilgiris_Range_Bokkapuram_Sep22_R16_06380.jpg",
+      "credit": "Timothy A. Gonsalves · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Nilgiris_Range_Bokkapuram_Sep22_R16_06380.jpg"
+    }
+  },
+  {
+    "id": "d_thekkady",
+    "slug": "thekkady",
+    "region": "ghats",
+    "localName": "थेक्कडी",
+    "name": "Thekkady (Periyar)",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "summary": "Boat safaris on Periyar Lake among wild elephants, and spice gardens in Kumily.",
+    "highlights": [
+      "Periyar National Park",
+      "Cardamom Hills",
+      "Suruli Falls",
+      "Mullaperiyar Dam"
+    ],
+    "avgDailyCost": {
+      "amount": 3200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Periyar_National_Park_01.jpg/1280px-Periyar_National_Park_01.jpg",
+      "credit": "Bernard Gagnon · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Periyar_National_Park_01.jpg"
+    }
+  },
+  {
     "id": "d_kochi",
     "slug": "kochi",
     "region": "konkan",
@@ -2399,6 +2554,43 @@
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Anchutheng_fort.jpg/1280px-Anchutheng_fort.jpg",
       "credit": "Prasanthvembayam · CC BY-SA 3.0",
       "creditUrl": "https://commons.wikimedia.org/wiki/File:Anchutheng_fort.jpg"
+    }
+  },
+  {
+    "id": "d_havelock",
+    "slug": "havelock",
+    "region": "konkan",
+    "localName": "स्वराज द्वीप",
+    "name": "Swaraj Dweep (Havelock)",
+    "country": "India",
+    "vibes": [
+      "beach",
+      "nature",
+      "romantic"
+    ],
+    "budgetTier": "luxury",
+    "bestMonths": [
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "summary": "Radhanagar Beach, clear-water snorkelling and dives over coral reefs.",
+    "highlights": [
+      "Swaraj Dweep",
+      "Sir William Peel Island",
+      "Radhanagar Beach"
+    ],
+    "avgDailyCost": {
+      "amount": 6000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Radhanagar_LateAfternoon.JPG/1280px-Radhanagar_LateAfternoon.JPG",
+      "credit": "Jpatokal · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Radhanagar_LateAfternoon.JPG"
     }
   },
   {
@@ -3063,8 +3255,8 @@
     "highlights": [
       "Mizoram State Museum",
       "Reiek",
-      "Solomon's Temple, Aizawl Mizoram, India",
-      "Aizwal Mosque"
+      "Aizwal Mosque",
+      "Solomon's Temple, Aizawl Mizoram, India"
     ],
     "avgDailyCost": {
       "amount": 2500,

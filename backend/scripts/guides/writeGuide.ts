@@ -73,6 +73,12 @@ const OVERRIDES: Record<string, { wikivoyage?: string | null; wikipedia?: string
   aizawl: { cuisine: 'Mizo cuisine' },
   agartala: { cuisine: 'Tripuri cuisine' },
   unakoti: { wikivoyage: null, cuisine: 'Tripuri cuisine' },
+  // Batch 3 — the last five (Pangong was swapped for Coonoor: too few distinct sights)
+  nubra: { cuisine: 'Ladakh' },
+  chikmagalur: { cuisine: 'Karnataka cuisine' },
+  coonoor: { cuisine: 'Tamil cuisine' },
+  thekkady: { wikivoyage: 'Kumily', wikipedia: 'Periyar National Park', cuisine: 'Kerala cuisine' },
+  havelock: { cuisine: 'Andaman and Nicobar Islands' },
 };
 
 /** The useful sections of each source, and how much of each to keep (characters). */
@@ -102,6 +108,18 @@ export function pickSections(text: string, wanted: string[] | Record<string, num
     if (limit) out.push(part.slice(0, limit));
   }
   return out.join('\n');
+}
+
+/**
+ * A page's "Cuisine" section at any level ("== Cuisine ==" or "=== Cuisine ===" under Culture), up
+ * to the next heading of the same or a higher level, trimmed; '' when there's none.
+ */
+function cuisineSection(text: string, limit = 3000): string {
+  const match = /\n(=+)\s*Cuisine\s*=+\n/.exec(text);
+  if (!match) return '';
+  const from = text.slice(match.index + 1);
+  const end = from.slice(1).search(new RegExp(`\\n={2,${match[1].length}}[^=]`));
+  return (end >= 0 ? from.slice(0, end + 1) : from).slice(0, limit);
 }
 
 /** The source pages for a destination: its main name ("Dharamshala & McLeod Ganj" → "Dharamshala"), plus a cuisine page for some. */
@@ -160,10 +178,10 @@ export async function writeGuide(d: { slug: string; name: string }, deps: { ai: 
   ];
   if (!found.length) return { ok: false, reasons: ['no sources found'] };
   // The cuisine page only adds to a place's own pages (for its food): its start, plus its "Cuisine"
-  // section when it's a general page (Jammu) where that comes late.
+  // section when it's a general page where that comes late (Jammu; Ladakh has it under Culture).
   if (cuisine) {
     const start = cuisine.text.slice(0, CUISINE);
-    const section = pickSections(cuisine.text.slice(CUISINE), { Cuisine: 3000 }, 3000, 0);
+    const section = cuisineSection(cuisine.text.slice(CUISINE));
     found.push({ label: 'Wikipedia cuisine text', page: cuisine, name: 'Wikipedia', text: [start, section].filter(Boolean).join('\n') });
   }
 

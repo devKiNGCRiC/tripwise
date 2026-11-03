@@ -24,8 +24,9 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 🏞️ | "Seven Worlds": a living, hand-drawn landscape of seven Indian regions behind every page | ✅ Done |
 | 🌗 | Day and Night for every world, region colours, a Colours menu that tints the site from your photo (kept on your account), Calm motion | ✅ Done |
 | 📱 | Mobile-first layout with an app-style bottom tab bar | ✅ Done |
-| 🧭 | Explore 50 destinations (44 in India across all seven worlds, 6 abroad) by world, vibe, budget and best month; destination guides with their top places | ✅ Done |
-| 📍 | Places catalogue: 1,028 real places across 44 Indian destinations in all seven worlds (Wikidata, credited Commons photos) | ✅ Done |
+| 🧭 | Explore 94 destinations (88 in India across all seven worlds, nature-heavy in the Himalaya and the North-East; 6 abroad) by world, vibe, budget and best month | ✅ Done |
+| 📖 | A written guide on every Indian destination's page — about, history, why it matters, things to do, food to try — adapted from Wikivoyage and Wikipedia (CC BY-SA 4.0, credited) and checked against them | ✅ Done |
+| 📍 | Places catalogue: 1,763 real places across 88 Indian destinations in all seven worlds (Wikidata, credited Commons photos) | ✅ Done |
 | 🧠 | AI plans grounded in real places; TripWise's own planner as a free, unlimited Quick plan and when the AI is down | ✅ Done |
 | 💬 | **Ask TripWise**: ask anything about a trip — answered from your plan, real places nearby (with chips) and the MET Norway forecast; follow-up questions; private per person, also on a Toli's trip (20 questions a day free) | ✅ Done |
 | 🪄 | Trip planner wizard + real AI itineraries that appear day by day (5 free plans a day) | ✅ Done |

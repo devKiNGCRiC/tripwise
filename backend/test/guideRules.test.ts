@@ -79,6 +79,17 @@ describe('checkGuide', () => {
     expect(result.guide.food.map((f) => f.name)).toEqual(['Momos', 'Thukpa', 'Phagshapa', 'Sel roti']);
   });
 
+  it('drops things to do that are only an activity ("Trekking"), keeps ones naming a place', () => {
+    const source = `${SOURCE}\nDo: trekking, camping, fishing and kayaking; paragliding at Rangpo.`;
+    const bare = ['Trekking', 'Camping', 'Fishing', 'Kayaking'].map((title) => ({ title, detail: 'x' }));
+    const result = checkGuide({ ...draft(), thingsToDo: [...draft().thingsToDo, ...bare, { title: 'Paragliding at Rangpo', detail: 'x' }] }, source, meta);
+    if (!result.ok) throw new Error(result.reasons.join('; '));
+    const titles = result.guide.thingsToDo.map((t) => t.title);
+    expect(titles).not.toContain('Trekking');
+    expect(titles).not.toContain('Kayaking');
+    expect(titles).toContain('Paragliding at Rangpo');
+  });
+
   it('caps the lists', () => {
     // Twelve different dishes, all in the sources: only 8 are kept (and a repeat counts once).
     const dishes = ['aloo', 'bhatura', 'chana', 'dal', 'egg curry', 'fish fry', 'gajar halwa', 'idli', 'jalebi', 'kheer', 'laddoo', 'malpua'];

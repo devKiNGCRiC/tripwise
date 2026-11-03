@@ -46,7 +46,9 @@ const FOOD = [3, 8] as const;
 /** Share of a thing-to-do title's key words that must be in the sources. */
 const GROUNDED_SHARE = 0.6;
 /** Everyday verbs and words that don't name anything. */
-const GENERIC = new Set(['visit', 'stroll', 'ride', 'drive', 'explore', 'take', 'walk', 'enjoy', 'watch', 'trek', 'hike', 'climb', 'catch', 'shop', 'taste', 'try', 'spend', 'head', 'over', 'from', 'with', 'into', 'along', 'through', 'around', 'your', 'their', 'this', 'that', 'some', 'local', 'evening', 'morning', 'sunrise', 'sunset', 'early', 'day', 'trip', 'tour', 'view', 'views']);
+const GENERIC = new Set(['visit', 'stroll', 'ride', 'drive', 'explore', 'take', 'walk', 'enjoy', 'watch', 'trek', 'hike', 'climb', 'catch', 'shop', 'taste', 'try', 'spend', 'head', 'over', 'from', 'with', 'into', 'along', 'through', 'around', 'your', 'their', 'this', 'that', 'some', 'local', 'evening', 'morning', 'sunrise', 'sunset', 'early', 'day', 'trip', 'tour', 'view', 'views',
+  // Activities on their own name no place ("Trekking" is dropped; "Paragliding at Rangpo" keeps "rangpo").
+  'trekking', 'camping', 'fishing', 'kayaking', 'boating', 'rafting', 'paragliding', 'shopping', 'birding', 'birdwatching', 'cycling', 'swimming', 'snorkelling', 'snorkeling', 'diving', 'hiking', 'walking', 'sightseeing', 'safari', 'safaris', 'picnic', 'photography', 'yoga', 'meditation']);
 
 /** Words that describe food without naming a dish ("snacks", "cold and warm drinks"). */
 const VAGUE_FOOD = new Set(['snack', 'snacks', 'drink', 'drinks', 'food', 'foods', 'meal', 'meals', 'dish', 'dishes', 'cuisine', 'local', 'street', 'cold', 'warm', 'hot', 'and', 'or', 'veg', 'vegetarian', 'non', 'fresh', 'various', 'other', 'traditional', 'indian']);

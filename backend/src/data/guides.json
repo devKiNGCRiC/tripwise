@@ -6081,10 +6081,6 @@
           "detail": "Witness the Kuki ethnic group celebrate the rice harvest festival with traditional attire and vivid dances."
         },
         {
-          "title": "Trekking",
-          "detail": "Go trekking in the rugged hills surrounding the town."
-        },
-        {
           "title": "Nature Walks",
           "detail": "Take walks to explore the natural forests and mountains of the district."
         }
@@ -6539,6 +6535,401 @@
         {
           "title": "Tripuri cuisine — Wikipedia",
           "url": "https://en.wikipedia.org/wiki/Tripuri_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "nubra": {
+      "about": "Nubra Valley is a vast region in Ladakh, India, cutting across the old Silk Route from South to Central Asia. Fed by the Shyok and Nubra rivers, the valley features a mix of sand, stones, and occasional green patches. It is a historical region also known as Dumra, meaning valley of flowers. Travelers visit for its striking mountain scenery, sand dunes, and high-altitude desert landscapes.",
+      "history": "Rock carvings show early habitation from Neolithic times. In the 14th century, Diskit Monastery was built. Hundar served as the capital of the Nubra kingdom in the 17th century. Until 1971, Turtuk was part of Baltistan. The Government of India encouraged tourism in Ladakh starting in 1974, and portions of Nubra were opened to tourists over the years.",
+      "significance": "Nubra Valley lies at a strategic crossroads on historical trade routes and is bordered by Pakistan and China. It holds deep religious and cultural value, featuring ancient monasteries, Buddhist rock walls, and a strong heritage linked to Tibet and the Balti community.",
+      "thingsToDo": [
+        {
+          "title": "Diskit Monastery",
+          "detail": "Explore the oldest and largest Buddhist monastery in the Nubra Valley."
+        },
+        {
+          "title": "Statue of Maitreya Buddha",
+          "detail": "View the massive landmark statue located near the Diskit Monastery."
+        },
+        {
+          "title": "Tso Luvan",
+          "detail": "Take a stroll by this Buddhist holy lake located inside a minor mountain."
+        },
+        {
+          "title": "Samtanling Gompa",
+          "detail": "Inspect a collection of tangkhas, Buddha idols, and frescoes on a hill overlooking the valley."
+        },
+        {
+          "title": "Eco Buddha Park",
+          "detail": "Visit the park featuring a large Buddha statue against a mountain silhouette."
+        },
+        {
+          "title": "Panamik Hot Springs",
+          "detail": "Relax in the sophisticated hot spring pools available in the area."
+        },
+        {
+          "title": "Hunder Sand Dunes",
+          "detail": "Enjoy quad biking and camel riding on two-humped Bactrian camels."
+        },
+        {
+          "title": "Sumur Sand Dunes",
+          "detail": "Experience the tranquillity of these less commercialized sand dunes."
+        }
+      ],
+      "food": [
+        {
+          "name": "Chang",
+          "detail": "A local brew of ale or beer."
+        },
+        {
+          "name": "Butter tea",
+          "detail": "A traditional hot beverage served in the region."
+        },
+        {
+          "name": "Apricots",
+          "detail": "Fresh tree-harvested fruit available during the autumn season."
+        },
+        {
+          "name": "Mutton momos",
+          "detail": "Dumplings filled with plain mutton meat."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Nubra Valley — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Nubra_Valley",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Nubra — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Nubra",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Ladakh — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Ladakh",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "chikmagalur": {
+      "about": "Chikkamagaluru is a city in Karnataka located on the foothills of the Chandra Drona Mountain range of the Western Ghats. Known as the Coffee Belt of the South, it is famous for its coffee plantations, coffee estates, and tropical rainforest. Life-supporting rivers like the Tunga, Bhadra, Hemavati, Vedavati, and Yagachi originate in the Western Ghat hills of the district. The city is a great attraction for trekkers, pilgrims, travellers, and tourists from around the world. Visitors come to enjoy the pleasant and favourable hill station climate, scenic walking routes, mountain ranges, and wildlife sanctuaries.",
+      "history": "The city was previously known as Kiriya-Muguli. It currently serves as the headquarters of the Chikmagalur district in the Indian state of Karnataka. Coffee was introduced to India in the pristine Baba Budangiri area located to the north of the city.",
+      "significance": "Chikkamagaluru matters as a major hub for coffee production, being known as the Coffee Belt of the South where coffee was first introduced to India. It is also environmentally significant as the origin point for several life-supporting rivers of Karnataka and other states.",
+      "thingsToDo": [
+        {
+          "title": "Amrutapura Temple",
+          "detail": "Visit this temple located in the village of Amrutapura, north of Chikmagalur."
+        },
+        {
+          "title": "Veera Narayana Temple",
+          "detail": "Explore this well-known temple located in the village of Belavadi."
+        },
+        {
+          "title": "B.B.Hills",
+          "detail": "Explore the hills and enjoy the terrific scenery."
+        },
+        {
+          "title": "Agumbe",
+          "detail": "Take a three-hour drive to visit this nearby attraction."
+        },
+        {
+          "title": "Chikmagalur Walk",
+          "detail": "Take a scenic five-kilometer walk past summit school, Aldur village, and the Brahmakumaris ashram."
+        }
+      ],
+      "food": [
+        {
+          "name": "Masala Dosai",
+          "detail": "A fermented crepe made from rice batter, black lentils, potato, and onions."
+        },
+        {
+          "name": "Avalakki",
+          "detail": "Flattened parboiled rice cooked with spices."
+        },
+        {
+          "name": "Chitranna",
+          "detail": "Prepared using rice, onion, green chili, lemon or raw mango peel, coriander leaves, and turmeric."
+        },
+        {
+          "name": "Bisi bele bath",
+          "detail": "A spicy rice-based dish."
+        },
+        {
+          "name": "Jolada rotti",
+          "detail": "Eaten with pulse curries, ennegayi, or assorted chutneys."
+        },
+        {
+          "name": "Mysore pak",
+          "detail": "Sweet dish prepared by using gram flour and ghee."
+        },
+        {
+          "name": "Holige",
+          "detail": "An extremely common sweet dish in Karnataka."
+        },
+        {
+          "name": "Neer dosa",
+          "detail": "A very common dish in the Mangalore and Malenadu regions."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Chikmagalur — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Chikmagalur",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Chikmagalur — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Chikmagalur",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Karnataka cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Karnataka_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "thekkady": {
+      "about": "Kumily is a town in the Cardamom Hills near Thekkady and the Periyar Tiger Reserve in the Idukki District. It serves as a major tourist destination and a center for spice trading, bringing in various merchants and labourers to the area.",
+      "history": "In 1895, the Mullaperiyar Dam was constructed. The Periyar Lake Reserve was formed in 1899. S.C.H. Robinson became the first game warden in 1933, and the Nellikkampatty Game Sanctuary was formed in 1934 by the Maharaja of Travancore. Periyar was consolidated as a wildlife sanctuary in 1950, declared a tiger reserve in 1978, and the core area became a national park in 1982.",
+      "significance": "The protected area is a repository of rare, endemic, and endangered flora and fauna. It serves as a renowned elephant and tiger reserve and forms the major watershed for both the Periyar and Pamba rivers.",
+      "thingsToDo": [
+        {
+          "title": "Chellarkovil",
+          "detail": "Explore the scenic area near Kumily."
+        },
+        {
+          "title": "Hill View Park",
+          "detail": "Visit this park located near the dam and wildlife areas."
+        },
+        {
+          "title": "Idukki Arch Dam",
+          "detail": "View the world's second and Asia's first arch dam."
+        },
+        {
+          "title": "Idukki Wildlife Sanctuary",
+          "detail": "Discover the wildlife and nature in the sanctuary."
+        },
+        {
+          "title": "Kurishumala Church",
+          "detail": "Visit this religious site in Vagamon."
+        },
+        {
+          "title": "Thekkady Wildlife Sanctuary",
+          "detail": "Take a morning boat ride on Periyar Lake for chances to view animals."
+        },
+        {
+          "title": "Vagamon",
+          "detail": "Explore the pine trees and pleasant landscape."
+        },
+        {
+          "title": "Vandiperiyar",
+          "detail": "Pass through this area during an off-road drive."
+        }
+      ],
+      "food": [
+        {
+          "name": "Navrathan Kurma",
+          "detail": "A wonderful vegetable kurma dish."
+        },
+        {
+          "name": "Banana chip",
+          "detail": "Thinly sliced raw bananas fried in coconut oil and flavored with salt or jaggery."
+        },
+        {
+          "name": "Achappam",
+          "detail": "A crispy, flower-shaped, deep-fried snack made from rice flour, coconut milk, and eggs."
+        },
+        {
+          "name": "Unni appam",
+          "detail": "Deep-fried rice cakes made with jaggery, banana, and coconut."
+        },
+        {
+          "name": "Appam",
+          "detail": "A bowl-shaped pancake made with fermented rice batter and coconut milk."
+        },
+        {
+          "name": "Dosa",
+          "detail": "A thin, savoury crepe made from a fermented batter of ground black gram and rice."
+        },
+        {
+          "name": "Puttu",
+          "detail": "Steamed cylinders of rice cake made of ground rice layered with coconut shavings."
+        },
+        {
+          "name": "Pathiri",
+          "detail": "Thin rice flour flatbread popular among the Malabar Muslim community."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kumily — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kumily",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Periyar National Park — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Periyar_National_Park",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kerala cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kerala_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "havelock": {
+      "about": "Swaraj Dweep, historically known as Havelock Island, is the most visited of the Andaman Islands and serves as the premier tourism hub of the archipelago. The Indian government advocates eco-friendly tourism here, keeping the pace of life slow and the locals friendly. Visitors come to enjoy its beautiful beaches, laid-back atmosphere, lush tropical forests, and top-tier scuba diving.",
+      "history": "Following the genocide and exodus of Hindu Bangladeshis prior to East Pakistan's war of independence in 1971, the vast majority of settlers here arrived as refugees. The island largely avoided devastation during the 2004 Indian Ocean earthquake and its resulting tsunami. A lighthouse was established at the northern point near Govinda Nagar in 2005, and Radhanagar Beach received Blue Flag certification in 2020.",
+      "significance": "Swaraj Dweep is culturally and naturally significant as a premier eco-tourism model in India. It is the primary epicenter for marine adventure sports in the country, hosting numerous certified scuba diving schools and globally renowned coastal environments like Radhanagar Beach.",
+      "thingsToDo": [
+        {
+          "title": "Radhanagar Beach",
+          "detail": "Relax on silky white sand backed by a forest, swim in turquoise water, and watch spectacular sunsets."
+        },
+        {
+          "title": "Elephant Beach",
+          "detail": "Snorkel among excellent coral reefs or reach the shore via a forest trek or fishing boat."
+        },
+        {
+          "title": "Kalapathar Beach",
+          "detail": "Enjoy the solitude along emerald seas framed by contrasting black rocks and silver sands."
+        },
+        {
+          "title": "Dixon's Pinnacle",
+          "detail": "Explore prominent dive sites as a certified scuba diver."
+        },
+        {
+          "title": "South Button",
+          "detail": "Take a dive expedition to discover underwater sites if you are an experienced diver."
+        },
+        {
+          "title": "Govind Nagar Market",
+          "detail": "Browse local shops and visit roadside dhabas for simple food."
+        },
+        {
+          "title": "Beach #1 Jetty",
+          "detail": "Purchase freshly caught seafood from the local catch of the day offerings."
+        }
+      ],
+      "food": [
+        {
+          "name": "Fresh Seafood",
+          "detail": "Locally caught fish, prawns, and crabs prepared fresh in various local styles."
+        },
+        {
+          "name": "Snappers",
+          "detail": "Freshly-fished snappers dressed in home-made masalas."
+        },
+        {
+          "name": "Lobster",
+          "detail": "Locally sourced lobster served at humble roadside shacks."
+        },
+        {
+          "name": "Grilled Fish",
+          "detail": "Fresh fish grilled over open flames near the beach and market areas."
+        },
+        {
+          "name": "Fresh Coconuts",
+          "detail": "Refreshing coconut water followed by eating the tender flesh inside."
+        },
+        {
+          "name": "Samosas",
+          "detail": "Popular savory snacks sold at roadside stands near the village center."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Havelock Island — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Havelock_Island",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Havelock Island — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Havelock_Island",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Andaman and Nicobar Islands — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Andaman_and_Nicobar_Islands",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "coonoor": {
+      "about": "Coonoor is a famous hill station and municipal town in the Nilgiris District of Tamil Nadu, standing at a height of 1,839 metres within the Jackatalla valley. Known for its picturesque surroundings, tea gardens, and tea factories, it provides a panoramic view of lush green hills, ravines, valleys, and waterfalls. It serves as a more secluded retreat compared to nearby Ooty, offering a quiet, romantic holiday amidst fresh air and verdant nature.",
+      "history": "During the British rule, Coonoor served as the terminus of the Nilgiri branch of the Southern Railway zone. The European settlement was on the upper plateau, while the native quarter was on the lower slopes. In the early 1800s, travelers reached the town via the Old Ooty Road, where an Inspection Bungalow provided rest. A historic milestone near the bungalow bears an inscription and may date from the 1830s.",
+      "significance": "Coonoor is one of the principal hill stations of the Nilgiri plateau and the principal pass connecting the Nilgiris to the plains. It is celebrated for its rich biodiversity, botanical gardens, and sprawling tea and coffee estates.",
+      "thingsToDo": [
+        {
+          "title": "Dolphin's Nose Viewpoint",
+          "detail": "Offers a panoramic view of the vast expanse of the Nilgiri hills and Catherine Falls."
+        },
+        {
+          "title": "Lamb's Rock",
+          "detail": "Commands a grand view of the Coimbatore Plains along a walking path."
+        },
+        {
+          "title": "Laws Falls",
+          "detail": "A beautiful picnic spot with a waterfall height of about 180 feet amidst undisturbed sholas."
+        },
+        {
+          "title": "Sim's Park",
+          "detail": "A botanical garden in a deep ravine featuring over 1,000 plant species and an annual fruit show in May."
+        },
+        {
+          "title": "Tiger Hill Cemetery",
+          "detail": "Known as the Sunset point of Coonoor, offering beautiful vistas of nature overlooking the Nilgiri Hills."
+        },
+        {
+          "title": "Lady Canning's Seat",
+          "detail": "A notable viewpoint located on the way to Dolphin's Nose."
+        }
+      ],
+      "food": [
+        {
+          "name": "Potato Bondas",
+          "detail": "Delicious and inexpensive fried potato snacks."
+        },
+        {
+          "name": "Bajjis",
+          "detail": "Crispy fried street snacks."
+        },
+        {
+          "name": "Vadais",
+          "detail": "Savory fried snacks enjoyed as street food."
+        },
+        {
+          "name": "Samosas",
+          "detail": "Crispy pastry pockets filled with savory ingredients."
+        },
+        {
+          "name": "Veg Puffs",
+          "detail": "Flaky baked pastry filled with vegetables."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Coonoor — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Coonoor",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Coonoor — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Coonoor",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Tamil cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Tamil_cuisine",
           "licence": "CC BY-SA 4.0"
         }
       ],
