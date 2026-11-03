@@ -453,6 +453,823 @@
     }
   },
   {
+    "id": "d_srinagar",
+    "slug": "srinagar",
+    "region": "himalaya",
+    "localName": "श्रीनगर",
+    "name": "Srinagar",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "romantic",
+      "culture"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "summary": "Shikaras on Dal Lake, Mughal gardens and houseboats under the Zabarwan hills.",
+    "highlights": [
+      "Kashmir Valley",
+      "Dal Lake",
+      "Hazratbal Shrine",
+      "Shalimar Bagh"
+    ],
+    "avgDailyCost": {
+      "amount": 3500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Dal_LakeVR.jpg",
+      "credit": "Basharat Shah · CC BY 2.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Dal_LakeVR.jpg"
+    }
+  },
+  {
+    "id": "d_gulmarg",
+    "slug": "gulmarg",
+    "region": "himalaya",
+    "localName": "गुलमर्ग",
+    "name": "Gulmarg",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "adventure",
+      "nature"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      12,
+      1,
+      2,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "summary": "A meadow of flowers in summer and India’s best ski slopes in winter, with a gondola up Apharwat.",
+    "highlights": [
+      "Gulmarg Wildlife Sanctuary",
+      "Afarwat Peak",
+      "St Mary's Church",
+      "Khilanmarg"
+    ],
+    "avgDailyCost": {
+      "amount": 4000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Gulmarg_Wildlife_Sanctuary.jpg/1280px-Gulmarg_Wildlife_Sanctuary.jpg",
+      "credit": "Shibnath Samanta · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Gulmarg_Wildlife_Sanctuary.jpg"
+    }
+  },
+  {
+    "id": "d_pahalgam",
+    "slug": "pahalgam",
+    "region": "himalaya",
+    "localName": "पहलगाम",
+    "name": "Pahalgam",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "mountains",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "summary": "The Lidder valley’s pine meadows — Betaab, Aru and Baisaran — and the start of the Amarnath Yatra.",
+    "highlights": [
+      "Tulian Lake",
+      "Betaab Valley",
+      "Mamaleshwar Temple",
+      "Aru Valley"
+    ],
+    "avgDailyCost": {
+      "amount": 3500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Tulian_Lake.jpg/1280px-Tulian_Lake.jpg",
+      "credit": "Raqueeb Mir · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Tulian_Lake.jpg"
+    }
+  },
+  {
+    "id": "d_sonamarg",
+    "slug": "sonamarg",
+    "region": "himalaya",
+    "localName": "सोनमर्ग",
+    "name": "Sonamarg",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "summary": "The meadow of gold: Thajiwas glacier, trout streams and the road up to Zoji La.",
+    "highlights": [
+      "Amarnath Temple",
+      "Zojila Pass",
+      "Kolahoi Peak",
+      "Krishansar Lake"
+    ],
+    "avgDailyCost": {
+      "amount": 3200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Cave_Temple_of_Lord_Amarnath.jpg/1280px-Cave_Temple_of_Lord_Amarnath.jpg",
+      "credit": "Gktambe at English Wikipedia · Public domain",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Cave_Temple_of_Lord_Amarnath.jpg"
+    }
+  },
+  {
+    "id": "d_katra",
+    "slug": "katra",
+    "region": "himalaya",
+    "localName": "कटरा",
+    "name": "Katra & Vaishno Devi",
+    "country": "India",
+    "vibes": [
+      "spiritual",
+      "mountains"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11
+    ],
+    "summary": "Base of the 12 km climb to the Vaishno Devi cave shrine in the Trikuta hills.",
+    "highlights": [
+      "Vaishno Devi Temple",
+      "Anji Khad Bridge",
+      "Vaishnodevi Temple",
+      "Gamhīr Rakh"
+    ],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Vaishno_Devi_Bhavan.jpg/1280px-Vaishno_Devi_Bhavan.jpg",
+      "credit": "Abhishek Chandra · Public domain",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Vaishno_Devi_Bhavan.jpg"
+    }
+  },
+  {
+    "id": "d_kasol",
+    "slug": "kasol",
+    "region": "himalaya",
+    "localName": "कसोल",
+    "name": "Kasol & Parvati Valley",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "adventure",
+      "party"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11
+    ],
+    "summary": "The pine-lined Parvati river, Manikaran’s hot springs and the trek up to Kheerganga.",
+    "highlights": [
+      "Deo Tibba",
+      "Parvati Valley",
+      "Kullu Valley",
+      "Khirganga National Park"
+    ],
+    "avgDailyCost": {
+      "amount": 1800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/TundaBhuj.jpg/1280px-TundaBhuj.jpg",
+      "credit": "Zoeacs at English Wikipedia · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:TundaBhuj.jpg"
+    }
+  },
+  {
+    "id": "d_dalhousie",
+    "slug": "dalhousie",
+    "region": "himalaya",
+    "localName": "डलहौज़ी",
+    "name": "Dalhousie & Khajjiar",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "nature",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11
+    ],
+    "summary": "Colonial churches on five hills, and Khajjiar’s meadow ringed by deodar forest.",
+    "highlights": [
+      "Dhauladhar",
+      "Chamera Dam",
+      "Khajjiar Lake",
+      "Bhalei Mata Temple"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Montaro_Dhauladhar_%28foto_de_Dharamsala%29.jpg",
+      "credit": "Jonathaneo with Internaciulo · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Montaro_Dhauladhar_(foto_de_Dharamsala).jpg"
+    }
+  },
+  {
+    "id": "d_bir",
+    "slug": "bir",
+    "region": "himalaya",
+    "localName": "बीड़",
+    "name": "Bir Billing",
+    "country": "India",
+    "vibes": [
+      "adventure",
+      "nature",
+      "spiritual"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      9,
+      10,
+      11
+    ],
+    "summary": "India’s paragliding capital: take off at Billing, land among Tibetan monasteries in Bir.",
+    "highlights": [
+      "Palampur",
+      "Baijnath Temple, Himachal Pradesh",
+      "Macchial Lake",
+      "Joginder Nagar Valley"
+    ],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Palampur.jpg",
+      "credit": "Gagansalaria at English Wikipedia · Public domain",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Palampur.jpg"
+    }
+  },
+  {
+    "id": "d_kasauli",
+    "slug": "kasauli",
+    "region": "himalaya",
+    "localName": "कसौली",
+    "name": "Kasauli",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "nature",
+      "romantic"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11,
+      12
+    ],
+    "summary": "A quiet cantonment of pine walks, Christ Church and sunset over the plains.",
+    "highlights": [
+      "Kaushalya Dam",
+      "Yadavindra Gardens",
+      "Barog",
+      "Bhima Devi Temple Complex"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Kaushalya_dam%2C_Pinjor%2C_district_panchkula_%2C_Haryana%2C_India.JPG/1280px-Kaushalya_dam%2C_Pinjor%2C_district_panchkula_%2C_Haryana%2C_India.JPG",
+      "credit": "Harvinder Chandigarh · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Kaushalya_dam,_Pinjor,_district_panchkula_,_Haryana,_India.JPG"
+    }
+  },
+  {
+    "id": "d_kinnaur",
+    "slug": "kinnaur",
+    "region": "himalaya",
+    "localName": "किन्नौर",
+    "name": "Kinnaur (Kalpa & Sangla)",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "summary": "Apple orchards under Kinner Kailash, Kalpa’s views and Chitkul, the last village on the road to Tibet.",
+    "highlights": [
+      "Kinnaur Kailash",
+      "Rupin Pass",
+      "Borasu Pass",
+      "Nathpa Jhakri Dam"
+    ],
+    "avgDailyCost": {
+      "amount": 2800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Chokas_Rang_with_Monolithic_pillar_of_Kinnaur_Kailash_a_79_feet_vertical_rock_formation_that_resembles_a_Shivalinga.jpg/1280px-Chokas_Rang_with_Monolithic_pillar_of_Kinnaur_Kailash_a_79_feet_vertical_rock_formation_that_resembles_a_Shivalinga.jpg",
+      "credit": "Goutam1962 · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Chokas_Rang_with_Monolithic_pillar_of_Kinnaur_Kailash_a_79_feet_vertical_rock_formation_that_resembles_a_Shivalinga.jpg"
+    }
+  },
+  {
+    "id": "d_palampur",
+    "slug": "palampur",
+    "region": "himalaya",
+    "localName": "पालमपुर",
+    "name": "Palampur",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "mountains",
+      "romantic"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11
+    ],
+    "summary": "Tea gardens of Kangra under the snowy Dhauladhar range, with old temples close by.",
+    "highlights": [
+      "Baijnath Temple, Himachal Pradesh",
+      "Shri Chamunda Devi Mandir",
+      "Himani Chamunda",
+      "Gopalpur Zoo"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/BaijNath.jpg/1280px-BaijNath.jpg",
+      "credit": "Pdhang · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:BaijNath.jpg"
+    }
+  },
+  {
+    "id": "d_mussoorie",
+    "slug": "mussoorie",
+    "region": "himalaya",
+    "localName": "मसूरी",
+    "name": "Mussoorie",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "romantic",
+      "nature"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11,
+      12
+    ],
+    "summary": "The Queen of the Hills: Mall Road, Kempty Falls and Landour’s quiet lanes above the Doon.",
+    "highlights": [
+      "Kempty Falls",
+      "Robber's Cave",
+      "Happy Valley, Mussoorie",
+      "Santola Devi Temple"
+    ],
+    "avgDailyCost": {
+      "amount": 3500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Kempty_Waterfalls.jpg/1280px-Kempty_Waterfalls.jpg",
+      "credit": "Siva301in · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Kempty_Waterfalls.jpg"
+    }
+  },
+  {
+    "id": "d_nainital",
+    "slug": "nainital",
+    "region": "himalaya",
+    "localName": "नैनीताल",
+    "name": "Nainital",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "romantic",
+      "mountains"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11,
+      12
+    ],
+    "summary": "Boats on Naini Lake, Snow View point and the lake country of Kumaon around it.",
+    "highlights": [
+      "Bhimtal Lake",
+      "Nainital Lake",
+      "Sattal",
+      "Kainchi Dham"
+    ],
+    "avgDailyCost": {
+      "amount": 3200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Boat-Man_at_Naini_Lake.jpg/1280px-Boat-Man_at_Naini_Lake.jpg",
+      "credit": "rohit gowaikar · CC BY-SA 2.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Boat-Man_at_Naini_Lake.jpg"
+    }
+  },
+  {
+    "id": "d_auli",
+    "slug": "auli",
+    "region": "himalaya",
+    "localName": "औली",
+    "name": "Auli",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "adventure",
+      "nature"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      12,
+      1,
+      2,
+      3,
+      5,
+      6,
+      9,
+      10,
+      11
+    ],
+    "summary": "Ski slopes and oak meadows facing Nanda Devi, with a long gondola up from Joshimath.",
+    "highlights": [
+      "Kalpeshwar",
+      "Jyotir Math",
+      "Tapovan Vishnugad Hydropower Plant",
+      "Songhangra"
+    ],
+    "avgDailyCost": {
+      "amount": 3500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Kalpehswar.jpg",
+      "credit": "rolling on · CC BY 2.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Kalpehswar.jpg"
+    }
+  },
+  {
+    "id": "d_kedarnath",
+    "slug": "kedarnath",
+    "region": "himalaya",
+    "localName": "केदारनाथ",
+    "name": "Kedarnath",
+    "country": "India",
+    "vibes": [
+      "spiritual",
+      "mountains",
+      "adventure"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      5,
+      6,
+      9,
+      10
+    ],
+    "summary": "The jyotirlinga temple at 3,583 m beneath snow peaks, reached by a trek from Gaurikund.",
+    "highlights": [
+      "Kedarnath Temple",
+      "Triyuginarayan Temple",
+      "Kharchakund",
+      "Sumeru Parbat"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Kedarnath_Temple_in_Rainy_season.jpg/1280px-Kedarnath_Temple_in_Rainy_season.jpg",
+      "credit": "Shivam Kumar 766 · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Kedarnath_Temple_in_Rainy_season.jpg"
+    }
+  },
+  {
+    "id": "d_valley_of_flowers",
+    "slug": "valley-of-flowers",
+    "region": "himalaya",
+    "localName": "फूलों की घाटी",
+    "name": "Valley of Flowers & Hemkund",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "adventure",
+      "mountains"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      7,
+      8,
+      9
+    ],
+    "summary": "A UNESCO alpine valley in bloom each monsoon, and the glacial lake of Hemkund Sahib above Ghangaria.",
+    "highlights": [
+      "Valley of Flowers National Park",
+      "Badrinath Temple",
+      "Nanda Devi and Valley of Flowers National Parks",
+      "Haathi Parvat"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/%22Flowers_Blossom_at_Valley_of_Flowers_Chamoli%2C_India%22_58.jpg/1280px-%22Flowers_Blossom_at_Valley_of_Flowers_Chamoli%2C_India%22_58.jpg",
+      "credit": "Naresh Chandra · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:%22Flowers_Blossom_at_Valley_of_Flowers_Chamoli,_India%22_58.jpg"
+    }
+  },
+  {
+    "id": "d_corbett",
+    "slug": "corbett",
+    "region": "himalaya",
+    "localName": "जिम कॉर्बेट",
+    "name": "Jim Corbett National Park",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      11,
+      12,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "summary": "India’s oldest national park: tiger safaris through the sal forests and grasslands of Dhikala.",
+    "highlights": [
+      "Ramganga Dam",
+      "Chaprait",
+      "Khairagarh Number One",
+      "Chaubeli"
+    ],
+    "avgDailyCost": {
+      "amount": 4500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Ramganga_Dam.jpg",
+      "credit": "Vaibhav78545 · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Ramganga_Dam.jpg"
+    }
+  },
+  {
+    "id": "d_chopta",
+    "slug": "chopta",
+    "region": "himalaya",
+    "localName": "चोपता",
+    "name": "Chopta & Tungnath",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "adventure",
+      "spiritual"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11,
+      12
+    ],
+    "summary": "Alpine meadows and the trek to Tungnath, the highest Shiva temple, with Chandrashila above.",
+    "highlights": [
+      "Deoria Tal",
+      "Gopinath Mandir",
+      "Chandrashila",
+      "Rudri Hiunwala Number Six SP"
+    ],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Deoria_Tal_Chandrashila_Chaukamba_reflection.jpg/1280px-Deoria_Tal_Chandrashila_Chaukamba_reflection.jpg",
+      "credit": "Senthilnath G T, XS · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Deoria_Tal_Chandrashila_Chaukamba_reflection.jpg"
+    }
+  },
+  {
+    "id": "d_munsiyari",
+    "slug": "munsiyari",
+    "region": "himalaya",
+    "localName": "मुनस्यारी",
+    "name": "Munsiyari",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11
+    ],
+    "summary": "Face to face with the five Panchachuli peaks, and the gateway to the Milam glacier trek.",
+    "highlights": [
+      "Nanda Kot",
+      "Pindari Glacier",
+      "Panchachuli",
+      "Johar Valley"
+    ],
+    "avgDailyCost": {
+      "amount": 2200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Nanda_Kot.jpg/1280px-Nanda_Kot.jpg",
+      "credit": "Capnraib at English Wikipedia · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Nanda_Kot.jpg"
+    }
+  },
+  {
+    "id": "d_kausani",
+    "slug": "kausani",
+    "region": "himalaya",
+    "localName": "कौसानी",
+    "name": "Kausani",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "nature",
+      "romantic"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11,
+      12
+    ],
+    "summary": "A 300 km sweep of Himalayan peaks at sunrise, tea estates and Gandhi’s Anasakti Ashram.",
+    "highlights": [
+      "Patal Bhuvaneshwar",
+      "Baijnath Temple Complex",
+      "Ninīdhār",
+      "Sūkal Devi"
+    ],
+    "avgDailyCost": {
+      "amount": 2200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1b/Temples_of_Baijnath%2C_Uttarakhand%2C_India.jpg/1280px-Temples_of_Baijnath%2C_Uttarakhand%2C_India.jpg",
+      "credit": "Yann ( talk ) · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Temples_of_Baijnath,_Uttarakhand,_India.jpg"
+    }
+  },
+  {
+    "id": "d_almora",
+    "slug": "almora",
+    "region": "himalaya",
+    "localName": "अल्मोड़ा",
+    "name": "Almora & Binsar",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "culture",
+      "mountains"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11,
+      12
+    ],
+    "summary": "An old Kumaoni hill town of temples and bal mithai, with the oak forests of Binsar above.",
+    "highlights": [
+      "Crank's Ridge",
+      "Gajār",
+      "Kilraur",
+      "Mrityunjaya Temple"
+    ],
+    "avgDailyCost": {
+      "amount": 2200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/54/2024-03-19_Crank%27s_Ridge_1.jpg/1280px-2024-03-19_Crank%27s_Ridge_1.jpg",
+      "credit": "Alexkom000 · CC BY 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:2024-03-19_Crank%27s_Ridge_1.jpg"
+    }
+  },
+  {
     "id": "d_jaisalmer",
     "slug": "jaisalmer",
     "region": "thar",
@@ -1119,7 +1936,7 @@
       "Pushpagiri",
       "Namdroling Monastery",
       "Pushpagiri Wildlife Sanctuary",
-      "Honnamana Kere"
+      "Abbey Falls"
     ],
     "avgDailyCost": {
       "amount": 3500,
@@ -1650,8 +2467,8 @@
     "summary": "A huge river island on the Brahmaputra with Vaishnavite satras and mask-making.",
     "highlights": [
       "Burhi Gosani Devalaya Jorhat",
-      "Bongal Pukhuri",
       "Mulai Kathoni",
+      "Bongal Pukhuri",
       "Moinaporia Namghar"
     ],
     "avgDailyCost": {

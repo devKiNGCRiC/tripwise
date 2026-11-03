@@ -3458,6 +3458,1674 @@
         }
       ],
       "checked": "2026-11-02"
+    },
+    "srinagar": {
+      "about": "Srinagar is the largest city and summer capital of Jammu and Kashmir, located in the Kashmir Valley along the banks of the Jhelum River and Dal Lake. Known for its natural environment, gardens, and waterfronts, people visit to experience its iconic houseboats and rich cultural heritage.",
+      "history": "A capital city was originally built by the Mauryan Emperor Ashoka. A new capital named Pravarapura was built in the 6th century by King Pravarasena, taking on the name Srinagari. Over the centuries, it survived as the primary capital under various rulers including the Karkota dynasty, Lohara dynasty, and the Shah Mir dynasty Sultans. The Mughals annexed Kashmir in 1586, using it as a summer resort and building many gardens. It later passed to the Afghan Durrani Empire, the Sikhs, and became the summer capital of the Dogra kingdom in 1846.",
+      "significance": "Srinagar serves as the summer capital of Jammu and Kashmir and is the spiritual and cultural heart of the Kashmir Valley. It is renowned for traditional handicrafts like the Kashmir shawl, wood carving, and carpet weaving, and features a diverse blend of religious holy places and historical gardens.",
+      "thingsToDo": [
+        {
+          "title": "Dal Lake",
+          "detail": "Explore the central lake and its complex maze of floating vegetable gardens on a decorated shikara boat."
+        },
+        {
+          "title": "Nagin Lake",
+          "detail": "Visit this separate, connected lake located at the foot of Hari Parbat for houseboats and floating gardens."
+        },
+        {
+          "title": "Mughal Gardens",
+          "detail": "Stroll through the royal gardens lining the periphery of Dal Lake, featuring terraced lawns and fountains."
+        },
+        {
+          "title": "Rupa Lank",
+          "detail": "Visit this man-made island in the central area of Dal Lake featuring manicured lawns and four giant chinar trees."
+        },
+        {
+          "title": "Sona Lank",
+          "detail": "Explore this northern island in Dal Lake located next to the shrine of Hazarat Bal."
+        },
+        {
+          "title": "Indira Gandhi Memorial Tulip Garden",
+          "detail": "Walk through Asia's largest tulip garden at the foothill of the Zabarwan Range, home to dozens of tulip varieties."
+        },
+        {
+          "title": "Dachigam National Park",
+          "detail": "Spot wildlife including the critically endangered Kashmir stag and Himalayan black bears across alpine meadows."
+        },
+        {
+          "title": "Musical Fountain, Sher-e-Kashmir International Conference Center",
+          "detail": "Watch the evening fountain and laser show depicting the history of Kashmir."
+        }
+      ],
+      "food": [
+        {
+          "name": "Rogan-gosht",
+          "detail": "Tender meat cooked in a rich red sauce."
+        },
+        {
+          "name": "Gushtaba",
+          "detail": "Soft meat balls cooked in a natural yoghurt gravy."
+        },
+        {
+          "name": "Rishta",
+          "detail": "Soft meat balls served in a delicious savory sauce."
+        },
+        {
+          "name": "Tabakmaaz",
+          "detail": "Deep-fried ribs of a lamb."
+        },
+        {
+          "name": "Kanti",
+          "detail": "Small chunks of meat cooked with a generous amount of onions."
+        },
+        {
+          "name": "Seekh-tuji",
+          "detail": "Freshly barbecued marinated meat pieces eaten with chutney."
+        },
+        {
+          "name": "Kahwah",
+          "detail": "Traditional green tea infused with saffron strands, cinnamon bark, cardamom pods, and crushed nuts."
+        },
+        {
+          "name": "Namkeen chai",
+          "detail": "Pink-colored salted tea made from black tea, cardamom, spices, and bicarbonate of soda."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Srinagar — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Srinagar",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Srinagar — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Srinagar",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "gulmarg": {
+      "about": "Gulmarg is a hill station in the Kashmir Valley set at an altitude of 2,650 metres in the Pir Panjal Range. It is known for lush green meadows and wildflowers during summer and endless snow fields in winter. The destination is a prominent hub for winter sports activities and features a high-altitude multi-stage cable car known as the gondola.",
+      "history": "Locally known as Gaurimarg, the place was renamed Gulmarg by Yousuf Shah Chak, who ruled Kashmir from 1579 to 1586. Mughal emperors and British civil servants later used it as a retreat. In 1927, the British established a ski club here. After British rule ended, it became part of Jammu and Kashmir, acceding to India in October 1947. It was briefly captured by Pakistan in the 1947-1948 war before being retaken by the Indian Army. The High Altitude Warfare School was established in 1948, and the government later developed it into a winter sports hub.",
+      "significance": "Gulmarg matters as a major Himalayan hill station and high-altitude winter sports center in the Kashmir Valley. It hosts the world's highest golf course, the High Altitude Warfare School, and the multi-stage Gulmarg Gondola, serving as a vital destination for tourism, mountaineering, and national winter games.",
+      "thingsToDo": [
+        {
+          "title": "Cable Car to Kongdori",
+          "detail": "Ride the two-stage high altitude gondola operating from Gulmarg to Kongdori and further up to the shoulder of Afarwat Peak."
+        },
+        {
+          "title": "Alpather Lake",
+          "detail": "Visit the frozen high-altitude lake situated at the foot of the twin Apharwat Peaks."
+        },
+        {
+          "title": "Gulmarg Golf Club",
+          "detail": "Play golf at the highest 18-hole golf course in the world housed in a cottage-style wooden building."
+        },
+        {
+          "title": "Baba Reshi Shrine",
+          "detail": "Explore the resting place of Sufi saint Baba Payam uddin Reshi set among surrounding gardens."
+        },
+        {
+          "title": "Maharani Temple",
+          "detail": "View the historic Shiva temple perched on a small hillock and visible from all over Gulmarg."
+        },
+        {
+          "title": "St. Mary's Church",
+          "detail": "See the brick-built church featuring a green metallic thatched roof and a stained glass window."
+        }
+      ],
+      "food": [
+        {
+          "name": "haakh-batte",
+          "detail": "A traditional Kashmiri phrase and dish combination representing greens and rice."
+        },
+        {
+          "name": "rogan josh",
+          "detail": "A slow-cooked meat dish colored with ratanjot."
+        },
+        {
+          "name": "yakhaen",
+          "detail": "A slow-cooked Persian-origin meat dish adapted into traditional Kashmiri cuisine."
+        },
+        {
+          "name": "riste",
+          "detail": "A traditional meat dish prepared as part of regional culinary practices."
+        },
+        {
+          "name": "goshtabh",
+          "detail": "A traditional slow-cooked meat preparation stemming from Persian sources."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Gulmarg — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Gulmarg",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Gulmarg — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Gulmarg",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kashmiri cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kashmiri_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "pahalgam": {
+      "about": "Pahalgam is a small city and hill station in the Kashmir Valley, located on the banks of the Lidder River. Its name means village of the shepherds in Kashmiri. Surrounded by mountains and evergreen trees in the Lidder Valley, it is a very popular tourist destination and the base camp for the annual Amarnath Temple pilgrimage.",
+      "history": "In 2011, the Pahalgam Golf Course was inaugurated. In 2015, the town had about 7,020 beds for tourists. On 22 April 2025, militants attacked a group of tourists at Baisaran valley near Pahalgam.",
+      "significance": "Pahalgam is significant as a popular hill station and tourist destination in the Lidder Valley. It serves as the base camp for the annual Amarnath Yatra pilgrimage and is connected to Hindu mythology regarding the god Shiva.",
+      "thingsToDo": [
+        {
+          "title": "Chandanwari",
+          "detail": "Visit the glacier and starting point of the Amarnath Yatra."
+        },
+        {
+          "title": "Betaab Valley",
+          "detail": "See the scenic verdant meadow where a Bollywood movie was shot."
+        },
+        {
+          "title": "Aru Valley",
+          "detail": "Explore the scenic spot and access trekking routes."
+        },
+        {
+          "title": "Kashmir Valley",
+          "detail": "Take a pony ride from the city centre to enjoy the landscape and picnic."
+        },
+        {
+          "title": "Baisaran",
+          "detail": "Ride to the meadow known locally as Mini Switzerland."
+        },
+        {
+          "title": "Pahalgam Golf Course",
+          "detail": "Visit the 18-hole golf course also known as Lidder Valley Golf Course."
+        },
+        {
+          "title": "Lidder River",
+          "detail": "Go for white water rafting trips down the river through natural forests."
+        },
+        {
+          "title": "Kolahoi Glacier",
+          "detail": "Trek to the hanging glacier situated up the Lidder Valley."
+        }
+      ],
+      "food": [
+        {
+          "name": "Masala Dosa",
+          "detail": "A vegetarian dish served locally at cheap rates."
+        },
+        {
+          "name": "nun chai",
+          "detail": "Special Kashmiri tea."
+        },
+        {
+          "name": "konge kehwa",
+          "detail": "Saffron tea available around the area."
+        },
+        {
+          "name": "haakh-batte",
+          "detail": "Greens and rice, representing the Kashmiri equivalent for bread and butter."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Pahalgam — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Pahalgam",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Pahalgam — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Pahalgam",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kashmiri cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kashmiri_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "sonamarg": {
+      "about": "Sonamarg, also known as the Meadow of Gold, is a hill station located in Jammu and Kashmir. Set against a backdrop of snow-capped mountains, it is reached from the Sindh Valley and serves as a popular destination for hikers, fishers, and tourists exploring the Himalayas.",
+      "history": "Sonamarg historically served as a gateway on the ancient Silk Road connecting Kashmir with Tibet. Following the Kargil War with Pakistan in 1999, it became a strategically important point for the Indian Army.",
+      "significance": "It holds importance as a popular tourist and trekking hub, a gateway for the Amarnath Temple Yatra, and a strategic location for the Indian Army, alongside its historical role on the Silk Road.",
+      "thingsToDo": [
+        {
+          "title": "Thajiwas Glacier",
+          "detail": "An exciting location for trek lovers offering sledding, hiking, and pony rides."
+        },
+        {
+          "title": "Gangabal Lake",
+          "detail": "A scenic lake located at the foot of Harmukh Peak."
+        },
+        {
+          "title": "Vishansar Lake",
+          "detail": "A high-altitude Himalayan lake included in regional trekking routes."
+        },
+        {
+          "title": "Krishnasar Lake",
+          "detail": "A lake dedicated to trout fish conservation where visitors can enjoy fishing."
+        },
+        {
+          "title": "Gadsir Lake",
+          "detail": "A remote lake reachable via challenging treks across steep climbs."
+        },
+        {
+          "title": "Zoji La",
+          "detail": "A mountain pass located near the valley of Baltal."
+        },
+        {
+          "title": "Sind River",
+          "detail": "A natural river offering opportunities for angling and river rafting."
+        }
+      ],
+      "food": [
+        {
+          "name": "rogan josh",
+          "detail": "A slow-cooked meat dish colored with ratanjot."
+        },
+        {
+          "name": "yakhaen",
+          "detail": "A traditional slow-cooked dish of Persian origin."
+        },
+        {
+          "name": "ab gosht",
+          "detail": "A savory preparation rooted in Persian culinary traditions."
+        },
+        {
+          "name": "riste",
+          "detail": "A meat-based dish part of traditional Kashmiri cuisine."
+        },
+        {
+          "name": "goshtabh",
+          "detail": "A classic meat preparation stemming from Persian sources."
+        },
+        {
+          "name": "haakh-batte",
+          "detail": "A traditional pairing of greens and rice."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Sonamarg — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Sonamarg",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Sonamarg — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Sonamarg",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kashmiri cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kashmiri_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "dalhousie": {
+      "about": "Dalhousie is a quiet hill resort town and hill station in the Chamba District of Himachal Pradesh, situated across five hills at an altitude of about 2,000 metres. Surrounded by thick forests of pine and deodar trees, it faces the pristine, snow-capped mountains of the Pir Panjal range. Exuding an old-world charm, it is an ideal destination for honeymooners and travellers who want to de-stress, enjoy long walks, picnics, and treks in a serene atmosphere. Khajjiar is a stunning nearby valley with a spring in the middle, known as the 'Switzerland of India' for its meadowy scenery. The region features English-style bungalows built during the British era, vibrant local markets, and wildlife reserves. Visitors come to experience nature, enjoy panoramic mountain views, and explore walking trails across the hills.",
+      "history": "Lord Dalhousie founded the town in 1854 because he was enchanted by its fresh and peaceful atmosphere and healthy surroundings. The British acquired five hills—Kathalagh, Potreyn, Terah, Bakrota, and Bhangora—from the ruler of the Chamba State to develop a sanatorium, reducing his taxes in return. The project began with Lt. Col. Napier as Chief Engineer of Punjab, and Dr. Clemenger surveyed the area. In 1851, a spot on the Dayan Kund Ridge was selected for the project, and Kathalagh was identified for a Convalescent Depot. Later, the Kalatop Sanctuary was recognized as a game sanctuary on July 1, 1949.",
+      "significance": "Dalhousie matters as a historic hill station established during the British Raj as a health sanatorium and summer retreat. The area holds cultural and historical importance through sites like the memorial of Amar Ajit Singh, traditional Himachali culinary heritage, and rich biodiversity preserved within the Kalatop Khajjiar Sanctuary.",
+      "thingsToDo": [
+        {
+          "title": "Ahla Water Tank",
+          "detail": "Visit the main water tank in the area which holds 100,000 gallons."
+        },
+        {
+          "title": "Dainkund Walk",
+          "detail": "Take a gentle, sloping walk near an Air Force base leading to a Hindu temple."
+        },
+        {
+          "title": "Ganji Pahadi Walk",
+          "detail": "Embark on a pleasant, long walk of at least an hour to a summit with no trees."
+        },
+        {
+          "title": "Kala Tope Rest House",
+          "detail": "Enjoy a nice, quiet picnic spot and a 3-km exhilarating route through dense pine forests."
+        },
+        {
+          "title": "Kalatop wild life reserve",
+          "detail": "Explore a steep sanctuary in the Outer Himalayas that features a lake at Khajjiar and scenic views."
+        },
+        {
+          "title": "Khajjiar",
+          "detail": "See the stunning valley with a spring in the middle, known as the Switzerland of India."
+        },
+        {
+          "title": "Subhash Chowk",
+          "detail": "Browse a fairly active market area located at a major road intersection."
+        },
+        {
+          "title": "Tibetan market",
+          "detail": "Have a look around the shops for great handicrafts and wooden articles."
+        }
+      ],
+      "food": [
+        {
+          "name": "Momos",
+          "detail": "A type of dumpling that is hugely popular with tourists."
+        },
+        {
+          "name": "Dhaam",
+          "detail": "A traditional festive mid-day meal served on joyful occasions and religious festivals."
+        },
+        {
+          "name": "Madra",
+          "detail": "A spicy vegetable curry of red kidney beans or chickpeas cooked in yoghurt with spices."
+        },
+        {
+          "name": "Khatta",
+          "detail": "A sweet and sour sauce made of tamarind and jaggery."
+        },
+        {
+          "name": "Mitha bhaat",
+          "detail": "A traditional sweet rice dessert served at the end of a festive meal."
+        },
+        {
+          "name": "Siddu",
+          "detail": "A traditional regional bread preparation from Himachal Pradesh."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Dalhousie (India) — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Dalhousie_(India)",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Dalhousie, India — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Dalhousie%2C_India",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Dham — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Dham",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "kasauli": {
+      "about": "Kasauli is a small hill station and cantonment in southern Himachal Pradesh, developed by the British Empire as a colonial retreat. Situated at an altitude of 1,927 meters, it offers a quiet atmosphere ideal for spending time alone or with family. The town features scenic walking trails, colonial-era architecture, and peaceful forests. Legend says the town began after Lord Hanuman placed his feet here to advance toward the Sanjeevani hill. Today, visitors come to enjoy the serene environment, panoramic views of the Dhauladhar Range and the Sutlej River, and attractions like historic churches and viewpoints.",
+      "history": "The cantonment was established by the British Raj in 1842 as a colonial hill station. The town was founded by a British family who also constructed its earliest church. In 1853, the Lawrence School at Sanawar received the King's Colours from the British Empire. Kasauli Brewery and Distillery was established in the 1820s as a producer of single malt whisky.",
+      "significance": "Kasauli is culturally and historically significant as a well-preserved British colonial hill station and military cantonment. It holds religious importance due to legends associating it with Lord Hanuman and the Sanjeevani hill, and it houses Asia's oldest functioning single malt whisky producer.",
+      "thingsToDo": [
+        {
+          "title": "Christ Church",
+          "detail": "A magnificent cross-shaped church built by the British family that founded Kasauli, set amidst chestnut and fir trees."
+        },
+        {
+          "title": "Gilbert Trail",
+          "detail": "A short walk up from Sunset point leading to a breathtaking viewpoint at Gilbert Hill."
+        },
+        {
+          "title": "Gurudwara Shri Guru Nanakji",
+          "detail": "A historic Sikh gurudwara located in Gharkhal bazaar that offers lodging facilities and Sunday morning processions."
+        },
+        {
+          "title": "Monkey Point (Manki Point)",
+          "detail": "The highest point in Kasauli featuring a temple dedicated to Lord Hanuman within an Air Force base."
+        },
+        {
+          "title": "Sunset Point",
+          "detail": "A viewing spot situated about 1 km from the bus stand offering magnificent views of nearby hill regions and Chandigarh."
+        },
+        {
+          "title": "Sanawar",
+          "detail": "A campus located at 1,750 m featuring colonial buildings, a chapel, and pine and deodar trees."
+        },
+        {
+          "title": "Dagshai",
+          "detail": "A former British haunt offering charming paths under a canopy of oaks and holly forests."
+        },
+        {
+          "title": "Kasauli Brewery and Distillery",
+          "detail": "The oldest functioning producer of single malt whisky in Asia, established in the 1820s."
+        }
+      ],
+      "food": [
+        {
+          "name": "bunsams",
+          "detail": "Tasty baked items available at chai shops along the cobbled street."
+        },
+        {
+          "name": "Lion Beer",
+          "detail": "A alcoholic beverage produced locally at the historic Kasauli brewery."
+        },
+        {
+          "name": "Solan No. 1",
+          "detail": "A single malt whisky produced by Asia's oldest functioning whisky producer."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kasauli — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kasauli",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kasauli — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kasauli",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "palampur": {
+      "about": "Palampur is a hill station and municipal corporation in the Kangra District of Himachal Pradesh. Located in the Himalayan foothills, the town is famous for its mountain scenery, tea gardens, and lush plantations, earning it the name Green Valley of Himachal Pradesh. Visitors come to enjoy the stunning natural beauty, ancient temples, art galleries, and views of the Dhauladhar range.",
+      "history": "In the mid-19th century, the tea bush flourished in the local climate, which attracted European tea estate owners. The expansion of these tea estates led to the development of local infrastructure, including schools, colleges, and hospitals. The town also emerged as a hub for labourers who worked on plucking, packing, and transporting tea leaves.",
+      "significance": "Palampur is historically and culturally significant as a prominent tea-producing hub in Himachal Pradesh and a gateway to numerous historic temples, scenic nature spots, and regional art centers.",
+      "thingsToDo": [
+        {
+          "title": "Bharkudi",
+          "detail": "Explore the tourist site filled with fountains, caves, and a temple of Lord Shiva."
+        },
+        {
+          "title": "Baijnath Temple",
+          "detail": "Visit the historic temple of Lord Shiva with beautiful monuments, dating from the reign of the Pandavas."
+        },
+        {
+          "title": "Brijeshwari Temple",
+          "detail": "See the famous temple situated in the heart of Kangra city."
+        },
+        {
+          "title": "Bundla Mata Mandir",
+          "detail": "Discover the temple blessed by nature and located near beautiful tea gardens."
+        },
+        {
+          "title": "Chamunda Devi Temple",
+          "detail": "Travel to the popular riverside temple where Devi Chamunda reportedly killed the evils Chand and Mund."
+        },
+        {
+          "title": "Jakhni Mata Temple chandpur",
+          "detail": "Visit this temple located in a nature paradise reached via Chandpur village."
+        },
+        {
+          "title": "Naam Art Gallery",
+          "detail": "View abstract and spiritual paintings by a German painter along with works by Alfred W. Hallet."
+        },
+        {
+          "title": "Sobha Singh Art Gallery",
+          "detail": "View great paintings like Kangari Dulhan and Gaddan by the world-famous painter Sardar Sobha Singh Ji."
+        },
+        {
+          "title": "Gopalpur Zoo",
+          "detail": "See a limited variety of animals, including the Asiatic lion, leopard, and Himalayan black bear."
+        }
+      ],
+      "food": [
+        {
+          "name": "Kangra Tea",
+          "detail": "A locally produced tea grown across the lush plantations of the region."
+        },
+        {
+          "name": "Jhol",
+          "detail": "A traditional drink made of preserved rice water."
+        },
+        {
+          "name": "Soda",
+          "detail": "A refreshing local beverage available near the old bus stand."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Palampur — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Palampur",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Palampur, Himachal Pradesh — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Palampur%2C_Himachal_Pradesh",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "mussoorie": {
+      "about": "Mussoorie is a hill station located in the Garhwal region of Uttarakhand, in the foothills of the Garhwal Himalayan range. Popularly known as The Queen of the Hills, it sits at an average altitude of over 2,000 metres and offers views of Himalayan snow ranges to the northeast and the Doon Valley to the south. Visitors come to enjoy its green hills, varied flora and fauna, and as a retreat from the heat of the plains. The town presents a fairyland atmosphere to tourists with its mix of nature and established holiday spots. It features scenic walks, waterfalls, a Tibetan settlement in Happy Valley, and a long stretch of road surrounded by shops and restaurants known as The Mall.",
+      "history": "In 1803 the Gorkhas conquered the region, and Mussoorie was established. The British annexed the area by 1819 after a war. Captain Frederick Young and F. J. Shore established it as a resort in 1825, building a shooting lodge on Camel's Back Road. George Everest attempted to make it the terminus of the Great Trigonometric Survey in 1832. The Nehru family frequently visited in the 1920s to 1940s. In 1959, the Dalai Lama took up residence here during the Tibetan Rebellion before moving to Dharamsala.",
+      "significance": "Mussoorie is culturally and historically significant as a prominent British-established hill station retreat in India, and as the initial place of refuge for the 14th Dalai Lama after he fled Tibet in 1959, leading to a lasting Tibetan community in Happy Valley.",
+      "thingsToDo": [
+        {
+          "title": "Bhatta Falls",
+          "detail": "A waterfall located a few kilometres away from Mussoorie with a short trek."
+        },
+        {
+          "title": "Camty Fall (Kempty Falls)",
+          "detail": "A popular tourist destination and waterfall located about 15 km from Mussoorie."
+        },
+        {
+          "title": "Company Garden",
+          "detail": "A man-made park featuring artificial falls and fun rides."
+        },
+        {
+          "title": "Gun Hill Point",
+          "detail": "A viewpoint offering a panoramic look at the city and ice-capped Himalayas, accessible by trolley."
+        },
+        {
+          "title": "Happy Valley",
+          "detail": "A Tibetan settlement area serving as a spot for short hikes."
+        },
+        {
+          "title": "Jawahar Aquarium",
+          "detail": "An aquarium located on Mall Road with a collection of fish."
+        },
+        {
+          "title": "Jhari Pani Falls",
+          "detail": "A waterfall reachable via a trek from the main road."
+        },
+        {
+          "title": "Lake Mist",
+          "detail": "A picnic spot featuring small waterfalls made by the Kempty river and boating facilities."
+        },
+        {
+          "title": "Lal Tibba",
+          "detail": "The highest point in Mussoorie offering an uphill walking route past Landour Bazaar."
+        },
+        {
+          "title": "Tibetan Buddhist Temple",
+          "detail": "A temple located on Happy Valley road close to the IAS Academy."
+        }
+      ],
+      "food": [
+        {
+          "name": "Biryani",
+          "detail": "Prepared using locally grown basmati rice."
+        },
+        {
+          "name": "Paranthas",
+          "detail": "Savory flatbreads served at a candy shop joint in Gandhi Chowk."
+        },
+        {
+          "name": "Omelettes",
+          "detail": "Popular egg dishes served at a small outlet in Kulri Bazaar."
+        },
+        {
+          "name": "Dosas",
+          "detail": "Spicy, crisp vegetarian crepes served piping hot."
+        },
+        {
+          "name": "Gulab Jamuns",
+          "detail": "Traditional sweet confections offered at a long-standing sweet shop in Landour Bazaar."
+        },
+        {
+          "name": "Pure Chocolate Barfi",
+          "detail": "A regional sweet delicacy available in Landour Bazaar."
+        },
+        {
+          "name": "Kalakand",
+          "detail": "A milk-based sweet sold at an old sweet shop established during the British period."
+        },
+        {
+          "name": "Sonhalwa",
+          "detail": "A traditional sweet treat served in Landour Bazaar."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Mussoorie — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Mussoorie",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Mussoorie — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Mussoorie",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "nainital": {
+      "about": "Nainital is a popular hill station in Uttarakhand set amidst the towering peaks of the Kumaon Hills. It is arranged around an eye-shaped lake and divided into two parts called Tallital and Mallital. Visitors come to enjoy boating, scenic hill walks, and bird-watching.",
+      "history": "The region was under the Khasia family after the Katyuri Dynasty fell in the 10th century. Kirat Chand established authority over the area by the early 16th century. The Khasia chiefs tried to regain independence in 1560 but were subdued by Balo Kalyan Chand. The Kumaon Hills came under British rule after the Anglo-Nepalese War. The hill station was founded in 1841 when the first European house was built. A major landslip occurred on September 18, 1880, destroying parts of the town.",
+      "significance": "Nainital is an important lake resort and the judicial capital of Uttarakhand, housing the High Court and the Raj Bhavan. It is celebrated for its natural beauty, bird's-eye views, and its association with the goddess Naina Devi.",
+      "thingsToDo": [
+        {
+          "title": "Naina Lake",
+          "detail": "Enjoy boating on the central water pool surrounded by high peaks."
+        },
+        {
+          "title": "Naina Devi Temple",
+          "detail": "Visit the religious site located on the northern shore of the lake."
+        },
+        {
+          "title": "Snow View",
+          "detail": "Ride the Aerial Express Ropeway to witness spectacular views of the Naina Devi Peak."
+        },
+        {
+          "title": "Gurney House",
+          "detail": "Explore the former home of Jim Corbett which now functions as a museum."
+        },
+        {
+          "title": "Guano Hills",
+          "detail": "Take walks through thick oak, bamboo, and deodar forests to spot rare birds."
+        },
+        {
+          "title": "Cave Garden",
+          "detail": "Explore a series of six narrow connected caves maintained by the local administration."
+        },
+        {
+          "title": "Nainital Zoo",
+          "detail": "See high-altitude native animal species spread across a wide area."
+        },
+        {
+          "title": "Tiffin Top",
+          "detail": "Hike or take a horse ride up the hill to enjoy sweeping panoramic views."
+        }
+      ],
+      "food": [
+        {
+          "name": "Herbal Chai",
+          "detail": "A local herbal tea served in the dhabas along The Mall."
+        },
+        {
+          "name": "Local Jams",
+          "detail": "Traditional sweet fruit preserves available for purchase in local shopping areas."
+        },
+        {
+          "name": "Bread Omelet",
+          "detail": "A simple warm snack served at tea shops located on mountain peaks."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Nainital — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Nainital",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Nainital — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Nainital",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "auli": {
+      "about": "Auli is a hill station and ski destination in the Indian state of Uttarakhand, nestled in the Garhwal Himalayas within the Chamoli district. Known locally as Auli Bugyal, meaning meadow, it sits at high altitudes ranging from 2,500 to 3,050 meters above sea level. The area is surrounded by coniferous and oak forests, offering panoramic views of major Himalayan peaks like Nanda Devi, Kamet, and Mana Parvat. Between June and October, the valley features a vast diversity of high-altitude plant and flower species. Travelers visit Auli for its natural beauty, tranquil alpine environment, and winter sports. The destination features virgin slopes used for skiing, cross-country, and slalom events, along with high-altitude trekking trails. Visitors can also explore nearby lakes, ancient towns, traditional handicrafts, and local villages featuring natural hot-water springs.",
+      "history": "In the 8th century AD, Adiguru Shri Shankaracharya established a Matha known as Jyotir Math or Shri Shankaracharya Math at nearby Joshimath, after which the area became known as the Gateway of the Himalayas. Semi-nomadic tribes including Tibetans, Mongolians, and Bhotias historically used the area for trade between Tibet and India, utilizing yaks and horses. In 1958, an unusual mountaineering expedition took place on the nearby Trishul peak, where climbers spent four days ascending and about 90 minutes skiing down to the base. Auli was later marketed as a tourist destination following the creation of the state of Uttarakhand.",
+      "significance": "Auli holds religious, cultural, and natural significance as an ancient gateway tied to Adi Shankaracharya's matha, a traditional trade route for Himalayan communities, and a sanctuary for hundreds of high-altitude and endangered plant species. It serves as India's premier skiing and winter sports hub.",
+      "thingsToDo": [
+        {
+          "title": "Gurson Bugyal",
+          "detail": "Trek through a high-altitude meadow that acts as a green carpet in summer and a snow-covered land in winter, connecting to the Kuari Pass trail."
+        },
+        {
+          "title": "Chattrakund",
+          "detail": "Visit a small high-altitude lake surrounded by verdant greenery and tranquility beyond the Gurson bugyal."
+        },
+        {
+          "title": "Auli Lake",
+          "detail": "Access the world's highest artificial lake via cable car to enjoy a serene turquoise body of water set against green slopes or winter snow."
+        },
+        {
+          "title": "Tapovan",
+          "detail": "Explore a small village featuring a natural hot-water spring, a temple, and traditional regional handicrafts."
+        },
+        {
+          "title": "Joshimath",
+          "detail": "Explore an ancient town settled in the 8th century that houses the Narsingh Temple and serves as an important military station."
+        },
+        {
+          "title": "Auli Slopes",
+          "detail": "Participate in skiing, take training courses, or ride the ski-lifts and chair-lifts across the extensive winter snowfields."
+        },
+        {
+          "title": "Trekking to Himalayan Peaks",
+          "detail": "Hike offbeat alpine trails leading toward peaks such as Nanda Devi, Kamet, Mana Parvat, and Dunagiri."
+        }
+      ],
+      "food": [
+        {
+          "name": "Rabri",
+          "detail": "A local dish made with Jhongora, buttermilk, and radish leaves."
+        },
+        {
+          "name": "Khadi",
+          "detail": "A traditional preparation made using curd or buttermilk."
+        },
+        {
+          "name": "Arsa",
+          "detail": "A sweet local item prepared with rice and jaggery."
+        },
+        {
+          "name": "Gulthiya",
+          "detail": "A dish made with normal wheat flour and pure desi ghee."
+        },
+        {
+          "name": "Stuffed Gahat Chapatis",
+          "detail": "Flatbreads filled with Gahat pulse fillings."
+        },
+        {
+          "name": "Bhang Ki Chutney",
+          "detail": "A regional accompaniment made with hemp seeds and local spices."
+        },
+        {
+          "name": "Aloo Ke Gutke",
+          "detail": "A simple spiced potato dish characteristic of the region."
+        },
+        {
+          "name": "Thechwani",
+          "detail": "A traditional vegetable or root preparation typical of local cuisine."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Auli — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Auli",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Auli, India — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Auli%2C_India",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Uttarakhandi cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Uttarakhandi_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "kedarnath": {
+      "about": "Kedarnath is a town and pilgrimage destination in the Rudraprayag district of Uttarakhand, India. Located in the Himalayas near the Chorabari Glacier, it sits at a high altitude and is surrounded by snow-capped peaks over 6,000 meters in elevation. The town is flanked by the Kedarnath Mountain and is the source of the Mandakini River. Millions of pilgrims visit Kedarnath each year for the Char Dham Yatra. Travelers trek sixteen kilometers from the roadhead at Gaurikund to reach this holy site. The area features pristine mountain landscapes, glaciers, and green glades, offering visitors a profound spiritual and natural experience.",
+      "history": "One of the earliest references to Kedarnath appears in the Skanda Purana from the seventh to eighth century. The construction of the temple is credited to the Pandava brothers from the Mahabharata, though the epic does not mention Kedarnath itself. The temple was rebuilt by the eighth-century philosopher Adi Shankaracharya, who is believed by some hagiographies to have died near the Kedarnath mountains. Kedarnath was already a prominent pilgrimage center by the twelfth century, as noted in the Kritya-kalpataru. In June 2013, the town suffered extensive destruction from flash floods.",
+      "significance": "Kedarnath is one of the holiest Hindu pilgrimage centers in India and the most remote of the Chota Char Dham sites. It is dedicated to Lord Shiva, housing a sacred lingam inside an exquisite stone temple. Hindus view it as a place of supreme mercy, peace, and spiritual release where Shiva is said to have freed the waters of the Ganga.",
+      "thingsToDo": [
+        {
+          "title": "Kedarnath Temple",
+          "detail": "Visit the exquisite stone temple housing the sacred lingam of Lord Shiva."
+        },
+        {
+          "title": "Gaurikund",
+          "detail": "Take a dip in the holy water from a natural hot spring at the trek base."
+        },
+        {
+          "title": "Gandhi Sarovar",
+          "detail": "Trek through a paved route to reach this glacial lake where Mahatma Gandhi's ashes were immersed."
+        },
+        {
+          "title": "Vasuki Tal",
+          "detail": "Embark on a challenging climb to reach this high-altitude lake known for its blue waters."
+        },
+        {
+          "title": "Bhairav Temple",
+          "detail": "Walk past this ancient shrine to explore the green glades and tiny streams beyond."
+        },
+        {
+          "title": "River Mandakini",
+          "detail": "Take a dip in the icy waters fed by the surrounding glaciers."
+        },
+        {
+          "title": "Triyuginarayan Temple",
+          "detail": "Visit the famous site where Lord Shiva and Goddess Parvati are said to have married."
+        },
+        {
+          "title": "Tungnath",
+          "detail": "Explore this neighboring site which is the second of the Panch Kedar temples."
+        }
+      ],
+      "food": [
+        {
+          "name": "Rabri",
+          "detail": "A simple dish made with Jhongora, buttermilk, and radish leaves."
+        },
+        {
+          "name": "Arsa",
+          "detail": "A local sweet prepared using rice and jaggery."
+        },
+        {
+          "name": "Gulthiya",
+          "detail": "A traditional preparation made from wheat flour and pure desi ghee."
+        },
+        {
+          "name": "Bhang Ki Chutney",
+          "detail": "A traditional regional condiment featuring local spices and herbs."
+        },
+        {
+          "name": "Chainsoo",
+          "detail": "A flavorful local lentil preparation made with simple ingredients."
+        },
+        {
+          "name": "Kafuli",
+          "detail": "A traditional green leafy preparation typical of the regional cuisine."
+        },
+        {
+          "name": "Aloo Ke Gutke",
+          "detail": "A popular local potato dish seasoned with simple Himalayan spices."
+        },
+        {
+          "name": "Thechwani",
+          "detail": "A traditional crushed vegetable or root dish from the local culinary tradition."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kedarnath — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kedarnath",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kedarnath — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kedarnath",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Uttarakhandi cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Uttarakhandi_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "valley-of-flowers": {
+      "about": "Ghangaria is a village and base camp in the Garhwal region of Uttarakhand, serving as the gateway for treks to the Valley of Flowers and Hemkunt. The area features high-altitude landscapes, waterfalls, and meadows surrounded by snow peaks and forests. During the rainy season, the valley transforms into a natural garden filled with endemic alpine flowers.",
+      "history": "In 1862, the Pushpawati River Valley was discovered by Col. Edmund Smyth. British mountaineers including Frank S. Smythe, Eric Shipton, and R. L. Holdsworth happened upon the valley in 1931 while returning from Mount Kamet, and Smythe later published a book about it. Botanist Lady Joan Margaret Legge died in the valley in 1939. The park was established as a national park in 1980, and it was listed as a UNESCO World Heritage site in 2004.",
+      "significance": "The area is a protected national park and UNESCO World Heritage site known for its diverse alpine flora, endangered wildlife species, and transition zone between the Zanskar and Great Himalaya ranges. It is also a sacred pilgrimage destination for Hindus and Sikhs at Hemkunt lake.",
+      "thingsToDo": [
+        {
+          "title": "Valley of Flowers",
+          "detail": "Hike through an 8 km long valley featuring waterfalls, snow lakes, glaciers, and vibrant endemic alpine flowers."
+        },
+        {
+          "title": "Hemkunt",
+          "detail": "Trek up to a holy high-altitude lake surrounded by seven snow-covered peaks and visit the associated Gurudwara."
+        },
+        {
+          "title": "Lakshman Temple",
+          "detail": "Visit a small temple situated behind the Hemkunt Gurudwara dedicated to Lord Lakshman."
+        },
+        {
+          "title": "Nanda Devi National Park",
+          "detail": "Explore the rugged mountain wilderness adjacent to the Valley of Flowers."
+        },
+        {
+          "title": "Nanda Devi Biosphere Reserve",
+          "detail": "Experience the unique transition zone encompassing protected core zones and mountain ranges."
+        }
+      ],
+      "food": [
+        {
+          "name": "Rabri",
+          "detail": "A simple dish made with jhongora, buttermilk, and radish leaves."
+        },
+        {
+          "name": "Arsa",
+          "detail": "A traditional sweet prepared using rice and jaggery."
+        },
+        {
+          "name": "Gulthiya",
+          "detail": "A local preparation made from wheat flour and pure desi ghee."
+        },
+        {
+          "name": "Aloo Ke Gutke",
+          "detail": "A popular regional potato dish prepared with simple local ingredients."
+        },
+        {
+          "name": "Bhang Ki Chutney",
+          "detail": "A flavorful regional accompaniment made without complex spices."
+        },
+        {
+          "name": "Chainsoo",
+          "detail": "A traditional lentil preparation from the Garhwal cuisine."
+        },
+        {
+          "name": "Kafuli",
+          "detail": "A wholesome green-based preparation typical of local culinary traditions."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Ghangaria — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Ghangaria",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Valley of Flowers National Park — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Valley_of_Flowers_National_Park",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Uttarakhandi cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Uttarakhandi_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "corbett": {
+      "about": "Jim Corbett National Park sits in the state of Uttarakhand in the Himalayan North region of India. It features a spectacular panorama of the jungle, reminding visitors of Kipling's Jungle Book. The park includes hills, riverine belts, marshy depressions, grasslands, and a large lake, providing a habitat for numerous species of plants, birds, mammals, and reptiles. Tourists, wildlife fans, and adventure seekers visit the park to experience the varied wildlife and scenery. Visitors can explore specific tourist zones to watch wildlife, view diverse vegetation, and enjoy birdwatching.",
+      "history": "In the 19th century, Major Ramsay started efforts to save the region's forests, and the British forest department established control in 1868. These forests became a reserve forest in 1879. Hailey National Park was created on August 6, 1936, as India's first national park under Governor Hailey. After independence, it was renamed Ramganga National Park. In 1957, it was renamed after James E. Corbett. The park area increased in 1991 with the addition of the Sonanadi Wildlife Sanctuary.",
+      "significance": "The park matters as India's first national park and the initial location for launching the Project Tiger wildlife conservation project. It is one of the thirteen protected areas covered under the Terai Arc Landscape Program to protect flagship species.",
+      "thingsToDo": [
+        {
+          "title": "Dhikala Forest Rest House",
+          "detail": "Stay in the core area of the jungle for uninterrupted views of the Ramganga Reservoir and grasslands."
+        },
+        {
+          "title": "Bijrani",
+          "detail": "Explore a drier terrain with diverse vegetation that serves as a prime location to witness elephants, deer, and birds."
+        },
+        {
+          "title": "Jhirna",
+          "detail": "Visit a rest house area inside the south boundary of the park known for its dry landscape."
+        },
+        {
+          "title": "Durga Devi",
+          "detail": "Spot birds like the Black Chinned Yuhina and see endangered Mahsheer fish breed."
+        },
+        {
+          "title": "Dhela Zone",
+          "detail": "Take a day visit with security guides to watch birds in the newest zone of the park."
+        },
+        {
+          "title": "Corbett Museum",
+          "detail": "Learn about the life history of Mr. Jim Corbett and view his personal belongings."
+        },
+        {
+          "title": "Jeep safari",
+          "detail": "Rent jeeps from travel agencies to explore the beauty of the national park."
+        }
+      ],
+      "food": [
+        {
+          "name": "Kumaoni raitaa",
+          "detail": "A traditional preparation made using local pulses."
+        },
+        {
+          "name": "Bal Mithai",
+          "detail": "A sweet local delicacy from the region."
+        },
+        {
+          "name": "ras bhaat",
+          "detail": "A regional dish prepared using local beans and rice."
+        },
+        {
+          "name": "chain",
+          "detail": "A local pulse preparation unique to Kumaoni cuisine."
+        },
+        {
+          "name": "faanda",
+          "detail": "A nutritious dish fashioned from local pulses."
+        },
+        {
+          "name": "thatwaani",
+          "detail": "A traditional preparation made from gouhat pulses."
+        },
+        {
+          "name": "Jholi",
+          "detail": "A curry seasoned with curd."
+        },
+        {
+          "name": "Chudkani",
+          "detail": "A dish prepared using bhatt pulses."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Jim Corbett National Park — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Jim_Corbett_National_Park",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Jim Corbett National Park — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Jim_Corbett_National_Park",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kumaoni cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kumaoni_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "chopta": {
+      "about": "Chopta is a small region of meadows and evergreen forests in Uttarakhand, India. It is part of the Kedarnath wildlife sanctuary and sits at an elevation of 2,709 metres above sea level. The village is surrounded by pine, deodar, and rhododendron forests, and is home to rare birds and musk deer. Travelers visit this unspoiled natural destination as a base for trekking. It offers views of the Himalayan range, including Trishul, Nanda Devi, and Chaukhamba.",
+      "history": "The sources do not provide a detailed history of Chopta and Tungnath.",
+      "significance": "Chopta serves as a key base for trekking to Tungnath, the third temple of Panch Kedar. It is also an important natural destination within the Kedarnath wildlife sanctuary, featuring rich flora and fauna.",
+      "thingsToDo": [
+        {
+          "title": "Chopta",
+          "detail": "Explore the small region of meadows and evergreen forests."
+        },
+        {
+          "title": "Kedarnath wildlife sanctuary",
+          "detail": "See rare species of birds and musk deer in the protected area."
+        },
+        {
+          "title": "Tungnath",
+          "detail": "Hike 3.5 kilometres away to reach the third temple of Panch Kedar."
+        },
+        {
+          "title": "Chandrashila",
+          "detail": "Trek to the summit rising over 4,000 metres located 1.5 kilometres from Tungnath."
+        },
+        {
+          "title": "Uttarakhand Himalayas",
+          "detail": "View the imposing Himalayan range including Trishul, Nanda Devi, and Chaukhamba."
+        }
+      ],
+      "food": [
+        {
+          "name": "Rabri",
+          "detail": "Made with jhongora and buttermilk, with added radish leaves."
+        },
+        {
+          "name": "Arsa",
+          "detail": "Prepared using rice and jaggery."
+        },
+        {
+          "name": "Gulthiya",
+          "detail": "Made with normal atta and pure desi ghee."
+        },
+        {
+          "name": "Bhang Ki Chutney",
+          "detail": "A traditional local chutney made with hemp seeds."
+        },
+        {
+          "name": "Aloo Ke Gutke",
+          "detail": "A popular local potato preparation."
+        },
+        {
+          "name": "Kafuli",
+          "detail": "A traditional green leafy dish."
+        },
+        {
+          "name": "Chainsoo",
+          "detail": "A dish prepared from black gram lentils."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Chopta — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Chopta",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Uttarakhandi cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Uttarakhandi_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "munsiyari": {
+      "about": "Munsiyari is a hill station and sub-division headquarters located in the Pithoragarh District of Uttarakhand, India. It sits at the base of the great Himalayan mountain range at an elevation of about 2,200 meters. The area serves as a starting point for various treks into the interior of the Himalayas.",
+      "history": "The tract of Munsiyari originally comprised the villages of Surhing, Gorpata, Darati, and Darkot in the Goriphat patti. It served as a vital depot for Trans-Himalayan trade between Tibet and the plains of India. During the early 20th century, it functioned as the primary winter settlement for the Bhotia traders of the Malla Johar region who migrated down the Gori river valley during winter months.",
+      "significance": "Munsiyari is significant as a gateway for mountain treks and as a historical winter settlement for Bhotia traders participating in the Trans-Himalayan trade economy.",
+      "thingsToDo": [
+        {
+          "title": "Milam",
+          "detail": "Visit or start a trek from this high-altitude village."
+        },
+        {
+          "title": "Laspa",
+          "detail": "Explore this high-altitude village area."
+        },
+        {
+          "title": "Surhing",
+          "detail": "See one of the historical villages comprising the original tract of Munsiyari."
+        },
+        {
+          "title": "Gorpata",
+          "detail": "Explore this historical village in the Goriphat patti."
+        },
+        {
+          "title": "Darati",
+          "detail": "Visit this traditional village within the region."
+        },
+        {
+          "title": "Darkot",
+          "detail": "Discover this historical village located in the Goriphat patti."
+        },
+        {
+          "title": "Gori river valley",
+          "detail": "Walk along the valley path used during seasonal migrations."
+        },
+        {
+          "title": "Malla Johar",
+          "detail": "Explore the region associated with the area's traditional traders."
+        }
+      ],
+      "food": [
+        {
+          "name": "Kumaoni raitaa",
+          "detail": "A preparation made using gouhat pulses."
+        },
+        {
+          "name": "Bal Mithai",
+          "detail": "A traditional sweet prepared in the region."
+        },
+        {
+          "name": "ras bhaat",
+          "detail": "A local dish prepared from gouhat pulses served with rice."
+        },
+        {
+          "name": "chain",
+          "detail": "A unique pulse preparation made from gouhat."
+        },
+        {
+          "name": "faanda",
+          "detail": "Another distinctive food item fashioned from gouhat pulses."
+        },
+        {
+          "name": "thatwaani",
+          "detail": "A regional preparation made using local beans."
+        },
+        {
+          "name": "Jholi",
+          "detail": "A curry seasoned with curd."
+        },
+        {
+          "name": "Chudkani",
+          "detail": "A dish made from bhatt pulses."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Munsiari — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Munsiari",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kumaoni cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kumaoni_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "kausani": {
+      "about": "Kausani is a peaceful hill town and village in Uttarakhand. It is famous for its natural scenery and a wide panoramic view of Himalayan peaks like Trisul, Nanda Devi, and Panchchuli. Mahatma Gandhi called it the Switzerland of India because of its landscape. The town features a local market in its lower section and hotels in the upper part. Life here moves slowly, and visitors enjoy quiet surroundings, local tea gardens, and mountain views.",
+      "history": "During the independence of India in 1947, Kausani was located in the Almora District. On 15 September 1997, the Bageshwar district was carved out of the Almora district. Later, on 9 November 2000, the State of Uttarakhand was created from northwestern districts of Uttar Pradesh.",
+      "significance": "Kausani is culturally and historically significant as a place where Mahatma Gandhi stayed briefly and wrote his commentary on Anashakti Yog. It is also the birthplace of the famous Hindi poet Sumitranandan Pant and serves as a center for regional crafts, social service, and mountain tourism.",
+      "thingsToDo": [
+        {
+          "title": "Gandhi Ashram",
+          "detail": "Visit the quiet place where Mahatma Gandhi stayed and wrote Anashakti Yog."
+        },
+        {
+          "title": "Baijnath Temples",
+          "detail": "Explore the series of small and big temples dedicated to Lord Shiva."
+        },
+        {
+          "title": "Sumitranandan Pant museum",
+          "detail": "View the poet's daily use articles, drafts, letters, and awards."
+        },
+        {
+          "title": "Shawl Factory",
+          "detail": "Witness how traditional Kausani shawls are manufactured using age-old techniques."
+        },
+        {
+          "title": "Lakshmi Ashram",
+          "detail": "Visit the solitary center run by Kumauni women dedicated to social service."
+        },
+        {
+          "title": "Tea Gardens",
+          "detail": "Walk through the local tea estates situated along the road."
+        },
+        {
+          "title": "Rudrahari cave temple trek",
+          "detail": "Go on a trekking excursion through the surrounding area."
+        },
+        {
+          "title": "Pindari Glacier Trek",
+          "detail": "Embark on a challenging trek in the surroundings around Kausani."
+        }
+      ],
+      "food": [
+        {
+          "name": "Kumaoni raitaa",
+          "detail": "A unique preparation made from pulses like gouhat."
+        },
+        {
+          "name": "Bal Mithai",
+          "detail": "A traditional sweet preparation from the Kumaon region."
+        },
+        {
+          "name": "ras bhaat",
+          "detail": "A simple and nutritious local preparation using regional pulses."
+        },
+        {
+          "name": "chain",
+          "detail": "A traditional dish fashioned from local beans."
+        },
+        {
+          "name": "faanda",
+          "detail": "A nutritious local pulse preparation suited for the mountain environment."
+        },
+        {
+          "name": "thatwaani",
+          "detail": "A regional dish prepared from kulath beans."
+        },
+        {
+          "name": "Jholi",
+          "detail": "A curry seasoned with curd."
+        },
+        {
+          "name": "Chudkani",
+          "detail": "A local dish made from bhatt pulses."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kausani — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kausani",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kausani — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kausani",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kumaoni cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kumaoni_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "almora": {
+      "about": "Almora is a hill station and municipal corporation nestled in the Kumaon mountains of the Himalayas. Most of the town sits on a crescent-shaped mountain ridge surrounded by the Kosi and Suyal rivers. Unlike many hill stations developed by the British, Almora was developed entirely by Kumaoni Indians and serves as the cultural heart of the region.",
+      "history": "The Katyuri dynasty ruled the region until the Chand dynasty took control. King Kalyan Chand established Almora as his capital in the 16th century, and the Chands ruled for nearly a thousand years. The Gorkhas captured Almora in the late 18th century, and the British took over after the Gorkha wars of 1814-1815. Jawaharlal Nehru was later imprisoned in the local jail during British rule.",
+      "significance": "Almora is considered the cultural heart of the Kumaon region, featuring ancient settlements mentioned in Hindu epics, a rich history of the Chand dynasty, and numerous historic temples dedicated to Hindu deities.",
+      "thingsToDo": [
+        {
+          "title": "Nanda Devi Temple",
+          "detail": "Situated in the centre of the town, dedicated to Goddess Nanda Devi."
+        },
+        {
+          "title": "Binsar temple",
+          "detail": "A large temple complex located eight kilometres from Almora."
+        },
+        {
+          "title": "Binsar Top",
+          "detail": "Offers good views of the surrounding natural landscape."
+        },
+        {
+          "title": "Chitai Temple",
+          "detail": "A notable temple located eight kilometres from the city."
+        },
+        {
+          "title": "Jageshwar",
+          "detail": "Features a group of temples located twenty kilometres from Almora."
+        },
+        {
+          "title": "Kasar Devi",
+          "detail": "A location eight kilometres from the city offering great views."
+        },
+        {
+          "title": "Mahavatar Babaji Cave",
+          "detail": "Located on the Pandukholi Mountain Dwarahat where Babaji initiated Lahiri Mahasaya."
+        },
+        {
+          "title": "Nakshatra Kasar Observatory",
+          "detail": "One of India's oldest observatories equipped with telescopes for stargazing."
+        }
+      ],
+      "food": [
+        {
+          "name": "Bal Mithai",
+          "detail": "A famous milk sweet of Almora."
+        },
+        {
+          "name": "Choklate",
+          "detail": "A condensed milk sweet with a fudge-like consistency."
+        },
+        {
+          "name": "Singauri",
+          "detail": "A milk sweet wrapped in a green Malu leaf."
+        },
+        {
+          "name": "Kumaoni raitaa",
+          "detail": "A preparation made using local pulses like gouhat."
+        },
+        {
+          "name": "chain",
+          "detail": "A traditional dish prepared from local pulses."
+        },
+        {
+          "name": "faanda",
+          "detail": "Another unique preparation made from pulse ingredients."
+        },
+        {
+          "name": "thatwaani",
+          "detail": "A local preparation utilizing traditional pulse varieties."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Almora — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Almora",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Almora — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Almora",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kumaoni cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kumaoni_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-02"
+    },
+    "katra": {
+      "about": "Katra is a city located in the foothills of the Trikuta Mountains in the union territory of Jammu and Kashmir. It serves as the base camp for the famous Maa Vaishno Devi temple, drawing millions of pilgrims annually. The main attraction, the Vaishno Devi shrine, is set on a mountain at an elevation of 1,615 meters. The journey involves a hilly track from Katra, with many travelers making the climb at night along an illuminated path equipped with drinking water and resting facilities.",
+      "history": "The shrine originally began as a sacred site for local tribes who worshipped the region's natural geography and the peak known as Trikuta Devi. After migrations around the 12th century, Trikuta Devi was gradually identified with Vaishno Devi. Historical records indicate visits by regional rulers, including Raja Jas Dev in 996 CE and Guru Gobind Singh in 1672. In the 18th century, Maharaja Ranjit Dev established early facilities for pilgrims. Control of the temple was managed by the Dharmarth Trust from 1846 until 1986, when legislation transferred its administration to the Shri Mata Vaishno Devi Shrine Board.",
+      "significance": "The Vaishno Devi Temple is one of the oldest and most popular Hindu pilgrimage sites in India. Dedicated to a manifestation of goddesses Mahakali, Mahalakshmi, and Mahasarasvati, the sacred cave houses three natural pindies representing creative, preservative, and destructive aspects of the Super Power.",
+      "thingsToDo": [
+        {
+          "title": "Vaishno Devi Temple",
+          "detail": "Visit the famous Hindu goddess temple located at the end of a 12 km climb from Katra."
+        },
+        {
+          "title": "Ardh Kuari",
+          "detail": "Rest at the dormitories and view the sacred cave along the pilgrimage route."
+        },
+        {
+          "title": "Kal Bhairav Temple",
+          "detail": "Visit this temple located along the route of the pilgrimage."
+        },
+        {
+          "title": "Bhairo Baba temple",
+          "detail": "Journey further from the main Bhawan to reach this mountain temple."
+        },
+        {
+          "title": "Shiv Khori",
+          "detail": "Explore this venerated cave shrine of Lord Shiva featuring a 4-foot high Svayambhu Lingum."
+        }
+      ],
+      "food": [
+        {
+          "name": "sund panjeeri",
+          "detail": "A traditional sweet dish."
+        },
+        {
+          "name": "patisa",
+          "detail": "A flaky, sweet confection popular in the region."
+        },
+        {
+          "name": "rajma with rice",
+          "detail": "A comforting dish of kidney beans served over rice."
+        },
+        {
+          "name": "Kalari cheese",
+          "detail": "A traditional local cheese variety."
+        },
+        {
+          "name": "ambal",
+          "detail": "A traditional Dogri food specialty."
+        },
+        {
+          "name": "khatta meat",
+          "detail": "A traditional meat preparation with a sour flavor profile."
+        },
+        {
+          "name": "maa da madra",
+          "detail": "A rich lentil-based regional specialty."
+        },
+        {
+          "name": "auriya",
+          "detail": "A traditional dish prepared with potatoes."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Katra — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Katra",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Vaishno Devi Temple — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Vaishno_Devi_Temple",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Jammu — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Jammu",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "kasol": {
+      "about": "Kasol is a small village in the Kullu district of Himachal Pradesh. It sits on the banks of the Parvati River in the lush green Parvati Valley, between Bhuntar and Manikaran. The sheer beauty of the valley makes it a popular Himalayan destination for backpackers and a base for treks. People visit Kasol to enjoy the striking mountain scenery and take on numerous treks of different grades. It also attracts many tourists, earning it the nickname Mini Israel of India due to the high percentage of Israeli visitors.",
+      "history": "The Parvati Valley developed along the Parvati River, which flows from Mantalai to the confluence with the Beas River at Bhuntar. Villages like Jari, Kasol, and Barshaini grew along the route over time. Kasol established itself as a base for nearby Himalayan treks and a popular destination for backpackers.",
+      "significance": "Kasol and the Parvati Valley matter as a major hub for Himalayan trekking and backpacker tourism in Himachal Pradesh. The valley is known for its natural beauty, geothermal springs, and as a starting point for routes to Malana and Kheerganga.",
+      "thingsToDo": [
+        {
+          "title": "Manikaran Hot Spring",
+          "detail": "A geothermal spring located on the banks of the Parvati River where bathing is allowed during daylight hours."
+        },
+        {
+          "title": "Kheerganga Hot Spring",
+          "detail": "A hot spring reached by a moderate trek of around six hours from the village of Barshaini."
+        },
+        {
+          "title": "Malana Trek",
+          "detail": "A trek that uses Kasol as a starting base."
+        },
+        {
+          "title": "Kheerganga Trek",
+          "detail": "A popular trek originating from Kasol leading to a mountain hot spring."
+        },
+        {
+          "title": "Parvati River Walk",
+          "detail": "Enjoy the roaring river that flows through the lush green valley."
+        }
+      ],
+      "food": [
+        {
+          "name": "Dhaam",
+          "detail": "A traditional festive lunch served on joyful occasions and religious festivals."
+        },
+        {
+          "name": "Madra",
+          "detail": "A curry of red kidney beans or chickpeas cooked in yoghurt with multiple spices."
+        },
+        {
+          "name": "Khatta",
+          "detail": "A sweet and sour sauce made of tamarind and jaggery."
+        },
+        {
+          "name": "Mitha Bhaat",
+          "detail": "A traditional sweet rice dessert served at the end of a feast."
+        },
+        {
+          "name": "Mash Dal",
+          "detail": "Fried pulses included as part of traditional regional meals."
+        },
+        {
+          "name": "Kheer",
+          "detail": "A sweet dish made of rice, milk, and sugar."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Parvati Valley — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Parvati_Valley",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kasol — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kasol",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Dham — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Dham",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "bir": {
+      "about": "Bir is a mountain town located in the Kangra Valley in Himachal Pradesh. Set against the Dhauladhar Range, the area features green villages and a well-established Tibetan community in the Tibetan Colony. It is known as a destination for ecotourism, meditation, volunteering, and outdoor activities. Visitors come to explore monasteries, attend Buddhist programs, and experience paragliding, as Bir Billing is a prominent centre for the sport. The town also offers tea gardens, river pools, and various dining and accommodation options.",
+      "history": "Local accounts indicate Bir was first settled by immigrants from Bengal around 1600 CE. Other groups migrated in the early 20th century. In the early 1960s, the Bir Tibetan Colony was founded as a settlement for Tibetan refugees after the 1959 Tibetan uprising. In 1966, the third Neten Chokling purchased land and established a Tibetan settlement where 300 families built houses and started building a new monastery. Orgyen Tobgyal Rinpoche assumed responsibility after his father passed away in 1973. In 2004, full responsibility for the monastery was passed to the fourth Neten Chokling.",
+      "significance": "Bir is significant as a thriving centre for Tibetan Buddhism and culture in India, hosting numerous monasteries and monastic colleges. It is also recognized as the paragliding capital of India, attracting global visitors for adventure sports alongside its growing tourism and sustainable living initiatives.",
+      "thingsToDo": [
+        {
+          "title": "Palpung Sherab Ling",
+          "detail": "Karma Kagyü Tibetan Buddhist Monastery located in woodlands between Bir and Baijnath."
+        },
+        {
+          "title": "Chökyi Lödro College of Dialectics",
+          "detail": "Centre for higher Buddhist philosophical study in nearby Chauntra."
+        },
+        {
+          "title": "Dharmalaya Institute",
+          "detail": "Eco-campus offering programs in sustainable living and contemplative practice."
+        },
+        {
+          "title": "Deer Park",
+          "detail": "Venue for attending Buddhist-related activities."
+        },
+        {
+          "title": "Amuzium illusion museum",
+          "detail": "Museum near the paragliding landing site featuring optical and sensory illusions."
+        },
+        {
+          "title": "River pools in Upper Bir",
+          "detail": "Natural water pools located in Upper Bir."
+        },
+        {
+          "title": "Tea gardens near the paragliding landing site",
+          "detail": "Scenic tea gardens located near the landing site."
+        }
+      ],
+      "food": [
+        {
+          "name": "momos",
+          "detail": "Dumplings enjoyed as a popular snack or meal item."
+        },
+        {
+          "name": "samosas",
+          "detail": "Savory fried pastry snack."
+        },
+        {
+          "name": "pakoras",
+          "detail": "Fried snack made with vegetables or other ingredients."
+        },
+        {
+          "name": "parathas",
+          "detail": "Flatbread often served as part of Indian meals."
+        },
+        {
+          "name": "tsampa",
+          "detail": "Flour milled from roasted barley, serving as a staple food."
+        },
+        {
+          "name": "sha phaley",
+          "detail": "Meat and cabbage enclosed in bread."
+        },
+        {
+          "name": "balep",
+          "detail": "Tibetan bread eaten for breakfast and lunch."
+        },
+        {
+          "name": "thukpa",
+          "detail": "Dinner staple consisting of vegetables, meat, and noodles in broth."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Bir — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Bir",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Bir, Himachal Pradesh — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Bir%2C_Himachal_Pradesh",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Tibetan cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Tibetan_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "kinnaur": {
+      "about": "Kinnaur is a mountainous district located in the northeast part of Himachal Pradesh, India, bordering Tibet. Kalpa is a bustling little mountain transit town in the district sitting at around 2800 metres. Visitors come to enjoy stunning views of snow-capped mountains and explore local village life.",
+      "history": "During the 10th and 11th centuries, Kinnaur was part of the Guge kingdom, which broke apart in the 12th century, leading to the rise of the Bushahr state. The uppermost part of Kinnaur remained under Tibetan influence until the late 17th century, when it was handed over to the Bushahr state. The Gurkhas attacked the state in the early 19th century, followed by British supremacy. Rampur-Bushahr became a princely state until India's Independence in 1947, and on 15 April 1948 it became part of India. Kinnaur was created as a new district in 1960.",
+      "significance": "Kinnaur holds historical importance through its ties to the ancient Guge kingdom and the Bushahr state. Culturally, it preserves unique Himalayan traditions, traditional wooden architecture, and village life influenced by both Hindu and Tibetan Buddhist heritages against the backdrop of Kinnaur Kailash.",
+      "thingsToDo": [
+        {
+          "title": "Chaakka",
+          "detail": "Trek upwards along the water channel and mountain starting by 9:30 AM."
+        },
+        {
+          "title": "Hindu temples",
+          "detail": "Explore a complex of wooden temples featuring interesting wooden sculptures against Kinnaur Kailash."
+        },
+        {
+          "title": "Kinnaur Kailash",
+          "detail": "Admire stunning views of the snow-capped mountain, especially during sunset."
+        },
+        {
+          "title": "Roghi village",
+          "detail": "Visit a small village near Kalpa with apple orchards to gain insight into local village life."
+        },
+        {
+          "title": "Tibetan Buddhist temple",
+          "detail": "See the small gompa located in the middle of the village with great mountain views."
+        }
+      ],
+      "food": [
+        {
+          "name": "Dhaam",
+          "detail": "A traditional festive lunch served in courses on leaf plates featuring rice, pulses, and desserts."
+        },
+        {
+          "name": "Madra",
+          "detail": "A curry of red kidney beans or chickpeas cooked in yoghurt with multiple spices."
+        },
+        {
+          "name": "Khatta",
+          "detail": "A sweet and sour sauce made of tamarind and jaggery."
+        },
+        {
+          "name": "Mitha bhaat",
+          "detail": "A sweet rice dessert served at the end of traditional meals."
+        },
+        {
+          "name": "Siddu",
+          "detail": "A traditional local bread specialty."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kalpa — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kalpa",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kinnaur district — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kinnaur_district",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Dham — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Dham",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
     }
   }
 }

@@ -48,6 +48,9 @@ const GROUNDED_SHARE = 0.6;
 /** Everyday verbs and words that don't name anything. */
 const GENERIC = new Set(['visit', 'stroll', 'ride', 'drive', 'explore', 'take', 'walk', 'enjoy', 'watch', 'trek', 'hike', 'climb', 'catch', 'shop', 'taste', 'try', 'spend', 'head', 'over', 'from', 'with', 'into', 'along', 'through', 'around', 'your', 'their', 'this', 'that', 'some', 'local', 'evening', 'morning', 'sunrise', 'sunset', 'early', 'day', 'trip', 'tour', 'view', 'views']);
 
+/** Words that describe food without naming a dish ("snacks", "cold and warm drinks"). */
+const VAGUE_FOOD = new Set(['snack', 'snacks', 'drink', 'drinks', 'food', 'foods', 'meal', 'meals', 'dish', 'dishes', 'cuisine', 'local', 'street', 'cold', 'warm', 'hot', 'and', 'or', 'veg', 'vegetarian', 'non', 'fresh', 'various', 'other', 'traditional', 'indian']);
+
 /** Text compared word by word: lower case, no accents, no punctuation, single spaces. */
 export function normalise(text: string): string {
   return text
@@ -75,8 +78,9 @@ function clean(text: string): string {
     .trim();
 }
 
-/** Is a dish named in the sources (as whole words, however it's spelt)? */
-const dishInSources = (name: string, source: string) => !!canon(name) && ` ${source} `.includes(` ${canon(name)} `);
+/** Is a dish named in the sources (as whole words, however it's spelt) — and is it a dish, not just "snacks"? */
+const dishInSources = (name: string, source: string) =>
+  !!canon(name) && ` ${source} `.includes(` ${canon(name)} `) && normalise(name).split(' ').some((w) => !VAGUE_FOOD.has(w));
 
 /** Do most of a title's key words appear in the sources? */
 function thingInSources(title: string, sourceWords: Set<string>) {

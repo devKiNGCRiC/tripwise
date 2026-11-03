@@ -91,6 +91,16 @@ describe('writeGuide', () => {
     expect(prompts[0].user).toContain('Meghalayan cuisine. Eat:');
   });
 
+  it('reads the Cuisine section of a cuisine source even when it comes late (Jammu for Katra)', async () => {
+    const jammu = ['Jammu is a city.', 'y'.repeat(5100), '== Cuisine ==', 'Kalari cheese, rajma and auriya.', '== Sport ==', 'Cricket.'].join(String.fromCharCode(10));
+    const fetchSource = async (wiki: 'wikivoyage' | 'wikipedia', title: string) =>
+      title === 'Jammu' ? { title, text: jammu, url: 'https://en.wikipedia.org/wiki/Jammu' } : { title: 'Katra', text: VOYAGE, url: `https://en.${wiki}.org/wiki/Katra` };
+    const { ai, prompts } = model(good);
+    await writeGuide({ slug: 'katra', name: 'Katra & Vaishno Devi' }, { ai, fetchSource, today: '2026-11-03' });
+    expect(prompts[0].user).toContain('Kalari cheese');
+    expect(prompts[0].user).not.toContain('Cricket');
+  });
+
   it('says so when there are no sources at all', async () => {
     const { ai } = model(good);
     expect(await writeGuide(destination, { ai, fetchSource: sources(null, null), today: '2026-11-03' })).toMatchObject({ ok: false, reasons: ['no sources found'] });
@@ -107,6 +117,16 @@ describe('pickSections', () => {
     expect(picked).toContain('dal bati churma');
     expect(picked).not.toContain('xxxxx');
     expect(picked).not.toContain('Touts');
+  });
+});
+
+describe('pickSections with combined headings', () => {
+  it('keeps "See and do" and "Eat and drink" sections too', () => {
+    const page = ['Katra is a pilgrim town.', '== Get in ==', 'Trains.', '== See and do ==', 'Bhawan, Ardhkuwari.', '== Eat and drink ==', 'Rajma chawal and kalari.', '== Sleep ==', 'Hotels.'].join(String.fromCharCode(10));
+    const picked = pickSections(page, ['See', 'Do', 'Eat', 'Drink']);
+    expect(picked).toContain('Ardhkuwari');
+    expect(picked).toContain('kalari');
+    expect(picked).not.toContain('Hotels');
   });
 });
 

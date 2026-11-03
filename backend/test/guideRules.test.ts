@@ -71,6 +71,14 @@ describe('checkGuide', () => {
     expect(checkGuide('nonsense', SOURCE, meta)).toMatchObject({ ok: false });
   });
 
+  it('drops "dishes" that are only everyday words (snacks, cold and warm drinks)', () => {
+    const source = `${SOURCE}\nEat: snacks, cold and warm drinks, local food.`;
+    const vague = { ...draft(), food: [...draft().food, { name: 'snacks', detail: 'x' }, { name: 'cold and warm drinks', detail: 'x' }, { name: 'Local food', detail: 'x' }] };
+    const result = checkGuide(vague, source, meta);
+    if (!result.ok) throw new Error(result.reasons.join('; '));
+    expect(result.guide.food.map((f) => f.name)).toEqual(['Momos', 'Thukpa', 'Phagshapa', 'Sel roti']);
+  });
+
   it('caps the lists', () => {
     // Twelve different dishes, all in the sources: only 8 are kept (and a repeat counts once).
     const dishes = ['aloo', 'bhatura', 'chana', 'dal', 'egg curry', 'fish fry', 'gajar halwa', 'idli', 'jalebi', 'kheer', 'laddoo', 'malpua'];

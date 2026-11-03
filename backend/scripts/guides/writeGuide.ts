@@ -42,11 +42,11 @@ const OVERRIDES: Record<string, { wikivoyage?: string | null; wikipedia?: string
   gulmarg: { cuisine: 'Kashmiri cuisine' },
   pahalgam: { cuisine: 'Kashmiri cuisine' },
   sonamarg: { cuisine: 'Kashmiri cuisine' },
-  katra: { wikipedia: 'Vaishno Devi Temple' },
-  kasol: { wikivoyage: 'Parvati Valley' },
-  dalhousie: { wikivoyage: 'Dalhousie (India)', wikipedia: 'Dalhousie, India' },
-  bir: { wikipedia: 'Bir, Himachal Pradesh' },
-  kinnaur: { wikivoyage: 'Kalpa', wikipedia: 'Kinnaur district' },
+  katra: { wikipedia: 'Vaishno Devi Temple', cuisine: 'Jammu' },
+  kasol: { wikivoyage: 'Parvati Valley', cuisine: 'Dham' },
+  dalhousie: { wikivoyage: 'Dalhousie (India)', wikipedia: 'Dalhousie, India', cuisine: 'Dham' },
+  bir: { wikivoyage: 'Bir', wikipedia: 'Bir, Himachal Pradesh', cuisine: 'Tibetan cuisine' },
+  kinnaur: { wikivoyage: 'Kalpa', wikipedia: 'Kinnaur district', cuisine: 'Dham' },
   auli: { wikipedia: 'Auli, India', cuisine: 'Uttarakhandi cuisine' },
   kedarnath: { cuisine: 'Uttarakhandi cuisine' },
   'valley-of-flowers': { wikivoyage: 'Ghangaria', wikipedia: 'Valley of Flowers National Park', cuisine: 'Uttarakhandi cuisine' },
@@ -69,14 +69,18 @@ const CUISINE = 5000;
  * The opening and the wanted top-level sections ("== See ==") of a plain-text wiki page, each
  * trimmed — so long pages still give the AI their See / Do / Eat parts, which can come late.
  */
-export function pickSections(text: string, wanted: string[] | Record<string, number>, perSection = 3000): string {
+export function pickSections(text: string, wanted: string[] | Record<string, number>, perSection = 3000, lead = LEAD): string {
   const limits: Record<string, number> = Array.isArray(wanted) ? Object.fromEntries(wanted.map((w) => [w, perSection])) : wanted;
   // Split before each top-level heading line ("== See ==", not "=== Forts ===").
   const parts = text.split(/\n(?===[^=])/);
-  const out = [parts[0].slice(0, LEAD)];
+  const out = lead ? [parts[0].slice(0, lead)] : [];
   for (const part of parts.slice(1)) {
     const heading = /^==\s*([^=]+?)\s*==/.exec(part)?.[1];
-    const limit = heading ? limits[heading] : undefined;
+    // A combined heading ("See and do", "Eat & drink") gets the room of each of its parts.
+    const limit = heading
+      ?.split(/\s+and\s+|\s*&\s*/)
+      .map((part) => limits[part.charAt(0).toUpperCase() + part.slice(1)] ?? 0)
+      .reduce((a, b) => a + b, 0);
     if (limit) out.push(part.slice(0, limit));
   }
   return out.join('\n');
@@ -137,8 +141,13 @@ export async function writeGuide(d: { slug: string; name: string }, deps: { ai: 
     ...(pedia ? [{ label: 'Wikipedia text', page: pedia, name: 'Wikipedia', text: pickSections(pedia.text, PEDIA_SECTIONS) }] : []),
   ];
   if (!found.length) return { ok: false, reasons: ['no sources found'] };
-  // The cuisine page only adds to a place's own pages (for its food).
-  if (cuisine) found.push({ label: 'Wikipedia cuisine text', page: cuisine, name: 'Wikipedia', text: cuisine.text.slice(0, CUISINE) });
+  // The cuisine page only adds to a place's own pages (for its food): its start, plus its "Cuisine"
+  // section when it's a general page (Jammu) where that comes late.
+  if (cuisine) {
+    const start = cuisine.text.slice(0, CUISINE);
+    const section = pickSections(cuisine.text.slice(CUISINE), { Cuisine: 3000 }, 3000, 0);
+    found.push({ label: 'Wikipedia cuisine text', page: cuisine, name: 'Wikipedia', text: [start, section].filter(Boolean).join('\n') });
+  }
 
   const texts = found.map((f) => ({ label: f.label, text: f.text }));
   // Checked against the same text the AI was given.
