@@ -1,11 +1,15 @@
 /**
  * ExplorePage.test.tsx — browsing destinations: all of them by default, filters that
  * narrow the list and live in the URL (shareable, back-button friendly), search, a
- * friendly empty state, and the destination guide with its "Plan a trip here" link.
+ * friendly empty state, and the destination guide with its "Plan a trip here" link (and no
+ * empty "Don’t miss" list).
  */
 import { screen, waitFor, within } from '@testing-library/react';
+import { http, HttpResponse } from 'msw';
 import { describe, expect, it } from 'vitest';
+import { apiUrl } from '@/lib/api/config';
 import { seedDestinations } from '@/mocks/data/destinations';
+import { server } from '@/mocks/node';
 import { renderApp } from '@/test/render';
 
 /** Every destination in the catalogue. */
@@ -95,6 +99,14 @@ describe('DestinationPage', () => {
     renderApp('/destinations/paris');
     await screen.findByRole('heading', { level: 1, name: /Paris/ });
     expect(screen.queryByRole('region', { name: /Top places/ })).not.toBeInTheDocument();
+  });
+
+  it('leaves out "Don’t miss" when a destination has no highlights yet', async () => {
+    const paris = seedDestinations.find((d) => d.slug === 'paris')!;
+    server.use(http.get(apiUrl('/destinations/paris'), () => HttpResponse.json({ destination: { ...paris, highlights: [] } })));
+    renderApp('/destinations/paris');
+    await screen.findByRole('heading', { level: 1, name: /Paris/ });
+    expect(screen.queryByText(/Don.t miss/)).not.toBeInTheDocument();
   });
 
   it('says so when a destination does not exist', async () => {

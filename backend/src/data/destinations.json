@@ -453,6 +453,157 @@
     }
   },
   {
+    "id": "d_pelling",
+    "slug": "pelling",
+    "region": "himalaya",
+    "localName": "पेलिंग",
+    "name": "Pelling",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "spiritual",
+      "nature"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      10,
+      11,
+      12
+    ],
+    "summary": "Kanchenjunga at arm’s length, Pemayangtse Monastery and the ruins of Rabdentse, Sikkim’s old capital.",
+    "highlights": [
+      "Buddha Park of Ravangla",
+      "Rabdentse",
+      "Khecheopalri Lake",
+      "Ralang Monastery"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Large_Gautama_Buddha_statue_in_Buddha_Park_of_Ravangla%2C_Sikkim.jpg/1280px-Large_Gautama_Buddha_statue_in_Buddha_Park_of_Ravangla%2C_Sikkim.jpg",
+      "credit": "Subhrajyoti07 · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Large_Gautama_Buddha_statue_in_Buddha_Park_of_Ravangla,_Sikkim.jpg"
+    }
+  },
+  {
+    "id": "d_lachung",
+    "slug": "lachung",
+    "region": "himalaya",
+    "localName": "लाचुंग",
+    "name": "Lachung & Yumthang",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      4,
+      5,
+      6,
+      10,
+      11
+    ],
+    "summary": "A North Sikkim village under snow peaks, and the rhododendron valley of Yumthang above it.",
+    "highlights": [
+      "Yumthang Valley",
+      "Amitabh Bachchan Falls",
+      "Gurdwara Nanaklama",
+      "Lachen Monastery"
+    ],
+    "avgDailyCost": {
+      "amount": 3500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Yumthang_valley%2C_Lachung_Sikkim_India_2012.jpg",
+      "credit": "Joginder Pathak · CC BY-SA 2.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Yumthang_valley,_Lachung_Sikkim_India_2012.jpg"
+    }
+  },
+  {
+    "id": "d_ravangla",
+    "slug": "ravangla",
+    "region": "himalaya",
+    "localName": "रावंगला",
+    "name": "Ravangla",
+    "country": "India",
+    "vibes": [
+      "spiritual",
+      "nature",
+      "mountains"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      10,
+      11,
+      12
+    ],
+    "summary": "Buddha Park’s giant statue, Ralang Monastery and the Temi tea garden on a quiet Sikkim ridge.",
+    "highlights": [
+      "Buddha Park of Ravangla",
+      "Rabdentse",
+      "Maenam Wildlife Sanctuary",
+      "Ralang Monastery"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Large_Gautama_Buddha_statue_in_Buddha_Park_of_Ravangla%2C_Sikkim.jpg/1280px-Large_Gautama_Buddha_statue_in_Buddha_Park_of_Ravangla%2C_Sikkim.jpg",
+      "credit": "Subhrajyoti07 · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Large_Gautama_Buddha_statue_in_Buddha_Park_of_Ravangla,_Sikkim.jpg"
+    }
+  },
+  {
+    "id": "d_kalimpong",
+    "slug": "kalimpong",
+    "region": "himalaya",
+    "localName": "कालिम्पोंग",
+    "name": "Kalimpong",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "culture",
+      "mountains"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      10,
+      11,
+      12
+    ],
+    "summary": "Orchid nurseries, hilltop monasteries and views over the Teesta to Kanchenjunga.",
+    "highlights": [
+      "Deolo Hill",
+      "Rabindra Museum",
+      "Phodong Monastery",
+      "Zang Dhok Palri Phodang"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Rabindra_Bhavan_with_a_cottage_in_its_front_at_Mungpoo_in_Darjeeling_district_01.jpg/1280px-Rabindra_Bhavan_with_a_cottage_in_its_front_at_Mungpoo_in_Darjeeling_district_01.jpg",
+      "credit": "Amitabha Gupta · CC BY 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Rabindra_Bhavan_with_a_cottage_in_its_front_at_Mungpoo_in_Darjeeling_district_01.jpg"
+    }
+  },
+  {
     "id": "d_srinagar",
     "slug": "srinagar",
     "region": "himalaya",
@@ -479,7 +630,7 @@
       "Kashmir Valley",
       "Dal Lake",
       "Hazratbal Shrine",
-      "Shalimar Bagh"
+      "Jamia Masjid"
     ],
     "avgDailyCost": {
       "amount": 3500,
@@ -1255,9 +1406,9 @@
     "summary": "An old Kumaoni hill town of temples and bal mithai, with the oak forests of Binsar above.",
     "highlights": [
       "Crank's Ridge",
+      "Mrityunjaya Temple",
       "Gajār",
-      "Kilraur",
-      "Mrityunjaya Temple"
+      "Kilraur"
     ],
     "avgDailyCost": {
       "amount": 2200,
@@ -1936,7 +2087,7 @@
       "Pushpagiri",
       "Namdroling Monastery",
       "Pushpagiri Wildlife Sanctuary",
-      "Abbey Falls"
+      "Honnamana Kere"
     ],
     "avgDailyCost": {
       "amount": 3500,
@@ -2479,6 +2630,520 @@
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/SRI_SRI_BURHI_GOSANI_DEVALAYA_Jorhat_Assam_India.jpg/1280px-SRI_SRI_BURHI_GOSANI_DEVALAYA_Jorhat_Assam_India.jpg",
       "credit": "Sarangakrishnachetia · CC BY-SA 4.0",
       "creditUrl": "https://commons.wikimedia.org/wiki/File:SRI_SRI_BURHI_GOSANI_DEVALAYA_Jorhat_Assam_India.jpg"
+    }
+  },
+  {
+    "id": "d_ziro",
+    "slug": "ziro",
+    "region": "sisters",
+    "localName": "ज़ीरो",
+    "name": "Ziro",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "culture",
+      "party"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "summary": "Apatani villages and rice fields in a pine valley, home of the Ziro music festival.",
+    "highlights": [
+      "Talley Valley Wildlife Sanctuary",
+      "Yarbo Po"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Paddy_fields_at_Ziro%2C_Arunachal_Pradesh.jpg/1280px-Paddy_fields_at_Ziro%2C_Arunachal_Pradesh.jpg",
+      "credit": "Ashwani Kumar · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Paddy_fields_at_Ziro,_Arunachal_Pradesh.jpg"
+    }
+  },
+  {
+    "id": "d_mawlynnong",
+    "slug": "mawlynnong",
+    "region": "sisters",
+    "localName": "मावलिननॉन्ग",
+    "name": "Mawlynnong",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "culture"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "summary": "A famously clean Khasi village, the living root bridge at Riwai and views over the Bangladesh plains.",
+    "highlights": [
+      "Jaflong",
+      "Bangladesh Last House",
+      "Church of the Epiphany"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/%E0%A6%AC%E0%A6%BF%E0%A6%9B%E0%A6%BE%E0%A6%A8%E0%A6%BE%E0%A6%95%E0%A6%BE%E0%A6%A8%E0%A7%8D%E0%A6%A6%E0%A6%BF_%2828864203963%29.jpg/1280px-%E0%A6%AC%E0%A6%BF%E0%A6%9B%E0%A6%BE%E0%A6%A8%E0%A6%BE%E0%A6%95%E0%A6%BE%E0%A6%A8%E0%A7%8D%E0%A6%A6%E0%A6%BF_%2828864203963%29.jpg",
+      "credit": "Arghya Banik from Bangladesh · CC BY 2.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:%E0%A6%AC%E0%A6%BF%E0%A6%9B%E0%A6%BE%E0%A6%A8%E0%A6%BE%E0%A6%95%E0%A6%BE%E0%A6%A8%E0%A7%8D%E0%A6%A6%E0%A6%BF_(28864203963).jpg"
+    }
+  },
+  {
+    "id": "d_bomdila",
+    "slug": "bomdila",
+    "region": "sisters",
+    "localName": "बोमडिला",
+    "name": "Bomdila",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "spiritual"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11
+    ],
+    "summary": "Monasteries and apple orchards with Himalayan views, on the way up to Sela Pass.",
+    "highlights": [
+      "Bomdila Monastery",
+      "Bomdi La"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/Bomdila_Monastery%2C_Arunachal_Pradesh.jpg/1280px-Bomdila_Monastery%2C_Arunachal_Pradesh.jpg",
+      "credit": "Chaduvari · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Bomdila_Monastery,_Arunachal_Pradesh.jpg"
+    }
+  },
+  {
+    "id": "d_mechuka",
+    "slug": "mechuka",
+    "region": "sisters",
+    "localName": "मेचुका",
+    "name": "Mechuka",
+    "country": "India",
+    "vibes": [
+      "mountains",
+      "adventure",
+      "nature"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      3,
+      4,
+      5,
+      9,
+      10,
+      11
+    ],
+    "summary": "A remote valley on the Siyom river near the China border, with an old monastery and snow peaks all round.",
+    "highlights": [
+      "Nyug Pass",
+      "Kargong Pass"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Mechuka_overview_2.jpg/1280px-Mechuka_overview_2.jpg",
+      "credit": "Quentin Talon &amp; Mario Geiger · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Mechuka_overview_2.jpg"
+    }
+  },
+  {
+    "id": "d_namdapha",
+    "slug": "namdapha",
+    "region": "sisters",
+    "localName": "नामदफा",
+    "name": "Namdapha National Park",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "summary": "Rainforest rising to snow peaks: home of four big cats and the hoolock gibbon.",
+    "highlights": [
+      "Kamlang Wildlife Sanctuary",
+      "Lunghpa Bum",
+      "Cathedral of Christ the Light"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Glao_Glow_Lake_1.jpg/1280px-Glao_Glow_Lake_1.jpg",
+      "credit": "Rohit Naniwadekar · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Glao_Glow_Lake_1.jpg"
+    }
+  },
+  {
+    "id": "d_guwahati",
+    "slug": "guwahati",
+    "region": "sisters",
+    "localName": "गुवाहाटी",
+    "name": "Guwahati",
+    "country": "India",
+    "vibes": [
+      "city",
+      "spiritual",
+      "culture"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "summary": "Gateway to the North-East: Kamakhya Temple, Brahmaputra cruises and Umananda island.",
+    "highlights": [
+      "Kamakhya Temple",
+      "Dipor Bil",
+      "Srimanta Sankaradeva Kalakshetra",
+      "Umananda Island"
+    ],
+    "avgDailyCost": {
+      "amount": 3000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/The_Kamakhya_Temple%2C_2025.jpg/1280px-The_Kamakhya_Temple%2C_2025.jpg",
+      "credit": "JyotiPN · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:The_Kamakhya_Temple,_2025.jpg"
+    }
+  },
+  {
+    "id": "d_manas",
+    "slug": "manas",
+    "region": "sisters",
+    "localName": "मानस",
+    "name": "Manas National Park",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "adventure"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "summary": "A UNESCO tiger reserve on the Bhutan border: golden langurs, wild buffalo and river forest.",
+    "highlights": [
+      "Kakoijana Reserved Forest",
+      "Gorokhiya Doul"
+    ],
+    "avgDailyCost": {
+      "amount": 3500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Capped_langur_in_manas.jpg",
+      "credit": "Pankaj from Bangalore, India · CC BY-SA 2.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Capped_langur_in_manas.jpg"
+    }
+  },
+  {
+    "id": "d_sivasagar",
+    "slug": "sivasagar",
+    "region": "sisters",
+    "localName": "शिवसागर",
+    "name": "Sivasagar",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "spiritual"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "summary": "The old Ahom capital: Rang Ghar, Talatal Ghar and temples beside a great tank.",
+    "highlights": [
+      "Rang Ghar",
+      "Sivasagar Sivadol",
+      "Kareng Ghar",
+      "Namdang Stone Bridge"
+    ],
+    "avgDailyCost": {
+      "amount": 2200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Rang_Ghar_at_noon.jpg/1280px-Rang_Ghar_at_noon.jpg",
+      "credit": "Dr Jagga · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Rang_Ghar_at_noon.jpg"
+    }
+  },
+  {
+    "id": "d_haflong",
+    "slug": "haflong",
+    "region": "sisters",
+    "localName": "हाफलोंग",
+    "name": "Haflong",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "mountains"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "summary": "Assam’s only hill station: a lake, the blue hills of Dima Hasao and the Jatinga ridge.",
+    "highlights": [],
+    "avgDailyCost": {
+      "amount": 2200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Haflong_Lake.jpg/1280px-Haflong_Lake.jpg",
+      "credit": "Thoiba Paonam · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Haflong_Lake.jpg"
+    }
+  },
+  {
+    "id": "d_tezpur",
+    "slug": "tezpur",
+    "region": "sisters",
+    "localName": "तेज़पुर",
+    "name": "Tezpur & Nameri",
+    "country": "India",
+    "vibes": [
+      "nature",
+      "culture",
+      "adventure"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "summary": "Ancient ruins and Agnigarh hill by the Brahmaputra, with river rafting at Nameri nearby.",
+    "highlights": [
+      "Samaguri Beel",
+      "Mahabhairav Temple",
+      "Hatimura Temple",
+      "Kolia Bhomora Setu"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Mahabhairab_temple%2C_Tezpur.jpg",
+      "credit": "Bishnu Saikia · CC BY-SA 3.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Mahabhairab_temple,_Tezpur.jpg"
+    }
+  },
+  {
+    "id": "d_imphal",
+    "slug": "imphal",
+    "region": "sisters",
+    "localName": "इंफाल",
+    "name": "Imphal & Loktak Lake",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "nature"
+    ],
+    "budgetTier": "mid",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "summary": "Kangla Fort, the women-run Ima Market and the floating islands of Loktak Lake.",
+    "highlights": [
+      "Imphal Peace Museum",
+      "Kangla Fort",
+      "Sanamahi Lainingkol",
+      "Ima Market"
+    ],
+    "avgDailyCost": {
+      "amount": 2800,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Imphal_Peace_Museum_View.jpg",
+      "credit": "Mihul-maiba · CC0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Imphal_Peace_Museum_View.jpg"
+    }
+  },
+  {
+    "id": "d_aizawl",
+    "slug": "aizawl",
+    "region": "sisters",
+    "localName": "आइज़ोल",
+    "name": "Aizawl",
+    "country": "India",
+    "vibes": [
+      "city",
+      "nature",
+      "culture"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "A ridge-top city of churches and Mizo crafts, with the Reiek viewpoint close by.",
+    "highlights": [
+      "Mizoram State Museum",
+      "Reiek",
+      "Solomon's Temple, Aizawl Mizoram, India",
+      "Aizwal Mosque"
+    ],
+    "avgDailyCost": {
+      "amount": 2500,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Mizoram_State_Museum_-_0.jpg/1280px-Mizoram_State_Museum_-_0.jpg",
+      "credit": "Irina Gelbukh · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Mizoram_State_Museum_-_0.jpg"
+    }
+  },
+  {
+    "id": "d_agartala",
+    "slug": "agartala",
+    "region": "sisters",
+    "localName": "अगरतला",
+    "name": "Agartala",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "city"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "The white Ujjayanta Palace, the lake palace of Neermahal and Tripura’s old temples.",
+    "highlights": [
+      "Qasba Mosque",
+      "Clouded Leopard National Park",
+      "St. Francis Xavier Cathedral, Agartala",
+      "Lakshmi Narayan Temple, Agartala"
+    ],
+    "avgDailyCost": {
+      "amount": 2200,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/%E0%A6%95%E0%A6%B8%E0%A6%AC%E0%A6%BE_%E0%A6%AE%E0%A6%B8%E0%A6%9C%E0%A6%BF%E0%A6%A6_36.jpg/1280px-%E0%A6%95%E0%A6%B8%E0%A6%AC%E0%A6%BE_%E0%A6%AE%E0%A6%B8%E0%A6%9C%E0%A6%BF%E0%A6%A6_36.jpg",
+      "credit": "Jafar Cyclist · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:%E0%A6%95%E0%A6%B8%E0%A6%AC%E0%A6%BE_%E0%A6%AE%E0%A6%B8%E0%A6%9C%E0%A6%BF%E0%A6%A6_36.jpg"
+    }
+  },
+  {
+    "id": "d_unakoti",
+    "slug": "unakoti",
+    "region": "sisters",
+    "localName": "उनाकोटी",
+    "name": "Unakoti",
+    "country": "India",
+    "vibes": [
+      "culture",
+      "spiritual",
+      "nature"
+    ],
+    "budgetTier": "budget",
+    "bestMonths": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "summary": "Huge rock-cut Shiva faces and a hillside of ancient reliefs in the Tripura forest.",
+    "highlights": [],
+    "avgDailyCost": {
+      "amount": 2000,
+      "currency": "INR"
+    },
+    "image": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Unakoti_1.jpg/1280px-Unakoti_1.jpg",
+      "credit": "Barunghosh · CC BY-SA 4.0",
+      "creditUrl": "https://commons.wikimedia.org/wiki/File:Unakoti_1.jpg"
     }
   },
   {

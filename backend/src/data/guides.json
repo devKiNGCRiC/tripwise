@@ -5126,6 +5126,1423 @@
         }
       ],
       "checked": "2026-11-03"
+    },
+    "pelling": {
+      "about": "Pelling is a small hill station in West Sikkim, offering magnificent views of snow-capped mountain ranges like Kanchenjunga. The town features a sparsely populated landscape of the Himalayas, where local Limboo people live in castle-like traditional houses and practice subsistence farming. Visitors come to experience the natural beauty, explore ancient monasteries, and enjoy village tourism.",
+      "history": "Freddie Pelling founded the town during British rule to protect townspeople from northern raiders who stole minerals. The village was later renamed in his honor. In 1697 AD, Sanga Choeling Monastery was built on a ridge above the town, followed by the founding of Pemayangtse Monastery in 1705.",
+      "significance": "Pelling holds cultural and religious importance due to its ancient Buddhist monasteries, traditional Limboo heritage, and its location in the rich biodiversity hotspot of the Eastern Himalayas.",
+      "thingsToDo": [
+        {
+          "title": "Pemayangtse Monastery",
+          "detail": "Visit one of the oldest and most important monasteries in Sikkim, featuring wall paintings and a 7-tiered wooden model."
+        },
+        {
+          "title": "Rabdentse Ruins",
+          "detail": "Walk through a forest area to reach historical ruins that offer views across the deep valley."
+        },
+        {
+          "title": "Chenrezig statue and skywalk",
+          "detail": "See the gigantic statue and walk along the skywalk for bird's-eye views of the town."
+        },
+        {
+          "title": "Sanga Choeling Monastery",
+          "detail": "Hike up a steep hilly slope through the forest to reach one of the oldest monasteries in the state."
+        },
+        {
+          "title": "Darap Village",
+          "detail": "Explore an unexplored valley to observe rural lifestyle, organic farming, and Limboo culture."
+        },
+        {
+          "title": "Rimbi",
+          "detail": "Enjoy a day of fishing and try the local assala fish."
+        },
+        {
+          "title": "Limboo Heritage House",
+          "detail": "View traditional architecture built by a Limboo village chieftain."
+        },
+        {
+          "title": "Khanchendzongna National Park",
+          "detail": "Visit the cave and experience jungle walks and bird watching."
+        }
+      ],
+      "food": [
+        {
+          "name": "momo",
+          "detail": "Popular dumplings served in local joints."
+        },
+        {
+          "name": "thukpa",
+          "detail": "Warm noodle soup commonly found across eateries."
+        },
+        {
+          "name": "tongba",
+          "detail": "A fermented millet wine served in a bamboo container with a bamboo straw."
+        },
+        {
+          "name": "kinema",
+          "detail": "Traditional fermented food item part of the local cuisine."
+        },
+        {
+          "name": "gundruk",
+          "detail": "Fermented leafy vegetable preparation eaten regionally."
+        },
+        {
+          "name": "sinki",
+          "detail": "Traditional fermented food made from radish taproots."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Pelling — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Pelling",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Pelling — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Pelling",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Sikkimese cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Sikkimese_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "lachung": {
+      "about": "Lachung is a scenic town and hill station in North Sikkim, India, sitting near the border with Tibet at the confluence of the Lachen and Lachung Rivers. Often called the most picturesque village of Sikkim, it features cold weather, snow-covered winter landscapes, and streets lined with rhododendrons. Visitors come to explore nearby alpine valleys, historic Buddhist gompas, and snow-capped mountain vistas, using the town as a base for high-altitude excursions. The region experiences vibrant seasonal shifts, with multicoloured autumn leaves and spring blooms that fill the valleys with colour. Tourists from around the world visit to experience the local Lepcha and Tibetan culture, enjoy trekking routes like the Rhododendron Valley Trek, and take in the natural beauty of the Eastern Himalayas.",
+      "history": "Lachung served as a trading post between Sikkim and Tibet before the Chinese invaded Tibet in 1950. British explorer Joseph Dalton Hooker described it as the most picturesque village of Sikkim in his 1855 publication, The Himalayan Journal. In later years, the Indian government opened up the region to boost tourism, and the Indian Army established a forward base in the town. In 2016, the surrounding state of Sikkim became India's first organic state after converting its agricultural land to sustainable farming practices.",
+      "significance": "Lachung matters as a vital cultural and natural hub in North Sikkim, preserving rich Lepcha and Tibetan heritage alongside Buddhist traditions. Ecologically, it sits within the Eastern Himalayas biodiversity hotspot and acts as the gateway to the renowned Yumthang Valley and high-altitude Himalayan landscapes.",
+      "thingsToDo": [
+        {
+          "title": "Lachung Gompa",
+          "detail": "Take a short thirty-minute walk uphill to visit this picturesque Buddhist temple sitting against a backdrop of snow-capped peaks."
+        },
+        {
+          "title": "Yumthang Valley",
+          "detail": "Drive from Lachung to explore this valley known for colourful flowers in bloom and rhododendron-lined roads."
+        },
+        {
+          "title": "Yumesamdong",
+          "detail": "Take an excursion to this high-altitude area located close to the Chinese border."
+        },
+        {
+          "title": "Phuni",
+          "detail": "Go skiing in this nearby area during the winter season."
+        },
+        {
+          "title": "Rhododendron Valley Trek",
+          "detail": "Embark on this trek starting in Yumthang Valley and ending at Lachen Valley."
+        }
+      ],
+      "food": [
+        {
+          "name": "rice",
+          "detail": "The staple food of Sikkim, commonly served as part of traditional meals."
+        },
+        {
+          "name": "kinema",
+          "detail": "A traditional fermented food item consumed in the region."
+        },
+        {
+          "name": "gundruk",
+          "detail": "A traditional fermented vegetable preparation."
+        },
+        {
+          "name": "sinki",
+          "detail": "A traditional fermented food product."
+        },
+        {
+          "name": "maseura",
+          "detail": "A traditional fermented food item of the local cuisine."
+        },
+        {
+          "name": "khalpi",
+          "detail": "A traditional fermented food variety."
+        },
+        {
+          "name": "chyang",
+          "detail": "A traditional fermented alcoholic beverage produced using cereal grains."
+        },
+        {
+          "name": "tongba",
+          "detail": "A traditional fermented alcoholic drink popular in the area."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Lachung — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Lachung",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Lachung — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Lachung",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Sikkimese cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Sikkimese_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "ravangla": {
+      "about": "Ravangla is a small picturesque town in South Sikkim located at an elevation of 8,000 feet on the highway between Gangtok and Gyalshing. It serves as a gateway for undisturbed views of the Greater Himalayas including Mt. Kanchenjunga, Mt. Pandim, Mt. Sinialchu, and Mt. Kabru. In April and May, many flowers are in full blossom across the area, making it a popular destination for nature lovers and trekkers.",
+      "history": "The Old Ralang monastery was built in 1768. The name Ravangla is derived from the Sikkimese language, where Ra means wild sheep, vong means a rearing place, and la means a pass. A large Buddhist complex known as Buddha Park was completed in 2013.",
+      "significance": "Ravangla is significant for its rich Buddhist heritage, hosting sacred monasteries and holy caves associated with Guru Padmasambhava. It also acts as the starting point for treks into the bio-diverse Maenam Wildlife Sanctuary and provides panoramic Himalayan views.",
+      "thingsToDo": [
+        {
+          "title": "Bon Monastery",
+          "detail": "Visit a monastery representing the Bon faith that was prevalent in Tibet before the advent of Buddhism."
+        },
+        {
+          "title": "Borong and Ralang Cha-chu",
+          "detail": "Soak in traditional winter sulphur hot springs located along the banks of the Rangit River."
+        },
+        {
+          "title": "Doling Monastery",
+          "detail": "Explore a gompa of the Nyingmapa sect situated amidst cardamom plantations."
+        },
+        {
+          "title": "Khandosangphu and Sharchog Bephug",
+          "detail": "Discover the holy caves where Guru Padmasambhava is said to have meditated."
+        },
+        {
+          "title": "Ralang Monasteries",
+          "detail": "See the two monasteries belonging to the Kagyupa sect of Buddhism, including an old monastery built in 1768."
+        },
+        {
+          "title": "Rayong Sunrise View Point",
+          "detail": "Catch a spectacular view of the sunrise up the snowy peaks of Mt. Narsing, Jopuno, Kabur, Rathong, and Pandim."
+        },
+        {
+          "title": "Tashiding Monastery",
+          "detail": "Visit the most sacred monastery complex in Sikkim, which was built in 1716."
+        },
+        {
+          "title": "Temi Tea Garden",
+          "detail": "Walk through one of the most beautifully situated tea gardens in Sikkim."
+        },
+        {
+          "title": "Buddha Park",
+          "detail": "Walk through a large Buddhist complex featuring a 40-metre high main Buddha statue."
+        }
+      ],
+      "food": [
+        {
+          "name": "momo dumplings",
+          "detail": "Popular filled dumpling dish served in local eateries."
+        },
+        {
+          "name": "thukpa soup",
+          "detail": "A traditional noodle soup commonly served in the region."
+        },
+        {
+          "name": "kinema",
+          "detail": "A traditional fermented food item consumed as part of the local cuisine."
+        },
+        {
+          "name": "gundruk",
+          "detail": "A traditional fermented vegetable preparation."
+        },
+        {
+          "name": "sinki",
+          "detail": "Fermented radish tap root product used in local dishes."
+        },
+        {
+          "name": "chhurpi",
+          "detail": "A traditional cheese product purchased in local markets."
+        },
+        {
+          "name": "tongba",
+          "detail": "A traditional fermented cereal-based alcoholic beverage."
+        },
+        {
+          "name": "chyang",
+          "detail": "A traditional fermented alcoholic beverage produced using cereal grain."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Ravangla — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Ravangla",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Ravangla — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Ravangla",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Sikkimese cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Sikkimese_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "kalimpong": {
+      "about": "Kalimpong is a quiet hill station in North Bengal, located between Deolo Hill and Durpin Dara on a ridge overlooking the Teesta River. It features a temperate climate that attracts visitors seeking a pleasant atmosphere, colonial-era buildings, and scenic views of Mount Kangchenjunga. The region is widely known for its horticulture, nurseries, and flower market filled with orchids. The town serves as a cultural hub with a population largely composed of Nepalese-speaking people, Tibetans, and indigenous communities like the Lepchas. Visitors come to explore Tibetan Buddhist monasteries, walk through nurseries, and enjoy the peaceful environment, which stands in contrast to busier hill stations.",
+      "history": "Kalimpong began as a trading post on the route between Tibet and India. From the early 18th to the mid-19th century, it was ruled in succession by the Sikkimese and Bhutanese kingdoms, coming under Bhutanese control around 1706 after the defeat of Lepcha chieftains. Following the Anglo-Bhutan War in 1864, the Treaty of Sinchula in 1865 ceded Bhutanese territory east of the Teesta River to the British East India Company. The British developed the town as an administrative centre and an alternative hill station, and trade with Tibet brought economic prosperity. Scottish missionaries later established schools, and after Tibet's annexation, many Tibetans settled in the area.",
+      "significance": "Kalimpong matters as a cultural and natural crossroads in North Bengal, blending indigenous Lepcha heritage with significant Tibetan Buddhist, Hindu, and British colonial influences. It is a vital center for Himalayan horticulture, rare Buddhist scriptures, and cross-border trade history with Tibet.",
+      "thingsToDo": [
+        {
+          "title": "Deolo Hill",
+          "detail": "Provides sweeping panoramic views of the surrounding hills and Mount Kangchenjunga."
+        },
+        {
+          "title": "Durpin Dara",
+          "detail": "Offers morning mountain views and houses the Zang Dhok Palri Phodang Monastery."
+        },
+        {
+          "title": "Zang Dhok Palri Phodang",
+          "detail": "A Tibetan Buddhist monastery that holds a number of rare Buddhist scriptures."
+        },
+        {
+          "title": "Lepcha Museum",
+          "detail": "Features a small collection of belongings from the native Lepcha tribe."
+        },
+        {
+          "title": "Kalimpong Science Centre",
+          "detail": "A science facility sitting atop Deolo Hill designed to build scientific awareness."
+        },
+        {
+          "title": "Mangal Dham",
+          "detail": "A tribute to Guru Mangaldasji, whose samadhi is on the ground floor."
+        },
+        {
+          "title": "Gaden Tharpa Choling Monastery",
+          "detail": "A Tibetan Buddhist monastery reflecting the spiritual heritage of the area."
+        },
+        {
+          "title": "Teesta Triveni",
+          "detail": "A camping spot at the confluence of the Rangeet and Teesta rivers."
+        }
+      ],
+      "food": [
+        {
+          "name": "Aged cheese",
+          "detail": "India's only aged cheese, featuring the texture of a hard European cheese and a mild, Parmesan-like flavour."
+        },
+        {
+          "name": "Momo",
+          "detail": "Popular dumplings served locally."
+        },
+        {
+          "name": "Thukpa",
+          "detail": "A traditional Tibetan and Chinese noodle dish."
+        },
+        {
+          "name": "Mei Foon",
+          "detail": "A popular Chinese-style noodle dish."
+        },
+        {
+          "name": "Chicken Drumsticks",
+          "detail": "A well-known local favourite item."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Kalimpong — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Kalimpong",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kalimpong — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kalimpong",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "ziro": {
+      "about": "Ziro is a picturesque town in Arunachal Pradesh, India, surrounded by green rice fields, thick pine forests, and small traditional villages. Standing at an altitude of approximately 1,500 meters, the valley enjoys a cool, pleasant climate year-round and is known for being calm and less crowded. It is home to the Apatani people and their distinctive cultural landscape, which features terraced rice fields and sustainable tribal farming practices.",
+      "history": "The Apatani tribe has inhabited the Ziro Valley region for centuries, practicing sustainable agriculture and permanent wet paddy cultivation. Prior to Indian Independence, wild birds and animals were a large part of their diet while British policy to isolate the hill people of NEFA was in effect. In modern times, the Apatani cultural landscape has been included in the Tentative List for UNESCO's World Heritage Site.",
+      "significance": "Ziro is significant for its unique Apatani cultural landscape, which reflects the tribe's centuries-old sustainable wet rice cultivation, eco-friendly land management, and distinct traditions. The valley is listed in the UNESCO World Heritage tentative list for its remarkable harmony between human culture and nature.",
+      "thingsToDo": [
+        {
+          "title": "Paddy fields",
+          "detail": "Explore the sustainable terraced rice fields with intricate irrigation and fish-rice farming."
+        },
+        {
+          "title": "Meghna Cave Temple",
+          "detail": "Visit the cave temple perched atop a hill offering panoramic views."
+        },
+        {
+          "title": "Hong",
+          "detail": "Walk through one of the biggest and most famous traditional Apatani villages."
+        },
+        {
+          "title": "Hari, Bamin, Dutta",
+          "detail": "Observe the unique layout of closely packed wooden houses built from bamboo, pinewood, and cane."
+        },
+        {
+          "title": "Ziro Festival of Music",
+          "detail": "Attend the annual four-day outdoor music festival featuring independent international acts."
+        },
+        {
+          "title": "Talley Valley Wildlife Sanctuary",
+          "detail": "Go trekking and birdwatching in a dense forest reserve home to clouded leopards and rare birds."
+        },
+        {
+          "title": "Myoko",
+          "detail": "Attend this traditional tribal festival celebrated in March."
+        },
+        {
+          "title": "Dree",
+          "detail": "Experience the cultural celebrations of this tribal festival held in July."
+        }
+      ],
+      "food": [
+        {
+          "name": "Pike Pila",
+          "detail": "A traditional dish made of fermented bamboo and pork fat."
+        },
+        {
+          "name": "Apong",
+          "detail": "A locally brewed, mildly alcoholic rice or millet beer."
+        },
+        {
+          "name": "Smoked pork",
+          "detail": "A staple meat dish rooted in local tribal traditions."
+        },
+        {
+          "name": "Bamboo shoot curry",
+          "detail": "A staple dish utilizing fresh or dried bamboo shoots."
+        },
+        {
+          "name": "Sticky rice",
+          "detail": "A primary staple grain served alongside local meals."
+        },
+        {
+          "name": "Lukter",
+          "detail": "A traditional meat dish included in local meals."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Ziro — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Ziro",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Ziro — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Ziro",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Arunachali cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Arunachali_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "mawlynnong": {
+      "about": "Mawlynnong is a village in the East Khasi Hills district of Meghalaya. Known as God's own garden, it is famous as a community-based eco-tourism initiative and has earned acclaim for its cleanliness. The village features lush greenery, waterfalls, and flowering orchids, and offers views of the Bangladesh plains. The villagers rely mostly on agriculture and grow betel nut. Every resident takes responsibility for keeping the environment clean, a tradition practiced for generations. The village also boasts complete literacy, with many inhabitants speaking English.",
+      "history": "In 2003, Discover India magazine declared the village the cleanest in Asia. It received the same recognition again in 2005 as the cleanest village in India.",
+      "significance": "Mawlynnong matters as a global symbol of community-led eco-tourism and environmental consciousness, proving that collective self-sustained efforts can maintain exceptional village cleanliness and preserve natural beauty.",
+      "thingsToDo": [
+        {
+          "title": "Living Root bridge",
+          "detail": "Take a trek to see this unique bridge at the neighbouring village Riwai."
+        },
+        {
+          "title": "Natural balancing rock",
+          "detail": "View the strange natural phenomenon of a boulder balancing on another rock."
+        },
+        {
+          "title": "Bamboo bridge",
+          "detail": "Visit and walk across the local bamboo bridge."
+        },
+        {
+          "title": "Village cleanliness walk",
+          "detail": "Observe the bamboo garbage bins and the pristine condition of the village pathways."
+        },
+        {
+          "title": "Tea shops",
+          "detail": "Relish a hot cup of tea with snacks at one of the small local tea stalls."
+        }
+      ],
+      "food": [
+        {
+          "name": "Tea Chappati and Rice",
+          "detail": "Simple and tasty local food available in village stalls."
+        },
+        {
+          "name": "Local Chicken",
+          "detail": "Chicken prepared in a non-spicy local style."
+        },
+        {
+          "name": "Jadoh",
+          "detail": "A traditional rice and meat preparation."
+        },
+        {
+          "name": "Tungrymbai",
+          "detail": "A dish made from fermented soybeans."
+        },
+        {
+          "name": "Dohkhlieh",
+          "detail": "A traditional pork salad."
+        },
+        {
+          "name": "Tungtap",
+          "detail": "A preparation of fermented fish."
+        },
+        {
+          "name": "Dohjem",
+          "detail": "Pork cooked with sesame seeds."
+        },
+        {
+          "name": "Syiar Nei-iong",
+          "detail": "Chicken curry cooked with black sesame."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Mawlynnong — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Mawlynnong",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Mawlynnong — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Mawlynnong",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Meghalayan cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Meghalayan_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "bomdila": {
+      "about": "Bomdila is a scenic mountainside town and the headquarters of the West Kameng district in Arunachal Pradesh. It was once a virgin forest before becoming a capital. Visitors come to explore the local monasteries, view traditional crafts, and experience the cultural heritage of this mountainous region.",
+      "history": "In February 1954, the headquarters of the Political Officer shifted from Charduar to Bomdila, and it was officially made the capital of the Sela Sub Agency on February 28, 1954, built by Major Ralengnao R Khathing. Later, Bomdila became the site of the last battle of the 1962 Battle of Se La Pass.",
+      "significance": "Bomdila serves as the administrative headquarters of the West Kameng district in Arunachal Pradesh and holds historical importance as the site of the final battle during the 1962 Battle of Se La Pass.",
+      "thingsToDo": [
+        {
+          "title": "Lower Gompa",
+          "detail": "Visit this very simple monastery situated just beyond the main market."
+        },
+        {
+          "title": "Middle Gompa",
+          "detail": "Travel a short distance from the main market to see this local monastery."
+        },
+        {
+          "title": "Upper Gompa",
+          "detail": "Explore the most majestic of the three town monasteries, also labeled as Bomdila Monastery."
+        },
+        {
+          "title": "Crafts Centre",
+          "detail": "Browse the local handicrafts showcased directly opposite the Lower Gompa."
+        },
+        {
+          "title": "Sikkim Restaurant",
+          "detail": "Dine in the main market area on a selection of local dishes."
+        },
+        {
+          "title": "Tsepal Yongjam",
+          "detail": "Enjoy Indian, Chinese, and continental dishes located in the main market."
+        }
+      ],
+      "food": [
+        {
+          "name": "Thukpa",
+          "detail": "A noodle soup available in vegetarian and non-vegetarian options."
+        },
+        {
+          "name": "Momo",
+          "detail": "Steamed dumplings offered with various fillings."
+        },
+        {
+          "name": "Chowmein",
+          "detail": "Fried noodles prepared in vegetarian and meat varieties."
+        },
+        {
+          "name": "Apo/Apong",
+          "detail": "A popular alcoholic rice beer made from fermented rice or millet."
+        },
+        {
+          "name": "Lukter",
+          "detail": "A traditional meat dish served alongside the staple rice."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Bomdila — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Bomdila",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Bomdila — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Bomdila",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Arunachali cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Arunachali_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "mechuka": {
+      "about": "Mechuka is a scenic town sitting high in the Menchukha Valley along the Siyom River in Arunachal Pradesh. Visitors come to experience the striking landscapes, gentle hills, snow-capped mountains, and the culture of the local tribes. It is also known for its strategic location near the India-Tibet border.",
+      "history": "Before the 1950s, the valley was called Pachakshiri. The Adi tribe has lived in the valley since time immemorial.",
+      "significance": "Mechuka is a growing tourist destination known for its natural beauty, ancient religious heritage, and unique tribal settlements.",
+      "thingsToDo": [
+        {
+          "title": "Siyom River",
+          "detail": "Enjoy scenic views along the river flowing through the valley."
+        },
+        {
+          "title": "Buddhist monastery",
+          "detail": "Visit the 400-year-old monastery on a hilltop holding ancient statues."
+        },
+        {
+          "title": "Gapo",
+          "detail": "Explore the traditional tribal village situated in the valley periphery."
+        },
+        {
+          "title": "Pauk",
+          "detail": "Walk through the historic village inhabited by the Adi tribe."
+        },
+        {
+          "title": "Padusa",
+          "detail": "Experience the local tribal lifestyle and surroundings."
+        },
+        {
+          "title": "Rapum",
+          "detail": "Discover the traditional settlement areas of the local people."
+        }
+      ],
+      "food": [
+        {
+          "name": "Apong",
+          "detail": "A popular alcoholic beverage made from fermented rice or millet."
+        },
+        {
+          "name": "Lukter",
+          "detail": "A traditional meat dish enjoyed alongside the staple diet of rice."
+        },
+        {
+          "name": "Boiled rice cakes",
+          "detail": "Cooked rice wrapped inside leaves as a traditional packing method."
+        },
+        {
+          "name": "Bamboo shoots",
+          "detail": "Extensively used fresh or dried in local food preparation."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Mechuka — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Mechuka",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Arunachali cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Arunachali_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "namdapha": {
+      "about": "Namdapha National Park is a large protected area in Arunachal Pradesh in Northeast India. It covers over one thousand square kilometers and sits in the Eastern Himalayas. The park is a major biodiversity hotspot with a wide variety of plants and animals, and it contains the northernmost lowland evergreen rainforests in the world. Visitors come to experience the rich nature of the region. The landscape includes extensive dipterocarp forests and is set between mountain ranges. It is the fourth largest national park in the country.",
+      "history": "The area was first declared a wildlife sanctuary in 1972. It officially became a national park and a tiger reserve under Project Tiger in 1983. The name comes from two Singpho words, meaning water and origin. In 2024, the park was declared as an Eco-Sensitive Zone.",
+      "significance": "The park is ecologically important as a diverse biodiversity hotspot in the Eastern Himalayas. It protects rare lowland evergreen rainforests, extensive dipterocarp forests, and numerous plant and animal species.",
+      "thingsToDo": [
+        {
+          "title": "Namdapha National Park",
+          "detail": "Explore the fourth largest national park in India, known as a major biodiversity hotspot."
+        },
+        {
+          "title": "Eastern Himalayas",
+          "detail": "View the mountainous landscape and rich ecosystems nestled within the region."
+        },
+        {
+          "title": "Dapha bum range",
+          "detail": "Visit the mountain range located of the Mishmi Hills that borders the park."
+        },
+        {
+          "title": "Patkai range",
+          "detail": "See the mountain range that sits alongside the park area."
+        },
+        {
+          "title": "Mizoram-Manipur-Kachin rain forests",
+          "detail": "Discover the ecoregion encompassing the park's extensive dipterocarp forests."
+        }
+      ],
+      "food": [
+        {
+          "name": "Apo/Apong",
+          "detail": "A popular alcoholic beverage and rice beer made from fermented rice or millet with different flavours."
+        },
+        {
+          "name": "Lukter",
+          "detail": "A meat dish eaten alongside the staple food of rice."
+        },
+        {
+          "name": "Boiled rice cakes",
+          "detail": "Cooked rice packed by wrapping it in leaves."
+        },
+        {
+          "name": "Bamboo shoots",
+          "detail": "Used extensively in food preparation, available in both dried and fresh forms."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Namdapha National Park — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Namdapha_National_Park",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Arunachali cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Arunachali_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "guwahati": {
+      "about": "Guwahati is the largest city in the northeast Indian state of Assam and serves as a major cultural, business, and retail hub. Nestled along the meandering Brahmaputra River and framed by the lush hills of the Shillong Plateau, the city offers a blend of natural beauty and urban development. Visitors come to explore its ancient temples, museums, riverside views, and nearby wildlife sanctuaries. The city features a subtropical climate with distinct summer, monsoon, and winter seasons. As the gateway to Northeast India, it connects travelers to regional arts, local markets, and diverse scenic attractions.",
+      "history": "Excavations trace Guwahati's origins to the Shunga-Kushana period between the 2nd century BCE and the 1st century CE. Ancient cities like Pragjyotishpura and Durjaya served as capitals of Kamarupa, and the area was the capital of Assam until the 10th century. In the 7th century, Xuanzang described the city during the reign of king Bhaskaravarman. Later, the area saw medieval rule by the Koch kings and battles between the Mughals and the Ahoms. In 1973, Dispur within Guwahati became the capital of Assam.",
+      "significance": "Guwahati is culturally and historically significant as the gateway to Northeast India and the historic capital of Assam. It holds deep religious importance for containing numerous ancient Hindu temples, including the Kamakhya Temple, which is a major seat of Shaktism and one of the 51 Shakti Pithas.",
+      "thingsToDo": [
+        {
+          "title": "Kamakhya Temple",
+          "detail": "A prominent hilltop Shaktism temple featuring a cave shrine and associated with the legend of goddess Kamakhya."
+        },
+        {
+          "title": "Assam State Museum",
+          "detail": "A museum preserving regional history, cultural items, and tribal artifacts."
+        },
+        {
+          "title": "Deepor Beel",
+          "detail": "A permanent freshwater lake and Ramsar site ideal for picnicking and winter birdwatching."
+        },
+        {
+          "title": "Dighali Pukhuri",
+          "detail": "An ancient rectangular lake in the city center offering boating and recreational activities."
+        },
+        {
+          "title": "Guwahati Planetarium",
+          "detail": "An entertaining and educational facility located in Uzan Bazar."
+        },
+        {
+          "title": "Guwahati War Cemetery",
+          "detail": "A large Second World War cemetery featuring the Cross of Sacrifice and foreign military graves."
+        },
+        {
+          "title": "Nehru Park",
+          "detail": "An outdoor park in Pan Bazaar featuring pleasant seating areas and a children's park."
+        },
+        {
+          "title": "Doul Govinda Temple",
+          "detail": "A Krishna temple on the northern river banks known for its vibrant five-day Holi celebrations."
+        }
+      ],
+      "food": [
+        {
+          "name": "Thalis",
+          "detail": "Traditional platters featuring a selection of regional Assamese dishes."
+        },
+        {
+          "name": "Assamese cuisine",
+          "detail": "Ethnic local meals featuring traditional flavors and preparations."
+        },
+        {
+          "name": "Biryani",
+          "detail": "A spiced rice dish served at specialty restaurants in the city."
+        },
+        {
+          "name": "Pastries",
+          "detail": "Baked goods and sweet treats from century-old local bakeries."
+        },
+        {
+          "name": "Cakes",
+          "detail": "Celebratory baked items known throughout Northeast India for decades."
+        },
+        {
+          "name": "Cookies",
+          "detail": "Traditional baked biscuits available at historic heritage bakeries."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Guwahati — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Guwahati",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Guwahati — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Guwahati",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "manas": {
+      "about": "Manas National Park is located in Assam in the Himalayan foothills and borders Bhutan. It is a national park, Project Tiger reserve, elephant reserve, biosphere reserve, and a UNESCO World Heritage Site. People visit to experience its exceptional biodiversity, scenery, and variety of habitats.",
+      "history": "The area was under the Kingdom of Bhutan until the Duar War of 1865 when it was ceded to British India. It served as a hunting reserve for the Cooch Behar royal family and Raja of Gauripur. The Manas Wildlife Sanctuary was declared on October 1, 1928. It became a UNESCO World Heritage Site in 1985 and a biosphere reserve in 1989. Additional reserve forests were added in 1990 to form Manas National Park. UNESCO declared it in danger in 1992, but it was removed from that list in 2011 after successful preservation efforts.",
+      "significance": "Manas National Park is significant for its exceptional biodiversity, beautiful scenery, and variety of habitats in the Himalayan foothills. It protects rare and endangered endemic wildlife and hosts the only known population of pygmy hogs in the world, as well as the largest population of the endangered Bengal florican.",
+      "thingsToDo": [
+        {
+          "title": "Manas Reserve Forest",
+          "detail": "Explore one of the original reserve forests that preceded the sanctuary declaration."
+        },
+        {
+          "title": "North Kamrup Reserve Forest",
+          "detail": "Visit the historic reserve forest area that contributed to the park's formation."
+        },
+        {
+          "title": "Kahitama R.F.",
+          "detail": "See the protected forest area added to the national park in 1990."
+        },
+        {
+          "title": "Kokilabari R.F.",
+          "detail": "Discover the designated reserve land integrated into the park boundary."
+        },
+        {
+          "title": "Panbari R.F.",
+          "detail": "Walk through the forested sector added during the 1990 expansion."
+        },
+        {
+          "title": "Pagrang",
+          "detail": "Visit the sole forest village located in the core of the national park."
+        },
+        {
+          "title": "Royal Manas National Park",
+          "detail": "View the contiguous protected park area across the border in Bhutan."
+        }
+      ],
+      "food": [
+        {
+          "name": "Khar",
+          "detail": "A traditional class of dishes named after its main ingredient."
+        },
+        {
+          "name": "Tenga",
+          "detail": "A very common sour dish usually prepared with tomatoes or kajinemu jui."
+        },
+        {
+          "name": "Sunga Saul",
+          "detail": "Sticky rice cooked inside hollow bamboo sections."
+        },
+        {
+          "name": "Tupula bhat",
+          "detail": "Sticky rice wrapped in plantain or tora leaves and boiled."
+        },
+        {
+          "name": "Poita",
+          "detail": "Cooked rice soaked overnight and accompanied with salt, mustard oil, and onions."
+        },
+        {
+          "name": "Mas tenga",
+          "detail": "A signature sour fish preparation popular across communities."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Manas National Park — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Manas_National_Park",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Manas National Park — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Manas_National_Park",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Assamese cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Assamese_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "sivasagar": {
+      "about": "Sivasagar is a city in Upper Assam famous for the monuments and palaces of the Ahom kingdom. It also houses the burial sites of Ahom kings known as Moidam, which is a UNESCO World Heritage Site. Formerly known as Rangpur, the city served as the capital of the Ahom Kingdom from 1699 to 1788 and today operates as a multi-cultural area.",
+      "history": "Sivasagar was the capital of the Ahom Kingdom from 1699 to 1788, a dynasty that ruled Assam for six centuries until falling to the Burmese Konbaung dynasty in 1819. During the reign of Gaurinath Singha, a battle was fought against Moamoria rebels near the Sivasagar tank. The British conquered the province in 1825 and completely annexed it in 1826.",
+      "significance": "Sivasagar is historically significant for housing the capital and monuments of the Ahom kingdom, including UNESCO-recognized royal burial grounds. Its temples feature a distinctive Nilachal architectural style combining traditional Nagara principles with Islamic and local Assamese traditions.",
+      "thingsToDo": [
+        {
+          "title": "Gourisagar Tank",
+          "detail": "An artificial lake dating back to the Ahom dynasty and excavated between 1715 and 1719."
+        },
+        {
+          "title": "Gourisagar Devi Dol",
+          "detail": "The biggest temple of the group, consecrated to Goddess Durga."
+        },
+        {
+          "title": "Gourisagar Shiva Dol",
+          "detail": "A temple very similar to the nearby Devi Dol but smaller in size."
+        },
+        {
+          "title": "Gourisagar Vishnu Dol",
+          "detail": "A temple located west of the Shiva Dol featuring a honeycomb design similar to Kamakhya."
+        },
+        {
+          "title": "Namdang Stone Bridge",
+          "detail": "An Ahom-era stone bridge built in 1703 that runs over the Namdang river."
+        },
+        {
+          "title": "Na Pukhuri Shiva Dol",
+          "detail": "The last major temple built during the Ahom era, following the traditional Nilachal style."
+        },
+        {
+          "title": "Pohu Garh",
+          "detail": "A historical natural zoo of the Ahom Kings that now hosts flocks of migratory birds."
+        },
+        {
+          "title": "Joysagar Tank",
+          "detail": "A lake excavated in 1697 in honor of Joymoti Konwari."
+        },
+        {
+          "title": "Joysagar Vishnu Dol",
+          "detail": "A temple constructed in 1698 featuring exterior walls carved with various incarnations of Vishnu."
+        },
+        {
+          "title": "Joysagar Shiva Dol",
+          "detail": "A shrine built in 1698 with a central pinnacle and four corner pinnacles."
+        }
+      ],
+      "food": [
+        {
+          "name": "Khar",
+          "detail": "A class of traditional dishes named after its main ingredient."
+        },
+        {
+          "name": "Tenga",
+          "detail": "A common sour dish made using souring agents like tomatoes."
+        },
+        {
+          "name": "Chira",
+          "detail": "Boiled in husk and flattened rice often eaten at breakfast with yogurt and jaggery."
+        },
+        {
+          "name": "Sunga Saul",
+          "detail": "A special preparation in which sticky rice is cooked in bamboo hollows."
+        },
+        {
+          "name": "Xutuli pitha",
+          "detail": "A special rice preparation fried in oil with a sesame filling."
+        },
+        {
+          "name": "Mas tenga",
+          "detail": "A signature sour fish dish commonly eaten across Assam."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Sibsagar — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Sibsagar",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Sivasagar — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Sivasagar",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Assamese cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Assamese_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "haflong": {
+      "about": "Haflong is the only hill station in the northeast Indian state of Assam. Serving as the headquarters and largest town of the rugged Dima Hasao district, it is a popular destination for travellers seeking a quieter alternative to larger hill stations. Surrounded by forests and mountains, visitors come to enjoy the scenic landscapes and local culture. Outdoor enthusiasts can enjoy trekking and nature walks in the surrounding hills. The area features notable local attractions, including a scenic lake in the heart of the town and nearby villages known for unique natural phenomena and cultural traditions.",
+      "history": "The sources do not provide a detailed historical timeline for Haflong, but they mention that the surrounding region contains historical sites with ruins linked to the Dimasa kingdom.",
+      "significance": "Haflong is culturally and naturally significant as Assam's sole hill station. It provides insight into regional biodiversity and bird behavior, preserves indigenous ethnic traditions like the Kuki rice harvest festival, and features ruins connected to the historical Dimasa kingdom.",
+      "thingsToDo": [
+        {
+          "title": "Haflong Lake",
+          "detail": "Visit the scenic lake in the heart of the town that is particularly beautiful after the rainy season."
+        },
+        {
+          "title": "Jatinga",
+          "detail": "Explore the nearby village known for the mysterious bird behavior phenomenon."
+        },
+        {
+          "title": "Maibang",
+          "detail": "Discover the historical site featuring ruins linked to the Dimasa kingdom."
+        },
+        {
+          "title": "Chavang Kut",
+          "detail": "Witness the Kuki ethnic group celebrate the rice harvest festival with traditional attire and vivid dances."
+        },
+        {
+          "title": "Trekking",
+          "detail": "Go trekking in the rugged hills surrounding the town."
+        },
+        {
+          "title": "Nature Walks",
+          "detail": "Take walks to explore the natural forests and mountains of the district."
+        }
+      ],
+      "food": [
+        {
+          "name": "Khar",
+          "detail": "A class of traditional dishes named after its main ingredient."
+        },
+        {
+          "name": "Tenga",
+          "detail": "A very common sour dish often prepared with tomatoes or kajinemu jui."
+        },
+        {
+          "name": "Sunga Saul",
+          "detail": "Sticky rice cooked in hollow bamboo sections."
+        },
+        {
+          "name": "Tupula Bhat",
+          "detail": "Sticky rice wrapped in leaves and dropped into boiling water."
+        },
+        {
+          "name": "Mas Tenga",
+          "detail": "A signature sour fish dish commonly eaten across communities."
+        },
+        {
+          "name": "Pitha",
+          "detail": "Soaked and ground glutinous rice preparations made on special occasions like Bihu."
+        },
+        {
+          "name": "Poita",
+          "detail": "Cooked rice soaked overnight and accompanied with salt, mustard oil, and onions."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Haflong — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Haflong",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Haflong — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Haflong",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Assamese cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Assamese_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "tezpur": {
+      "about": "Tezpur is the largest city on the northern banks of the Brahmaputra River in Assam. Known for its picturesque parks, ancient temples, and tea plantations, it serves as a gateway to Arunachal Pradesh and is steeped in legendary Puranic history. The city features a moderate climate with hot summers and mild winters. Visitors are drawn to its rich cultural heritage, archaeological ruins dating back centuries, and vibrant local markets.",
+      "history": "Tezpur's existence dates back to the Vedic period and is tied to the legend of King Banasura and Lord Krishna. The area later saw rule by the Koch dynasty and the Ahom kingdom in the 16th century, whose rulers shaped the region's heritage. In the 20th century, Tezpur served as a B-24 Liberator heavy bomber base during World War II and experienced civilian evacuation threats during the 1962 Sino-Indian War.",
+      "significance": "Tezpur is culturally and historically significant as a medieval trading town and a major centre of the Ahom kingdom. It houses important Hindu Puranic sites, revered Shakta pithas like the Bhairabi Temple, and ancient Gupta-era architectural remnants.",
+      "thingsToDo": [
+        {
+          "title": "Agnigarh",
+          "detail": "Trek up the legendary hill via a circular staircase to enjoy panoramic views and statues depicting the local lore."
+        },
+        {
+          "title": "Bamuni Hills",
+          "detail": "Inspect the artistic structural ruins and intricate stone carvings dating back to the 9th and 10th centuries."
+        },
+        {
+          "title": "Bhairabi Temple",
+          "detail": "Visit the important Shakta pitha on the city outskirts with a backdrop overlooking the Brahmaputra River."
+        },
+        {
+          "title": "Mahabhairab Temple",
+          "detail": "Pay respects at the ancient temple dedicated to Lord Shiva, believed to have been established by King Bana."
+        },
+        {
+          "title": "Ketakeshwar Dewalay",
+          "detail": "View one of the largest Shivalingas in the world housed at this open-air shrine."
+        },
+        {
+          "title": "Kolia Bhomora Setu",
+          "detail": "Walk or drive across the 3.05 km bridge that connects Nagaon with Tezpur over the Brahmaputra River."
+        },
+        {
+          "title": "Da Parbatia Gate",
+          "detail": "Examine the exquisitely carved Gupta-era door frame featuring carvings of the Goddesses Ganga and Yamuna."
+        },
+        {
+          "title": "Chitralekha Udyan",
+          "detail": "Stroll through the largest park in the city, offering paddle boating, a MiG-21 jet model, and a concrete map of India."
+        }
+      ],
+      "food": [
+        {
+          "name": "Khar",
+          "detail": "A traditional class of dishes named after its main alkaline ingredient, typically eaten at the start of a meal."
+        },
+        {
+          "name": "Mas Tenga",
+          "detail": "A signature sour fish dish commonly prepared using tomatoes or citrus as a souring agent."
+        },
+        {
+          "name": "Pitha",
+          "detail": "A special class of sweet or savory rice preparations like xutuli pitha, often made during festivals like Bihu."
+        },
+        {
+          "name": "Sunga Saul",
+          "detail": "Sticky rice cooked inside hollow bamboo sections."
+        },
+        {
+          "name": "Tupula Bhat",
+          "detail": "Sticky rice wrapped in plantain or tora leaves and dropped into boiling water."
+        },
+        {
+          "name": "Tamul",
+          "detail": "Raw or fermented betel nut generally served to conclude a traditional meal."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Tezpur — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Tezpur",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Tezpur — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Tezpur",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Assamese cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Assamese_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "imphal": {
+      "about": "Imphal is the capital city of Manipur, set in a valley with a cooler, pleasant climate and surrounded by lush green landscapes. Travellers visit this developed city for its unique cultural landmarks, ancient history, and bustling markets. It serves as an important commercial and transit hub in northeast India.",
+      "history": "King Pakhangba established Kangla Fort in 33CE. The Ningthouja dynasty later dominated the region, and King Khagemba and his son Khunjaoba built Kangla Palace. The British captured the fort during the 1891 Anglo-Manipur War. Later, the Battle of Imphal took place in 1944 during World War II when Japanese forces were defeated and forced to retreat.",
+      "significance": "Imphal is a vital cultural and historical centre in northeast India, known for hosting ancient royal seats, the world's oldest polo ground, the unique women-run Ima Keithel market, and significant World War II heritage sites.",
+      "thingsToDo": [
+        {
+          "title": "Imphal Polo Ground",
+          "detail": "Visit the world's oldest polo ground located in the heart of the city."
+        },
+        {
+          "title": "Kangla Fort",
+          "detail": "Explore the ancient fortified capital featuring ruins, gardens, museums, and a temple."
+        },
+        {
+          "title": "Manipur State Museum",
+          "detail": "View royal portraits, tribal costumes, ancient weapons, and a giant royal boat."
+        },
+        {
+          "title": "Sambal-Lei-Sekpil garden",
+          "detail": "See the world-famous topiary plant and decorated flower fence."
+        },
+        {
+          "title": "Shree Govindajee Temple",
+          "detail": "Visit the historic temple with two domes and a raised congregation hall."
+        },
+        {
+          "title": "Manipur Zoological Garden",
+          "detail": "Observe diverse wildlife including the endangered and endemic Sangai deer."
+        },
+        {
+          "title": "Khongjom War Memorial",
+          "detail": "See the war complex built where Manipur fought its last war of resistance against the British."
+        },
+        {
+          "title": "Matai Garden",
+          "detail": "Walk through the garden known for its myriad shaped Duranta plants."
+        }
+      ],
+      "food": [
+        {
+          "name": "Eromba",
+          "detail": "A chutney of vegetables boiled or steamed with red chillies, fermented fish, and mashed together."
+        },
+        {
+          "name": "Singju",
+          "detail": "A piquant salad prepared with raw vegetables, herbs, and seasonings."
+        },
+        {
+          "name": "Chamthong",
+          "detail": "A vegetable stew flavored with herbs and spices."
+        },
+        {
+          "name": "Sekmai",
+          "detail": "A traditional, strong rice wine with savoury characteristics."
+        },
+        {
+          "name": "Mujikund",
+          "detail": "Local wine and beer."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Imphal — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Imphal",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Imphal — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Imphal",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Manipuri cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Manipuri_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "aizawl": {
+      "about": "Aizawl is the capital and largest city of Mizoram, India. Perched on a ridge at an elevation of 1,132 metres above sea level, it sits between the Tlawng and Tuirial river valleys just north of the Tropic of Cancer. This 112-year-old citadel features timber houses built across mountain ridges with steep inclines. It functions as an important religious and cultural center for the Mizo people. Colonial-era structures remain visible in the city center, which also serves as the seat of the Government of Mizoram. Visitors are drawn to its pleasant monsoon weather, vibrant local culture, museums, and striking hilltop architecture.",
+      "history": "Before British arrival, Aizawl was a village founded around 1810 by Chief Lalsavunga, who later freed the Zadeng bawi and provided better rights. In 1889, Officer Dally and Colonel Skinner arrived during a military operation, leading to the construction of a fortified post and the establishment of Fort Aijal as the British headquarters in the North Lushai Hills. On 25 February 1890, Fort Aijal was formally established. In September 1890, western Lushai chiefs besieged the fort, initiating the Lushai Rising. The fort was successfully defended and liberated in October 1890. From 1898 to 1947, Aizawl served as the capital of the British Lushai Hills.",
+      "significance": "Aizawl is culturally and religiously significant as the heart of Mizo society and the capital of Mizoram. Historically, it served as the British administrative headquarters for the Lushai Hills, leaving a legacy of colonial structures while evolving into a modern urban center under the Smart Cities Mission.",
+      "thingsToDo": [
+        {
+          "title": "Mizoram State Museum",
+          "detail": "Explore five galleries showcasing Mizo culture, textiles, history, anthropology, and natural history on MacDonald Hill."
+        },
+        {
+          "title": "Solomon's Temple",
+          "detail": "Visit this large church that has become a prominent tourist attraction in the city."
+        },
+        {
+          "title": "Lalsavunga Park",
+          "detail": "Walk across high suspension bridges, visit the children's playground, and enjoy mountain views at an elevation of 1,129 metres."
+        },
+        {
+          "title": "Hawla Indoor Stadium",
+          "detail": "See one of the city's notable stadiums."
+        },
+        {
+          "title": "Lammual Stadium",
+          "detail": "View this central sports and gathering ground."
+        },
+        {
+          "title": "Rajiv Gandhi Stadium",
+          "detail": "Visit a major sporting venue located in the city."
+        }
+      ],
+      "food": [
+        {
+          "name": "Bai",
+          "detail": "A staple vegetable stew boiled with fermented soybeans or fermented pork and herbs."
+        },
+        {
+          "name": "Sawhchiar",
+          "detail": "A common dish made of rice cooked with beef, pork, or chicken."
+        },
+        {
+          "name": "Rep",
+          "detail": "Smoked meat mixed with chilies, local herbs, and fresh leafy greens."
+        },
+        {
+          "name": "Chhum han",
+          "detail": "Mixed steamed vegetables."
+        },
+        {
+          "name": "Hmarcha rawt",
+          "detail": "A tangy and spicy chili chutney."
+        },
+        {
+          "name": "Sanpiau",
+          "detail": "A rice porridge mixed with meat, sauce, and Mizo spices."
+        },
+        {
+          "name": "Chhangban",
+          "detail": "A sticky local rice bread snack."
+        },
+        {
+          "name": "Zawlaidi",
+          "detail": "A licensed local wine available in departmental stores."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Aizawl — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Aizawl",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Aizawl — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Aizawl",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Mizo cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Mizo_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "agartala": {
+      "about": "Agartala is the capital and largest city of Tripura in northeastern India. Located along the Haora River near the Bangladesh border, it is a bustling hub with a humid subtropical climate. Visitors come to explore its rich royal heritage, magnificent palaces, prominent temples, and vibrant local culture.",
+      "history": "Tripura was ruled by many Hindu rulers and came under Mughal rule. The British took governance in 1808. In 1760 the capital shifted to Old Agartala. Maharaja Krishna Kishore Manikya founded the capital city of Agartala in 1838. Maharaja Bir Chandra Manikya established the Agartala Municipality in 1871. Later, Maharaja Bir Bikram Manikya planned the modern township in the 1940s.",
+      "significance": "Agartala serves as the political, cultural, and economic center of Tripura. It features historic royal palaces, sacred religious sites for various faiths, and stands as India's third international internet gateway.",
+      "thingsToDo": [
+        {
+          "title": "Ujjayanta Palace",
+          "detail": "A two-storey former royal mansion featuring high domes, Mughal-style gardens, and the Tripura Government Museum."
+        },
+        {
+          "title": "Akhaura Checkpost",
+          "detail": "A busy border checkpost handling many visitors traveling to and from Bangladesh."
+        },
+        {
+          "title": "Gedu Miar Maszid",
+          "detail": "An imposing mosque in the Shibnagar area serving as a main place of worship for Muslims in Tripura."
+        },
+        {
+          "title": "Jagannath Temple",
+          "detail": "A remarkable Hindu temple with an octagonal base, impressive circumambulation path, and pyramidal cones."
+        },
+        {
+          "title": "Lakshmi Narayan Temple",
+          "detail": "A historic temple from the princely state era housing an idol of Lord Krishna."
+        },
+        {
+          "title": "Maharaja Bir Bikram College",
+          "detail": "A college founded by the last king of Tripura amid lush landscapes and natural lakes."
+        },
+        {
+          "title": "Sukanta Academy",
+          "detail": "A science museum located in the center of town featuring a small planetarium."
+        },
+        {
+          "title": "Temple of Fourteen Gods",
+          "detail": "A historical temple in Old Agartala built to honor fourteen deities worshipped during Kharchi Puja."
+        },
+        {
+          "title": "Heritage Park",
+          "detail": "A popular city park featuring miniature models of state monuments and an Ayurvedic herb-garden."
+        },
+        {
+          "title": "Nehru Park",
+          "detail": "A green walking park inaugurated in 2003 as a getaway from the city."
+        }
+      ],
+      "food": [
+        {
+          "name": "gudok",
+          "detail": "A traditional local dish of the Tiprasa people."
+        },
+        {
+          "name": "chakhwi",
+          "detail": "A traditional local preparation enjoyed by tourists and locals alike."
+        },
+        {
+          "name": "Mui Borok",
+          "detail": "A traditional Tripuri dish made with rice and dry fish."
+        },
+        {
+          "name": "Wahan Mosdeng",
+          "detail": "A meat-based dish historically made from wild boar."
+        },
+        {
+          "name": "Wak Bahan",
+          "detail": "A pork-based delicacy prepared with jackfruit and papaya."
+        },
+        {
+          "name": "Berma Bwtwi",
+          "detail": "A stew dish made by combining fermented fish with various vegetables."
+        },
+        {
+          "name": "Chuak",
+          "detail": "A traditional Tripuri rice-beer beverage."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Agartala — Wikivoyage",
+          "url": "https://en.wikivoyage.org/wiki/Agartala",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Agartala — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Agartala",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Tripuri cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Tripuri_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
+    },
+    "unakoti": {
+      "about": "Unakoti, also called Subrai Khung, is an ancient Shaivite site known for its large rock carvings, figures, and images of gods and goddesses. Located in the Kailashahar Subdivision of Tripura's Unakoti District, it serves as the prime tourist spot in the region. Visitors come to see the unique bas relief sculptures carved into the rock face.",
+      "history": "The bas relief sculptures date back to the 7th to 9th century CE during the Pre-Manikya period and were patronised by the Deva Dynasty of Sribhumi in Samatata. Later, an inscription in Bengali characters from the 11th to 12th century CE was added on the Chaturmukhalinga image, mentioning a pilgrim named Sri Jayadeva.",
+      "significance": "Unakoti holds deep religious and cultural value as an ancient Shaivite site with unique rock-cut sculptures and inscriptions, reflecting centuries of local history and heritage. It was added to the UNESCO world heritage site tentative list in 2022.",
+      "thingsToDo": [
+        {
+          "title": "Unakoti",
+          "detail": "Explore the ancient Shaivite site and view the large rock carvings and images of gods and goddesses."
+        },
+        {
+          "title": "Subrai Khung",
+          "detail": "Discover the sculptural emblem under its traditional local Kokborok language name."
+        },
+        {
+          "title": "Chaturmukhalinga image",
+          "detail": "View the stone carving that features the site's only historical inscription in Bengali characters."
+        },
+        {
+          "title": "Bas relief sculptures",
+          "detail": "Observe the intricate rock art created during the period of Pre-Manikya rule."
+        },
+        {
+          "title": "Unakoti District tourist area",
+          "detail": "Visit the prime sightseeing destination located within the Kailashahar Subdivision."
+        }
+      ],
+      "food": [
+        {
+          "name": "Mui Borok",
+          "detail": "A traditional Tripuri dish made with rice and dry fish."
+        },
+        {
+          "name": "Wahan Mosdeng",
+          "detail": "A meat-based dish historically prepared with wild boar, though pork, beef, and chicken are now used."
+        },
+        {
+          "name": "Wak Bahan",
+          "detail": "A pork delicacy prepared with jackfruit and papaya as additional ingredients."
+        },
+        {
+          "name": "Berma Bwtwi",
+          "detail": "A stew dish made by combining fermented fish called berma with various vegetables."
+        },
+        {
+          "name": "Mosdeng",
+          "detail": "A popular side-dish prepared using chilli, herbs, onion, and seasonal vegetables."
+        },
+        {
+          "name": "Chuak",
+          "detail": "A traditional Tripuri rice-beer beverage."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Unakoti — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Unakoti",
+          "licence": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Tripuri cuisine — Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Tripuri_cuisine",
+          "licence": "CC BY-SA 4.0"
+        }
+      ],
+      "checked": "2026-11-03"
     }
   }
 }

@@ -55,6 +55,24 @@ const OVERRIDES: Record<string, { wikivoyage?: string | null; wikipedia?: string
   munsiyari: { wikivoyage: null, wikipedia: 'Munsiari', cuisine: 'Kumaoni cuisine' },
   kausani: { cuisine: 'Kumaoni cuisine' },
   almora: { cuisine: 'Kumaoni cuisine' },
+  // Batch 2 — North-East
+  pelling: { cuisine: 'Sikkimese cuisine' },
+  lachung: { cuisine: 'Sikkimese cuisine' },
+  ravangla: { cuisine: 'Sikkimese cuisine' },
+  mawlynnong: { cuisine: 'Meghalayan cuisine' },
+  ziro: { cuisine: 'Arunachali cuisine' },
+  dirang: { cuisine: 'Arunachali cuisine' },
+  bomdila: { cuisine: 'Arunachali cuisine' },
+  mechuka: { cuisine: 'Arunachali cuisine' },
+  namdapha: { cuisine: 'Arunachali cuisine' },
+  manas: { cuisine: 'Assamese cuisine' },
+  sivasagar: { cuisine: 'Assamese cuisine' },
+  haflong: { cuisine: 'Assamese cuisine' },
+  tezpur: { cuisine: 'Assamese cuisine' },
+  imphal: { cuisine: 'Manipuri cuisine' },
+  aizawl: { cuisine: 'Mizo cuisine' },
+  agartala: { cuisine: 'Tripuri cuisine' },
+  unakoti: { wikivoyage: null, cuisine: 'Tripuri cuisine' },
 };
 
 /** The useful sections of each source, and how much of each to keep (characters). */

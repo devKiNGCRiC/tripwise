@@ -114,17 +114,20 @@ export default function DestinationPage() {
               ))}
             </ol>
           </div>
-          <div>
-            <p className="text-xs font-bold tracking-[0.14em] text-soft uppercase">Don't miss</p>
-            <ul className="mt-2 grid gap-1.5">
-              {destination.highlights.map((highlight) => (
-                <li key={highlight} className="flex items-center gap-2.5 font-medium">
-                  <span aria-hidden className="size-1.5 rotate-45 bg-accent" />
-                  {highlight}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Places with no catalogue spots yet have no highlights — no empty list then. */}
+          {destination.highlights.length > 0 && (
+            <div>
+              <p className="text-xs font-bold tracking-[0.14em] text-soft uppercase">Don't miss</p>
+              <ul className="mt-2 grid gap-1.5">
+                {destination.highlights.map((highlight) => (
+                  <li key={highlight} className="flex items-center gap-2.5 font-medium">
+                    <span aria-hidden className="size-1.5 rotate-45 bg-accent" />
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <Link to={`/plan?destination=${encodeURIComponent(destination.name)}`} className={buttonClasses({ variant: 'glow', size: 'lg', className: 'mt-auto' })}>
             Plan a trip here <ArrowRight aria-hidden className="size-4" />
           </Link>

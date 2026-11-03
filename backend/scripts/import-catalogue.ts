@@ -108,6 +108,12 @@ function point(wkt: string): [number, number] {
 /** Lower-case letters and digits only, for comparing names. */
 const plain = (text: string) => text.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, ' ').trim();
 
+/**
+ * Each destination's own photo (its Wikidata item's image), by slug — a cover for parks and
+ * single sites (Manas, Unakoti) whose best photo is of the place itself, not a stop inside it.
+ */
+const ownPhotos = new Map<string, string>();
+
 /** Travel places for one destination: classified, de-duplicated, best first. */
 function placesFrom(rows: Row[], slug: string, destinationName: string): (CataloguePlace & { file?: string })[] {
   const seen = new Set<string>();
@@ -115,7 +121,8 @@ function placesFrom(rows: Row[], slug: string, destinationName: string): (Catalo
   for (const row of rows) {
     const name = row.itemLabel.value;
     const qid = row.item.value.split('/').pop()!;
-    // Unlabelled items show their id as the label; the destination itself isn't a stop.
+    // Unlabelled items show their id as the label; the destination itself isn't a stop (but its photo can be the cover).
+    if (plain(name) === plain(destinationName) && row.image && !ownPhotos.has(slug)) ownPhotos.set(slug, decodeURIComponent(row.image.value.split('/Special:FilePath/').pop()!));
     if (/^Q\d+$/.test(name) || plain(name) === plain(destinationName)) continue;
     const kind = classify((row.types?.value ?? '').split('|').filter(Boolean));
     if (!kind || seen.has(plain(name))) continue;
@@ -184,7 +191,7 @@ async function main() {
   }
 
   // 2. Photo credits (places without a credited photo simply have none).
-  const photos = await credits([...new Set(all.flatMap((p) => (p.file ? [p.file] : [])))]);
+  const photos = await credits([...new Set([...all.flatMap((p) => (p.file ? [p.file] : [])), ...ownPhotos.values()])]);
   const places: CataloguePlace[] = all.map(({ file, ...place }) => {
     const image = file ? photos.get(file) : undefined;
     return image ? { ...place, image } : place;
@@ -193,7 +200,9 @@ async function main() {
   // 3. New destinations: highlights and photo from their best places.
   const added = NEW.flatMap((d) => {
     const own = places.filter((p) => p.destination === d.slug);
-    const cover = own.find((p) => p.image);
+    // Its best place's photo, or else a photo of the destination itself.
+    const ownFile = ownPhotos.get(d.slug);
+    const cover = own.find((p) => p.image) ?? (ownFile && photos.get(ownFile) ? { image: photos.get(ownFile) } : undefined);
     if (!cover) {
       console.warn(`! ${d.slug}: no credited photo found — left out`);
       return [];
