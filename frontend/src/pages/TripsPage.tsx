@@ -28,7 +28,7 @@ function NextTrip({ trip, destination }: { trip: Itinerary; destination?: Destin
         <span className="absolute top-4 left-4 rounded-full bg-accent px-3.5 py-1.5 font-semibold text-on-accent">{status.label}</span>
       </div>
       <div className="flex flex-col justify-center gap-3 p-7 sm:p-9">
-        <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">{status.phase === 'ongoing' ? 'On the road' : 'Next trip'}</p>
+        <p className="eyebrow">{status.phase === 'ongoing' ? 'On the road' : 'Next trip'}</p>
         <h2 className="text-[clamp(32px,3.6vw,52px)]">{trip.title}</h2>
         <p className="text-soft">
           {rangeLabel(trip.request.startDate, trip.request.endDate)} · {TRAVELLER_LABEL[trip.request.travellers]}
@@ -45,9 +45,9 @@ function NextTrip({ trip, destination }: { trip: Itinerary; destination?: Destin
 /** A titled grid of trip cards. */
 function TripGrid({ label, trips, place }: { label: string; trips: Itinerary[]; place: (name: string) => Destination | undefined }) {
   return (
-    <section aria-label={label} className="mb-10">
-      {/* A small glass pill keeps the label readable over any landscape. */}
-      <h2 className="glass mb-4 inline-block rounded-full px-4 py-1.5 text-xs font-bold tracking-[0.16em] text-ink uppercase">{label}</h2>
+    // One panel per group, its heading inside, so labels never float on the landscape.
+    <section aria-label={label} className="glass mb-8 rounded-4xl p-5 sm:p-7">
+      <h2 className="mb-5 font-display text-[clamp(24px,2.4vw,32px)] leading-tight">{label}</h2>
       <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         {trips.map((trip) => (
           <li key={trip.id}>

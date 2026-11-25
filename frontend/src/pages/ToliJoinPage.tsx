@@ -39,7 +39,7 @@ export default function ToliJoinPage() {
         )}
         {invite.data && (
           <>
-            <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">{english ? 'Plan trips together' : 'Toli · plan trips together'}</p>
+            <p className="eyebrow">{english ? 'Plan trips together' : 'Toli · plan trips together'}</p>
             <h1 className="text-[clamp(30px,4.5vw,52px)]">Join {invite.data.name}</h1>
             <p className="text-soft">
               {TYPE_LABEL[invite.data.type]} · {invite.data.memberCount} {w.sahyatris}

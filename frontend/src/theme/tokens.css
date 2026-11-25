@@ -9,16 +9,17 @@
 
 /* ── Day theme (default) ─────────────────────────────────────────────── */
 :root {
-  /* Text and hairlines; on-ink = text on a solid ink pill */
-  --trip-ink: #121417;
+  /* Text and hairlines, in the brand's deep indigo; on-ink = text on a solid ink pill */
+  --trip-ink: #161c33;
   --trip-on-ink: #ffffff;
-  --trip-soft: #3c4149;
-  --trip-line: rgb(18 20 23 / 0.12);
+  --trip-soft: #454c5e;
+  --trip-line: rgb(22 28 51 / 0.12);
 
-  /* Frosted glass: normal and strong (forms, dense panels), with a bright edge */
-  --trip-glass: rgb(255 255 255 / 0.52);
-  --trip-glass-strong: rgb(255 255 255 / 0.72);
-  --trip-glass-edge: rgb(255 255 255 / 0.7);
+  /* Frosted paper: mostly opaque and warm, so text stays crisp whether the sky or the dark
+     forest is behind it (clear glass went muddy grey over the forest). Normal and strong. */
+  --trip-glass: rgb(251 248 243 / 0.88);
+  --trip-glass-strong: rgb(252 250 246 / 0.93);
+  --trip-glass-edge: rgb(255 255 255 / 0.8);
   --trip-glass-shadow: 0 30px 80px -40px rgb(0 0 0 / 0.45);
 
   /* Soft wash behind the hero text so it reads over any landscape */
@@ -54,8 +55,8 @@
   --trip-soft: #c9c6bf;
   --trip-line: rgb(255 255 255 / 0.14);
 
-  --trip-glass: rgb(10 16 30 / 0.42);
-  --trip-glass-strong: rgb(10 16 30 / 0.66);
+  --trip-glass: rgb(17 22 40 / 0.78);
+  --trip-glass-strong: rgb(17 22 40 / 0.9);
   --trip-glass-edge: rgb(255 255 255 / 0.14);
   --trip-glass-shadow: 0 30px 80px -40px rgb(0 0 0 / 0.7);
 

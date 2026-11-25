@@ -34,7 +34,7 @@ export function Hero({ who, onWhoChange }: HeroProps) {
           <div>
             <p className="flex flex-wrap items-center gap-3.5">
               <span className="rounded-full bg-accent px-3 py-1 text-[13px] font-semibold text-on-accent">{counter}</span>
-              <span className="text-xs font-bold tracking-[0.18em] text-soft uppercase">{region.name}</span>
+              <span className="eyebrow">{region.name}</span>
               <span lang="hi" className="text-[22px] text-accent">
                 {region.hi}
               </span>

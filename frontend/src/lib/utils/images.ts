@@ -18,3 +18,13 @@ export function sizedImage(url: string, width: number): string {
   }
   return url;
 }
+
+/**
+ * A size list (srcset) offering the photo at each of `widths`, so the browser downloads the
+ * smallest copy the screen needs (a phone or a 1× screen skips the large one). Undefined for
+ * hosts we can't resize — then the plain src is used.
+ */
+export function imageSrcSet(url: string, widths: number[]): string | undefined {
+  if (sizedImage(url, widths[0]) === url && sizedImage(url, widths.at(-1)!) === url) return undefined;
+  return widths.map((w) => `${sizedImage(url, w)} ${w}w`).join(', ');
+}

@@ -9,7 +9,7 @@ import type { Region } from '@/world/regions';
 import { RegionPhoto } from './RegionPhoto';
 
 /** Small caps label used in the panel. */
-const LABEL = 'text-xs font-bold tracking-[0.16em] text-soft uppercase';
+const LABEL = 'eyebrow';
 
 /** The current region's photo and quick facts. */
 export function Dossier({ region, index, total }: { region: Region; index: number; total: number }) {
@@ -37,7 +37,7 @@ export function Dossier({ region, index, total }: { region: Region; index: numbe
           ['Best time', region.best],
         ].map(([term, value]) => (
           <div key={term} className="rounded-2xl bg-ink/5 px-3 py-2.5">
-            <dt className="text-[11.5px] font-bold tracking-[0.12em] text-soft uppercase">{term}</dt>
+            <dt className="eyebrow">{term}</dt>
             <dd className="mt-0.5 text-[14.5px] font-semibold">{value}</dd>
           </div>
         ))}

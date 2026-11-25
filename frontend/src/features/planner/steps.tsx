@@ -51,7 +51,7 @@ export function DestinationStep({ register, errors, setValue }: StepProps) {
       <Input label="Destination" placeholder="Badrinath, Goa, Hampi, Tokyo…" error={errors.destination?.message} autoComplete="off" {...register('destination')} />
       {destinations && (
         <div>
-          <p className="mb-2 text-xs font-bold tracking-[0.14em] text-soft uppercase">Popular right now</p>
+          <p className="mb-2 eyebrow">Popular right now</p>
           <div role="group" aria-label="Popular destinations" className="flex flex-wrap gap-2">
             {destinations.slice(0, 8).map((d) => (
               <Chip key={d.id} onClick={() => setValue('destination', d.name, { shouldValidate: true })}>
@@ -181,7 +181,7 @@ export function ReviewStep({ values }: Pick<StepProps, 'values'>) {
     <dl aria-label="Your answers" className="grid gap-2 sm:grid-cols-2">
       {rows.map(([term, value]) => (
         <div key={term} className={cn('rounded-2xl bg-ink/5 px-4 py-3', term === 'When' && 'sm:col-span-2')}>
-          <dt className="text-xs font-bold tracking-[0.12em] text-soft uppercase">{term}</dt>
+          <dt className="eyebrow">{term}</dt>
           <dd className="mt-0.5 font-semibold">{value}</dd>
         </div>
       ))}

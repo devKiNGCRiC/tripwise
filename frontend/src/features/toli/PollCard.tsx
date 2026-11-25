@@ -60,7 +60,7 @@ export function PollCard({ toli, poll }: { toli: Toli; poll: Poll }) {
   return (
     <article aria-label={poll.question} className="glass-strong grid gap-3 rounded-card p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">{poll.kind === 'tithi' ? (english ? 'Dates' : 'Tithi · dates') : poll.kind === 'destination' ? 'Where to' : poll.kind === 'transport' ? 'Getting there' : 'Poll'}</p>
+        <p className="eyebrow">{poll.kind === 'tithi' ? (english ? 'Dates' : 'Tithi · dates') : poll.kind === 'destination' ? 'Where to' : poll.kind === 'transport' ? 'Getting there' : 'Poll'}</p>
         {poll.closesAt && open && <span className="text-xs text-soft">Closes {new Date(poll.closesAt).toLocaleString('en-IN', { weekday: 'short', hour: 'numeric', minute: '2-digit' })}</span>}
       </div>
       <h3 className="text-xl">{poll.question}</h3>

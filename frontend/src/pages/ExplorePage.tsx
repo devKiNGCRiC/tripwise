@@ -1,6 +1,7 @@
 /**
- * ExplorePage.tsx — route "/explore": every destination as cinematic cards, with search
- * and filters (world, vibe, budget, best month) kept in the URL. Choosing a world also
+ * ExplorePage.tsx — route "/explore": every destination as cinematic cards, grouped by world
+ * (India's seven worlds in order, then places abroad) so the list reads as a journey, not a
+ * wall; with search and filters (world, vibe, budget, best month) kept in the URL. Choosing a world also
  * turns the living landscape behind the page into that world (without overwriting the
  * traveller's own remembered pick).
  */
@@ -12,12 +13,19 @@ import { Skeleton } from '@/components/ui/Skeleton';
 import { DestinationCard } from '@/features/explore/DestinationCard';
 import { Filters, NO_FILTERS, type ExploreFilters } from '@/features/explore/Filters';
 import { useDestinations } from '@/features/explore/hooks';
-import type { BudgetTier, Vibe } from '@/lib/api/types';
-import { regionByKey } from '@/world/regions';
+import type { BudgetTier, Destination, Vibe } from '@/lib/api/types';
+import { REGIONS, regionByKey } from '@/world/regions';
 import { useWorld } from '@/world/WorldProvider';
 
 /** Filter names stored in the URL. */
 const KEYS = Object.keys(NO_FILTERS) as (keyof ExploreFilters)[];
+
+/** Results in groups: each of the seven worlds in order (with its Hindi name and line), then abroad. */
+function byWorld(results: Destination[]) {
+  const worlds = REGIONS.map((r) => ({ key: r.key, name: r.name, hi: r.hi, line: `${r.headline} ${r.accent}`, places: results.filter((d) => d.region === r.key) }));
+  const abroad = { key: 'abroad', name: 'Beyond India', hi: undefined, line: 'A few favourites from the rest of the world.', places: results.filter((d) => !d.region) };
+  return [...worlds, abroad].filter((g) => g.places.length);
+}
 
 /** Route "/explore". */
 export default function ExplorePage() {
@@ -118,13 +126,33 @@ export default function ExplorePage() {
           </div>
         )}
         {results && results.length > 0 && (
-          <ul aria-label="Destinations" className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-            {results.map((destination) => (
-              <li key={destination.id}>
-                <DestinationCard destination={destination} className="h-[400px]" />
-              </li>
+          <section aria-label="Destinations" className="grid gap-14">
+            {byWorld(results).map((group) => (
+              <div key={group.key}>
+                {/* The world's name, its Hindi name, how many places, and its line — on paper, so it reads over any landscape. */}
+                <div className="glass mb-5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 rounded-3xl px-5 py-4 sm:px-7">
+                  <h2 className="text-[clamp(28px,3vw,40px)] leading-tight">
+                    {group.name}
+                    {group.hi && (
+                      <span lang="hi" className="ml-3 font-hindi text-[0.7em] text-accent">
+                        {group.hi}
+                      </span>
+                    )}
+                  </h2>
+                  <p className="text-soft">
+                    {group.line} {group.places.length} {group.places.length === 1 ? 'place' : 'places'}.
+                  </p>
+                </div>
+                <ul aria-label={group.name} className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                  {group.places.map((destination) => (
+                    <li key={destination.id}>
+                      <DestinationCard destination={destination} className="h-[380px]" />
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </section>
         )}
       </div>
     </div>

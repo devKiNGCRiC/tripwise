@@ -35,7 +35,7 @@ export function ItineraryView({ itinerary, actions, onRegenerateDay, regeneratin
       {/* Ticket header */}
       <header className="glass-strong grid overflow-hidden rounded-[32px] lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
         <div className="p-6 sm:p-8">
-          <p className="flex items-center gap-2 text-xs font-bold tracking-[0.16em] text-soft uppercase">
+          <p className="flex items-center gap-2 eyebrow">
             <Plane aria-hidden className="size-4 text-accent" /> Your itinerary
           </p>
           <h1 className="mt-2 text-[clamp(38px,5vw,72px)]">{itinerary.title}</h1>
@@ -94,7 +94,7 @@ export function ItineraryView({ itinerary, actions, onRegenerateDay, regeneratin
         <aside className="grid gap-5 lg:sticky lg:top-24">
           <CostBreakdown cost={itinerary.estimatedCost} />
           <section aria-labelledby="tips-title" className="glass-strong rounded-card p-6">
-            <h2 id="tips-title" className="text-xs font-bold tracking-[0.14em] text-soft uppercase">
+            <h2 id="tips-title" className="eyebrow">
               Good to know
             </h2>
             <ul className="mt-3 grid gap-2.5">
@@ -107,7 +107,7 @@ export function ItineraryView({ itinerary, actions, onRegenerateDay, regeneratin
             </ul>
           </section>
           <section aria-labelledby="packing-title" className="glass-strong rounded-card p-6">
-            <h2 id="packing-title" className="text-xs font-bold tracking-[0.14em] text-soft uppercase">
+            <h2 id="packing-title" className="eyebrow">
               Packing list
             </h2>
             <ul aria-label="Packing list" className="mt-3 flex flex-wrap gap-2">

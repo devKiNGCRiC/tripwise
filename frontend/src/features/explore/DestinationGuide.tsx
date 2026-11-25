@@ -11,7 +11,7 @@ import type { DestinationGuide as Guide } from '@/lib/api/types';
 const LICENCE_URL = 'https://creativecommons.org/licenses/by-sa/4.0/';
 
 /** A small label above a heading. */
-const EYEBROW = 'text-xs font-bold tracking-[0.14em] text-soft uppercase';
+const EYEBROW = 'eyebrow';
 
 /** One text part (History, Why it matters). */
 function Part({ title, text }: { title: string; text: string }) {

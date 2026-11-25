@@ -72,7 +72,7 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
         {trip.data && (
           <>
             <div className="glass-strong rounded-card p-5">
-              <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">{english ? 'The shared trip' : 'Sahyatra · the shared trip'}</p>
+              <p className="eyebrow">{english ? 'The shared trip' : 'Sahyatra · the shared trip'}</p>
               <h2 className="mt-1 text-2xl">{trip.data.title}</h2>
               <p className="text-sm text-soft">Anyone can suggest a change; the {w.sutradhar} and {w.sah}s decide.</p>
             </div>

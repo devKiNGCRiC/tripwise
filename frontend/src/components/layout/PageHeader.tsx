@@ -24,7 +24,7 @@ export function PageHeader({ eyebrow, title, accent, lede, actions, className }:
   return (
     <header className={cn('glass mb-6 flex flex-wrap items-end justify-between gap-x-8 gap-y-4 rounded-[28px] px-6 py-5 sm:px-8', className)}>
       <div className="min-w-0">
-        <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">{eyebrow}</p>
+        <p className="eyebrow">{eyebrow}</p>
         <h1 className="mt-1 text-[clamp(34px,4vw,56px)]">
           {title}
           {accent && (

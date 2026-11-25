@@ -93,16 +93,16 @@ export default function DestinationPage() {
           <p className="text-lg">{destination.summary}</p>
           <dl className="grid grid-cols-2 gap-2">
             <div className="rounded-2xl bg-ink/5 px-4 py-3">
-              <dt className="text-xs font-bold tracking-[0.12em] text-soft uppercase">Typical day</dt>
+              <dt className="eyebrow">Typical day</dt>
               <dd className="mt-0.5 font-semibold">{formatMoney(destination.avgDailyCost)} per person</dd>
             </div>
             <div className="rounded-2xl bg-ink/5 px-4 py-3">
-              <dt className="text-xs font-bold tracking-[0.12em] text-soft uppercase">Budget</dt>
+              <dt className="eyebrow">Budget</dt>
               <dd className="mt-0.5 font-semibold">{BUDGET[destination.budgetTier]}</dd>
             </div>
           </dl>
           <div>
-            <p className="text-xs font-bold tracking-[0.14em] text-soft uppercase">Best time · {formatSeason(destination.bestMonths)}</p>
+            <p className="eyebrow">Best time · {formatSeason(destination.bestMonths)}</p>
             <ol aria-label="Best months" className="mt-3 grid h-24 grid-cols-12 items-end gap-1.5">
               {SHORT.map((month, i) => (
                 <li key={month} aria-label={`${LONG[i]}: ${best.has(i + 1) ? 'Best' : 'Off season'}`} className="grid h-full grid-rows-[1fr_auto] items-end justify-items-center gap-1.5">
@@ -117,7 +117,7 @@ export default function DestinationPage() {
           {/* Places with no catalogue spots yet have no highlights — no empty list then. */}
           {destination.highlights.length > 0 && (
             <div>
-              <p className="text-xs font-bold tracking-[0.14em] text-soft uppercase">Don't miss</p>
+              <p className="eyebrow">Don't miss</p>
               <ul className="mt-2 grid gap-1.5">
                 {destination.highlights.map((highlight) => (
                   <li key={highlight} className="flex items-center gap-2.5 font-medium">

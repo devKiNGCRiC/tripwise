@@ -23,9 +23,9 @@ import type { Region } from '@/world/regions';
 /** What each month score means. */
 const SCORE = ['', 'Not ideal', 'Good', 'Best'];
 /** Small caps section label. */
-const LABEL = 'text-xs font-bold tracking-[0.16em] text-soft uppercase';
+const LABEL = 'eyebrow';
 /** A sub-heading inside the month panel, with its icon. */
-const SUB = 'flex items-center gap-2 text-xs font-bold tracking-[0.16em] text-soft uppercase';
+const SUB = 'flex items-center gap-2 eyebrow';
 /** A small "plan" link. */
 const PLAN_LINK = 'inline-flex shrink-0 items-center gap-1 rounded-full border border-line px-3 py-1 text-sm font-semibold hover:bg-ink/6';
 

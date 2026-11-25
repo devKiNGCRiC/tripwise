@@ -40,7 +40,7 @@ export function ToliHeader({ toli }: { toli: Toli }) {
     <header className="glass-strong grid gap-4 rounded-[32px] p-6 sm:p-8">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">
+          <p className="eyebrow">
             {!english && (
               <>
                 <span lang="hi" className="font-hindi normal-case tracking-normal text-[#b8862f]">

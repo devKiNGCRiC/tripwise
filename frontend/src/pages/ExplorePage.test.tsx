@@ -15,10 +15,10 @@ import { renderApp } from '@/test/render';
 /** Every destination in the catalogue. */
 const ALL = seedDestinations.length;
 
-/** The destination links in the results grid. */
+/** The destination links in the results (across every world's group). */
 async function results() {
-  const grid = await screen.findByRole('list', { name: 'Destinations' });
-  return within(grid).queryAllByRole('link');
+  const all = await screen.findByRole('region', { name: 'Destinations' });
+  return within(all).queryAllByRole('link');
 }
 
 describe('ExplorePage', () => {
@@ -26,6 +26,16 @@ describe('ExplorePage', () => {
     renderApp('/explore');
     await waitFor(async () => expect(await results()).toHaveLength(ALL));
     expect(screen.getByRole('heading', { level: 1, name: /Explore/ })).toBeInTheDocument();
+  });
+
+  it('groups destinations by world, in the seven worlds’ order, with places abroad last', async () => {
+    renderApp('/explore');
+    await waitFor(async () => expect(await results()).toHaveLength(ALL));
+    const groups = within(screen.getByRole('region', { name: 'Destinations' })).getAllByRole('heading', { level: 2 });
+    expect(groups[0]).toHaveTextContent(/^Himalaya/);
+    expect(groups.at(-1)).toHaveTextContent(/^Beyond India/);
+    const himalaya = screen.getByRole('list', { name: 'Himalaya' });
+    expect(within(himalaya).getAllByRole('link').length).toBe(seedDestinations.filter((d) => d.region === 'himalaya').length);
   });
 
   it('narrows by vibe and keeps the filter in the address', async () => {

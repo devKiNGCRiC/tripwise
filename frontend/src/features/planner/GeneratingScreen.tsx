@@ -26,7 +26,7 @@ export function GeneratingScreen({ destination, preview }: { destination: string
 
   return (
     <GlassPanel className="mx-auto flex max-w-xl flex-col items-center gap-5 text-center">
-      <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">Planning your trip</p>
+      <p className="eyebrow">Planning your trip</p>
       <h2 className="text-[clamp(36px,5vw,60px)]">{destination}</h2>
       <p role="status" key={step} className="swap text-lg text-soft">
         {MESSAGES[step]}

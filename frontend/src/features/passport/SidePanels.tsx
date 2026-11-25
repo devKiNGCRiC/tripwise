@@ -28,7 +28,7 @@ import { QuotaMeter } from './QuotaMeter';
 function Panel({ title, icon, children, footer }: { title: string; icon: ReactNode; children: ReactNode; footer?: ReactNode }) {
   return (
     <section aria-label={title} className="glass-strong rounded-card p-5">
-      <h2 className="flex items-center gap-2 text-xs font-bold tracking-[0.16em] text-soft uppercase [font-family:var(--trip-font-body)]">
+      <h2 className="flex items-center gap-2 eyebrow [font-family:var(--trip-font-body)]">
         {icon}
         {title}
       </h2>

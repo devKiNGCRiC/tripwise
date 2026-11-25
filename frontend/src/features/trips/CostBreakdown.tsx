@@ -18,7 +18,7 @@ export function CostBreakdown({ cost }: { cost: Itinerary['estimatedCost'] }) {
   const money = (amount: number) => formatMoney({ amount, currency: cost.currency });
   return (
     <section aria-labelledby="cost-title" className="glass-strong rounded-card p-6">
-      <h2 id="cost-title" className="text-xs font-bold tracking-[0.14em] text-soft uppercase">
+      <h2 id="cost-title" className="eyebrow">
         Estimated cost
       </h2>
       <p className="mt-2 font-display text-4xl">{money(cost.total)}</p>

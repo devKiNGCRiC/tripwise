@@ -49,20 +49,29 @@ const KIND: Record<PlaceKind, string> = {
 /** "hindu temple in Hampi" → "Hindu temple in Hampi". */
 const capital = (text: string) => `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
 
-/** One place card. */
+/** One place card. Its photo fades in once loaded, and only then shows its credit. */
 function PlaceItem({ place }: { place: Place }) {
+  const [loaded, setLoaded] = useState(false);
   return (
     <li>
       <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-ink/3">
-        <div className="relative h-36 overflow-hidden">
+        {/* A tinted frame shows while the photo loads. */}
+        <div className="relative h-36 overflow-hidden bg-linear-to-br from-accent/25 to-ink/25">
           {place.image ? (
             <>
-              <img src={sizedImage(place.image.url, 500)} alt="" loading="lazy" decoding="async" className="size-full object-cover" />
+              <img
+                src={sizedImage(place.image.url, 500)}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                onLoad={() => setLoaded(true)}
+                className={cn('size-full object-cover transition-opacity duration-500', loaded ? 'opacity-100' : 'opacity-0')}
+              />
               <a
                 href={place.image.creditUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="absolute right-2 bottom-2 max-w-[90%] truncate rounded-full bg-black/45 px-2 py-0.5 text-[11px] text-white backdrop-blur-md"
+                className={cn('absolute right-2 bottom-2 max-w-[90%] truncate rounded-full bg-black/45 px-2 py-0.5 text-[11px] text-white backdrop-blur-md transition-opacity', !loaded && 'opacity-0')}
               >
                 Photo: {place.image.credit}
               </a>
@@ -72,7 +81,7 @@ function PlaceItem({ place }: { place: Place }) {
           )}
         </div>
         <div className="flex flex-1 flex-col gap-1 p-4">
-          <p className="text-xs font-bold tracking-[0.12em] text-soft uppercase">{KIND[place.kind] ?? place.kind}</p>
+          <p className="text-sm font-semibold text-accent">{KIND[place.kind] ?? place.kind}</p>
           <h3 className="font-display text-xl leading-tight">{place.name}</h3>
           {place.description && <p className="text-sm text-soft">{capital(place.description)}</p>}
           {place.wikipedia && (
@@ -102,7 +111,7 @@ export function TopPlaces({ slug, name }: { slug: string; name: string }) {
     <section aria-label={title} className="glass-strong mt-6 rounded-[32px] p-[clamp(20px,3vw,40px)]">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-bold tracking-[0.14em] text-soft uppercase">From our places catalogue</p>
+          <p className="eyebrow">From our places catalogue</p>
           <h2 className="mt-2 text-[clamp(28px,3vw,44px)]">{title}</h2>
         </div>
         <p className="text-sm text-soft">{places.length} real places, most famous first.</p>

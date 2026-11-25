@@ -97,7 +97,7 @@ export function JournalSheet({ stamp, onClose }: { stamp: Stamp; onClose: () => 
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">Journal</p>
+            <p className="eyebrow">Journal</p>
             <h2 id={titleId} className="font-display text-3xl">
               {stamp.destination} journal
             </h2>

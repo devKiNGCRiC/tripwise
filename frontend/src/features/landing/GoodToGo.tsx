@@ -31,7 +31,7 @@ export function GoodToGo() {
       <div className="reveal-up glass rounded-[36px] p-[clamp(22px,3.4vw,48px)]">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-6">
           <div>
-            <span className="text-[11px] font-bold tracking-[0.18em] text-soft uppercase">Right now</span>
+            <span className="eyebrow">Right now</span>
             <h2 id="good-title" className="mt-3 text-[clamp(32px,3.6vw,54px)]">
               Good to go <em>in {monthName}</em>
             </h2>

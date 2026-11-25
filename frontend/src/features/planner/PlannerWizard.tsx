@@ -103,7 +103,7 @@ export function PlannerWizard({ initial, toliId }: { initial: Partial<PlannerVal
             </li>
           ))}
         </ol>
-        <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">
+        <p className="eyebrow">
           Step {step + 1} of {STEPS.length}
         </p>
         <h2 key={step} className="swap mt-2 text-[clamp(32px,4vw,52px)]">

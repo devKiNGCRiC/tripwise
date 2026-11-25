@@ -34,7 +34,7 @@ export function AuthLayout({ eyebrow, eyebrowLocal, title, subtitle, children, f
       <div className="page-wrap grid min-h-svh items-center gap-12 pt-28 pb-20 lg:grid-cols-[1fr_minmax(0,460px)]">
         {/* The promise, beside the form (desktop only) */}
         <div aria-hidden className="hidden lg:block">
-          <p className="text-[11px] font-bold tracking-[0.18em] text-soft uppercase">
+          <p className="eyebrow">
             Now showing · {region.name}{' '}
             <span lang="hi" className="text-lg tracking-normal text-accent-2 normal-case">
               {region.hi}

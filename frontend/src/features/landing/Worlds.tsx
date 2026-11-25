@@ -24,7 +24,7 @@ export function Worlds() {
     <section ref={reveal} id="worlds" aria-labelledby="worlds-title" className="page-wrap scroll-mt-24 pb-[clamp(60px,10vh,120px)]">
       <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
         <div className="reveal-up glass-strong flex min-h-60 flex-col justify-between gap-4 rounded-[26px] p-6">
-          <span className="text-[11px] font-bold tracking-[0.18em] text-soft uppercase">Seven worlds</span>
+          <span className="eyebrow">Seven worlds</span>
           <h2 id="worlds-title" className="text-[clamp(30px,3vw,44px)]">
             One India. <em>Seven worlds.</em>
           </h2>
@@ -62,10 +62,7 @@ export function Worlds() {
                   <span className="shrink-0 font-semibold">Best {region.best}</span>
                 </span>
               </span>
-              {/* Top row: number, and how many places (or that AI can plan it) */}
-              <span aria-hidden className="absolute top-3.5 left-4 z-10 text-xs font-bold tracking-[0.14em]">
-                {String(i + 1).padStart(2, '0')}
-              </span>
+              {/* Top corner: how many places (or that AI can plan it) */}
               {destinations && (
                 <span className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 rounded-full border border-white/30 bg-black/30 px-3 py-1 text-[13px] font-semibold backdrop-blur-md">
                   {ours.length ? `${ours.length} ${ours.length === 1 ? 'destination' : 'destinations'}` : 'Plan with AI'}

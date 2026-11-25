@@ -58,7 +58,7 @@ export function DecideTab({ toli }: { toli: Toli }) {
         <BudgetComfort toliId={toli.id} />
         {toli.me.role !== 'sahyatri' && (
           <section className="glass-strong grid gap-3 rounded-card p-5">
-            <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">Ready?</p>
+            <p className="eyebrow">Ready?</p>
             <Link to={planUrl(toli)} className={buttonClasses({ variant: 'glow' })}>
               <Sparkles aria-hidden className="size-4" /> Plan the {w.sahyatra} with TripWise
             </Link>

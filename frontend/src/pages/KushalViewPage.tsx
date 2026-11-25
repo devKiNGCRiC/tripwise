@@ -27,7 +27,7 @@ export default function KushalViewPage() {
       <title>Kushal · TripWise</title>
       <GlassPanel className="flex flex-col items-center gap-4 text-center">
         <HeartHandshake aria-hidden className="size-10 text-accent" />
-        <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">
+        <p className="eyebrow">
           <span lang="hi">कुशल</span> · Kushal · family check-in
         </p>
         {view.isPending && <p role="status">Loading…</p>}

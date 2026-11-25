@@ -45,7 +45,7 @@ export function PlannerPreview({ values, step }: { values: PlannerValues; step: 
         </figcaption>
       </figure>
       <div className="p-5">
-        <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">Your trip so far</p>
+        <p className="eyebrow">Your trip so far</p>
         <dl className="mt-3 grid gap-2.5">
           {rows.map(([term, value, ready]) => (
             <div key={term} className={cn('flex items-baseline justify-between gap-4 border-b border-dashed border-line pb-2 transition-opacity', !ready && 'opacity-40')}>

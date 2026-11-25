@@ -25,7 +25,7 @@ export function InfoLayout({ eyebrow, title, tabTitle, lead, updated, children }
       <title>{`${tabTitle} · TripWise`}</title>
       <GlassPanel className="mx-auto max-w-[1200px]">
         <header className="max-w-[72ch]">
-          <p className="text-xs font-bold tracking-[0.14em] text-soft uppercase">{eyebrow}</p>
+          <p className="eyebrow">{eyebrow}</p>
           <h1 className="mt-2 text-[clamp(36px,5vw,60px)] leading-[1.05]">{title}</h1>
           <div className="mt-4 text-lg leading-relaxed text-pretty">{lead}</div>
           {updated && <p className="mt-3 text-sm text-soft">Last updated {updated}</p>}
@@ -34,7 +34,7 @@ export function InfoLayout({ eyebrow, title, tabTitle, lead, updated, children }
         <div className="mt-10 grid gap-8 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-14">
           {/* Sections menu: first on phones, a sticky column beside the text on large screens. */}
           <nav aria-label="On this page" className="lg:sticky lg:top-28 lg:self-start">
-            <p className="text-xs font-bold tracking-[0.14em] text-soft uppercase">On this page</p>
+            <p className="eyebrow">On this page</p>
             <ul className="mt-3 flex flex-wrap gap-2 lg:flex-col lg:gap-0.5 lg:border-l lg:border-line">
               {titles.map((t) => (
                 <li key={t}>

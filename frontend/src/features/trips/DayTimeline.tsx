@@ -30,7 +30,7 @@ export function DayTimeline({ day, onRegenerate, regenerating = false }: DayTime
         <div>
           <p className="flex flex-wrap items-baseline gap-3">
             <span className="font-display text-3xl text-accent">Day {day.dayNumber}</span>
-            <span className="text-xs font-bold tracking-[0.14em] text-soft uppercase">{dayLabel(day.date)}</span>
+            <span className="eyebrow">{dayLabel(day.date)}</span>
           </p>
           <h3 key={day.theme} className="swap mt-1 text-xl font-semibold">
             {day.theme}

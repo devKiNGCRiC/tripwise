@@ -42,7 +42,7 @@ export default function JoinPage() {
     <WorldStage>
       <title>Join a friend · TripWise</title>
       <div className="glass-strong mx-auto flex w-full max-w-lg flex-col gap-5 rounded-card p-8 text-center">
-        <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">An invitation</p>
+        <p className="eyebrow">An invitation</p>
         {invite.isPending && <Skeleton className="h-20 rounded-2xl" />}
         {invite.isError && (
           <>

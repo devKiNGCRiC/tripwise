@@ -52,7 +52,7 @@ export function BudgetComfort({ toliId }: { toliId: string }) {
 
   return (
     <section aria-label="Budget comfort" className="glass-strong grid gap-3 rounded-card p-5">
-      <p className="text-xs font-bold tracking-[0.16em] text-soft uppercase">Budget comfort · private</p>
+      <p className="eyebrow">Budget comfort · private</p>
       {budget.data && <h3 className="text-xl">{groupLine(budget.data.group)}</h3>}
       {budget.data?.mine && (
         <p className="text-sm">
