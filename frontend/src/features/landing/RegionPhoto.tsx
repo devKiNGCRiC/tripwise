@@ -37,7 +37,7 @@ export function RegionPhoto({ region, className }: { region: Region; className?:
         decoding="async"
         className={cn('absolute inset-0 size-full animate-[photo-in_0.9s_ease_both] object-cover', MELT)}
       />
-      <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 px-5 pb-1.5 text-[12.5px] sm:px-6">
+      <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 px-5 pb-1.5 text-[13px] sm:px-6">
         <span className="truncate font-semibold text-ink">{photo.place}</span>
         {/* Short visible credit; the full credit is the link's accessible name and tooltip */}
         <a

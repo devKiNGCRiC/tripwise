@@ -27,7 +27,7 @@ export function GoodToGo() {
   if (!isPending && !places?.length) return null;
 
   return (
-    <section ref={reveal} aria-labelledby="good-title" className="page-wrap pb-[clamp(60px,10vh,120px)]">
+    <section ref={reveal} aria-labelledby="good-title" className="page-wrap pt-[clamp(40px,6vh,72px)] pb-[clamp(40px,6vh,72px)]">
       <div className="reveal-up glass rounded-[36px] p-[clamp(22px,3.4vw,48px)]">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-6">
           <div>

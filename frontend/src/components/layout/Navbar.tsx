@@ -88,7 +88,7 @@ export function Navbar() {
               <NavLink
                 to="/passport"
                 aria-label={waiting > 0 ? `Your passport (${waiting} friend ${waiting === 1 ? 'request' : 'requests'})` : 'Your passport'}
-                className="relative grid size-11 place-items-center overflow-hidden rounded-full bg-ink font-semibold text-[14px] text-on-ink transition hover:-translate-y-0.5"
+                className="relative grid size-11 place-items-center overflow-hidden rounded-full bg-ink font-semibold text-sm text-on-ink transition hover:-translate-y-0.5"
               >
                 {user.avatarUrl ? <img src={user.avatarUrl} alt="" className="size-full object-cover" /> : initials(user.name)}
               </NavLink>

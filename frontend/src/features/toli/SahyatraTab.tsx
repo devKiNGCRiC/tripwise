@@ -15,6 +15,7 @@ import { useTrip } from '@/features/trips/hooks';
 import { useWords } from '@/features/words/WordsProvider';
 import { toliApi } from '@/lib/api/endpoints';
 import type { Toli } from '@/lib/api/types';
+import { cn } from '@/lib/utils/cn';
 import { TOLI_REFRESH_MS } from './hooks';
 import { SuggestForm, type SuggestTarget } from './SuggestForm';
 import { SujhavCard } from './SujhavCard';
@@ -54,10 +55,23 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
 
   /** The form for a target, if it's the open one. */
   const formFor = (key: string) => (form?.key === key ? <SuggestForm toliId={toli.id} target={form.target} onDone={() => setForm(null)} /> : null);
-  /** A "suggest" button that opens a form. */
-  const suggest = (key: string, target: SuggestTarget, label: string, text = 'Suggest…') => (
-    <button type="button" aria-label={label} onClick={() => setForm(form?.key === key ? null : { key, target })} className="inline-flex h-8 shrink-0 items-center gap-1 rounded-full border border-line px-3 text-sm font-semibold hover:bg-ink/6">
-      <Lightbulb aria-hidden className="size-3.5" /> {text}
+  /**
+   * A "suggest" button that opens a form. Per-stop buttons (`quiet`) show on hover or keyboard
+   * focus on larger screens, so a day isn't a column of identical buttons; touch screens always show them.
+   */
+  const suggest = (key: string, target: SuggestTarget, label: string, text = 'Suggest…', quiet = false) => (
+    <button
+      type="button"
+      aria-label={label}
+      onClick={() => setForm(form?.key === key ? null : { key, target })}
+      className={cn(
+        'inline-flex h-8 shrink-0 items-center gap-1 rounded-full border border-line px-3 text-sm font-semibold transition-opacity hover:bg-ink/6',
+        quiet && form?.key !== key && 'md:opacity-0 md:group-focus-within:opacity-100 md:group-hover:opacity-100',
+      )}
+    >
+      <Lightbulb aria-hidden className="size-3.5" />
+      {/* Per-stop buttons are just the bulb on phones, so the stop's text keeps its width (the label says the rest). */}
+      <span className={quiet ? 'hidden sm:inline' : undefined}>{text}</span>
     </button>
   );
   const open = sujhavs.data?.filter((s) => s.status === 'open') ?? [];
@@ -79,17 +93,17 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
             {trip.data.days.map((day) => (
               <section key={day.dayNumber} aria-label={`Day ${day.dayNumber} · ${day.theme}`} className="glass-strong grid gap-3 rounded-card p-5">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h3 className="text-xl">
-                    Day {day.dayNumber} · {day.theme}
+                  <h3 className="text-2xl leading-tight">
+                    <span className="text-accent-2">Day {day.dayNumber}</span> · {day.theme}
                   </h3>
                   {suggest(`day-${day.dayNumber}`, { kind: 'day', day: day.dayNumber, stops: day.activities.length }, `Suggest a stop for Day ${day.dayNumber}`, 'Suggest for this day')}
                 </div>
                 {formFor(`day-${day.dayNumber}`)}
                 <ul className="grid gap-2">
                   {day.activities.map((stop, i) => (
-                    <li key={`${stop.title}-${i}`} className="grid gap-2 border-b border-line pb-2 last:border-0">
+                    <li key={`${stop.title}-${i}`} className="group grid gap-2 border-b border-line py-1 pb-2.5 last:border-0">
                       <div className="flex items-start gap-3">
-                        <span className="w-12 shrink-0 font-semibold">{stop.startTime ?? ''}</span>
+                        <span className="w-12 shrink-0 font-semibold tabular-nums">{stop.startTime ?? ''}</span>
                         <div className="min-w-0 flex-1">
                           <h4 className="font-semibold">{stop.title}</h4>
                           <p className="text-sm text-soft">{stop.description}</p>
@@ -98,6 +112,8 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
                           `stop-${day.dayNumber}-${i}`,
                           { kind: 'stop', day: day.dayNumber, index: i, stop, days: trip.data.days.length, last: i === day.activities.length - 1 },
                           `Suggest a change to ${stop.title}`,
+                          'Suggest…',
+                          true,
                         )}
                       </div>
                       {formFor(`stop-${day.dayNumber}-${i}`)}
@@ -107,7 +123,9 @@ export function SahyatraTab({ toli }: { toli: Toli }) {
                 <DayDharas toli={toli} day={day.dayNumber} date={dateOfDay(trip.data.request.startDate, day.dayNumber)} splits={splits.data?.filter((s) => s.day === day.dayNumber) ?? []} />
               </section>
             ))}
-            <div className="flex flex-wrap items-center gap-3">
+            {/* On a panel, so it never floats on the landscape. */}
+            <div className="glass flex flex-wrap items-center justify-between gap-3 rounded-card px-5 py-4">
+              <p className="text-sm text-soft">Want more time there?</p>
               {suggest('trip', { kind: 'trip' }, 'Suggest adding a day', 'Suggest adding a day')}
             </div>
             {formFor('trip')}

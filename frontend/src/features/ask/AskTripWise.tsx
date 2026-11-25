@@ -41,7 +41,7 @@ function Message({ message, onAsk, busy }: { message: AskMessage; onAsk: (q: str
           ))}
         </div>
       )}
-      {message.weatherCredit && <p className="text-[11px] text-soft">Weather: MET Norway</p>}
+      {message.weatherCredit && <p className="text-xs text-soft">Weather: MET Norway</p>}
     </article>
   );
 }

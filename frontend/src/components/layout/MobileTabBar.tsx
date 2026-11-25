@@ -45,7 +45,7 @@ export function MobileTabBar() {
               end={to === '/'}
               className={({ isActive }) =>
                 cn(
-                  'flex flex-col items-center gap-0.5 rounded-full py-1.5 text-[11px] font-medium transition-colors duration-300',
+                  'flex flex-col items-center gap-0.5 rounded-full py-1.5 text-xs font-medium transition-colors duration-300',
                   isActive ? 'bg-ink text-on-ink' : 'text-soft',
                 )
               }

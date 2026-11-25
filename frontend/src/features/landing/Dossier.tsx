@@ -38,7 +38,7 @@ export function Dossier({ region, index, total }: { region: Region; index: numbe
         ].map(([term, value]) => (
           <div key={term} className="rounded-2xl bg-ink/5 px-3 py-2.5">
             <dt className="eyebrow">{term}</dt>
-            <dd className="mt-0.5 text-[14.5px] font-semibold">{value}</dd>
+            <dd className="mt-0.5 text-[15px] font-semibold">{value}</dd>
           </div>
         ))}
       </dl>

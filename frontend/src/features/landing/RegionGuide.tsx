@@ -70,7 +70,7 @@ export function RegionGuide({ region }: { region: Region }) {
   }
 
   return (
-    <section ref={reveal} id="region-guide" aria-label={`${region.name} guide`} className="page-wrap scroll-mt-24 pt-[clamp(48px,8vh,96px)]">
+    <section ref={reveal} id="region-guide" aria-label={`${region.name} guide`} className="page-wrap scroll-mt-24 pt-[clamp(40px,6vh,72px)]">
       <div className="reveal-up glass-strong grid gap-8 rounded-[36px] p-[clamp(22px,3vw,44px)] lg:grid-cols-[1.1fr_1fr]">
         {/* Left: the chart, which picks the month */}
         <div className="flex flex-col">
@@ -108,7 +108,7 @@ export function RegionGuide({ region }: { region: Region }) {
                   />
                   <span
                     className={cn(
-                      'text-[11px] font-semibold sm:text-xs',
+                      'text-xs font-semibold sm:text-xs',
                       on ? 'text-ink' : 'text-soft',
                       m === thisMonth && 'underline decoration-accent decoration-2 underline-offset-4',
                     )}

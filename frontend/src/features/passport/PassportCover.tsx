@@ -82,7 +82,7 @@ export function PassportCover({ passport, actions }: { passport: Passport; actio
             {numbers.map(([value, label]) => (
               <li key={label} className="rounded-xl bg-[#1a2759] px-3 py-2.5 text-center ring-1 ring-white/6">
                 <span className="block font-display text-2xl text-white">{value}</span>
-                <span className="text-[11px] font-semibold tracking-wide text-[#f6efe3]/70 uppercase">{label}</span>
+                <span className="text-xs font-semibold tracking-wide text-[#f6efe3]/70 uppercase">{label}</span>
               </li>
             ))}
           </ul>
@@ -90,7 +90,7 @@ export function PassportCover({ passport, actions }: { passport: Passport; actio
       </div>
 
       {/* The machine-readable line every passport has (decoration) */}
-      <p aria-hidden className="mt-5 overflow-hidden font-mono text-[11px] tracking-[0.3em] whitespace-nowrap text-[#8fa0c8] sm:text-xs">
+      <p aria-hidden className="mt-5 overflow-hidden font-mono text-xs tracking-[0.3em] whitespace-nowrap text-[#8fa0c8] sm:text-xs">
         {passportCode(cover.name, cover.username, cover.joined)}
       </p>
     </section>

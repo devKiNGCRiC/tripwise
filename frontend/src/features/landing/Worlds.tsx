@@ -21,7 +21,7 @@ export function Worlds() {
   const { data: destinations } = useDestinations();
 
   return (
-    <section ref={reveal} id="worlds" aria-labelledby="worlds-title" className="page-wrap scroll-mt-24 pb-[clamp(60px,10vh,120px)]">
+    <section ref={reveal} id="worlds" aria-labelledby="worlds-title" className="page-wrap scroll-mt-24 pt-[clamp(40px,6vh,72px)]">
       <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
         <div className="reveal-up glass-strong flex min-h-60 flex-col justify-between gap-4 rounded-[26px] p-6">
           <span className="eyebrow">Seven worlds</span>

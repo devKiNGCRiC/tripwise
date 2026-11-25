@@ -67,11 +67,10 @@
     transition: color 0.8s ease;
     -webkit-font-smoothing: antialiased;
   }
-  /* Headlines: Fraunces at large optical size, a touch soft */
+  /* Headlines: Fraunces at large optical size, a touch soft (small titles, h4, stay in the body font) */
   h1,
   h2,
-  h3,
-  h4 {
+  h3 {
     font-family: var(--trip-font-display);
     font-weight: 580;
     font-variation-settings:

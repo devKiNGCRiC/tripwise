@@ -23,7 +23,7 @@ export function TravellerKinds({ who, onWhoChange }: { who: string; onWhoChange:
   const columns = KINDS.map((kind) => (kind.who === who ? '1.6fr' : '1fr')).join(' ');
 
   return (
-    <section ref={reveal} aria-labelledby="kinds-title" className="page-wrap py-[clamp(60px,10vh,120px)]">
+    <section ref={reveal} aria-labelledby="kinds-title" className="page-wrap pt-[clamp(40px,6vh,72px)]">
       <div className="reveal-up glass rounded-[36px] p-[clamp(22px,3.4vw,48px)]">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-6">
           <h2 id="kinds-title" className="max-w-[15ch] text-[clamp(34px,4.6vw,70px)]">
@@ -41,8 +41,9 @@ export function TravellerKinds({ who, onWhoChange }: { who: string; onWhoChange:
                 aria-pressed={on}
                 onClick={() => onWhoChange(kind.who)}
                 className={cn(
-                  'flex min-h-[240px] flex-col gap-2.5 overflow-hidden rounded-3xl border p-5 text-left transition-colors duration-300',
-                  on ? 'border-transparent bg-accent text-on-accent' : 'border-line bg-ink/4 hover:bg-ink/7',
+                  'flex min-h-[210px] flex-col gap-2.5 overflow-hidden rounded-3xl border p-5 text-left transition-colors duration-300',
+                  // Unchosen cards sit slightly raised on the panel and warm to the accent on hover.
+                  on ? 'border-transparent bg-accent text-on-accent shadow-lg shadow-accent/25' : 'border-line bg-white/55 hover:border-accent/35 hover:bg-accent/8 dark:bg-white/5',
                 )}
               >
                 <span aria-hidden className="grid size-11 place-items-center rounded-2xl bg-current/12">
@@ -52,7 +53,7 @@ export function TravellerKinds({ who, onWhoChange }: { who: string; onWhoChange:
                 </span>
                 <h3 className="text-[26px]">{kind.title}</h3>
                 <p className="text-sm opacity-85">{kind.line}</p>
-                <ul className={cn('mt-auto grid gap-1.5 text-[13.5px] font-semibold transition-[opacity,max-height] duration-500', on ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0')}>
+                <ul className={cn('mt-auto grid gap-1.5 text-sm font-semibold transition-[opacity,max-height] duration-500', on ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0')}>
                   {kind.perks.map((perk) => (
                     <li key={perk}>✓ {perk}</li>
                   ))}

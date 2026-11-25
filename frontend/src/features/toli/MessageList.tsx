@@ -78,7 +78,7 @@ export function MessageList({ toli, messages, pending, meId, onReply }: { toli: 
                   ))}
                 </div>
               )}
-              <div className="flex items-center justify-between gap-3 text-[11px] opacity-75">
+              <div className="flex items-center justify-between gap-3 text-xs opacity-75">
                 <span>{new Date(m.createdAt).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}</span>
                 <button type="button" onClick={() => onReply(m)} aria-label={`Reply to ${m.author.name}`} className="inline-flex items-center gap-1 font-semibold hover:underline">
                   <Reply aria-hidden className="size-3" /> Reply
@@ -92,7 +92,7 @@ export function MessageList({ toli, messages, pending, meId, onReply }: { toli: 
         <li key={p.clientId} className="flex flex-row-reverse">
           <article aria-label={`Waiting to send: ${p.text.slice(0, 60)}`} className="grid max-w-[85%] gap-1 rounded-2xl rounded-br-md bg-accent/50 px-3.5 py-2.5 text-on-accent">
             <p className="whitespace-pre-wrap break-words">{p.text}</p>
-            <p className="text-[11px]">⏳ Waiting for signal — it will send by itself</p>
+            <p className="text-xs">⏳ Waiting for signal — it will send by itself</p>
           </article>
         </li>
       ))}

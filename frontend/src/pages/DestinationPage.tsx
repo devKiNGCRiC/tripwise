@@ -107,7 +107,7 @@ export default function DestinationPage() {
               {SHORT.map((month, i) => (
                 <li key={month} aria-label={`${LONG[i]}: ${best.has(i + 1) ? 'Best' : 'Off season'}`} className="grid h-full grid-rows-[1fr_auto] items-end justify-items-center gap-1.5">
                   <span aria-hidden className={cn('w-full rounded-t-md rounded-b-sm', best.has(i + 1) ? 'h-full bg-accent' : 'h-1/4 bg-accent/20')} />
-                  <span aria-hidden className="text-[11px] font-semibold text-soft">
+                  <span aria-hidden className="text-xs font-semibold text-soft">
                     {month}
                   </span>
                 </li>

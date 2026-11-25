@@ -26,8 +26,8 @@ export function RegionBar({ className }: { className?: string }) {
         >
           <img src={region.photo.thumb} alt="" width={54} height={64} className="h-[64px] w-[54px] shrink-0 bg-accent/20 object-cover [clip-path:url(#archClip)]" />
           <span className="min-w-0">
-            <b className="block truncate text-[14.5px] leading-tight font-semibold">{region.name}</b>
-            <small className="block truncate text-[12.5px] text-soft">
+            <b className="block truncate text-[15px] leading-tight font-semibold">{region.name}</b>
+            <small className="block truncate text-[13px] text-soft">
               <span lang="hi">{region.hi}</span> · {region.terr}
             </small>
           </span>

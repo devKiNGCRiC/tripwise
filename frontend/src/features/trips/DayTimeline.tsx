@@ -68,7 +68,7 @@ export function DayTimeline({ day, onRegenerate, regenerating = false }: DayTime
                 {activity.estCost ? <span className="text-sm font-semibold text-soft sm:text-right">{formatMoney({ amount: activity.estCost, currency: 'INR' })}</span> : null}
               </div>
               {activity.transfer && Icon && (
-                <p className="my-3 flex items-center gap-1.5 text-[13.5px] text-soft sm:ml-[80px]">
+                <p className="my-3 flex items-center gap-1.5 text-sm text-soft sm:ml-[80px]">
                   <Icon aria-hidden className="size-4" />
                   {transferLabel(activity.transfer)}
                 </p>

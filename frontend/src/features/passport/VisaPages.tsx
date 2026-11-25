@@ -32,13 +32,13 @@ function StampMark({ stamp, tilt }: { stamp: Stamp; tilt: number }) {
       style={{ transform: `rotate(${upcoming ? 0 : tilt}deg)`, ...(upcoming ? {} : { borderColor: ink, color: ink }) }}
     >
       {/* Long names get smaller letters so they stay inside the ring */}
-      <span className={cn('px-3 font-display tracking-wider uppercase', stamp.destination.length > 10 ? 'text-[11px] leading-tight sm:text-xs' : 'text-sm sm:text-base')}>{stamp.destination}</span>
+      <span className={cn('px-3 font-display tracking-wider uppercase', stamp.destination.length > 10 ? 'text-xs leading-tight sm:text-xs' : 'text-sm sm:text-base')}>{stamp.destination}</span>
       {stamp.localName && (
         <span lang="hi" className="text-sm">
           {stamp.localName}
         </span>
       )}
-      <span className="mt-0.5 text-[11px] font-bold tracking-widest">{upcoming ? `in ${stamp.daysUntil} d` : monthYear(stamp.startDate)}</span>
+      <span className="mt-0.5 text-xs font-bold tracking-widest">{upcoming ? `in ${stamp.daysUntil} d` : monthYear(stamp.startDate)}</span>
     </span>
   );
 }

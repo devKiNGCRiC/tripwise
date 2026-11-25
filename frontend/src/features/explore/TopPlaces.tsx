@@ -71,7 +71,7 @@ function PlaceItem({ place }: { place: Place }) {
                 href={place.image.creditUrl}
                 target="_blank"
                 rel="noreferrer"
-                className={cn('absolute right-2 bottom-2 max-w-[90%] truncate rounded-full bg-black/45 px-2 py-0.5 text-[11px] text-white backdrop-blur-md transition-opacity', !loaded && 'opacity-0')}
+                className={cn('absolute right-2 bottom-2 max-w-[90%] truncate rounded-full bg-black/45 px-2 py-0.5 text-xs text-white backdrop-blur-md transition-opacity', !loaded && 'opacity-0')}
               >
                 Photo: {place.image.credit}
               </a>

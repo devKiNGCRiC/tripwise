@@ -34,7 +34,7 @@ function CoverActions() {
         <Users aria-hidden className="size-4" />
         Friends{count !== undefined && ` · ${count}`}
         {waiting > 0 && (
-          <span className="absolute -top-1 -right-1 grid size-5 place-items-center rounded-full bg-danger text-[11px] text-white" aria-label={`${waiting} friend ${waiting === 1 ? 'request' : 'requests'}`}>
+          <span className="absolute -top-1 -right-1 grid size-5 place-items-center rounded-full bg-danger text-xs text-white" aria-label={`${waiting} friend ${waiting === 1 ? 'request' : 'requests'}`}>
             {waiting}
           </span>
         )}
