@@ -24,6 +24,10 @@ You can then save it, download it as a PDF, or share it with your friends.
 | 🏞️ | "Seven Worlds": a living, hand-drawn landscape of seven Indian regions behind every page | ✅ Done |
 | 🌗 | Day and Night for every world, region colours, a Colours menu that tints the site from your photo (kept on your account), Calm motion | ✅ Done |
 | 📱 | Mobile-first layout with an app-style bottom tab bar | ✅ Done |
+| 🛕 | Identity: the *Dwar* gateway mark with its winding footpath, and the slogan **Wander wisely · विवेक से यात्रा** — on the site, tab icon, app icons, share image and splash screen (`npm --prefix frontend run brand:assets` redraws the pictures) | ✅ Done |
+| 📄 | About, Privacy, Terms and Contact pages; sign-up links the Terms and Privacy policy | ✅ Done |
+| 🔎 | Search-friendly: a ready-made page for every public address (with each destination's guide text), link previews, schema.org data, `sitemap.xml` and `robots.txt`, written at build time | ✅ Done |
+| 📲 | Installable (web app manifest and icons), with a branded splash screen while the app starts | ✅ Done |
 | 🧭 | Explore 94 destinations (88 in India across all seven worlds, nature-heavy in the Himalaya and the North-East; 6 abroad) by world, vibe, budget and best month | ✅ Done |
 | 📖 | A written guide on every Indian destination's page — about, history, why it matters, things to do, food to try — adapted from Wikivoyage and Wikipedia (CC BY-SA 4.0, credited) and checked against them | ✅ Done |
 | 📍 | Places catalogue: 1,763 real places across 88 Indian destinations in all seven worlds (Wikidata, credited Commons photos) | ✅ Done |
@@ -170,7 +174,7 @@ Add their keys to `backend/.env` (names in `backend/.env.example`); TripWise swi
 - [x] **Toli, part 2 (Lekha):** fair expense splitting, settle up with UPI, totals; Indian or English names
 - [x] **Toli, part 3a:** Dharas and Sangam, where are my Sahyatris, Kushal family check-ins, notes, Potli
 - [ ] **Toli, part 3b:** Toli album, voice notes, offline trip
-- [ ] **Launch:** deploy to Cloudflare Pages + Render, installable PWA with offline trips
+- [ ] **Launch:** deploy to Cloudflare Pages + Render (set `VITE_SITE_URL` to the live address), offline trips
 - [ ] **Premium:** paid plan with Razorpay
 - [ ] **Phase 2:** React Native app, social sharing, AI chat assistant
 

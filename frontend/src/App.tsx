@@ -4,8 +4,10 @@
  * Order matters: the query cache is outermost (auth uses it), then theme, the living
  * world (it follows the theme), toasts, auth, smooth scrolling, and finally the router.
  * The world's canvas is mounted here — once, behind every page, including error pages.
+ * Once the app has drawn its first screen, the splash screen from index.html goes.
  */
 import { QueryClientProvider } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 import { ToastProvider } from '@/components/ui/Toast';
@@ -13,6 +15,7 @@ import { ScrollThumb } from '@/components/signature/ScrollThumb';
 import { SmoothScroll } from '@/components/signature/SmoothScroll';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { createQueryClient } from '@/lib/queryClient';
+import { hideSplash } from '@/lib/splash';
 import { routes } from '@/router';
 import { ThemeProvider } from '@/theme/ThemeProvider';
 import { LivingWorld } from '@/world/LivingWorld';
@@ -24,6 +27,9 @@ const queryClient = createQueryClient();
 const router = createBrowserRouter(routes);
 
 export default function App() {
+  // The app is on screen: take the splash away.
+  useEffect(() => hideSplash(), []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>

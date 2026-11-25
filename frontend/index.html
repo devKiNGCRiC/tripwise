@@ -1,8 +1,9 @@
 <!doctype html>
 <!--
   index.html — the single HTML page of the TripWise SPA.
-  React renders everything inside <div id="root">; this file only holds
-  meta tags, the favicon, and a tiny pre-paint theme script.
+  React renders everything inside <div id="root">; this file only holds meta tags, the icons and
+  app manifest, a tiny pre-paint theme script, and the splash screen shown until the app starts
+  (src/lib/splash.ts takes it away).
 -->
 <html lang="en" data-theme="light">
   <head>
@@ -10,6 +11,8 @@
     <!-- Icons: the gateway mark in the tab, and on phone home screens. -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <!-- Installable app: name, icons and colours (public/manifest.webmanifest). -->
+    <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
@@ -47,8 +50,35 @@
         } catch (e) {}
       })();
     </script>
+    <!--
+      Splash screen: the mark, name and slogan on the brand paper (indigo night in dark mode),
+      over everything until the app has started. Plain CSS — the app's styles aren't loaded yet.
+    -->
+    <style>
+      #splash { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; background: #f6efe3; color: #1e2747; transition: opacity 350ms ease; }
+      [data-theme='dark'] #splash { background: #12172b; color: #f6efe3; }
+      #splash.is-leaving { opacity: 0; pointer-events: none; }
+      #splash .splash-inner { display: grid; justify-items: center; gap: 14px; }
+      #splash .splash-name { font-family: 'Fraunces Variable', Georgia, serif; font-weight: 600; font-size: 34px; letter-spacing: -0.02em; }
+      #splash .splash-slogan { font-family: 'Plus Jakarta Sans Variable', system-ui, sans-serif; font-size: 15px; opacity: 0.75; }
+      #splash .splash-sun { animation: splash-rise 1.6s ease-in-out infinite alternate; transform-origin: center; }
+      @keyframes splash-rise { from { transform: translateY(2px); } to { transform: translateY(-2px); } }
+      [data-motion='calm'] #splash .splash-sun { animation: none; }
+      @media (prefers-reduced-motion: reduce) { #splash .splash-sun { animation: none; } }
+    </style>
   </head>
   <body>
+    <div id="splash" aria-hidden="true">
+      <div class="splash-inner">
+        <svg viewBox="0 0 64 64" width="88" height="88">
+          <path fill="currentColor" fill-rule="evenodd" d="M8,60 V24.2 C8,13.5 17.6,7.4 32,3.5 C46.4,7.4 56,13.5 56,24.2 V60 Z M15.5,60 V29.5 C15.5,21.8 21.8,16.8 32,13.6 C42.2,16.8 48.5,21.8 48.5,29.5 V60 Z" />
+          <circle class="splash-sun" cx="32" cy="36.5" r="7" fill="#e8813a" />
+          <path fill="currentColor" fill-rule="evenodd" d="M14,46.8 C23,42.4 41,42.4 50,46.8 V60 H14 Z M24.5,60 C26.5,56 33.4,55.6 33.4,52.4 C33.4,49.6 29.8,48.6 31.3,44.6 H33 C32.4,47.6 37.6,49 37.6,52.6 C37.6,56.6 33.4,57.4 35.4,60 Z" />
+        </svg>
+        <div class="splash-name">TripWise</div>
+        <div class="splash-slogan">Wander wisely</div>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
