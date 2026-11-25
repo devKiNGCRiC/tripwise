@@ -33,6 +33,11 @@ export const routes: RouteObject[] = [
       { path: 'reset-password/:token', lazy: lazyPage(() => import('@/pages/ResetPasswordPage')) },
       { path: 'u/:username', lazy: lazyPage(() => import('@/pages/PublicPassportPage')) },
       { path: 'kushal/:token', lazy: lazyPage(() => import('@/pages/KushalViewPage')) },
+      // Information pages
+      { path: 'about', lazy: lazyPage(() => import('@/pages/AboutPage')) },
+      { path: 'privacy', lazy: lazyPage(() => import('@/pages/PrivacyPage')) },
+      { path: 'terms', lazy: lazyPage(() => import('@/pages/TermsPage')) },
+      { path: 'contact', lazy: lazyPage(() => import('@/pages/ContactPage')) },
 
       // Only for logged-out visitors
       {

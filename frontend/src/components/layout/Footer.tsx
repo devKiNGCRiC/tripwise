@@ -26,17 +26,32 @@ export function Footer() {
           </p>
           <p className="mt-1 max-w-xs text-soft">Trips across India's seven worlds — and the rest of the planet — planned around you. Free, always.</p>
         </div>
-        <nav aria-label="Footer" className="flex flex-col gap-2">
-          <Link to="/explore" className={LINK}>
-            Explore destinations
-          </Link>
-          <Link to="/plan" className={LINK}>
-            Plan a trip
-          </Link>
-          <Link to="/signup" className={LINK}>
-            Create an account
-          </Link>
-        </nav>
+        {/* Two link groups side by side: getting around, and about TripWise. */}
+        <div className="grid grid-cols-2 gap-6">
+          <nav aria-label="Footer" className="flex flex-col gap-2">
+            <Link to="/explore" className={LINK}>
+              Explore destinations
+            </Link>
+            <Link to="/plan" className={LINK}>
+              Plan a trip
+            </Link>
+            <Link to="/signup" className={LINK}>
+              Create an account
+            </Link>
+          </nav>
+          <nav aria-label="About TripWise" className="flex flex-col gap-2">
+            {[
+              ['About', '/about'],
+              ['Privacy', '/privacy'],
+              ['Terms', '/terms'],
+              ['Contact', '/contact'],
+            ].map(([label, to]) => (
+              <Link key={to} to={to} className={LINK}>
+                {label}
+              </Link>
+            ))}
+          </nav>
+        </div>
         <div className="text-soft">
           <p>Every landscape here is drawn live in your browser.</p>
           <p>

@@ -5,6 +5,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { ApiError } from '@/lib/api/errors';
@@ -48,6 +49,18 @@ export function SignupForm() {
       <Button type="submit" size="lg" fullWidth loading={isSubmitting}>
         Create account
       </Button>
+      {/* What creating an account agrees to. */}
+      <p className="text-center text-sm text-soft">
+        By creating an account you accept our{' '}
+        <Link to="/terms" className="text-ink underline decoration-accent underline-offset-4">
+          Terms
+        </Link>{' '}
+        and{' '}
+        <Link to="/privacy" className="text-ink underline decoration-accent underline-offset-4">
+          Privacy policy
+        </Link>
+        .
+      </p>
     </form>
   );
 }
