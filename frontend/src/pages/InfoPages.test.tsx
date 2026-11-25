@@ -36,6 +36,14 @@ describe('info pages', () => {
     expect(screen.getByRole('heading', { name: /delet/i })).toBeInTheDocument();
   });
 
+  it('lists its sections in an "On this page" menu that jumps to each', async () => {
+    renderApp('/privacy');
+    const menu = await screen.findByRole('navigation', { name: 'On this page' });
+    expect(within(menu).getByRole('link', { name: 'Your location' })).toHaveAttribute('href', '#your-location');
+    expect(within(menu).getAllByRole('link').length).toBeGreaterThanOrEqual(8);
+    expect(screen.getByRole('region', { name: 'Your location' })).toHaveAttribute('id', 'your-location');
+  });
+
   it('links all four from the footer', async () => {
     renderApp('/explore');
     const footer = await screen.findByRole('navigation', { name: 'About TripWise' });
