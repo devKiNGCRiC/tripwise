@@ -63,6 +63,9 @@ function TripGrid({ label, trips, place }: { label: string; trips: Itinerary[]; 
 export default function TripsPage() {
   const { data: trips, isPending, isError, refetch } = useTrips();
   const { data: destinations } = useDestinations();
+  // For someone with no trips yet: four Indian places at their best this month.
+  const month = new Date().getMonth() + 1;
+  const ideas = (destinations ?? []).filter((d) => d.region && d.bestMonths.includes(month)).slice(0, 4);
   /** The destination record behind a trip (for its photo), if we know it. */
   const place = (name: string) => destinations?.find((d) => d.name.toLowerCase() === name.trim().toLowerCase());
 
@@ -109,6 +112,24 @@ export default function TripsPage() {
           <Link to="/plan" className={buttonClasses({ className: 'mt-2' })}>
             Plan your first trip
           </Link>
+          {/* Or start from a place at its best right now. */}
+          {ideas.length > 0 && (
+            <div className="mt-6 w-full max-w-3xl">
+              <p className="eyebrow">Or start with a place at its best this month</p>
+              <ul aria-label="Ideas for this month" className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {ideas.map((d) => (
+                  <li key={d.id}>
+                    <Link to={`/plan?destination=${encodeURIComponent(d.name)}`} className="group block overflow-hidden rounded-2xl border border-line text-left">
+                      <span className="block h-24 overflow-hidden bg-linear-to-b from-[#3a4566] to-[#1e2747]">
+                        <img src={sizedImage(d.image.url, 330)} alt="" loading="lazy" className="size-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      </span>
+                      <span className="block px-3 py-2 font-semibold">{d.name}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </GlassPanel>
       )}
       {next && <NextTrip trip={next} destination={place(next.request.destination)} />}

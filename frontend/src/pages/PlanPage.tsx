@@ -48,6 +48,11 @@ export default function PlanPage() {
   return (
     <div className="page-wrap pt-28 pb-16">
       <title>Plan a trip · TripWise</title>
+      {/* The page's title and what to expect, on a header panel like every inner page. */}
+      <header className="glass mx-auto mb-6 max-w-6xl rounded-[28px] px-6 py-5 sm:px-8">
+        <h1 className="text-[clamp(34px,4vw,52px)] leading-[1.05]">Plan a trip</h1>
+        <p className="mt-1.5 max-w-[60ch] text-soft">Six quick questions, then a day-by-day plan built on real places — with AI, or our own planner when you’re out of AI plans.</p>
+      </header>
       {toli.data && (
         <p className="glass mx-auto mb-4 max-w-3xl rounded-2xl px-5 py-3 text-center">
           Planning the {w.sahyatra} for <b>{toli.data.name}</b> — every {w.sahyatri} will see it.

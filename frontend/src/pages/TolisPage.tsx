@@ -3,7 +3,7 @@
  * chat and what's waiting to be decided) and "Start a Toli". `?trip=<id>` starts a Toli from
  * that trip.
  */
-import { MessageCircle } from 'lucide-react';
+import { Lightbulb, Map as MapIcon, MessageCircle, Wallet } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
 import { LoadError } from '@/components/layout/LoadError';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -66,7 +66,30 @@ export default function TolisPage() {
         <div className="grid gap-4 sm:grid-cols-2">
           {tolis.isPending && <Skeleton className="h-40 rounded-card" />}
           {tolis.isError && <LoadError what={`your ${w.tolis}`} onRetry={() => void tolis.refetch()} />}
-          {tolis.data?.length === 0 && <p className="glass rounded-card p-6 text-soft">No {w.tolis} yet. Start one and invite your people.</p>}
+          {/* Nothing yet: what a Toli is for, so starting one makes sense. */}
+          {tolis.data?.length === 0 && (
+            <section aria-label={`What a ${w.toli} does`} className="glass-strong grid gap-5 rounded-card p-6 sm:col-span-2 sm:p-8">
+              <div>
+                <h2 className="text-[clamp(26px,2.6vw,34px)] leading-tight">Plan it together, without the chaos</h2>
+                <p className="mt-2 max-w-[56ch] text-soft">A {w.toli} is your group for one trip. Start one, invite your people, and decide everything in one place.</p>
+              </div>
+              <ul className="grid gap-4 sm:grid-cols-3">
+                {[
+                  { icon: Lightbulb, title: 'Decide together', line: 'Suggest places and dates, vote in polls, and see the budget everyone’s comfortable with.' },
+                  { icon: MapIcon, title: 'One shared plan', line: `The ${w.sahyatra}: a day-by-day plan everyone sees, with ideas the leaders approve.` },
+                  { icon: Wallet, title: 'Money that adds up', line: `${w.lekha} keeps who paid and who owes, and settles up in the fewest payments.` },
+                ].map(({ icon: Icon, title, line }) => (
+                  <li key={title} className="grid content-start gap-2 rounded-3xl border border-line bg-white/50 p-4 dark:bg-white/5">
+                    <span aria-hidden className="grid size-10 place-items-center rounded-2xl bg-accent/12 text-accent">
+                      <Icon className="size-5" />
+                    </span>
+                    <h3 className="text-xl">{title}</h3>
+                    <p className="text-sm text-soft">{line}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
           {tolis.data?.map((t) => (
             <ToliCard key={t.id} toli={t} />
           ))}

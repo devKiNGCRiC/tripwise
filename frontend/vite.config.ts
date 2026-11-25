@@ -12,7 +12,7 @@ import { fileURLToPath, URL } from 'node:url';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig, type Plugin } from 'vite';
-import { publicPages, renderPage, robotsTxt, sitemapXml, type SeoDestination, type SeoGuide } from './src/lib/seo/pages';
+import { publicPages, renderPage, robotsTxt, sitemapXml, type SeoDestination, type SeoGuide } from './src/lib/seo/pages.ts';
 
 /** The live site's address (set VITE_SITE_URL when deploying; this is the expected default). */
 const SITE_URL = (process.env.VITE_SITE_URL ?? 'https://tripwise.pages.dev').replace(/\/$/, '');

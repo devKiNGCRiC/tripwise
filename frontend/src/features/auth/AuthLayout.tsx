@@ -51,7 +51,7 @@ export function AuthLayout({ eyebrow, eyebrowLocal, title, subtitle, children, f
         </div>
 
         <Card className="w-full p-7 sm:p-9">
-          <p className="flex items-baseline justify-between text-xs font-bold tracking-[0.2em] text-soft uppercase">
+          <p className="eyebrow flex items-baseline justify-between">
             {eyebrow}
             <span lang="hi" className="text-xl tracking-normal text-accent-2 normal-case">
               {eyebrowLocal}

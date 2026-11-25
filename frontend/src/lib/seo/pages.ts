@@ -10,7 +10,7 @@
  *   robotsTxt     what crawlers may visit, and where the sitemap is
  * Pure functions (no browser or file access), so they are tested directly.
  */
-import { BRAND } from '../brand';
+import { BRAND } from '../brand.ts';
 
 /** The destination fields used here (from the catalogue's destinations.json). */
 export interface SeoDestination {

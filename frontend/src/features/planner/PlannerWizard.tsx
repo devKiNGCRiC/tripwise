@@ -24,13 +24,13 @@ import { plannerResolver, type PlannerValues } from './schema';
 import { BudgetStep, DatesStep, DestinationStep, InterestsStep, PaceStep, ReviewStep } from './steps';
 
 /** The steps: title, a short prompt, and which fields must be valid to move on. */
-const STEPS: { title: string; prompt: string; fields: (keyof PlannerValues)[] }[] = [
-  { title: 'Where to?', prompt: 'A city, a region, a temple town — anywhere.', fields: ['destination'] },
-  { title: 'When?', prompt: 'Up to 14 days.', fields: ['startDate', 'endDate'] },
-  { title: 'Budget & company', prompt: 'We plan stays, food and transport to fit.', fields: ['budget', 'travellers'] },
-  { title: 'What do you love?', prompt: 'The plan leans towards your interests.', fields: ['interests'] },
-  { title: 'Your pace', prompt: 'Slow and deep, or see it all?', fields: ['pace'] },
-  { title: 'Ready when you are', prompt: 'Check your answers, then let the planner work.', fields: [] },
+const STEPS: { title: string; short: string; prompt: string; fields: (keyof PlannerValues)[] }[] = [
+  { title: 'Where to?', short: 'Where', prompt: 'A city, a region, a temple town — anywhere.', fields: ['destination'] },
+  { title: 'When?', short: 'When', prompt: 'Up to 14 days.', fields: ['startDate', 'endDate'] },
+  { title: 'Budget & company', short: 'Budget', prompt: 'We plan stays, food and transport to fit.', fields: ['budget', 'travellers'] },
+  { title: 'What do you love?', short: 'Interests', prompt: 'The plan leans towards your interests.', fields: ['interests'] },
+  { title: 'Your pace', short: 'Pace', prompt: 'Slow and deep, or see it all?', fields: ['pace'] },
+  { title: 'Ready when you are', short: 'Review', prompt: 'Check your answers, then let the planner work.', fields: [] },
 ];
 
 /** The planner wizard, pre-filled from the page's address where possible. */
@@ -92,14 +92,13 @@ export function PlannerWizard({ initial, toliId }: { initial: Partial<PlannerVal
 
   return (
     <div className="mx-auto grid max-w-6xl items-start gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(300px,1fr)]">
-      <GlassPanel>
-        {/* Progress: one segment per step */}
+      <GlassPanel className="lg:min-h-[560px]">
+        {/* Progress: one named segment per step (names from small screens up; bars alone on phones) */}
         <ol aria-label="Planner steps" className="mb-7 grid grid-cols-6 gap-1.5">
           {STEPS.map((s, i) => (
-            <li key={s.title} aria-current={i === step ? 'step' : undefined} className={cn('h-1.5 rounded-full transition-colors', i <= step ? 'bg-accent' : 'bg-accent/20')}>
-              <span className="sr-only">
-                Step {i + 1}: {s.title}
-              </span>
+            <li key={s.title} aria-current={i === step ? 'step' : undefined} className="grid gap-2">
+              <span aria-hidden className={cn('h-1.5 rounded-full transition-colors', i <= step ? 'bg-accent' : 'bg-accent/20')} />
+              <span className={cn('sr-only text-[13px] font-semibold sm:not-sr-only', i === step ? 'text-ink' : 'text-soft')}>{s.short}</span>
             </li>
           ))}
         </ol>

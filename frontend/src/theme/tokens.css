@@ -15,9 +15,10 @@
   --trip-soft: #454c5e;
   --trip-line: rgb(22 28 51 / 0.12);
 
-  /* Frosted paper: mostly opaque and warm, so text stays crisp whether the sky or the dark
-     forest is behind it (clear glass went muddy grey over the forest). Normal and strong. */
-  --trip-glass: rgb(251 248 243 / 0.88);
+  /* Two tiers. Glass — the frame and short-text pieces (navbar, footer, headers, tags) — lets the
+     living landscape glow through a strong blur, yet stays opaque enough for text over the dark
+     forest (about 5:1). Strong — reading and forms — is near-solid frosted paper. */
+  --trip-glass: rgb(251 248 243 / 0.7);
   --trip-glass-strong: rgb(252 250 246 / 0.93);
   --trip-glass-edge: rgb(255 255 255 / 0.8);
   --trip-glass-shadow: 0 30px 80px -40px rgb(0 0 0 / 0.45);
@@ -55,7 +56,7 @@
   --trip-soft: #c9c6bf;
   --trip-line: rgb(255 255 255 / 0.14);
 
-  --trip-glass: rgb(17 22 40 / 0.78);
+  --trip-glass: rgb(17 22 40 / 0.62);
   --trip-glass-strong: rgb(17 22 40 / 0.9);
   --trip-glass-edge: rgb(255 255 255 / 0.14);
   --trip-glass-shadow: 0 30px 80px -40px rgb(0 0 0 / 0.7);

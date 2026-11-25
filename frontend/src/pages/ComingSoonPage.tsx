@@ -13,7 +13,7 @@ export default function ComingSoonPage({ title }: { title: string }) {
     <WorldStage>
       <title>{`${title} · TripWise`}</title>
       <GlassPanel className="flex flex-col items-center gap-5 text-center">
-        <p className="flex items-baseline gap-3 text-sm font-medium tracking-[0.2em] text-soft uppercase">
+        <p className="eyebrow flex items-baseline gap-3">
           Boarding soon
           <span lang="hi" className="text-xl tracking-normal text-accent-2 normal-case">
             जल्द आ रहा है

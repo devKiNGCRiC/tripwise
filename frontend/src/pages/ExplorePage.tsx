@@ -146,7 +146,7 @@ export default function ExplorePage() {
                 <ul aria-label={group.name} className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                   {group.places.map((destination) => (
                     <li key={destination.id}>
-                      <DestinationCard destination={destination} className="h-[380px]" />
+                      <DestinationCard destination={destination} className="h-[340px]" />
                     </li>
                   ))}
                 </ul>

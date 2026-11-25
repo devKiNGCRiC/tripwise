@@ -41,6 +41,14 @@ async function fillAll(user: ReturnType<typeof renderApp>['user'], destination =
 describe('PlannerWizard', () => {
   beforeEach(() => session.set('u_demo'));
 
+  it('has a page title and names each step under the progress bar', async () => {
+    renderApp('/plan');
+    expect(await screen.findByRole('heading', { level: 1, name: 'Plan a trip' })).toBeInTheDocument();
+    const steps = await screen.findByRole('list', { name: 'Planner steps' });
+    expect(within(steps).getAllByRole('listitem').map((li) => li.textContent)).toEqual(['Where', 'When', 'Budget', 'Interests', 'Pace', 'Review']);
+    expect(within(steps).getAllByRole('listitem')[0]).toHaveAttribute('aria-current', 'step');
+  });
+
   it('pre-fills the destination from the address', async () => {
     renderApp('/plan?destination=Goa');
     expect(await screen.findByLabelText('Destination')).toHaveValue('Goa');

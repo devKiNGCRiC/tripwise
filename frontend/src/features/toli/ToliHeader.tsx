@@ -3,10 +3,10 @@
  * Sahyatris' faces, and (for leaders) the invite: "Invite on WhatsApp" opens WhatsApp with
  * the message and link already written; "Copy link" copies it.
  */
-import { Copy, HeartHandshake, Megaphone } from 'lucide-react';
+import { Copy, HeartHandshake, Megaphone, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router';
 import { Avatar } from '@/components/ui/Avatar';
-import { Button } from '@/components/ui/Button';
+import { Button, buttonClasses } from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
 import { useWords } from '@/features/words/WordsProvider';
 import type { Toli } from '@/lib/api/types';
@@ -37,7 +37,7 @@ export function ToliHeader({ toli }: { toli: Toli }) {
   }
 
   return (
-    <header className="glass-strong grid gap-4 rounded-[32px] p-6 sm:p-8">
+    <header className="glass-strong grid gap-4 rounded-[32px] p-5 sm:p-7">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
           <p className="eyebrow">
@@ -51,7 +51,7 @@ export function ToliHeader({ toli }: { toli: Toli }) {
             )}
             plan trips together
           </p>
-          <h1 className="mt-2 text-[clamp(36px,5vw,60px)]">{toli.name}</h1>
+          <h1 className="mt-1.5 text-[clamp(32px,4.2vw,52px)] leading-[1.05]">{toli.name}</h1>
           <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
             <span className="rounded-full border border-line px-3 py-1 font-semibold">{TYPE_LABEL[toli.type]}</span>
             {toli.announcementMode && (
@@ -68,8 +68,9 @@ export function ToliHeader({ toli }: { toli: Toli }) {
         </div>
         {toli.inviteUrl && (
           <div className="flex flex-wrap gap-2">
-            <a href={whatsappInvite(toli, toli.inviteUrl)} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center rounded-full bg-[#25d366] px-5 font-semibold text-[#06331a]">
-              Invite on WhatsApp
+            {/* A brand button; WhatsApp's own green stays on its icon so it's still recognisable. */}
+            <a href={whatsappInvite(toli, toli.inviteUrl)} target="_blank" rel="noreferrer" className={buttonClasses({ className: 'gap-2' })}>
+              <MessageCircle aria-hidden className="size-4 fill-[#25d366] text-[#25d366]" /> Invite on WhatsApp
             </a>
             <Button variant="secondary" icon={<Copy aria-hidden className="size-4" />} onClick={() => void copy()}>
               Copy link
