@@ -32,7 +32,7 @@ export default function FriendsPage() {
       <Link to="/passport" className="glass mb-4 inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-semibold">
         <ArrowLeft aria-hidden className="size-4" /> Your passport
       </Link>
-      <PageHeader eyebrow="दोस्त · Friends" title="Your travel circle" lede="Friends can see your passport (unless you choose Only me). Plan trips together soon in Crew mode." />
+      <PageHeader eyebrow="दोस्त · Friends" title="Your travel circle" lede="Friends can see your passport (unless you choose Only me), and you can bring them into a Toli to plan a trip together." />
 
       <div className="grid gap-6">
         <InviteLink />

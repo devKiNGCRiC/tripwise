@@ -25,6 +25,13 @@ describe('Button', () => {
     expect(button).toHaveAttribute('aria-busy', 'true');
   });
 
+  it('has a round icon size with no side padding, so the icon keeps its room', () => {
+    render(<Button size="icon" aria-label="Send">→</Button>);
+    const button = screen.getByRole('button', { name: 'Send' });
+    expect(button.className).toContain('size-11');
+    expect(button.className).not.toMatch(/\bpx-[1-9]/);
+  });
+
   it('defaults to type="button" so it never submits a form by accident', () => {
     render(<Button>Click</Button>);
     expect(screen.getByRole('button')).toHaveAttribute('type', 'button');

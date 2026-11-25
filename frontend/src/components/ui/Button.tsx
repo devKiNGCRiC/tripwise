@@ -11,7 +11,7 @@ import type { ComponentProps, ReactNode } from 'react';
 import { cn } from '@/lib/utils/cn';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'glow';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
 
 /** Shared look: pill shape, semibold body font, gentle lift on hover, dimmed when disabled. */
 const BASE =
@@ -30,6 +30,8 @@ const SIZES: Record<ButtonSize, string> = {
   sm: 'h-9 px-4 text-sm',
   md: 'h-11 px-5 text-base',
   lg: 'h-14 px-7 text-lg',
+  // A round button holding just an icon (Send, Ask): no side padding, so the icon keeps its room.
+  icon: 'size-11 shrink-0 px-0',
 };
 
 interface ButtonStyleOptions {

@@ -40,7 +40,8 @@ export function DecideTab({ toli }: { toli: Toli }) {
   return (
     <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1.4fr)_minmax(320px,1fr)]">
       <div className="grid gap-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        {/* On a panel, so the heading never floats on the landscape. */}
+        <div className="glass flex flex-wrap items-center justify-between gap-3 rounded-card px-5 py-3">
           <h2 className="text-2xl">Polls</h2>
           {!creating && (
             <Button variant="secondary" onClick={() => setCreating(true)}>

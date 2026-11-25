@@ -135,7 +135,7 @@ export function AskTripWise({ tripId }: { tripId: string }) {
           <span className="sr-only">Your question</span>
           <input value={question} onChange={(e) => setQuestion(e.target.value)} maxLength={300} placeholder="Is the fort open on Monday?" className="h-11 w-full rounded-2xl border border-line bg-white/70 px-4 outline-none focus:border-accent dark:bg-white/5" />
         </label>
-        <Button type="submit" aria-label="Ask" disabled={busy || !question.trim()} className="size-11 shrink-0 px-0">
+        <Button type="submit" size="icon" aria-label="Ask" disabled={busy || !question.trim()}>
           <Send aria-hidden className="size-4" />
         </Button>
       </form>

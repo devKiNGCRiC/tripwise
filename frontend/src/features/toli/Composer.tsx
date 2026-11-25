@@ -109,9 +109,9 @@ export function Composer({
         <input ref={fileRef} type="file" accept="image/*" multiple className="sr-only" tabIndex={-1} onChange={(e) => void addPhotos(e.target.files)} />
         <label className="min-w-0 flex-1">
           <span className="sr-only">Message</span>
-          <textarea value={text} onChange={(e) => setText(e.target.value)} onKeyDown={onKeyDown} rows={1} maxLength={2000} placeholder="Write to the Toli… (@ to mention)" className="max-h-40 min-h-11 w-full resize-y rounded-2xl border border-line bg-transparent px-4 py-2.5 outline-none focus:border-accent" />
+          <textarea value={text} onChange={(e) => setText(e.target.value)} onKeyDown={onKeyDown} rows={1} maxLength={2000} placeholder="Message (@ to mention)" className="max-h-40 min-h-11 w-full resize-y rounded-2xl border border-line bg-transparent px-4 py-2.5 outline-none focus:border-accent" />
         </label>
-        <Button type="submit" aria-label="Send" disabled={uploading || (!text.trim() && !photos.length)} className="size-11 shrink-0 px-0">
+        <Button type="submit" size="icon" aria-label="Send" disabled={uploading || (!text.trim() && !photos.length)}>
           <Send aria-hidden className="size-4" />
         </Button>
       </div>
