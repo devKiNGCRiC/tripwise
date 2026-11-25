@@ -4,6 +4,7 @@
  * floating tab bar never covers it.
  */
 import { Link } from 'react-router';
+import { BRAND } from '@/lib/brand';
 import { Logo } from './Logo';
 
 /** Footer link: quiet text that warms to ink on hover. */
@@ -16,7 +17,14 @@ export function Footer() {
       <div className="glass grid gap-8 rounded-[28px] px-6 py-8 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr] md:items-start">
         <div>
           <Logo />
-          <p className="mt-3 max-w-xs text-soft">Trips across India's seven worlds — and the rest of the planet — planned around you. Free, always.</p>
+          {/* The slogan, in English and Hindi. */}
+          <p className="mt-3 font-display text-lg">
+            <span>{BRAND.slogan}</span> <span aria-hidden>·</span>{' '}
+            <span lang="hi" className="font-hindi text-accent">
+              {BRAND.sloganHi}
+            </span>
+          </p>
+          <p className="mt-1 max-w-xs text-soft">Trips across India's seven worlds — and the rest of the planet — planned around you. Free, always.</p>
         </div>
         <nav aria-label="Footer" className="flex flex-col gap-2">
           <Link to="/explore" className={LINK}>
@@ -41,7 +49,7 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} TripWise ·{' '}
             <span lang="hi" className="text-accent">
-              शुभ यात्रा
+              {BRAND.signOff}
             </span>
           </p>
         </div>

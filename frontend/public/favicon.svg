@@ -1,6 +1,12 @@
-<!-- favicon.svg — TripWise tab icon: a coral "stamp" square with a paper-plane mark. -->
+<!-- favicon.svg — TripWise tab icon: the gateway (dwar) with the sun on the horizon and a winding
+     footpath leading in (same shapes as src/components/layout/BrandMark.tsx). Indigo on light
+     browser chrome, paper-white on dark; the sun is always saffron. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect x="4" y="4" width="52" height="52" rx="14" fill="#1B1B1F"/>
-  <rect x="0" y="0" width="52" height="52" rx="14" fill="#FF6B5A" stroke="#1B1B1F" stroke-width="4"/>
-  <path d="M12 26 L42 13 L33 41 L27 30 Z" fill="#FFF8EE" stroke="#1B1B1F" stroke-width="3" stroke-linejoin="round"/>
+  <style>
+    .ink { fill: #1e2747; }
+    @media (prefers-color-scheme: dark) { .ink { fill: #f6efe3; } }
+  </style>
+  <path class="ink" fill-rule="evenodd" d="M8,60 V24.2 C8,13.5 17.6,7.4 32,3.5 C46.4,7.4 56,13.5 56,24.2 V60 Z M15.5,60 V29.5 C15.5,21.8 21.8,16.8 32,13.6 C42.2,16.8 48.5,21.8 48.5,29.5 V60 Z" />
+  <circle cx="32" cy="36.5" r="7" fill="#e8813a" />
+  <path class="ink" fill-rule="evenodd" d="M14,46.8 C23,42.4 41,42.4 50,46.8 V60 H14 Z M24.5,60 C26.5,56 33.4,55.6 33.4,52.4 C33.4,49.6 29.8,48.6 31.3,44.6 H33 C32.4,47.6 37.6,49 37.6,52.6 C37.6,56.6 33.4,57.4 35.4,60 Z" />
 </svg>
